@@ -1,6 +1,6 @@
 module github.com/sagernet/tailscale
 
-go 1.24.0
+go 1.24.1
 
 require (
 	fyne.io/systray v1.11.1-0.20250812065214-4856ac3adc3c
@@ -47,6 +47,7 @@ require (
 	github.com/prometheus/client_golang v1.23.0
 	github.com/prometheus/common v0.65.0
 	github.com/safchain/ethtool v0.3.0
+	github.com/sagernet/gvisor v0.0.0-20250811.0-sing-box-mod.1
 	github.com/tailscale/certstore v0.1.1-0.20231202035212-d3fa0460f47e
 	github.com/tailscale/goupnp v1.0.1-0.20210804011211-c64d0f06ea05
 	github.com/tailscale/hujson v0.0.0-20221223112325-20486734a56a
@@ -69,7 +70,6 @@ require (
 	golang.org/x/time v0.11.0
 	golang.org/x/tools v0.39.0
 	golang.zx2c4.com/wireguard/windows v0.5.3
-	gvisor.dev/gvisor v0.0.0-20250205023644-9414b50a5633
 )
 
 require (
@@ -97,6 +97,7 @@ require (
 	github.com/vishvananda/netns v0.0.5 // indirect
 	go.etcd.io/bbolt v1.3.11 // indirect
 	golang.zx2c4.com/wintun v0.0.0-20230126152724-0fa3db229ce2 // indirect
+	gotest.tools/v3 v3.4.0 // indirect
 	software.sslmate.com/src/go-pkcs12 v0.4.0 // indirect
 )
 
@@ -112,7 +113,7 @@ require (
 	github.com/fatih/color v1.18.0 // indirect
 	github.com/go-git/go-billy/v5 v5.6.2 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
-	github.com/google/btree v1.1.2 // indirect
+	github.com/google/btree v1.1.3 // indirect
 	github.com/gorilla/csrf v1.7.3
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/mattn/go-runewidth v0.0.14 // indirect
