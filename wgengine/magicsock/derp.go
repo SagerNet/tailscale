@@ -30,7 +30,7 @@ import (
 	"github.com/sagernet/tailscale/util/mak"
 	"github.com/sagernet/tailscale/util/rands"
 	"github.com/sagernet/tailscale/util/testenv"
-	"github.com/tailscale/wireguard-go/conn"
+	"github.com/sagernet/wireguard-go/conn"
 )
 
 // frameReceiveRecordRate is the minimum time between updates to last frame

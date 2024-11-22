@@ -48,6 +48,7 @@ require (
 	github.com/prometheus/common v0.65.0
 	github.com/safchain/ethtool v0.3.0
 	github.com/sagernet/gvisor v0.0.0-20241123041152-536d05261cff
+	github.com/sagernet/wireguard-go v0.0.2-beta.1.0.20250917110311-16510ac47288
 	github.com/tailscale/certstore v0.1.1-0.20231202035212-d3fa0460f47e
 	github.com/tailscale/goupnp v1.0.1-0.20210804011211-c64d0f06ea05
 	github.com/tailscale/hujson v0.0.0-20221223112325-20486734a56a
@@ -98,6 +99,7 @@ require (
 	github.com/vishvananda/netns v0.0.5 // indirect
 	go.etcd.io/bbolt v1.3.11 // indirect
 	golang.zx2c4.com/wintun v0.0.0-20230126152724-0fa3db229ce2 // indirect
+	gotest.tools/v3 v3.4.0 // indirect
 	software.sslmate.com/src/go-pkcs12 v0.4.0 // indirect
 )
 

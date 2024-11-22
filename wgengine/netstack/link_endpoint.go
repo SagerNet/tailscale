@@ -7,6 +7,9 @@ import (
 	"context"
 	"sync"
 
+	"github.com/sagernet/gvisor/pkg/tcpip"
+	"github.com/sagernet/gvisor/pkg/tcpip/header"
+	"github.com/sagernet/gvisor/pkg/tcpip/stack"
 	"github.com/sagernet/tailscale/feature/buildfeatures"
 	"github.com/sagernet/tailscale/net/packet"
 	"github.com/sagernet/tailscale/types/ipproto"
@@ -99,7 +102,7 @@ const (
 // linkEndpoint implements stack.LinkEndpoint and stack.GSOEndpoint. Outbound
 // packets written by gVisor towards Tailscale are stored in a channel.
 // Inbound is fed to gVisor via injectInbound or gro. This is loosely
-// modeled after gvisor.dev/pkg/tcpip/link/channel.Endpoint.
+// modeled after github.com/sagernet/gvisor/pkg/tcpip/link/channel.Endpoint.
 type linkEndpoint struct {
 	SupportedGSOKind stack.SupportedGSO
 	supportedGRO     supportedGRO
