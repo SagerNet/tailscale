@@ -60,3 +60,4 @@ client/web/build/assets
 /.stfolder
 fbstatus
 gafpush
+.DS_Store
