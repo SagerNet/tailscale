@@ -57,8 +57,8 @@ import (
 	"github.com/sagernet/tailscale/wgengine/wgcfg"
 	"github.com/sagernet/tailscale/wgengine/wgint"
 	"github.com/sagernet/tailscale/wgengine/wglog"
-	"github.com/tailscale/wireguard-go/device"
-	"github.com/tailscale/wireguard-go/tun"
+	"github.com/sagernet/wireguard-go/device"
+	"github.com/sagernet/wireguard-go/tun"
 )
 
 // Lazy wireguard-go configuration parameters.
@@ -89,6 +89,8 @@ const statusPollInterval = 1 * time.Minute
 const networkLoggerUploadTimeout = 5 * time.Second
 
 type userspaceEngine struct {
+	ctx              context.Context
+	workers          int
 	logf             logger.Logf
 	wgLogger         *wglog.Logger // a wireguard-go logging wrapper
 	reqCh            chan struct{}
@@ -164,6 +166,9 @@ type BIRDClient interface {
 
 // Config is the engine configuration.
 type Config struct {
+	Context context.Context
+	Workers int
+
 	// Tun is the device used by the Engine to exchange packets with
 	// the OS.
 	// If nil, a fake Device that does nothing is used.
@@ -323,6 +328,8 @@ func NewUserspaceEngine(logf logger.Logf, conf Config) (_ Engine, reterr error) 
 	}
 
 	e := &userspaceEngine{
+		ctx:            conf.Context,
+		workers:        conf.Workers,
 		timeNow:        mono.Now,
 		logf:           logf,
 		reqCh:          make(chan struct{}, 1),
@@ -456,7 +463,7 @@ func NewUserspaceEngine(logf logger.Logf, conf Config) (_ Engine, reterr error) 
 
 	// wgdev takes ownership of tundev, will close it when closed.
 	e.logf("Creating WireGuard device...")
-	e.wgdev = wgcfg.NewDevice(e.tundev, e.magicConn.Bind(), e.wgLogger.DeviceLogger)
+	e.wgdev = wgcfg.NewDevice(e.ctx, e.tundev, e.magicConn.Bind(), e.wgLogger.DeviceLogger, e.workers)
 	closePool.addFunc(e.wgdev.Close)
 	closePool.addFunc(func() {
 		if err := e.magicConn.Close(); err != nil {

@@ -15,7 +15,7 @@ import (
 
 	"github.com/sagernet/tailscale/feature"
 	"github.com/sagernet/tailscale/types/logger"
-	"github.com/tailscale/wireguard-go/tun"
+	"github.com/sagernet/wireguard-go/tun"
 )
 
 // CrateTAP is the hook set by feature/tap.
