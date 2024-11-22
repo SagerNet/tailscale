@@ -8,8 +8,8 @@ package captivedetection
 import (
 	"syscall"
 
-	"golang.org/x/sys/unix"
 	"github.com/sagernet/tailscale/types/logger"
+	"golang.org/x/sys/unix"
 )
 
 // setSocketInterfaceIndex sets the IP_BOUND_IF socket option on the given RawConn.

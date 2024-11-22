@@ -96,7 +96,8 @@ func newIPTablesRunner(logf logger.Logf) (*iptablesRunner, error) {
 		ipt6:              ipt6,
 		v6Available:       supportsV6,
 		v6NATAvailable:    supportsV6NAT,
-		v6FilterAvailable: supportsV6Filter}, nil
+		v6FilterAvailable: supportsV6Filter,
+	}, nil
 }
 
 // checkSupportsV6Filter returns whether the system has a "filter" table in the

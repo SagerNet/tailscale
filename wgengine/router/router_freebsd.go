@@ -4,10 +4,10 @@
 package router
 
 import (
-	"github.com/tailscale/wireguard-go/tun"
 	"github.com/sagernet/tailscale/health"
 	"github.com/sagernet/tailscale/net/netmon"
 	"github.com/sagernet/tailscale/types/logger"
+	"github.com/tailscale/wireguard-go/tun"
 )
 
 // For now this router only supports the userspace WireGuard implementations.

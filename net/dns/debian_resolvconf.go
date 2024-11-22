@@ -101,10 +101,10 @@ func (m *resolvconfManager) deleteTailscaleConfig() error {
 func (m *resolvconfManager) SetDNS(config OSConfig) error {
 	if !m.scriptInstalled {
 		m.logf("injecting resolvconf workaround script")
-		if err := os.MkdirAll(resolvconfLibcHookPath, 0755); err != nil {
+		if err := os.MkdirAll(resolvconfLibcHookPath, 0o755); err != nil {
 			return err
 		}
-		if err := atomicfile.WriteFile(resolvconfHookPath, workaroundScript, 0755); err != nil {
+		if err := atomicfile.WriteFile(resolvconfHookPath, workaroundScript, 0o755); err != nil {
 			return err
 		}
 		m.scriptInstalled = true

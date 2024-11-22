@@ -6,8 +6,8 @@ package key
 import (
 	"errors"
 
-	"go4.org/mem"
 	"github.com/sagernet/tailscale/types/structs"
+	"go4.org/mem"
 )
 
 const (

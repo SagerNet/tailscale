@@ -20,18 +20,6 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/tailscale/wireguard-go/conn"
-	"gvisor.dev/gvisor/pkg/refs"
-	"gvisor.dev/gvisor/pkg/tcpip"
-	"gvisor.dev/gvisor/pkg/tcpip/adapters/gonet"
-	"gvisor.dev/gvisor/pkg/tcpip/header"
-	"gvisor.dev/gvisor/pkg/tcpip/network/ipv4"
-	"gvisor.dev/gvisor/pkg/tcpip/network/ipv6"
-	"gvisor.dev/gvisor/pkg/tcpip/stack"
-	"gvisor.dev/gvisor/pkg/tcpip/transport/icmp"
-	"gvisor.dev/gvisor/pkg/tcpip/transport/tcp"
-	"gvisor.dev/gvisor/pkg/tcpip/transport/udp"
-	"gvisor.dev/gvisor/pkg/waiter"
 	"github.com/sagernet/tailscale/envknob"
 	"github.com/sagernet/tailscale/ipn/ipnlocal"
 	"github.com/sagernet/tailscale/metrics"
@@ -55,6 +43,18 @@ import (
 	"github.com/sagernet/tailscale/wgengine/filter"
 	"github.com/sagernet/tailscale/wgengine/magicsock"
 	"github.com/sagernet/tailscale/wgengine/netstack/gro"
+	"github.com/tailscale/wireguard-go/conn"
+	"gvisor.dev/gvisor/pkg/refs"
+	"gvisor.dev/gvisor/pkg/tcpip"
+	"gvisor.dev/gvisor/pkg/tcpip/adapters/gonet"
+	"gvisor.dev/gvisor/pkg/tcpip/header"
+	"gvisor.dev/gvisor/pkg/tcpip/network/ipv4"
+	"gvisor.dev/gvisor/pkg/tcpip/network/ipv6"
+	"gvisor.dev/gvisor/pkg/tcpip/stack"
+	"gvisor.dev/gvisor/pkg/tcpip/transport/icmp"
+	"gvisor.dev/gvisor/pkg/tcpip/transport/tcp"
+	"gvisor.dev/gvisor/pkg/tcpip/transport/udp"
+	"gvisor.dev/gvisor/pkg/waiter"
 )
 
 const debugPackets = false
@@ -445,9 +445,7 @@ func (ns *Impl) wrapUDPProtocolHandler(h protocolHandlerFunc) protocolHandlerFun
 	}
 }
 
-var (
-	metricPerClientForwardLimit = clientmetric.NewCounter("netstack_tcp_forward_dropped_attempts_per_client")
-)
+var metricPerClientForwardLimit = clientmetric.NewCounter("netstack_tcp_forward_dropped_attempts_per_client")
 
 // wrapTCPProtocolHandler wraps the protocol handler we pass to netstack for TCP.
 func (ns *Impl) wrapTCPProtocolHandler(h protocolHandlerFunc) protocolHandlerFunc {

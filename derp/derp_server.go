@@ -35,8 +35,6 @@ import (
 	"sync/atomic"
 	"time"
 
-	"go4.org/mem"
-	"golang.org/x/sync/errgroup"
 	"github.com/sagernet/tailscale/client/tailscale"
 	"github.com/sagernet/tailscale/disco"
 	"github.com/sagernet/tailscale/envknob"
@@ -52,6 +50,8 @@ import (
 	"github.com/sagernet/tailscale/util/set"
 	"github.com/sagernet/tailscale/util/slicesx"
 	"github.com/sagernet/tailscale/version"
+	"go4.org/mem"
+	"golang.org/x/sync/errgroup"
 )
 
 // verboseDropKeys is the set of destination public keys that should
@@ -1671,7 +1671,6 @@ func (c *sclient) onSendLoopDone() {
 			return
 		}
 	}
-
 }
 
 func (c *sclient) sendLoop(ctx context.Context) error {

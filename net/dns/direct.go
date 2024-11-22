@@ -272,7 +272,7 @@ func (m *directManager) rename(old, new string) error {
 	if err != nil {
 		return fmt.Errorf("reading %q to rename: %w", old, err)
 	}
-	if err := m.fs.WriteFile(new, bs, 0644); err != nil {
+	if err := m.fs.WriteFile(new, bs, 0o644); err != nil {
 		return fmt.Errorf("writing to %q in rename of %q: %w", new, old, err)
 	}
 
@@ -280,7 +280,7 @@ func (m *directManager) rename(old, new string) error {
 	// if we have a umask set which prevents creating world-readable files,
 	// the file will still have the correct permissions once it's renamed
 	// into place. See #12609.
-	if err := m.fs.Chmod(new, 0644); err != nil {
+	if err := m.fs.Chmod(new, 0o644); err != nil {
 		return fmt.Errorf("chmod %q in rename of %q: %w", new, old, err)
 	}
 
@@ -330,7 +330,7 @@ func (m *directManager) SetDNS(config OSConfig) (err error) {
 
 		buf := new(bytes.Buffer)
 		writeResolvConf(buf, config.Nameservers, config.SearchDomains)
-		if err := m.atomicWriteFile(m.fs, resolvConf, buf.Bytes(), 0644); err != nil {
+		if err := m.atomicWriteFile(m.fs, resolvConf, buf.Bytes(), 0o644); err != nil {
 			return err
 		}
 

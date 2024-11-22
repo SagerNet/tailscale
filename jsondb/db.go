@@ -53,5 +53,5 @@ func (db *DB[T]) Save() error {
 		return err
 	}
 
-	return atomicfile.WriteFile(db.path, bs, 0600)
+	return atomicfile.WriteFile(db.path, bs, 0o600)
 }

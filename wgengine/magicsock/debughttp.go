@@ -182,7 +182,6 @@ func printEndpointHTML(w io.Writer, ep *endpoint) {
 		fmt.Fprintf(w, "</ul></li>\n")
 	}
 	io.WriteString(w, "</ul>")
-
 }
 
 func peerDebugName(p tailcfg.NodeView) string {

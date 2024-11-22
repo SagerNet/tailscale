@@ -16,10 +16,10 @@ import (
 	"sync"
 	"time"
 
-	"github.com/tailscale/certstore"
 	"github.com/sagernet/tailscale/tailcfg"
 	"github.com/sagernet/tailscale/types/key"
 	"github.com/sagernet/tailscale/util/syspolicy"
+	"github.com/tailscale/certstore"
 )
 
 var getMachineCertificateSubjectOnce struct {

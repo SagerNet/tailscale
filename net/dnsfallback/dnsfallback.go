@@ -395,7 +395,7 @@ func UpdateCache(c *tailcfg.DERPMap, logf logger.Logf) {
 	// Don't try writing if we don't have a cache path set; this can happen
 	// when we don't have a state path (e.g. /var/lib/tailscale) configured.
 	if cachePath != "" {
-		err = atomicfile.WriteFile(cachePath, d, 0600)
+		err = atomicfile.WriteFile(cachePath, d, 0o600)
 		if err != nil {
 			logf("[v1] dnsfallback: UpdateCache error writing: %v", err)
 			return

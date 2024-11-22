@@ -10,9 +10,9 @@ import (
 	"os"
 	"os/exec"
 
-	"golang.org/x/sys/unix"
 	"github.com/sagernet/tailscale/types/ptr"
 	"github.com/sagernet/tailscale/version/distro"
+	"golang.org/x/sys/unix"
 )
 
 func init() {

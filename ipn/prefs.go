@@ -36,11 +36,9 @@ import (
 // The default control plane is the hosted version run by Tailscale.com.
 const DefaultControlURL = "https://controlplane.github.com/sagernet/tailscale"
 
-var (
-	// ErrExitNodeIDAlreadySet is returned from (*Prefs).SetExitNodeIP when the
-	// Prefs.ExitNodeID field is already set.
-	ErrExitNodeIDAlreadySet = errors.New("cannot set ExitNodeIP when ExitNodeID is already set")
-)
+// ErrExitNodeIDAlreadySet is returned from (*Prefs).SetExitNodeIP when the
+// Prefs.ExitNodeID field is already set.
+var ErrExitNodeIDAlreadySet = errors.New("cannot set ExitNodeIP when ExitNodeID is already set")
 
 // IsLoginServerSynonym reports whether a URL is a drop-in replacement
 // for the primary Tailscale login server.
@@ -922,8 +920,8 @@ func LoadPrefsWindows(filename string) (*Prefs, error) {
 func SavePrefs(filename string, p *Prefs) {
 	log.Printf("Saving prefs %v %v\n", filename, p.Pretty())
 	data := p.ToBytes()
-	os.MkdirAll(filepath.Dir(filename), 0700)
-	if err := atomicfile.WriteFile(filename, data, 0600); err != nil {
+	os.MkdirAll(filepath.Dir(filename), 0o700)
+	if err := atomicfile.WriteFile(filename, data, 0o600); err != nil {
 		log.Printf("SavePrefs: %v\n", err)
 	}
 }

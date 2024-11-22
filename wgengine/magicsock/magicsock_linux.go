@@ -17,11 +17,6 @@ import (
 	"time"
 
 	"github.com/mdlayher/socket"
-	"golang.org/x/net/bpf"
-	"golang.org/x/net/ipv4"
-	"golang.org/x/net/ipv6"
-	"golang.org/x/sys/cpu"
-	"golang.org/x/sys/unix"
 	"github.com/sagernet/tailscale/disco"
 	"github.com/sagernet/tailscale/envknob"
 	"github.com/sagernet/tailscale/net/netns"
@@ -29,6 +24,11 @@ import (
 	"github.com/sagernet/tailscale/types/key"
 	"github.com/sagernet/tailscale/types/logger"
 	"github.com/sagernet/tailscale/types/nettype"
+	"golang.org/x/net/bpf"
+	"golang.org/x/net/ipv4"
+	"golang.org/x/net/ipv6"
+	"golang.org/x/sys/cpu"
+	"golang.org/x/sys/unix"
 )
 
 const (
@@ -38,11 +38,9 @@ const (
 	discoMinHeaderSize = len(disco.Magic) + 32 /* key length */ + disco.NonceLen
 )
 
-var (
-	// Opt-in for using raw sockets to receive disco traffic; added for
-	// #13140 and replaces the older "TS_DEBUG_DISABLE_RAW_DISCO".
-	envknobEnableRawDisco = envknob.RegisterBool("TS_ENABLE_RAW_DISCO")
-)
+// Opt-in for using raw sockets to receive disco traffic; added for
+// #13140 and replaces the older "TS_DEBUG_DISABLE_RAW_DISCO".
+var envknobEnableRawDisco = envknob.RegisterBool("TS_ENABLE_RAW_DISCO")
 
 // debugRawDiscoReads enables logging of raw disco reads.
 var debugRawDiscoReads = envknob.RegisterBool("TS_DEBUG_RAW_DISCO")

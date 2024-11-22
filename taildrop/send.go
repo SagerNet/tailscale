@@ -116,7 +116,7 @@ func (m *Manager) PutFile(id ClientID, baseName string, r io.Reader, offset, len
 	m.deleter.Remove(filepath.Base(partialPath)) // avoid deleting the partial file while receiving
 
 	// Create (if not already) the partial file with read-write permissions.
-	f, err := os.OpenFile(partialPath, os.O_CREATE|os.O_RDWR, 0666)
+	f, err := os.OpenFile(partialPath, os.O_CREATE|os.O_RDWR, 0o666)
 	if err != nil {
 		return 0, redactAndLogError("Create", err)
 	}

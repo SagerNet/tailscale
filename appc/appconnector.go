@@ -18,8 +18,6 @@ import (
 	"sync"
 	"time"
 
-	xmaps "golang.org/x/exp/maps"
-	"golang.org/x/net/dns/dnsmessage"
 	"github.com/sagernet/tailscale/types/logger"
 	"github.com/sagernet/tailscale/types/views"
 	"github.com/sagernet/tailscale/util/clientmetric"
@@ -27,6 +25,8 @@ import (
 	"github.com/sagernet/tailscale/util/execqueue"
 	"github.com/sagernet/tailscale/util/mak"
 	"github.com/sagernet/tailscale/util/slicesx"
+	xmaps "golang.org/x/exp/maps"
+	"golang.org/x/net/dns/dnsmessage"
 )
 
 // rateLogger responds to calls to update by adding a count for the current period and

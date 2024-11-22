@@ -11,9 +11,9 @@ import (
 	"slices"
 	"sync"
 
-	"go4.org/netipx"
 	"github.com/sagernet/tailscale/net/netaddr"
 	"github.com/sagernet/tailscale/types/views"
+	"go4.org/netipx"
 )
 
 // ChromeOSVMRange returns the subset of the CGNAT IPv4 range used by

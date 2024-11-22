@@ -131,7 +131,7 @@ func userLookupGetent(usernameOrUID string, std lookupStd) (*user.User, string, 
 	for len(f) < 7 {
 		f = append(f, "")
 	}
-	var mandatoryFields = []int{0, 2, 3, 5}
+	mandatoryFields := []int{0, 2, 3, 5}
 	for _, v := range mandatoryFields {
 		if f[v] == "" {
 			log.Printf("getent for user %q returned invalid output: %q", usernameOrUID, out)

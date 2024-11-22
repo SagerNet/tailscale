@@ -14,7 +14,6 @@ import (
 	"runtime"
 	"strconv"
 
-	"github.com/tailscale/peercred"
 	"github.com/sagernet/tailscale/envknob"
 	"github.com/sagernet/tailscale/ipn"
 	"github.com/sagernet/tailscale/safesocket"
@@ -23,6 +22,7 @@ import (
 	"github.com/sagernet/tailscale/util/groupmember"
 	"github.com/sagernet/tailscale/util/winutil"
 	"github.com/sagernet/tailscale/version/distro"
+	"github.com/tailscale/peercred"
 )
 
 // ErrNotImplemented is returned by ConnIdentity.WindowsToken when it is not

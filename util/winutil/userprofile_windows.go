@@ -8,10 +8,10 @@ import (
 	"strings"
 	"unsafe"
 
-	"golang.org/x/sys/windows"
-	"golang.org/x/sys/windows/registry"
 	"github.com/sagernet/tailscale/types/logger"
 	"github.com/sagernet/tailscale/util/winutil/winenv"
+	"golang.org/x/sys/windows"
+	"golang.org/x/sys/windows/registry"
 )
 
 type _PROFILEINFO struct {

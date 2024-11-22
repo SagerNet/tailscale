@@ -39,7 +39,7 @@ func TryConfigFileMigration(logf logger.Logf, oldFile, newFile string) string {
 		return oldFile
 	}
 
-	err = os.WriteFile(newFile, contents, 0600)
+	err = os.WriteFile(newFile, contents, 0o600)
 	if err != nil {
 		removeErr := os.Remove(newFile)
 		if removeErr != nil {

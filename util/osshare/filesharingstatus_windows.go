@@ -11,8 +11,8 @@ import (
 	"path/filepath"
 	"sync"
 
-	"golang.org/x/sys/windows/registry"
 	"github.com/sagernet/tailscale/types/logger"
+	"golang.org/x/sys/windows/registry"
 )
 
 const (

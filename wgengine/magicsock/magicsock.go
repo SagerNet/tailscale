@@ -24,10 +24,6 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/tailscale/wireguard-go/conn"
-	"go4.org/mem"
-	"golang.org/x/net/ipv6"
-
 	"github.com/sagernet/tailscale/control/controlknobs"
 	"github.com/sagernet/tailscale/disco"
 	"github.com/sagernet/tailscale/envknob"
@@ -64,6 +60,9 @@ import (
 	"github.com/sagernet/tailscale/util/usermetric"
 	"github.com/sagernet/tailscale/wgengine/capture"
 	"github.com/sagernet/tailscale/wgengine/wgint"
+	"github.com/tailscale/wireguard-go/conn"
+	"go4.org/mem"
+	"golang.org/x/net/ipv6"
 )
 
 const (
@@ -3202,8 +3201,10 @@ type lazyEndpoint struct {
 	src netip.AddrPort
 }
 
-var _ conn.PeerAwareEndpoint = (*lazyEndpoint)(nil)
-var _ conn.Endpoint = (*lazyEndpoint)(nil)
+var (
+	_ conn.PeerAwareEndpoint = (*lazyEndpoint)(nil)
+	_ conn.Endpoint          = (*lazyEndpoint)(nil)
+)
 
 func (le *lazyEndpoint) ClearSrc()           {}
 func (le *lazyEndpoint) SrcIP() netip.Addr   { return le.src.Addr() }

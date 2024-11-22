@@ -11,7 +11,6 @@ import (
 	"sync"
 	"time"
 
-	"go4.org/netipx"
 	"github.com/sagernet/tailscale/envknob"
 	"github.com/sagernet/tailscale/net/flowtrack"
 	"github.com/sagernet/tailscale/net/ipset"
@@ -25,6 +24,7 @@ import (
 	"github.com/sagernet/tailscale/util/mak"
 	"github.com/sagernet/tailscale/util/slicesx"
 	"github.com/sagernet/tailscale/wgengine/filter/filtertype"
+	"go4.org/netipx"
 )
 
 // Filter is a stateful packet filter.
@@ -291,8 +291,10 @@ func maybeHexdump(flag RunFlags, b []byte) string {
 // we have to be cautious about flooding the logs vs letting people use
 // flood protection to hide their traffic. We could use a rate limiter in
 // the actual *filter* for SYN accepts, perhaps.
-var acceptBucket = rate.NewLimiter(rate.Every(10*time.Second), 3)
-var dropBucket = rate.NewLimiter(rate.Every(5*time.Second), 10)
+var (
+	acceptBucket = rate.NewLimiter(rate.Every(10*time.Second), 3)
+	dropBucket   = rate.NewLimiter(rate.Every(5*time.Second), 10)
+)
 
 // NOTE(Xe): This func init is used to detect
 // TS_DEBUG_FILTER_RATE_LIMIT_LOGS=all, and if it matches, to

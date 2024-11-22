@@ -529,7 +529,6 @@ func HTTPOfListener(ln net.Listener) string {
 		return fmt.Sprintf("http://%v/", net.JoinHostPort(goodIP, fmt.Sprint(ta.Port)))
 	}
 	return fmt.Sprintf("http://localhost:%v/", fmt.Sprint(ta.Port))
-
 }
 
 // likelyHomeRouterIP, if present, is a platform-specific function that is used
@@ -641,9 +640,7 @@ func isUsableV6(ip netip.Addr) bool {
 		(ip.Is6() && ip.IsPrivate() && !tsaddr.TailscaleULARange().Contains(ip))
 }
 
-var (
-	v6Global1 = netip.MustParsePrefix("2000::/3")
-)
+var v6Global1 = netip.MustParsePrefix("2000::/3")
 
 // keepInterfaceInStringSummary reports whether the named interface should be included
 // in the String method's summary string.

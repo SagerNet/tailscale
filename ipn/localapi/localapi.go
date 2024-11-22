@@ -31,7 +31,6 @@ import (
 	"sync"
 	"time"
 
-	"golang.org/x/net/dns/dnsmessage"
 	"github.com/sagernet/tailscale/client/tailscale/apitype"
 	"github.com/sagernet/tailscale/clientupdate"
 	"github.com/sagernet/tailscale/drive"
@@ -66,6 +65,7 @@ import (
 	"github.com/sagernet/tailscale/util/syspolicy/setting"
 	"github.com/sagernet/tailscale/version"
 	"github.com/sagernet/tailscale/wgengine/magicsock"
+	"golang.org/x/net/dns/dnsmessage"
 )
 
 type localAPIHandler func(*Handler, http.ResponseWriter, *http.Request)
@@ -1087,7 +1087,6 @@ func authorizeServeConfigForGOOSAndUserContext(goos string, configIn *ipn.ServeC
 		// should never happen.
 		panic("unreachable")
 	}
-
 }
 
 func (h *Handler) serveCheckIPForwarding(w http.ResponseWriter, r *http.Request) {

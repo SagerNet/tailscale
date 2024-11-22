@@ -28,7 +28,6 @@ import (
 	"sync"
 	"time"
 
-	"go4.org/mem"
 	"github.com/sagernet/tailscale/derp"
 	"github.com/sagernet/tailscale/envknob"
 	"github.com/sagernet/tailscale/health"
@@ -43,6 +42,7 @@ import (
 	"github.com/sagernet/tailscale/tstime"
 	"github.com/sagernet/tailscale/types/key"
 	"github.com/sagernet/tailscale/types/logger"
+	"go4.org/mem"
 )
 
 // Client is a DERP-over-HTTP client.

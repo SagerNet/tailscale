@@ -10,9 +10,9 @@ import (
 	"net/netip"
 	"unsafe"
 
+	"github.com/sagernet/tailscale/net/netaddr"
 	"golang.org/x/sys/cpu"
 	"golang.org/x/sys/windows"
-	"github.com/sagernet/tailscale/net/netaddr"
 )
 
 // OSMetadata includes any additional OS-specific information that may be

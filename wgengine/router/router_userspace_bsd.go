@@ -12,13 +12,13 @@ import (
 	"os/exec"
 	"runtime"
 
-	"github.com/tailscale/wireguard-go/tun"
-	"go4.org/netipx"
 	"github.com/sagernet/tailscale/health"
 	"github.com/sagernet/tailscale/net/netmon"
 	"github.com/sagernet/tailscale/net/tsaddr"
 	"github.com/sagernet/tailscale/types/logger"
 	"github.com/sagernet/tailscale/version"
+	"github.com/tailscale/wireguard-go/tun"
+	"go4.org/netipx"
 )
 
 type userspaceBSDRouter struct {
@@ -163,9 +163,11 @@ func (r *userspaceBSDRouter) Set(cfg *Config) (reterr error) {
 			if version.OS() == "macOS" {
 				del = "delete"
 			}
-			routedel := []string{"route", "-q", "-n",
+			routedel := []string{
+				"route", "-q", "-n",
 				del, "-" + inet(route), nstr,
-				"-iface", r.tunname}
+				"-iface", r.tunname,
+			}
 			out, err := cmd(routedel...).CombinedOutput()
 			if err != nil {
 				r.logf("route del failed: %v: %v\n%s", routedel, err, out)
@@ -179,9 +181,11 @@ func (r *userspaceBSDRouter) Set(cfg *Config) (reterr error) {
 			net := netipx.PrefixIPNet(route)
 			nip := net.IP.Mask(net.Mask)
 			nstr := fmt.Sprintf("%v/%d", nip, route.Bits())
-			routeadd := []string{"route", "-q", "-n",
+			routeadd := []string{
+				"route", "-q", "-n",
 				"add", "-" + inet(route), nstr,
-				"-iface", r.tunname}
+				"-iface", r.tunname,
+			}
 			out, err := cmd(routeadd...).CombinedOutput()
 			if err != nil {
 				r.logf("addr add failed: %v: %v\n%s", routeadd, err, out)

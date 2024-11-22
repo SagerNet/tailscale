@@ -18,11 +18,6 @@ import (
 	"time"
 
 	"github.com/gaissmai/bart"
-	"github.com/tailscale/wireguard-go/conn"
-	"github.com/tailscale/wireguard-go/device"
-	"github.com/tailscale/wireguard-go/tun"
-	"go4.org/mem"
-	"gvisor.dev/gvisor/pkg/tcpip/stack"
 	"github.com/sagernet/tailscale/disco"
 	tsmetrics "github.com/sagernet/tailscale/metrics"
 	"github.com/sagernet/tailscale/net/connstats"
@@ -40,6 +35,11 @@ import (
 	"github.com/sagernet/tailscale/wgengine/filter"
 	"github.com/sagernet/tailscale/wgengine/netstack/gro"
 	"github.com/sagernet/tailscale/wgengine/wgcfg"
+	"github.com/tailscale/wireguard-go/conn"
+	"github.com/tailscale/wireguard-go/device"
+	"github.com/tailscale/wireguard-go/tun"
+	"go4.org/mem"
+	"gvisor.dev/gvisor/pkg/tcpip/stack"
 )
 
 const maxBufferSize = device.MaxMessageSize

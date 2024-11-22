@@ -104,7 +104,7 @@ func NewLogger(logdir string, logf logger.Logf, logID logid.PublicID, netMon *ne
 		netMon = netmon.NewStatic()
 	}
 
-	if err := os.MkdirAll(logdir, 0755); err != nil && !os.IsExist(err) {
+	if err := os.MkdirAll(logdir, 0o755); err != nil && !os.IsExist(err) {
 		return nil, err
 	}
 	filchPrefix := filepath.Join(logdir, "sockstats")

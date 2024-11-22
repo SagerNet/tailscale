@@ -46,7 +46,7 @@ func listen(path string) (net.Listener, error) {
 
 	sockDir := filepath.Dir(path)
 	if _, err := os.Stat(sockDir); os.IsNotExist(err) {
-		os.MkdirAll(sockDir, 0755) // best effort
+		os.MkdirAll(sockDir, 0o755) // best effort
 
 		// If we're on a platform where we want the socket
 		// world-readable, open up the permissions on the
@@ -54,9 +54,9 @@ func listen(path string) (net.Listener, error) {
 		// it. This primarily affects running tailscaled by
 		// hand as root in a shell, as there is no umask when
 		// running under systemd.
-		if perm == 0666 {
-			if fi, err := os.Stat(sockDir); err == nil && fi.Mode()&0077 == 0 {
-				if err := os.Chmod(sockDir, 0755); err != nil {
+		if perm == 0o666 {
+			if fi, err := os.Stat(sockDir); err == nil && fi.Mode()&0o077 == 0 {
+				if err := os.Chmod(sockDir, 0o755); err != nil {
 					log.Print(err)
 				}
 			}
@@ -84,8 +84,8 @@ func tailscaledRunningUnderLaunchd() bool {
 // tailscaled.sock.
 func socketPermissionsForOS() os.FileMode {
 	if PlatformUsesPeerCreds() {
-		return 0666
+		return 0o666
 	}
 	// Otherwise, root only.
-	return 0600
+	return 0o600
 }

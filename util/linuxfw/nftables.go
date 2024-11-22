@@ -16,8 +16,8 @@ import (
 	"github.com/google/nftables/expr"
 	"github.com/google/nftables/xt"
 	"github.com/josharian/native"
-	"golang.org/x/sys/unix"
 	"github.com/sagernet/tailscale/types/logger"
+	"golang.org/x/sys/unix"
 )
 
 // DebugNetfilter prints debug information about netfilter rules to the
@@ -163,8 +163,8 @@ func printMatchInfo(name string, info xt.InfoAny) string {
 	var handled bool = true
 	switch v := info.(type) {
 	// TODO(andrew): we should support these common types
-	//case *xt.ConntrackMtinfo3:
-	//case *xt.ConntrackMtinfo2:
+	// case *xt.ConntrackMtinfo3:
+	// case *xt.ConntrackMtinfo2:
 	case *xt.Tcp:
 		fmt.Fprintf(&sb, "Src:%s Dst:%s", formatPortRange(v.SrcPorts), formatPortRange(v.DstPorts))
 		if v.Option != 0 {

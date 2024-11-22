@@ -18,12 +18,12 @@ import (
 	"unsafe"
 
 	"github.com/alexbrainman/sspi/negotiate"
-	"golang.org/x/sys/windows"
 	"github.com/sagernet/tailscale/hostinfo"
 	"github.com/sagernet/tailscale/syncs"
 	"github.com/sagernet/tailscale/types/logger"
 	"github.com/sagernet/tailscale/util/clientmetric"
 	"github.com/sagernet/tailscale/util/cmpver"
+	"golang.org/x/sys/windows"
 )
 
 func init() {

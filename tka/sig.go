@@ -13,10 +13,10 @@ import (
 
 	"github.com/fxamacker/cbor/v2"
 	"github.com/hdevalence/ed25519consensus"
-	"golang.org/x/crypto/blake2s"
 	"github.com/sagernet/tailscale/types/key"
 	"github.com/sagernet/tailscale/types/logger"
 	"github.com/sagernet/tailscale/types/tkatype"
+	"golang.org/x/crypto/blake2s"
 )
 
 //go:generate go run github.com/sagernet/tailscale/cmd/cloner  -clonefunc=false -type=NodeKeySignature

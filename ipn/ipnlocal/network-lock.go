@@ -438,10 +438,10 @@ func (b *LocalBackend) tkaBootstrapFromGenesisLocked(g tkatype.MarshaledAUM, per
 	}
 
 	chonkDir := b.chonkPathLocked()
-	if err := os.Mkdir(filepath.Dir(chonkDir), 0755); err != nil && !os.IsExist(err) {
+	if err := os.Mkdir(filepath.Dir(chonkDir), 0o755); err != nil && !os.IsExist(err) {
 		return fmt.Errorf("creating chonk root dir: %v", err)
 	}
-	if err := os.Mkdir(chonkDir, 0755); err != nil && !os.IsExist(err) {
+	if err := os.Mkdir(chonkDir, 0o755); err != nil && !os.IsExist(err) {
 		return fmt.Errorf("mkdir: %v", err)
 	}
 

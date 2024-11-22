@@ -544,8 +544,8 @@ table tbody tr:nth-child(even) td { background-color: #f5f5f5; }
 <h1>Tailscale State</h1>
 `)
 
-	//f("<p><b>logid:</b> %s</p>\n", logid)
-	//f("<p><b>opts:</b> <code>%s</code></p>\n", html.EscapeString(fmt.Sprintf("%+v", opts)))
+	// f("<p><b>logid:</b> %s</p>\n", logid)
+	// f("<p><b>opts:</b> <code>%s</code></p>\n", html.EscapeString(fmt.Sprintf("%+v", opts)))
 
 	ips := make([]string, 0, len(st.TailscaleIPs))
 	for _, ip := range st.TailscaleIPs {

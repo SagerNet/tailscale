@@ -27,8 +27,6 @@ import (
 	"time"
 
 	"github.com/kortschak/wol"
-	"golang.org/x/net/dns/dnsmessage"
-	"golang.org/x/net/http/httpguts"
 	"github.com/sagernet/tailscale/drive"
 	"github.com/sagernet/tailscale/envknob"
 	"github.com/sagernet/tailscale/health"
@@ -45,6 +43,8 @@ import (
 	"github.com/sagernet/tailscale/util/httphdr"
 	"github.com/sagernet/tailscale/util/httpm"
 	"github.com/sagernet/tailscale/wgengine/filter"
+	"golang.org/x/net/dns/dnsmessage"
+	"golang.org/x/net/http/httpguts"
 )
 
 const (

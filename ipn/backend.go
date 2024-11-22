@@ -43,7 +43,8 @@ func (s State) String() string {
 		"NeedsMachineAuth",
 		"Stopped",
 		"Starting",
-		"Running"}[s]
+		"Running",
+	}[s]
 }
 
 // EngineStatus contains WireGuard engine stats.

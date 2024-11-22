@@ -32,15 +32,19 @@ type Checksum struct{ cs [sha256.Size]byte }
 func hash(b []byte) Checksum {
 	return Checksum{sha256.Sum256(b)}
 }
+
 func (cs Checksum) String() string {
 	return hex.EncodeToString(cs.cs[:])
 }
+
 func (cs Checksum) AppendText(b []byte) ([]byte, error) {
 	return hex.AppendEncode(b, cs.cs[:]), nil
 }
+
 func (cs Checksum) MarshalText() ([]byte, error) {
 	return hex.AppendEncode(nil, cs.cs[:]), nil
 }
+
 func (cs *Checksum) UnmarshalText(b []byte) error {
 	if len(b) != 2*len(cs.cs) {
 		return fmt.Errorf("invalid hex length: %d", len(b))

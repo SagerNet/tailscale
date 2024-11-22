@@ -11,15 +11,13 @@ import (
 	"os"
 
 	"github.com/dblohm7/wingoes"
-	"golang.org/x/sys/windows"
 	"github.com/sagernet/tailscale/util/winutil"
+	"golang.org/x/sys/windows"
 )
 
-var (
-	// ErrUnsupported is returned by NewPseudoConsole if the current Windows
-	// build does not support this package's API.
-	ErrUnsupported = errors.New("conpty unsupported on this version of Windows")
-)
+// ErrUnsupported is returned by NewPseudoConsole if the current Windows
+// build does not support this package's API.
+var ErrUnsupported = errors.New("conpty unsupported on this version of Windows")
 
 // PseudoConsole encapsulates a Windows pseudo-console. Use NewPseudoConsole
 // to create a new instance.

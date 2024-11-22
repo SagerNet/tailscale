@@ -243,7 +243,6 @@ func (pm *profileManager) SetPrefs(prefsIn ipn.PrefsView, np ipn.NetworkProfile)
 		return err
 	}
 	return pm.setProfileAsUserDefault(cp)
-
 }
 
 // SetProfilePrefs is like [profileManager.SetPrefs], but sets prefs for the specified [ipn.LoginProfile]

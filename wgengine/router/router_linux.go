@@ -16,11 +16,6 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/tailscale/netlink"
-	"github.com/tailscale/wireguard-go/tun"
-	"go4.org/netipx"
-	"golang.org/x/sys/unix"
-	"golang.org/x/time/rate"
 	"github.com/sagernet/tailscale/envknob"
 	"github.com/sagernet/tailscale/health"
 	"github.com/sagernet/tailscale/net/netmon"
@@ -30,6 +25,11 @@ import (
 	"github.com/sagernet/tailscale/util/linuxfw"
 	"github.com/sagernet/tailscale/util/multierr"
 	"github.com/sagernet/tailscale/version/distro"
+	"github.com/tailscale/netlink"
+	"github.com/tailscale/wireguard-go/tun"
+	"go4.org/netipx"
+	"golang.org/x/sys/unix"
+	"golang.org/x/time/rate"
 )
 
 const (
@@ -1014,7 +1014,7 @@ func (r *linuxRouter) enableIPForwarding() {
 
 func writeSysctl(key, val string) error {
 	fn := "/proc/sys/" + strings.Replace(key, ".", "/", -1)
-	if err := os.WriteFile(fn, []byte(val), 0644); err != nil {
+	if err := os.WriteFile(fn, []byte(val), 0o644); err != nil {
 		return fmt.Errorf("sysctl(%v=%v): %v", key, val, err)
 	}
 	return nil
@@ -1242,7 +1242,6 @@ func (r *linuxRouter) justAddIPRules() error {
 	}
 	var errAcc error
 	for _, family := range r.addrFamilies() {
-
 		for _, ru := range ipRules {
 			// Note: r is a value type here; safe to mutate it.
 			ru.Family = family.netlinkInt()

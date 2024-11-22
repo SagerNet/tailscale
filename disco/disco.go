@@ -26,8 +26,8 @@ import (
 	"net"
 	"net/netip"
 
-	"go4.org/mem"
 	"github.com/sagernet/tailscale/types/key"
+	"go4.org/mem"
 )
 
 // Magic is the 6 byte header of all discovery messages.

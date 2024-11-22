@@ -8,12 +8,12 @@ import (
 	"net/netip"
 	"strings"
 
-	"go4.org/netipx"
 	"github.com/sagernet/tailscale/net/ipset"
 	"github.com/sagernet/tailscale/net/netaddr"
 	"github.com/sagernet/tailscale/tailcfg"
 	"github.com/sagernet/tailscale/types/ipproto"
 	"github.com/sagernet/tailscale/types/views"
+	"go4.org/netipx"
 )
 
 var defaultProtos = []ipproto.Proto{

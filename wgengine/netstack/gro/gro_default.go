@@ -8,14 +8,12 @@ package gro
 import (
 	"sync"
 
+	"github.com/sagernet/tailscale/net/packet"
 	"gvisor.dev/gvisor/pkg/tcpip/stack"
 	nsgro "gvisor.dev/gvisor/pkg/tcpip/stack/gro"
-	"github.com/sagernet/tailscale/net/packet"
 )
 
-var (
-	groPool sync.Pool
-)
+var groPool sync.Pool
 
 func init() {
 	groPool.New = func() any {

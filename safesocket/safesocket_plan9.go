@@ -64,30 +64,37 @@ type plan9FileConn struct {
 func (fc plan9FileConn) Read(b []byte) (n int, err error) {
 	return fc.file.Read(b)
 }
+
 func (fc plan9FileConn) Write(b []byte) (n int, err error) {
 	return fc.file.Write(b)
 }
+
 func (fc plan9FileConn) Close() error {
 	return fc.file.Close()
 }
+
 func (fc plan9FileConn) LocalAddr() net.Addr {
 	return plan9SrvAddr(fc.name)
 }
+
 func (fc plan9FileConn) RemoteAddr() net.Addr {
 	return plan9SrvAddr(fc.name)
 }
+
 func (fc plan9FileConn) SetDeadline(t time.Time) error {
 	return syscall.EPLAN9
 }
+
 func (fc plan9FileConn) SetReadDeadline(t time.Time) error {
 	return syscall.EPLAN9
 }
+
 func (fc plan9FileConn) SetWriteDeadline(t time.Time) error {
 	return syscall.EPLAN9
 }
 
 func connect(_ context.Context, path string) (net.Conn, error) {
-	f, err := os.OpenFile(path, os.O_RDWR, 0666)
+	f, err := os.OpenFile(path, os.O_RDWR, 0o666)
 	if err != nil {
 		return nil, err
 	}
@@ -110,7 +117,7 @@ func listen(path string) (net.Listener, error) {
 	}
 	defer plan9.Close(pip[1])
 
-	srvfd, err := plan9.Create(path, plan9.O_WRONLY|plan9.O_CLOEXEC|O_RCLOSE, 0600)
+	srvfd, err := plan9.Create(path, plan9.O_WRONLY|plan9.O_CLOEXEC|O_RCLOSE, 0o600)
 	if err != nil {
 		return nil, err
 	}

@@ -23,7 +23,6 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/tcnksm/go-httpstat"
 	"github.com/sagernet/tailscale/derp/derphttp"
 	"github.com/sagernet/tailscale/envknob"
 	"github.com/sagernet/tailscale/net/captivedetection"
@@ -43,6 +42,7 @@ import (
 	"github.com/sagernet/tailscale/types/views"
 	"github.com/sagernet/tailscale/util/clientmetric"
 	"github.com/sagernet/tailscale/util/mak"
+	"github.com/tcnksm/go-httpstat"
 )
 
 // Debugging and experimentation tweakables.
@@ -576,7 +576,6 @@ func nodeMight6(n *tailcfg.DERPNode) bool {
 	}
 	ip, _ := netip.ParseAddr(n.IPv6)
 	return ip.Is6()
-
 }
 
 // nodeMight4 reports whether n might reply to STUN over IPv4 based on

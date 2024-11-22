@@ -13,9 +13,7 @@ import (
 	"github.com/sagernet/tailscale/tsnet"
 )
 
-var (
-	addr = flag.String("addr", "localhost:8060", "address of Tailscale web client")
-)
+var addr = flag.String("addr", "localhost:8060", "address of Tailscale web client")
 
 func main() {
 	flag.Parse()

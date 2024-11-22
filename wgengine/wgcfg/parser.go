@@ -12,8 +12,8 @@ import (
 	"strconv"
 	"strings"
 
-	"go4.org/mem"
 	"github.com/sagernet/tailscale/types/key"
+	"go4.org/mem"
 )
 
 type ParseError struct {

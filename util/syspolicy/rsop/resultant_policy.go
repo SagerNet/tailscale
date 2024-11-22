@@ -13,7 +13,6 @@ import (
 
 	"github.com/sagernet/tailscale/util/syspolicy/internal/loggerx"
 	"github.com/sagernet/tailscale/util/syspolicy/setting"
-
 	"github.com/sagernet/tailscale/util/syspolicy/source"
 )
 

@@ -6,16 +6,14 @@ package magicsock
 import (
 	"net/netip"
 
+	"github.com/sagernet/tailscale/types/nettype"
 	"golang.org/x/net/ipv4"
 	"golang.org/x/net/ipv6"
-	"github.com/sagernet/tailscale/types/nettype"
 )
 
-var (
-	// This acts as a compile-time check for our usage of ipv6.Message in
-	// batchingConn for both IPv6 and IPv4 operations.
-	_ ipv6.Message = ipv4.Message{}
-)
+// This acts as a compile-time check for our usage of ipv6.Message in
+// batchingConn for both IPv6 and IPv4 operations.
+var _ ipv6.Message = ipv4.Message{}
 
 // batchingConn is a nettype.PacketConn that provides batched i/o.
 type batchingConn interface {

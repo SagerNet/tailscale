@@ -54,6 +54,7 @@ package posture
 //     return serialNumberBuf;
 // }
 import "C"
+
 import (
 	"fmt"
 	"strings"

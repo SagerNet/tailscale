@@ -15,9 +15,9 @@ import (
 	"net/netip"
 	"syscall"
 
+	"github.com/sagernet/tailscale/net/netaddr"
 	"golang.org/x/net/route"
 	"golang.org/x/sys/unix"
-	"github.com/sagernet/tailscale/net/netaddr"
 )
 
 // ErrNoGatewayIndexFound is returned by DefaultRouteInterfaceIndex when no
@@ -109,8 +109,10 @@ func likelyHomeRouterIPBSDFetchRIB() (ret, myIP netip.Addr, ok bool) {
 	return ret, myIP, false
 }
 
-var v4default = [4]byte{0, 0, 0, 0}
-var v6default = [16]byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+var (
+	v4default = [4]byte{0, 0, 0, 0}
+	v6default = [16]byte{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+)
 
 func isDefaultGateway(rm *route.RouteMessage) bool {
 	if rm.Flags&unix.RTF_GATEWAY == 0 {

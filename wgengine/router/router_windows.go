@@ -19,14 +19,14 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/tailscale/wireguard-go/tun"
-	"golang.org/x/sys/windows"
-	"golang.zx2c4.com/wireguard/windows/tunnel/winipcfg"
 	"github.com/sagernet/tailscale/health"
 	"github.com/sagernet/tailscale/logtail/backoff"
 	"github.com/sagernet/tailscale/net/dns"
 	"github.com/sagernet/tailscale/net/netmon"
 	"github.com/sagernet/tailscale/types/logger"
+	"github.com/tailscale/wireguard-go/tun"
+	"golang.org/x/sys/windows"
+	"golang.zx2c4.com/wireguard/windows/tunnel/winipcfg"
 )
 
 type winRouter struct {

@@ -16,9 +16,7 @@ import (
 	"github.com/sagernet/tailscale/tsnet"
 )
 
-var (
-	addr = flag.String("addr", ":80", "address to listen on")
-)
+var addr = flag.String("addr", ":80", "address to listen on")
 
 func main() {
 	flag.Parse()

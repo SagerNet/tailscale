@@ -18,9 +18,9 @@ import (
 	"strings"
 
 	"github.com/google/uuid"
-	"golang.org/x/sys/windows"
 	"github.com/sagernet/tailscale/util/winutil"
 	"github.com/sagernet/tailscale/util/winutil/authenticode"
+	"golang.org/x/sys/windows"
 )
 
 const (
@@ -120,7 +120,7 @@ you can run the command prompt as Administrator one of these ways:
 	} else if !fi.IsDir() {
 		return fmt.Errorf("expected %s to be a directory; got %v", tsDir, fi.Mode())
 	}
-	if err := os.MkdirAll(msiDir, 0700); err != nil {
+	if err := os.MkdirAll(msiDir, 0o700); err != nil {
 		return err
 	}
 	up.cleanupOldDownloads(filepath.Join(msiDir, "*.msi"))

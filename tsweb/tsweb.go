@@ -27,7 +27,6 @@ import (
 	"sync"
 	"time"
 
-	"go4.org/mem"
 	"github.com/sagernet/tailscale/envknob"
 	"github.com/sagernet/tailscale/metrics"
 	"github.com/sagernet/tailscale/net/tsaddr"
@@ -35,6 +34,7 @@ import (
 	"github.com/sagernet/tailscale/types/logger"
 	"github.com/sagernet/tailscale/util/ctxkey"
 	"github.com/sagernet/tailscale/util/vizerror"
+	"go4.org/mem"
 )
 
 // DevMode controls whether extra output in shown, for when the binary is being run in dev mode.

@@ -17,7 +17,6 @@ type TestActor struct {
 	CID         ClientID          // non-zero if the actor represents a connected LocalAPI client
 	LocalSystem bool              // whether the actor represents the special Local System account on Windows
 	LocalAdmin  bool              // whether the actor has local admin access
-
 }
 
 // UserID implements [Actor].

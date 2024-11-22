@@ -28,7 +28,6 @@ import (
 	"time"
 	"unicode/utf8"
 
-	"golang.org/x/net/http2"
 	"github.com/sagernet/tailscale/ipn"
 	"github.com/sagernet/tailscale/logtail/backoff"
 	"github.com/sagernet/tailscale/net/netutil"
@@ -39,6 +38,7 @@ import (
 	"github.com/sagernet/tailscale/util/ctxkey"
 	"github.com/sagernet/tailscale/util/mak"
 	"github.com/sagernet/tailscale/version"
+	"golang.org/x/net/http2"
 )
 
 const (
@@ -111,7 +111,6 @@ func (b *LocalBackend) newServeListener(ctx context.Context, ap netip.AddrPort, 
 		},
 		bo: backoff.NewBackoff("serve-listener", logf, 30*time.Second),
 	}
-
 }
 
 // Close cancels the context and closes the listener, if any.

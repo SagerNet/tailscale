@@ -12,10 +12,10 @@ import (
 
 	"github.com/jsimonetti/rtnetlink"
 	"github.com/mdlayher/netlink"
-	"golang.org/x/sys/unix"
 	"github.com/sagernet/tailscale/envknob"
 	"github.com/sagernet/tailscale/net/tsaddr"
 	"github.com/sagernet/tailscale/types/logger"
+	"golang.org/x/sys/unix"
 )
 
 var debugNetlinkMessages = envknob.RegisterBool("TS_DEBUG_NETLINK")

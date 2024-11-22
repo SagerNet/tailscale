@@ -9,11 +9,11 @@ import (
 	"strings"
 	"sync"
 
-	"golang.org/x/sys/windows"
-	"golang.org/x/sys/windows/registry"
 	"github.com/sagernet/tailscale/util/set"
 	"github.com/sagernet/tailscale/util/syspolicy/setting"
 	"github.com/sagernet/tailscale/util/winutil/gp"
+	"golang.org/x/sys/windows"
+	"golang.org/x/sys/windows/registry"
 )
 
 const (

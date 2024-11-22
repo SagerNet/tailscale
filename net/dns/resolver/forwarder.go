@@ -23,7 +23,6 @@ import (
 	"sync/atomic"
 	"time"
 
-	dns "golang.org/x/net/dns/dnsmessage"
 	"github.com/sagernet/tailscale/control/controlknobs"
 	"github.com/sagernet/tailscale/envknob"
 	"github.com/sagernet/tailscale/health"
@@ -40,6 +39,7 @@ import (
 	"github.com/sagernet/tailscale/util/dnsname"
 	"github.com/sagernet/tailscale/util/race"
 	"github.com/sagernet/tailscale/version"
+	dns "golang.org/x/net/dns/dnsmessage"
 )
 
 // headerBytes is the number of bytes in a DNS message header.
@@ -641,8 +641,10 @@ type truncatedResponseError struct {
 
 func (tr truncatedResponseError) Error() string { return "response truncated" }
 
-var errServerFailure = errors.New("response code indicates server issue")
-var errTxIDMismatch = errors.New("txid doesn't match")
+var (
+	errServerFailure = errors.New("response code indicates server issue")
+	errTxIDMismatch  = errors.New("txid doesn't match")
+)
 
 func (f *forwarder) sendUDP(ctx context.Context, fq *forwardQuery, rr resolverAndDelay) (ret []byte, err error) {
 	ipp, ok := rr.name.IPPort()
@@ -837,7 +839,7 @@ func (f *forwarder) sendTCP(ctx context.Context, fq *forwardQuery, rr resolverAn
 	}
 
 	// TODO(andrew): do we need to do this?
-	//clampEDNSSize(out, maxResponseBytes)
+	// clampEDNSSize(out, maxResponseBytes)
 	metricDNSFwdTCPSuccess.Add(1)
 	return out, nil
 }

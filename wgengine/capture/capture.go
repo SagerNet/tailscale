@@ -7,13 +7,12 @@ package capture
 import (
 	"bytes"
 	"context"
+	_ "embed"
 	"encoding/binary"
 	"io"
 	"net/http"
 	"sync"
 	"time"
-
-	_ "embed"
 
 	"github.com/sagernet/tailscale/net/packet"
 	"github.com/sagernet/tailscale/util/set"

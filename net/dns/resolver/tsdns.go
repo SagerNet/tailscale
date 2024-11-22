@@ -22,7 +22,6 @@ import (
 	"sync"
 	"time"
 
-	dns "golang.org/x/net/dns/dnsmessage"
 	"github.com/sagernet/tailscale/control/controlknobs"
 	"github.com/sagernet/tailscale/envknob"
 	"github.com/sagernet/tailscale/health"
@@ -37,6 +36,7 @@ import (
 	"github.com/sagernet/tailscale/util/clientmetric"
 	"github.com/sagernet/tailscale/util/cloudenv"
 	"github.com/sagernet/tailscale/util/dnsname"
+	dns "golang.org/x/net/dns/dnsmessage"
 )
 
 const dnsSymbolicFQDN = "magicdns.localhost-tailscale-daemon."
@@ -1332,7 +1332,6 @@ func unARPA(a string) (ipStr string, ok bool) {
 		return netip.AddrFrom16(a16).Unmap().String(), true
 	}
 	return "", false
-
 }
 
 var (

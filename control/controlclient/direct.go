@@ -27,7 +27,6 @@ import (
 	"sync/atomic"
 	"time"
 
-	"go4.org/mem"
 	"github.com/sagernet/tailscale/control/controlknobs"
 	"github.com/sagernet/tailscale/envknob"
 	"github.com/sagernet/tailscale/health"
@@ -57,6 +56,7 @@ import (
 	"github.com/sagernet/tailscale/util/systemd"
 	"github.com/sagernet/tailscale/util/testenv"
 	"github.com/sagernet/tailscale/util/zstdframe"
+	"go4.org/mem"
 )
 
 // Direct is the client that connects to a tailcontrol server for a node.

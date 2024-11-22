@@ -19,7 +19,6 @@ import (
 	"sync/atomic"
 	"time"
 
-	"go4.org/mem"
 	"github.com/sagernet/tailscale/control/controlknobs"
 	"github.com/sagernet/tailscale/envknob"
 	"github.com/sagernet/tailscale/net/netaddr"
@@ -31,6 +30,7 @@ import (
 	"github.com/sagernet/tailscale/types/logger"
 	"github.com/sagernet/tailscale/types/nettype"
 	"github.com/sagernet/tailscale/util/clientmetric"
+	"go4.org/mem"
 )
 
 var disablePortMapperEnv = envknob.RegisterBool("TS_DISABLE_PORTMAPPER")

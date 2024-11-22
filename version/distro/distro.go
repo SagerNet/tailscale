@@ -32,8 +32,10 @@ const (
 	Alpine    = Distro("alpine")
 )
 
-var distro lazy.SyncValue[Distro]
-var isWSL lazy.SyncValue[bool]
+var (
+	distro lazy.SyncValue[Distro]
+	isWSL  lazy.SyncValue[bool]
+)
 
 // Get returns the current distro, or the empty string if unknown.
 func Get() Distro {

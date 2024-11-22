@@ -12,8 +12,6 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/tailscale/wireguard-go/tun"
-
 	"github.com/sagernet/tailscale/net/dns"
 	"github.com/sagernet/tailscale/tailcfg"
 	"github.com/sagernet/tailscale/tsd"
@@ -24,6 +22,7 @@ import (
 	"github.com/sagernet/tailscale/wgengine/filter"
 	"github.com/sagernet/tailscale/wgengine/router"
 	"github.com/sagernet/tailscale/wgengine/wgcfg"
+	"github.com/tailscale/wireguard-go/tun"
 )
 
 func epFromTyped(eps []tailcfg.Endpoint) (ret []netip.AddrPort) {

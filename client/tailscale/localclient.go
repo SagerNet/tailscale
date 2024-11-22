@@ -26,7 +26,6 @@ import (
 	"sync"
 	"time"
 
-	"go4.org/mem"
 	"github.com/sagernet/tailscale/client/tailscale/apitype"
 	"github.com/sagernet/tailscale/drive"
 	"github.com/sagernet/tailscale/envknob"
@@ -41,6 +40,7 @@ import (
 	"github.com/sagernet/tailscale/types/key"
 	"github.com/sagernet/tailscale/types/tkatype"
 	"github.com/sagernet/tailscale/util/syspolicy/setting"
+	"go4.org/mem"
 )
 
 // defaultLocalClient is the default LocalClient when using the legacy

@@ -12,8 +12,8 @@ import (
 
 	jsonv2 "github.com/go-json-experiment/json"
 	"github.com/go-json-experiment/json/jsontext"
-	xmaps "golang.org/x/exp/maps"
 	"github.com/sagernet/tailscale/util/deephash"
+	xmaps "golang.org/x/exp/maps"
 )
 
 // Snapshot is an immutable collection of ([Key], [RawItem]) pairs, representing

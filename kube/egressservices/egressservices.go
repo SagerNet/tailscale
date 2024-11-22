@@ -55,9 +55,11 @@ type PortMaps map[PortMap]struct{}
 // with efficient lookups in code. It implements custom JSON marshalling
 // methods to convert between being a list in JSON and a set (map with empty
 // values) in code.
-var _ json.Marshaler = &PortMaps{}
-var _ json.Marshaler = PortMaps{}
-var _ json.Unmarshaler = &PortMaps{}
+var (
+	_ json.Marshaler   = &PortMaps{}
+	_ json.Marshaler   = PortMaps{}
+	_ json.Unmarshaler = &PortMaps{}
+)
 
 func (p *PortMaps) UnmarshalJSON(data []byte) error {
 	*p = make(map[PortMap]struct{})

@@ -417,7 +417,7 @@ func (c *FS) scanHashes(eachHashInfo func(*fsHashInfo)) error {
 func (c *FS) SetLastActiveAncestor(hash AUMHash) error {
 	c.mu.Lock()
 	defer c.mu.Unlock()
-	return atomicfile.WriteFile(filepath.Join(c.base, "last_active_ancestor"), hash[:], 0644)
+	return atomicfile.WriteFile(filepath.Join(c.base, "last_active_ancestor"), hash[:], 0o644)
 }
 
 // LastActiveAncestor returns the oldest-known AUM that was (in a
@@ -533,7 +533,7 @@ func (c *FS) commit(h AUMHash, updater func(*fsHashInfo)) error {
 	}
 
 	dir, base := c.aumDir(h)
-	if err := os.MkdirAll(dir, 0755); err != nil && !os.IsExist(err) {
+	if err := os.MkdirAll(dir, 0o755); err != nil && !os.IsExist(err) {
 		return fmt.Errorf("creating directory: %v", err)
 	}
 
@@ -546,7 +546,7 @@ func (c *FS) commit(h AUMHash, updater func(*fsHashInfo)) error {
 	if err := m.NewEncoder(&buff).Encode(toCommit); err != nil {
 		return fmt.Errorf("encoding: %v", err)
 	}
-	return atomicfile.WriteFile(filepath.Join(dir, base), buff.Bytes(), 0644)
+	return atomicfile.WriteFile(filepath.Join(dir, base), buff.Bytes(), 0o644)
 }
 
 // CompactionOptions describes tuneables to use when compacting a Chonk.

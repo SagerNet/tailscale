@@ -75,5 +75,5 @@ func (pm *profileManager) loadLegacyPrefs(uid ipn.WindowsUserID) (string, ipn.Pr
 }
 
 func (pm *profileManager) completeMigration(migrationSentinel string) {
-	atomicfile.WriteFile(migrationSentinel, []byte{}, 0600)
+	atomicfile.WriteFile(migrationSentinel, []byte{}, 0o600)
 }

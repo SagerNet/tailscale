@@ -19,7 +19,6 @@ import (
 	"sync/atomic"
 	"time"
 
-	xmaps "golang.org/x/exp/maps"
 	"github.com/sagernet/tailscale/control/controlknobs"
 	"github.com/sagernet/tailscale/health"
 	"github.com/sagernet/tailscale/net/dns/resolver"
@@ -31,11 +30,10 @@ import (
 	"github.com/sagernet/tailscale/types/logger"
 	"github.com/sagernet/tailscale/util/clientmetric"
 	"github.com/sagernet/tailscale/util/dnsname"
+	xmaps "golang.org/x/exp/maps"
 )
 
-var (
-	errFullQueue = errors.New("request queue full")
-)
+var errFullQueue = errors.New("request queue full")
 
 // maxActiveQueries returns the maximal number of DNS requests that can
 // be running.
@@ -581,6 +579,4 @@ func CleanUp(logf logger.Logf, netMon *netmon.Monitor, health *health.Tracker, i
 	}
 }
 
-var (
-	metricDNSQueryErrorQueue = clientmetric.NewCounter("dns_query_local_error_queue")
-)
+var metricDNSQueryErrorQueue = clientmetric.NewCounter("dns_query_local_error_queue")

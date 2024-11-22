@@ -14,12 +14,12 @@ import (
 	"sync"
 	"time"
 
-	"go4.org/mem"
-	"golang.org/x/time/rate"
 	"github.com/sagernet/tailscale/syncs"
 	"github.com/sagernet/tailscale/tstime"
 	"github.com/sagernet/tailscale/types/key"
 	"github.com/sagernet/tailscale/types/logger"
+	"go4.org/mem"
+	"golang.org/x/time/rate"
 )
 
 // Client is a DERP client.

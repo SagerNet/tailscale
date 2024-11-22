@@ -21,9 +21,6 @@ import (
 	"sync/atomic"
 	"time"
 
-	xmaps "golang.org/x/exp/maps"
-	"golang.org/x/net/ipv4"
-	"golang.org/x/net/ipv6"
 	"github.com/sagernet/tailscale/disco"
 	"github.com/sagernet/tailscale/ipn/ipnstate"
 	"github.com/sagernet/tailscale/net/stun"
@@ -34,10 +31,15 @@ import (
 	"github.com/sagernet/tailscale/types/logger"
 	"github.com/sagernet/tailscale/util/mak"
 	"github.com/sagernet/tailscale/util/ringbuffer"
+	xmaps "golang.org/x/exp/maps"
+	"golang.org/x/net/ipv4"
+	"golang.org/x/net/ipv6"
 )
 
-var mtuProbePingSizesV4 []int
-var mtuProbePingSizesV6 []int
+var (
+	mtuProbePingSizesV4 []int
+	mtuProbePingSizesV6 []int
+)
 
 func init() {
 	for _, m := range tstun.WireMTUsToProbe {
@@ -207,22 +209,20 @@ type ProbeUDPLifetimeConfig struct {
 	CycleCanStartEvery time.Duration
 }
 
-var (
-	// defaultProbeUDPLifetimeConfig is the configuration that must be used
-	// for UDP path lifetime probing until it can be wholly disseminated (not
-	// just on/off) from upstream control components, and associated metrics
-	// (metricUDPLifetime*) have lifetime management.
-	//
-	// TODO(#10928): support dynamic config via tailcfg.PeerCapMap.
-	defaultProbeUDPLifetimeConfig = &ProbeUDPLifetimeConfig{
-		Cliffs: []time.Duration{
-			time.Second * 10,
-			time.Second * 30,
-			time.Second * 60,
-		},
-		CycleCanStartEvery: time.Hour * 24,
-	}
-)
+// defaultProbeUDPLifetimeConfig is the configuration that must be used
+// for UDP path lifetime probing until it can be wholly disseminated (not
+// just on/off) from upstream control components, and associated metrics
+// (metricUDPLifetime*) have lifetime management.
+//
+// TODO(#10928): support dynamic config via tailcfg.PeerCapMap.
+var defaultProbeUDPLifetimeConfig = &ProbeUDPLifetimeConfig{
+	Cliffs: []time.Duration{
+		time.Second * 10,
+		time.Second * 30,
+		time.Second * 60,
+	},
+	CycleCanStartEvery: time.Hour * 24,
+}
 
 // Equals returns true if b equals p, otherwise false. If both sides are nil,
 // Equals returns true. If only one side is nil, Equals returns false.
@@ -1205,7 +1205,6 @@ func (de *endpoint) startDiscoPingLocked(ep netip.AddrPort, now mono.Time, purpo
 		}
 		go de.sendDiscoPing(ep, epDisco.key, txid, s, logLevel)
 	}
-
 }
 
 // sendDiscoPingsLocked starts pinging all of ep's endpoints.
@@ -1386,7 +1385,8 @@ func (de *endpoint) updateFromNode(n tailcfg.NodeView, heartbeatDisabled bool, p
 
 func (de *endpoint) setEndpointsLocked(eps interface {
 	All() iter.Seq2[int, netip.AddrPort]
-}) {
+},
+) {
 	for _, st := range de.endpointState {
 		st.index = indexSentinelDeleted // assume deleted until updated in next loop
 	}

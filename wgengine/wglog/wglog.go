@@ -9,12 +9,12 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/tailscale/wireguard-go/device"
 	"github.com/sagernet/tailscale/envknob"
 	"github.com/sagernet/tailscale/syncs"
 	"github.com/sagernet/tailscale/types/key"
 	"github.com/sagernet/tailscale/types/logger"
 	"github.com/sagernet/tailscale/wgengine/wgcfg"
+	"github.com/tailscale/wireguard-go/device"
 )
 
 // A Logger is a wireguard-go log wrapper that cleans up and rewrites log lines.

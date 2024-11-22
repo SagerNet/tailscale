@@ -142,7 +142,7 @@ func (m *Manager) DeleteFile(baseName string) error {
 }
 
 func touchFile(path string) error {
-	f, err := os.OpenFile(path, os.O_RDWR|os.O_CREATE, 0666)
+	f, err := os.OpenFile(path, os.O_RDWR|os.O_CREATE, 0o666)
 	if err != nil {
 		return redactError(err)
 	}

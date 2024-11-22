@@ -19,10 +19,10 @@ import (
 	"time"
 	"unsafe"
 
-	"go4.org/mem"
-	"golang.org/x/sys/unix"
 	"github.com/sagernet/tailscale/util/dirwalk"
 	"github.com/sagernet/tailscale/util/mak"
+	"go4.org/mem"
+	"golang.org/x/sys/unix"
 )
 
 func init() {

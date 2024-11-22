@@ -65,7 +65,7 @@ func ReadOnlyDirInfo(name string, ts time.Time) *StaticFileInfo {
 	return &StaticFileInfo{
 		Named:       Base(name),
 		Sized:       0,
-		Moded:       0555,
+		Moded:       0o555,
 		BirthedTime: ts,
 		ModdedTime:  ts,
 		Dir:         true,

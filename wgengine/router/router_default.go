@@ -9,10 +9,10 @@ import (
 	"fmt"
 	"runtime"
 
-	"github.com/tailscale/wireguard-go/tun"
 	"github.com/sagernet/tailscale/health"
 	"github.com/sagernet/tailscale/net/netmon"
 	"github.com/sagernet/tailscale/types/logger"
+	"github.com/tailscale/wireguard-go/tun"
 )
 
 func newUserspaceRouter(logf logger.Logf, tunDev tun.Device, netMon *netmon.Monitor, health *health.Tracker) (Router, error) {

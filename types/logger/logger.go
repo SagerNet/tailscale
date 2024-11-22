@@ -10,6 +10,7 @@ import (
 	"bufio"
 	"bytes"
 	"container/list"
+	"context"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -18,11 +19,9 @@ import (
 	"sync"
 	"time"
 
-	"context"
-
-	"go4.org/mem"
 	"github.com/sagernet/tailscale/envknob"
 	"github.com/sagernet/tailscale/util/ctxkey"
+	"go4.org/mem"
 )
 
 // Logf is the basic Tailscale logger type: a printf-like func.
@@ -80,7 +79,6 @@ func (logf Logf) JSON(level int, recType string, v any) {
 	je.buf.WriteByte('}')
 	// Magic prefix recognized by logtail:
 	logf("[v\x00JSON]%d%s", level%10, je.buf.Bytes())
-
 }
 
 // FromContext extracts a log function from ctx.

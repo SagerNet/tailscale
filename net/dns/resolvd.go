@@ -38,7 +38,7 @@ func (m *resolvdManager) SetDNS(config OSConfig) error {
 		m.ifName,
 	}
 
-	origResolv, err := m.readAndCopy(resolvConf, backupConf, 0644)
+	origResolv, err := m.readAndCopy(resolvConf, backupConf, 0o644)
 	if err != nil {
 		return err
 	}
@@ -48,7 +48,7 @@ func (m *resolvdManager) SetDNS(config OSConfig) error {
 		args = append(args, ns.String())
 	}
 
-	var newSearch = []string{
+	newSearch := []string{
 		"search",
 	}
 	for _, s := range config.SearchDomains {
@@ -60,7 +60,7 @@ func (m *resolvdManager) SetDNS(config OSConfig) error {
 		newResolvConf = append(newResolvConf, '\n')
 	}
 
-	err = m.fs.WriteFile(resolvConf, newResolvConf, 0644)
+	err = m.fs.WriteFile(resolvConf, newResolvConf, 0o644)
 	if err != nil {
 		return err
 	}
@@ -86,7 +86,7 @@ func (m *resolvdManager) Close() error {
 	// resolvd handles teardown of nameservers so we only need to write back the original
 	// config and be done.
 
-	_, err := m.readAndCopy(backupConf, resolvConf, 0644)
+	_, err := m.readAndCopy(backupConf, resolvConf, 0o644)
 	if err != nil {
 		return err
 	}

@@ -36,11 +36,6 @@ import (
 	"sync/atomic"
 	"time"
 
-	"go4.org/mem"
-	"go4.org/netipx"
-	xmaps "golang.org/x/exp/maps"
-	"golang.org/x/net/dns/dnsmessage"
-	"gvisor.dev/gvisor/pkg/tcpip"
 	"github.com/sagernet/tailscale/appc"
 	"github.com/sagernet/tailscale/client/tailscale/apitype"
 	"github.com/sagernet/tailscale/clientupdate"
@@ -119,6 +114,11 @@ import (
 	"github.com/sagernet/tailscale/wgengine/router"
 	"github.com/sagernet/tailscale/wgengine/wgcfg"
 	"github.com/sagernet/tailscale/wgengine/wgcfg/nmcfg"
+	"go4.org/mem"
+	"go4.org/netipx"
+	xmaps "golang.org/x/exp/maps"
+	"golang.org/x/net/dns/dnsmessage"
+	"gvisor.dev/gvisor/pkg/tcpip"
 )
 
 var controlDebugFlags = getControlDebugFlags()
@@ -4549,7 +4549,7 @@ func (b *LocalBackend) fileRootLocked(uid tailcfg.UserID) string {
 		strings.ReplaceAll(b.activeLogin, "@", "-"),
 		uid)
 	dir := filepath.Join(varRoot, "files", baseDir)
-	if err := os.MkdirAll(dir, 0700); err != nil {
+	if err := os.MkdirAll(dir, 0o700); err != nil {
 		b.logf("Taildrop disabled; error making directory: %v", err)
 		return ""
 	}

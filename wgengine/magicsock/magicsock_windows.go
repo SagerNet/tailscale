@@ -9,9 +9,9 @@ import (
 	"net"
 	"unsafe"
 
-	"golang.org/x/sys/windows"
 	"github.com/sagernet/tailscale/types/logger"
 	"github.com/sagernet/tailscale/types/nettype"
+	"golang.org/x/sys/windows"
 )
 
 func trySetUDPSocketOptions(pconn nettype.PacketConn, logf logger.Logf) {

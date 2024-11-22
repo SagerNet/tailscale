@@ -24,11 +24,11 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/tailscale/golang-x-crypto/ssh"
-	"go4.org/mem"
 	"github.com/sagernet/tailscale/tailcfg"
 	"github.com/sagernet/tailscale/util/lineiter"
 	"github.com/sagernet/tailscale/util/mak"
+	"github.com/tailscale/golang-x-crypto/ssh"
+	"go4.org/mem"
 )
 
 // keyTypes are the SSH key types that we either try to read from the
@@ -133,7 +133,7 @@ func (b *LocalBackend) getTailscaleSSH_HostKeys(existing map[string]ssh.Signer) 
 				return nil, errors.New("no var root for ssh keys")
 			}
 			keyDir = filepath.Join(root, "ssh")
-			if err := os.MkdirAll(keyDir, 0700); err != nil {
+			if err := os.MkdirAll(keyDir, 0o700); err != nil {
 				return nil, err
 			}
 		}
@@ -191,7 +191,7 @@ func (b *LocalBackend) hostKeyFileOrCreate(keyDir, typ string) ([]byte, error) {
 		return nil, err
 	}
 	pemGen := pem.EncodeToMemory(&pem.Block{Type: "PRIVATE KEY", Bytes: mk})
-	err = os.WriteFile(path, pemGen, 0700)
+	err = os.WriteFile(path, pemGen, 0o700)
 	return pemGen, err
 }
 

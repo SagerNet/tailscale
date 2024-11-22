@@ -123,36 +123,47 @@ func (e *watchdogEngine) watchdog(name string, fn func()) {
 func (e *watchdogEngine) Reconfig(cfg *wgcfg.Config, routerCfg *router.Config, dnsCfg *dns.Config) error {
 	return e.watchdogErr("Reconfig", func() error { return e.wrap.Reconfig(cfg, routerCfg, dnsCfg) })
 }
+
 func (e *watchdogEngine) GetFilter() *filter.Filter {
 	return e.wrap.GetFilter()
 }
+
 func (e *watchdogEngine) SetFilter(filt *filter.Filter) {
 	e.watchdog("SetFilter", func() { e.wrap.SetFilter(filt) })
 }
+
 func (e *watchdogEngine) GetJailedFilter() *filter.Filter {
 	return e.wrap.GetJailedFilter()
 }
+
 func (e *watchdogEngine) SetJailedFilter(filt *filter.Filter) {
 	e.watchdog("SetJailedFilter", func() { e.wrap.SetJailedFilter(filt) })
 }
+
 func (e *watchdogEngine) SetStatusCallback(cb StatusCallback) {
 	e.watchdog("SetStatusCallback", func() { e.wrap.SetStatusCallback(cb) })
 }
+
 func (e *watchdogEngine) UpdateStatus(sb *ipnstate.StatusBuilder) {
 	e.watchdog("UpdateStatus", func() { e.wrap.UpdateStatus(sb) })
 }
+
 func (e *watchdogEngine) RequestStatus() {
 	e.watchdog("RequestStatus", func() { e.wrap.RequestStatus() })
 }
+
 func (e *watchdogEngine) SetNetworkMap(nm *netmap.NetworkMap) {
 	e.watchdog("SetNetworkMap", func() { e.wrap.SetNetworkMap(nm) })
 }
+
 func (e *watchdogEngine) Ping(ip netip.Addr, pingType tailcfg.PingType, size int, cb func(*ipnstate.PingResult)) {
 	e.watchdog("Ping", func() { e.wrap.Ping(ip, pingType, size, cb) })
 }
+
 func (e *watchdogEngine) Close() {
 	e.watchdog("Close", e.wrap.Close)
 }
+
 func (e *watchdogEngine) PeerForIP(ip netip.Addr) (ret PeerForIP, ok bool) {
 	e.watchdog("PeerForIP", func() { ret, ok = e.wrap.PeerForIP(ip) })
 	return ret, ok

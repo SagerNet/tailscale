@@ -17,12 +17,12 @@ import (
 	"time"
 	"unsafe"
 
-	"golang.org/x/net/ipv4"
-	"golang.org/x/net/ipv6"
-	"golang.org/x/sys/unix"
 	"github.com/sagernet/tailscale/hostinfo"
 	"github.com/sagernet/tailscale/net/neterror"
 	"github.com/sagernet/tailscale/types/nettype"
+	"golang.org/x/net/ipv4"
+	"golang.org/x/net/ipv6"
+	"golang.org/x/sys/unix"
 )
 
 // xnetBatchReaderWriter defines the batching i/o methods of

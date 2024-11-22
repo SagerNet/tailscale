@@ -80,7 +80,6 @@ func (c *Client) CreateKey(ctx context.Context, caps KeyCapabilities) (keySecret
 //
 // The time is truncated to a whole number of seconds. If zero, that means no expiration.
 func (c *Client) CreateKeyWithExpiry(ctx context.Context, caps KeyCapabilities, expiry time.Duration) (keySecret string, keyMeta *Key, _ error) {
-
 	// convert expirySeconds to an int64 (seconds)
 	expirySeconds := int64(expiry.Seconds())
 	if expirySeconds < 0 {

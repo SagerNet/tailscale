@@ -1281,7 +1281,7 @@ func (s *Server) csrfKey() []byte {
 
 	// if running in CGI mode, try to write the newly created key to disk, and exit if it fails.
 	if s.cgiMode {
-		if err := os.WriteFile(csrfFile, key, 0600); err != nil {
+		if err := os.WriteFile(csrfFile, key, 0o600); err != nil {
 			log.Fatalf("unable to store CSRF key: %v", err)
 		}
 	}

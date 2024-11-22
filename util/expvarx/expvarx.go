@@ -43,7 +43,7 @@ func (s *SafeFunc) Value() any {
 	if s.inflight == nil {
 		s.inflight = new(lazy.SyncValue[any])
 	}
-	var inflight = s.inflight
+	inflight := s.inflight
 	s.mu.Unlock()
 
 	// inflight ensures that only a single work routine is spawned at any given
@@ -60,7 +60,6 @@ func (s *SafeFunc) Value() any {
 				s.mu.Lock()
 				s.inflight = nil
 				s.mu.Unlock()
-
 			}()
 
 			v := s.f.Value()

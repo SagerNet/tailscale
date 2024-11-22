@@ -18,8 +18,6 @@ import (
 	"sync"
 	"time"
 
-	"github.com/tailscale/wireguard-go/device"
-	"github.com/tailscale/wireguard-go/tun"
 	"github.com/sagernet/tailscale/control/controlknobs"
 	"github.com/sagernet/tailscale/drive"
 	"github.com/sagernet/tailscale/envknob"
@@ -60,6 +58,8 @@ import (
 	"github.com/sagernet/tailscale/wgengine/wgcfg"
 	"github.com/sagernet/tailscale/wgengine/wgint"
 	"github.com/sagernet/tailscale/wgengine/wglog"
+	"github.com/tailscale/wireguard-go/device"
+	"github.com/tailscale/wireguard-go/tun"
 )
 
 // Lazy wireguard-go configuration parameters.
@@ -91,7 +91,7 @@ const networkLoggerUploadTimeout = 5 * time.Second
 
 type userspaceEngine struct {
 	logf             logger.Logf
-	wgLogger         *wglog.Logger //a wireguard-go logging wrapper
+	wgLogger         *wglog.Logger // a wireguard-go logging wrapper
 	reqCh            chan struct{}
 	waitCh           chan struct{} // chan is closed when first Close call completes; contrast with closing bool
 	timeNow          func() mono.Time

@@ -18,9 +18,6 @@ import (
 	"syscall"
 	"time"
 
-	"golang.org/x/sys/windows"
-	"golang.org/x/sys/windows/registry"
-	"golang.zx2c4.com/wireguard/windows/tunnel/winipcfg"
 	"github.com/sagernet/tailscale/atomicfile"
 	"github.com/sagernet/tailscale/control/controlknobs"
 	"github.com/sagernet/tailscale/envknob"
@@ -28,6 +25,9 @@ import (
 	"github.com/sagernet/tailscale/types/logger"
 	"github.com/sagernet/tailscale/util/dnsname"
 	"github.com/sagernet/tailscale/util/winutil"
+	"golang.org/x/sys/windows"
+	"golang.org/x/sys/windows/registry"
+	"golang.zx2c4.com/wireguard/windows/tunnel/winipcfg"
 )
 
 const (
@@ -147,7 +147,7 @@ func setTailscaleHosts(prevHostsFile []byte, hosts []*HostEntry) ([]byte, error)
 		header = "# TailscaleHostsSectionStart"
 		footer = "# TailscaleHostsSectionEnd"
 	)
-	var comments = []string{
+	comments := []string{
 		"# This section contains MagicDNS entries for Tailscale.",
 		"# Do not edit this section manually.",
 	}

@@ -8,8 +8,6 @@ import (
 	"strings"
 	"sync"
 
-	xmaps "golang.org/x/exp/maps"
-
 	"github.com/sagernet/tailscale/syncs"
 	"github.com/sagernet/tailscale/types/lazy"
 	"github.com/sagernet/tailscale/util/clientmetric"
@@ -19,6 +17,7 @@ import (
 	"github.com/sagernet/tailscale/util/syspolicy/internal/loggerx"
 	"github.com/sagernet/tailscale/util/syspolicy/setting"
 	"github.com/sagernet/tailscale/util/testenv"
+	xmaps "golang.org/x/exp/maps"
 )
 
 var lazyReportMetrics lazy.SyncValue[bool] // used as a test hook

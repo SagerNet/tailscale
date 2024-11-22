@@ -32,6 +32,7 @@ type unsafePointer struct{ p unsafe.Pointer }
 func unsafePointerOf(v reflect.Value) unsafePointer {
 	return unsafePointer{v.UnsafePointer()}
 }
+
 func (p unsafePointer) isNil() bool {
 	return p.p == nil
 }

@@ -36,7 +36,7 @@ func New(fileBasePrefix, logID string, logf logger.Logf) logger.Logf {
 	}
 	dir := filepath.Join(os.Getenv("ProgramData"), "Tailscale", "Logs")
 
-	if err := os.MkdirAll(dir, 0700); err != nil {
+	if err := os.MkdirAll(dir, 0o700); err != nil {
 		log.Printf("failed to create local log directory; not writing logs to disk: %v", err)
 		return logf
 	}

@@ -47,10 +47,8 @@ type policyLockResult struct {
 	err    error
 }
 
-var (
-	// ErrInvalidLockState is returned by (*PolicyLock).Lock if the lock has a zero value or has already been closed.
-	ErrInvalidLockState = errors.New("the lock has not been created or has already been closed")
-)
+// ErrInvalidLockState is returned by (*PolicyLock).Lock if the lock has a zero value or has already been closed.
+var ErrInvalidLockState = errors.New("the lock has not been created or has already been closed")
 
 // NewMachinePolicyLock creates a PolicyLock that facilitates pausing the
 // application of computer policy. To avoid deadlocks when acquiring both

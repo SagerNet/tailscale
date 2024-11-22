@@ -8,10 +8,10 @@ import (
 	"crypto/subtle"
 	"fmt"
 
+	"github.com/sagernet/tailscale/types/structs"
 	"go4.org/mem"
 	"golang.org/x/crypto/curve25519"
 	"golang.org/x/crypto/nacl/box"
-	"github.com/sagernet/tailscale/types/structs"
 )
 
 const (

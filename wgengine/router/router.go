@@ -9,11 +9,11 @@ import (
 	"net/netip"
 	"reflect"
 
-	"github.com/tailscale/wireguard-go/tun"
 	"github.com/sagernet/tailscale/health"
 	"github.com/sagernet/tailscale/net/netmon"
 	"github.com/sagernet/tailscale/types/logger"
 	"github.com/sagernet/tailscale/types/preftype"
+	"github.com/tailscale/wireguard-go/tun"
 )
 
 // Router is responsible for managing the system network stack.

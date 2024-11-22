@@ -17,7 +17,6 @@ import (
 	"time"
 	"unsafe"
 
-	"github.com/tailscale/wireguard-go/conn"
 	"github.com/sagernet/tailscale/derp"
 	"github.com/sagernet/tailscale/derp/derphttp"
 	"github.com/sagernet/tailscale/health"
@@ -34,6 +33,7 @@ import (
 	"github.com/sagernet/tailscale/util/rands"
 	"github.com/sagernet/tailscale/util/sysresources"
 	"github.com/sagernet/tailscale/util/testenv"
+	"github.com/tailscale/wireguard-go/conn"
 )
 
 // frameReceiveRecordRate is the minimum time between updates to last frame
@@ -82,9 +82,7 @@ type activeDerp struct {
 	createTime time.Time
 }
 
-var (
-	pickDERPFallbackForTests func() int
-)
+var pickDERPFallbackForTests func() int
 
 // pickDERPFallback returns a non-zero but deterministic DERP node to
 // connect to.  This is only used if netcheck couldn't find the
@@ -758,7 +756,7 @@ func (c *Conn) SetDERPMap(dm *tailcfg.DERPMap) {
 	c.mu.Lock()
 	defer c.mu.Unlock()
 
-	var derpAddr = debugUseDERPAddr()
+	derpAddr := debugUseDERPAddr()
 	if derpAddr != "" {
 		derpPort := 443
 		if debugUseDERPHTTP() {

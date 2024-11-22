@@ -8,8 +8,8 @@ import (
 	"errors"
 	"fmt"
 
-	"golang.org/x/crypto/argon2"
 	"github.com/sagernet/tailscale/types/tkatype"
+	"golang.org/x/crypto/argon2"
 )
 
 // ErrNoSuchKey is returned if the key referenced by a KeyID does not exist.

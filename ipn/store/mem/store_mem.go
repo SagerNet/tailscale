@@ -9,10 +9,10 @@ import (
 	"encoding/json"
 	"sync"
 
-	xmaps "golang.org/x/exp/maps"
 	"github.com/sagernet/tailscale/ipn"
 	"github.com/sagernet/tailscale/types/logger"
 	"github.com/sagernet/tailscale/util/mak"
+	xmaps "golang.org/x/exp/maps"
 )
 
 // New returns a new Store.

@@ -10,13 +10,13 @@ import (
 	"strings"
 	"syscall"
 
-	"golang.org/x/sys/cpu"
-	"golang.org/x/sys/windows"
-	"golang.zx2c4.com/wireguard/windows/tunnel/winipcfg"
 	"github.com/sagernet/tailscale/envknob"
 	"github.com/sagernet/tailscale/net/netmon"
 	"github.com/sagernet/tailscale/tsconst"
 	"github.com/sagernet/tailscale/types/logger"
+	"golang.org/x/sys/cpu"
+	"golang.org/x/sys/windows"
+	"golang.zx2c4.com/wireguard/windows/tunnel/winipcfg"
 )
 
 func interfaceIndex(iface *winipcfg.IPAdapterAddresses) uint32 {

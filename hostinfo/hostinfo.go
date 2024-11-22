@@ -18,7 +18,6 @@ import (
 	"sync/atomic"
 	"time"
 
-	"go4.org/mem"
 	"github.com/sagernet/tailscale/envknob"
 	"github.com/sagernet/tailscale/tailcfg"
 	"github.com/sagernet/tailscale/types/opt"
@@ -28,6 +27,7 @@ import (
 	"github.com/sagernet/tailscale/util/lineiter"
 	"github.com/sagernet/tailscale/version"
 	"github.com/sagernet/tailscale/version/distro"
+	"go4.org/mem"
 )
 
 var started = time.Now()

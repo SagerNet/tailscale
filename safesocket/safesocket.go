@@ -30,8 +30,10 @@ func ConnCloseWrite(c net.Conn) error {
 	return c.(closeable).CloseWrite()
 }
 
-var processStartTime = time.Now()
-var tailscaledProcExists = func() bool { return false } // set by safesocket_ps.go
+var (
+	processStartTime     = time.Now()
+	tailscaledProcExists = func() bool { return false } // set by safesocket_ps.go
+)
 
 // tailscaledStillStarting reports whether tailscaled is probably
 // still starting up. That is, it reports whether the caller should

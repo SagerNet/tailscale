@@ -195,7 +195,6 @@ func NewNoStart(opts Options) (_ *Auto, err error) {
 
 	c.unregisterHealthWatch = opts.HealthTracker.RegisterWatcher(direct.ReportHealthChange)
 	return c, nil
-
 }
 
 // SetPaused controls whether HTTP activity should be paused.

@@ -15,7 +15,6 @@ import (
 	"sync"
 	"time"
 
-	"golang.org/x/net/http2"
 	"github.com/sagernet/tailscale/control/controlhttp"
 	"github.com/sagernet/tailscale/health"
 	"github.com/sagernet/tailscale/internal/noiseconn"
@@ -29,6 +28,7 @@ import (
 	"github.com/sagernet/tailscale/util/mak"
 	"github.com/sagernet/tailscale/util/multierr"
 	"github.com/sagernet/tailscale/util/singleflight"
+	"golang.org/x/net/http2"
 )
 
 // NoiseClient provides a http.Client to connect to tailcontrol over

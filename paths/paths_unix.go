@@ -11,8 +11,8 @@ import (
 	"path/filepath"
 	"runtime"
 
-	"golang.org/x/sys/unix"
 	"github.com/sagernet/tailscale/version/distro"
+	"golang.org/x/sys/unix"
 )
 
 func init() {
@@ -79,7 +79,7 @@ func ensureStateDirPermsUnix(dir string) error {
 	if !fi.IsDir() {
 		return fmt.Errorf("expected %q to be a directory; is %v", dir, fi.Mode())
 	}
-	const perm = 0700
+	const perm = 0o700
 	if fi.Mode().Perm() == perm {
 		// Already correct.
 		return nil

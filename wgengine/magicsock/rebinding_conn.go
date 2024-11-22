@@ -11,9 +11,9 @@ import (
 	"sync/atomic"
 	"syscall"
 
-	"golang.org/x/net/ipv6"
 	"github.com/sagernet/tailscale/net/netaddr"
 	"github.com/sagernet/tailscale/types/nettype"
+	"golang.org/x/net/ipv6"
 )
 
 // RebindingUDPConn is a UDP socket that can be re-bound.

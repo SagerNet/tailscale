@@ -498,7 +498,7 @@ func (s *Server) start() (reterr error) {
 			return err
 		}
 	}
-	if err := os.MkdirAll(s.rootPath, 0700); err != nil {
+	if err := os.MkdirAll(s.rootPath, 0o700); err != nil {
 		return err
 	}
 	if fi, err := os.Stat(s.rootPath); err != nil {
@@ -1213,7 +1213,7 @@ func (s *Server) CapturePcap(ctx context.Context, pcapFile string) error {
 		return err
 	}
 
-	f, err := os.OpenFile(pcapFile, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
+	f, err := os.OpenFile(pcapFile, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0o644)
 	if err != nil {
 		stream.Close()
 		return err

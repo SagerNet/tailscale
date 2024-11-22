@@ -69,7 +69,7 @@ func Config(host string, ht *health.Tracker, base *tls.Config) *tls.Config {
 	conf.ServerName = host
 
 	if n := sslKeyLogFile; n != "" {
-		f, err := os.OpenFile(n, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600)
+		f, err := os.OpenFile(n, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0o600)
 		if err != nil {
 			log.Fatal(err)
 		}

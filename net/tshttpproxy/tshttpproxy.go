@@ -18,8 +18,8 @@ import (
 	"sync"
 	"time"
 
-	"golang.org/x/net/http/httpproxy"
 	"github.com/sagernet/tailscale/util/mak"
+	"golang.org/x/net/http/httpproxy"
 )
 
 // InvalidateCache invalidates the package-level cache for ProxyFromEnvironment.

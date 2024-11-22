@@ -8,11 +8,11 @@ import (
 	"sync"
 	"sync/atomic"
 
-	xmaps "golang.org/x/exp/maps"
 	"github.com/sagernet/tailscale/util/mak"
 	"github.com/sagernet/tailscale/util/set"
 	"github.com/sagernet/tailscale/util/syspolicy/internal"
 	"github.com/sagernet/tailscale/util/syspolicy/setting"
+	xmaps "golang.org/x/exp/maps"
 )
 
 var (

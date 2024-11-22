@@ -9,10 +9,10 @@ import (
 	"strings"
 	"sync"
 
-	"golang.org/x/net/route"
-	"golang.org/x/sys/unix"
 	"github.com/sagernet/tailscale/net/netaddr"
 	"github.com/sagernet/tailscale/types/logger"
+	"golang.org/x/net/route"
+	"golang.org/x/sys/unix"
 )
 
 const debugRouteMessages = false

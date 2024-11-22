@@ -10,16 +10,14 @@ import (
 	"os/exec"
 	"sync/atomic"
 
-	"go4.org/mem"
-	"golang.org/x/sys/unix"
 	"github.com/sagernet/tailscale/net/netaddr"
 	"github.com/sagernet/tailscale/syncs"
 	"github.com/sagernet/tailscale/util/lineiter"
+	"go4.org/mem"
+	"golang.org/x/sys/unix"
 )
 
-var (
-	lastKnownDefaultRouteIfName syncs.AtomicValue[string]
-)
+var lastKnownDefaultRouteIfName syncs.AtomicValue[string]
 
 var procNetRoutePath = "/proc/net/route"
 

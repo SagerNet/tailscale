@@ -8,13 +8,13 @@ import (
 	"net/netip"
 	"runtime"
 
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/net/tsaddr"
 	"github.com/tailscale/wireguard-go/tun"
 	"golang.org/x/sys/unix"
 	"gvisor.dev/gvisor/pkg/tcpip"
 	"gvisor.dev/gvisor/pkg/tcpip/checksum"
 	"gvisor.dev/gvisor/pkg/tcpip/header"
-	"github.com/sagernet/tailscale/envknob"
-	"github.com/sagernet/tailscale/net/tsaddr"
 )
 
 // SetLinkFeaturesPostUp configures link features on t based on select TS_TUN_

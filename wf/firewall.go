@@ -11,9 +11,9 @@ import (
 	"net/netip"
 	"os"
 
+	"github.com/sagernet/tailscale/net/netaddr"
 	"github.com/tailscale/wf"
 	"golang.org/x/sys/windows"
-	"github.com/sagernet/tailscale/net/netaddr"
 )
 
 // Known addresses.
@@ -331,7 +331,7 @@ func (f *Firewall) permitNDP(w weight) error {
 	fieldICMPType := wf.FieldIPLocalPort
 	fieldICMPCode := wf.FieldIPRemotePort
 
-	var icmpConditions = func(t, c uint16, remoteAddress any) []*wf.Match {
+	icmpConditions := func(t, c uint16, remoteAddress any) []*wf.Match {
 		conditions := []*wf.Match{
 			{
 				Field: wf.FieldIPProtocol,
@@ -414,7 +414,7 @@ func (f *Firewall) permitNDP(w weight) error {
 }
 
 func (f *Firewall) permitDHCPv6(w weight) error {
-	var dhcpConditions = func(remoteAddrs ...any) []*wf.Match {
+	dhcpConditions := func(remoteAddrs ...any) []*wf.Match {
 		conditions := []*wf.Match{
 			{
 				Field: wf.FieldIPProtocol,
@@ -458,7 +458,7 @@ func (f *Firewall) permitDHCPv6(w weight) error {
 }
 
 func (f *Firewall) permitDHCPv4(w weight) error {
-	var dhcpConditions = func(remoteAddrs ...any) []*wf.Match {
+	dhcpConditions := func(remoteAddrs ...any) []*wf.Match {
 		conditions := []*wf.Match{
 			{
 				Field: wf.FieldIPProtocol,

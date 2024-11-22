@@ -8,10 +8,10 @@ import (
 	"encoding/binary"
 	"net/netip"
 
-	"gvisor.dev/gvisor/pkg/tcpip"
-	"gvisor.dev/gvisor/pkg/tcpip/header"
 	"github.com/sagernet/tailscale/net/packet"
 	"github.com/sagernet/tailscale/types/ipproto"
+	"gvisor.dev/gvisor/pkg/tcpip"
+	"gvisor.dev/gvisor/pkg/tcpip/header"
 )
 
 // UpdateSrcAddr updates the source address in the packet buffer (e.g. during

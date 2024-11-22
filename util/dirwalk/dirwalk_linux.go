@@ -81,9 +81,11 @@ func (de *linuxDirEnt) Name() string { return de.name.StringCopy() }
 func (de *linuxDirEnt) Info() (fs.FileInfo, error) {
 	return os.Lstat(filepath.Join(de.root.StringCopy(), de.name.StringCopy()))
 }
+
 func (de *linuxDirEnt) IsDir() bool {
 	return de.d.Type == syscall.DT_DIR
 }
+
 func (de *linuxDirEnt) Type() fs.FileMode {
 	switch de.d.Type {
 	case syscall.DT_BLK:
