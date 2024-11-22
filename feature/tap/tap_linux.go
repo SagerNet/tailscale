@@ -28,7 +28,7 @@ import (
 	"github.com/sagernet/tailscale/types/ipproto"
 	"github.com/sagernet/tailscale/types/logger"
 	"github.com/sagernet/tailscale/util/multierr"
-	"github.com/tailscale/wireguard-go/tun"
+	"github.com/sagernet/wireguard-go/tun"
 	"golang.org/x/sys/unix"
 )
 

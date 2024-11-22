@@ -4,19 +4,23 @@
 package wgcfg
 
 import (
+	"context"
 	"io"
 	"sort"
 
 	"github.com/sagernet/tailscale/types/logger"
 	"github.com/sagernet/tailscale/util/multierr"
-	"github.com/tailscale/wireguard-go/conn"
-	"github.com/tailscale/wireguard-go/device"
-	"github.com/tailscale/wireguard-go/tun"
+	"github.com/sagernet/wireguard-go/conn"
+	"github.com/sagernet/wireguard-go/device"
+	"github.com/sagernet/wireguard-go/tun"
 )
 
 // NewDevice returns a wireguard-go Device configured for Tailscale use.
-func NewDevice(tunDev tun.Device, bind conn.Bind, logger *device.Logger) *device.Device {
-	ret := device.NewDevice(tunDev, bind, logger)
+func NewDevice(ctx context.Context, tunDev tun.Device, bind conn.Bind, logger *device.Logger, workers int) *device.Device {
+	if ctx == nil {
+		ctx = context.Background()
+	}
+	ret := device.NewDevice(ctx, tunDev, bind, logger, workers)
 	ret.DisableSomeRoamingForBrokenMobileSemantics()
 	return ret
 }

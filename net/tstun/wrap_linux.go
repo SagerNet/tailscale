@@ -13,7 +13,7 @@ import (
 	"github.com/sagernet/gvisor/pkg/tcpip/header"
 	"github.com/sagernet/tailscale/envknob"
 	"github.com/sagernet/tailscale/net/tsaddr"
-	"github.com/tailscale/wireguard-go/tun"
+	"github.com/sagernet/wireguard-go/tun"
 	"golang.org/x/sys/unix"
 )
 
