@@ -37,6 +37,7 @@ import (
 	"sync/atomic"
 	"time"
 
+	"github.com/sagernet/gvisor/pkg/tcpip"
 	"github.com/sagernet/tailscale/appc"
 	"github.com/sagernet/tailscale/client/tailscale/apitype"
 	"github.com/sagernet/tailscale/clientupdate"
@@ -120,7 +121,6 @@ import (
 	"go4.org/mem"
 	"go4.org/netipx"
 	"golang.org/x/net/dns/dnsmessage"
-	"gvisor.dev/gvisor/pkg/tcpip"
 )
 
 var controlDebugFlags = getControlDebugFlags()
