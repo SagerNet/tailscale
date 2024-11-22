@@ -19,7 +19,7 @@ import (
 	"github.com/sagernet/tailscale/feature"
 	"github.com/sagernet/tailscale/feature/buildfeatures"
 	"github.com/sagernet/tailscale/types/logger"
-	"github.com/tailscale/wireguard-go/tun"
+	"github.com/sagernet/wireguard-go/tun"
 )
 
 // CreateTAP is the hook maybe set by feature/tap.
