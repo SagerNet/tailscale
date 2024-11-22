@@ -60,7 +60,7 @@ import (
 	"github.com/sagernet/tailscale/util/usermetric"
 	"github.com/sagernet/tailscale/wgengine/capture"
 	"github.com/sagernet/tailscale/wgengine/wgint"
-	"github.com/tailscale/wireguard-go/conn"
+	"github.com/sagernet/wireguard-go/conn"
 	"go4.org/mem"
 	"golang.org/x/net/ipv6"
 )
@@ -2481,6 +2481,9 @@ func (c *connBind) isClosed() bool {
 	return c.closed
 }
 
+func (c *connBind) SetReservedForEndpoint(destination netip.AddrPort, reserved [3]byte) {
+}
+
 // Close closes the connection.
 //
 // Only the first close does anything. Any later closes return nil.
@@ -3202,7 +3205,7 @@ func (c *Conn) SetLastNetcheckReportForTest(ctx context.Context, report *netchec
 // non-disco (presumably WireGuard) packet from a UDP address from which we
 // can't map to a Tailscale peer. But Wireguard most likely can, once it
 // decrypts it. So we implement the conn.PeerAwareEndpoint interface
-// from https://github.com/tailscale/wireguard-go/pull/27 to allow WireGuard
+// from https://github.com/sagernet/wireguard-go/pull/27 to allow WireGuard
 // to tell us who it is later and get the correct conn.Endpoint.
 type lazyEndpoint struct {
 	c   *Conn
