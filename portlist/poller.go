@@ -9,18 +9,14 @@ package portlist
 import (
 	"errors"
 	"fmt"
-	"runtime"
 	"slices"
 	"sync"
 	"time"
-
-	"github.com/sagernet/tailscale/envknob"
 )
 
 var (
-	newOSImpl            func(includeLocalhost bool) osImpl // if non-nil, constructs a new osImpl.
-	pollInterval         = 5 * time.Second                  // default; changed by some OS-specific init funcs
-	debugDisablePortlist = envknob.RegisterBool("TS_DEBUG_DISABLE_PORTLIST")
+	newOSImpl    func(includeLocalhost bool) osImpl // if non-nil, constructs a new osImpl.
+	pollInterval = 5 * time.Second                  // default; changed by some OS-specific init funcs
 )
 
 // PollInterval is the recommended OS-specific interval
@@ -76,14 +72,7 @@ func (p *Poller) setPrev(pl List) {
 // init initializes the Poller by ensuring it has an underlying
 // OS implementation and is not turned off by envknob.
 func (p *Poller) init() {
-	switch {
-	case debugDisablePortlist():
-		p.initErr = errors.New("portlist disabled by envknob")
-	case newOSImpl == nil:
-		p.initErr = errors.New("portlist poller not implemented on " + runtime.GOOS)
-	default:
-		p.os = newOSImpl(p.IncludeLocalhost)
-	}
+	p.initErr = errors.New("portlist disabled by sing-box")
 }
 
 // Close closes the Poller.
