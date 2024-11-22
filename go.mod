@@ -39,6 +39,7 @@ require (
 	github.com/prometheus/client_golang v1.19.1
 	github.com/prometheus/common v0.48.0
 	github.com/safchain/ethtool v0.3.0
+	github.com/sagernet/gvisor v0.0.0-20241021032506-a4324256e4a3
 	github.com/tailscale/certstore v0.1.1-0.20231202035212-d3fa0460f47e
 	github.com/tailscale/golang-x-crypto v0.0.0-20240604161659-3fde5e568aa4
 	github.com/tailscale/goupnp v1.0.1-0.20210804011211-c64d0f06ea05
@@ -58,16 +59,16 @@ require (
 	golang.org/x/sync v0.10.0
 	golang.org/x/sys v0.28.0
 	golang.org/x/term v0.27.0
-	golang.org/x/time v0.5.0
+	golang.org/x/time v0.7.0
 	golang.org/x/tools v0.23.0
 	golang.zx2c4.com/wireguard/windows v0.5.3
-	gvisor.dev/gvisor v0.0.0-20240722211153-64c016c92987
 )
 
 require (
 	github.com/bits-and-blooms/bitset v1.13.0 // indirect
 	github.com/google/go-cmp v0.6.0 // indirect
 	github.com/gorilla/securecookie v1.1.2 // indirect
+	github.com/sagernet/sing v0.5.0-rc.4 // indirect
 	github.com/vishvananda/netns v0.0.4 // indirect
 	go.uber.org/goleak v1.3.0 // indirect
 	golang.zx2c4.com/wintun v0.0.0-20230126152724-0fa3db229ce2 // indirect
@@ -79,7 +80,7 @@ require (
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
-	github.com/google/btree v1.1.2 // indirect
+	github.com/google/btree v1.1.3 // indirect
 	github.com/gorilla/csrf v1.7.2
 	github.com/mdlayher/socket v0.5.0
 	github.com/pierrec/lz4/v4 v4.1.21 // indirect
@@ -87,7 +88,6 @@ require (
 	github.com/prometheus/client_model v0.5.0 // indirect
 	github.com/prometheus/procfs v0.12.0 // indirect
 	github.com/rogpeppe/go-internal v1.12.0 // indirect
-	github.com/stretchr/testify v1.9.0 // indirect
 	github.com/tailscale/go-winio v0.0.0-20231025203758-c4f33415bf55
 	github.com/u-root/uio v0.0.0-20240118234441-a3c409a6018e // indirect
 	github.com/x448/float16 v0.8.4 // indirect
