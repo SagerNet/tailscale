@@ -41,6 +41,7 @@ require (
 	github.com/prometheus/common v0.48.0
 	github.com/safchain/ethtool v0.3.0
 	github.com/sagernet/gvisor v0.0.0-20241021032506-a4324256e4a3
+	github.com/sagernet/wireguard-go v0.0.1-beta.4
 	github.com/tailscale/certstore v0.1.1-0.20231202035212-d3fa0460f47e
 	github.com/tailscale/depaware v0.0.0-20210622194025-720c4b409502
 	github.com/tailscale/golang-x-crypto v0.0.0-20240604161659-3fde5e568aa4
@@ -50,7 +51,6 @@ require (
 	github.com/tailscale/peercred v0.0.0-20240214030740-b535050b2aa4
 	github.com/tailscale/web-client-prebuilt v0.0.0-20240226180453-5db17b287bf1
 	github.com/tailscale/wf v0.0.0-20240214030419-6fbb0a674ee6
-	github.com/tailscale/wireguard-go v0.0.0-20241113014420-4e883d38c8d3
 	github.com/tailscale/xnet v0.0.0-20240729143630-8497ac4dab2e
 	github.com/tcnksm/go-httpstat v0.2.0
 	go4.org/mem v0.0.0-20220726221520-4f986261bf13
@@ -92,7 +92,7 @@ require (
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/onsi/ginkgo/v2 v2.17.2 // indirect
 	github.com/onsi/gomega v1.33.1 // indirect
-	github.com/sagernet/sing v0.5.0-rc.4 // indirect
+	github.com/sagernet/sing v0.5.1 // indirect
 	github.com/santhosh-tekuri/jsonschema/v5 v5.3.1 // indirect
 	github.com/vishvananda/netns v0.0.4 // indirect
 	github.com/xen0n/gosmopolitan v1.2.2 // indirect
