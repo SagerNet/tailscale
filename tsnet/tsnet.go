@@ -30,7 +30,6 @@ import (
 	"github.com/sagernet/tailscale/control/controlclient"
 	"github.com/sagernet/tailscale/envknob"
 	"github.com/sagernet/tailscale/health"
-	"github.com/sagernet/tailscale/hostinfo"
 	"github.com/sagernet/tailscale/ipn"
 	"github.com/sagernet/tailscale/ipn/ipnlocal"
 	"github.com/sagernet/tailscale/ipn/ipnstate"
@@ -286,7 +285,6 @@ func (h *localSecHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 // Start connects the server to the tailnet.
 // Optional: any calls to Dial/Listen will also call Start.
 func (s *Server) Start() error {
-	hostinfo.SetPackage("tsnet")
 	s.initOnce.Do(s.doInit)
 	return s.initErr
 }
