@@ -629,7 +629,7 @@ func (s *Server) start() (reterr error) {
 	} else if authKey != "" {
 		s.logf("Authkey is set; but state is %v. Ignoring authkey. Re-run with TSNET_FORCE_LOGIN=1 to force use of authkey.", st)
 	}
-	go s.printAuthURLLoop()
+	//go s.printAuthURLLoop()
 
 	// Run the localapi handler, to allow fetching LetsEncrypt certs.
 	lah := localapi.NewHandler(lb, tsLogf, s.logid)
