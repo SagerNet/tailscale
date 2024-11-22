@@ -36,9 +36,9 @@ import (
 	"github.com/sagernet/tailscale/tailcfg"
 	"github.com/sagernet/tailscale/types/key"
 	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/wireguard-go/tun"
 	wgconn "github.com/tailscale/wireguard-go/conn"
 	"github.com/tailscale/wireguard-go/device"
-	"github.com/tailscale/wireguard-go/tun"
 	"go4.org/netipx"
 )
 

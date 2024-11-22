@@ -20,6 +20,17 @@ import (
 	"sync/atomic"
 	"time"
 
+	"github.com/sagernet/gvisor/pkg/refs"
+	"github.com/sagernet/gvisor/pkg/tcpip"
+	"github.com/sagernet/gvisor/pkg/tcpip/adapters/gonet"
+	"github.com/sagernet/gvisor/pkg/tcpip/header"
+	"github.com/sagernet/gvisor/pkg/tcpip/network/ipv4"
+	"github.com/sagernet/gvisor/pkg/tcpip/network/ipv6"
+	"github.com/sagernet/gvisor/pkg/tcpip/stack"
+	"github.com/sagernet/gvisor/pkg/tcpip/transport/icmp"
+	"github.com/sagernet/gvisor/pkg/tcpip/transport/tcp"
+	"github.com/sagernet/gvisor/pkg/tcpip/transport/udp"
+	"github.com/sagernet/gvisor/pkg/waiter"
 	"github.com/sagernet/tailscale/envknob"
 	"github.com/sagernet/tailscale/ipn/ipnlocal"
 	"github.com/sagernet/tailscale/metrics"
@@ -45,18 +56,7 @@ import (
 	"github.com/sagernet/tailscale/wgengine/filter"
 	"github.com/sagernet/tailscale/wgengine/magicsock"
 	"github.com/sagernet/tailscale/wgengine/netstack/gro"
-	"github.com/tailscale/wireguard-go/conn"
-	"gvisor.dev/gvisor/pkg/refs"
-	"gvisor.dev/gvisor/pkg/tcpip"
-	"gvisor.dev/gvisor/pkg/tcpip/adapters/gonet"
-	"gvisor.dev/gvisor/pkg/tcpip/header"
-	"gvisor.dev/gvisor/pkg/tcpip/network/ipv4"
-	"gvisor.dev/gvisor/pkg/tcpip/network/ipv6"
-	"gvisor.dev/gvisor/pkg/tcpip/stack"
-	"gvisor.dev/gvisor/pkg/tcpip/transport/icmp"
-	"gvisor.dev/gvisor/pkg/tcpip/transport/tcp"
-	"gvisor.dev/gvisor/pkg/tcpip/transport/udp"
-	"gvisor.dev/gvisor/pkg/waiter"
+	"github.com/sagernet/wireguard-go/conn"
 )
 
 const debugPackets = false
@@ -583,7 +583,11 @@ func (ns *Impl) Start(lb *ipnlocal.LocalBackend) error {
 	}
 	ns.lb = lb
 	tcpFwd := tcp.NewForwarder(ns.ipstack, tcpRXBufDefSize, maxInFlightConnectionAttempts(), ns.acceptTCP)
-	udpFwd := udp.NewForwarder(ns.ipstack, ns.acceptUDP)
+	// udpFwd := udp.NewForwarder(ns.ipstack, ns.acceptUDP)
+	udpFwd := udp.NewForwarder(ns.ipstack, func(request *udp.ForwarderRequest) (handled bool) {
+		ns.acceptUDP(request)
+		return true
+	})
 	ns.ipstack.SetTransportProtocolHandler(tcp.ProtocolNumber, ns.wrapTCPProtocolHandler(tcpFwd.HandlePacket))
 	ns.ipstack.SetTransportProtocolHandler(udp.ProtocolNumber, ns.wrapUDPProtocolHandler(udpFwd.HandlePacket))
 	go ns.inject()
