@@ -21,7 +21,7 @@ import (
 	"github.com/sagernet/tailscale/net/tstun"
 	"github.com/sagernet/tailscale/util/multierr"
 	"github.com/sagernet/tailscale/wgengine/winnet"
-	"github.com/tailscale/wireguard-go/tun"
+	"github.com/sagernet/wireguard-go/tun"
 	"go4.org/netipx"
 	"golang.org/x/sys/windows"
 	"golang.zx2c4.com/wireguard/windows/tunnel/winipcfg"
