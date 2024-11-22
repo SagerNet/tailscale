@@ -11,9 +11,6 @@ import (
 	"github.com/sagernet/tailscale/net/packet"
 	"github.com/sagernet/tailscale/types/ipproto"
 	"github.com/sagernet/tailscale/wgengine/netstack/gro"
-	"gvisor.dev/gvisor/pkg/tcpip"
-	"gvisor.dev/gvisor/pkg/tcpip/header"
-	"gvisor.dev/gvisor/pkg/tcpip/stack"
 )
 
 type queue struct {

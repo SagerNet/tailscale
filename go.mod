@@ -47,6 +47,7 @@ require (
 	github.com/prometheus/client_golang v1.23.0
 	github.com/prometheus/common v0.65.0
 	github.com/safchain/ethtool v0.3.0
+	github.com/sagernet/gvisor v0.0.0-20241123041152-536d05261cff
 	github.com/tailscale/certstore v0.1.1-0.20231202035212-d3fa0460f47e
 	github.com/tailscale/goupnp v1.0.1-0.20210804011211-c64d0f06ea05
 	github.com/tailscale/hujson v0.0.0-20221223112325-20486734a56a
@@ -69,7 +70,6 @@ require (
 	golang.org/x/time v0.11.0
 	golang.org/x/tools v0.39.0
 	golang.zx2c4.com/wireguard/windows v0.5.3
-	gvisor.dev/gvisor v0.0.0-20250205023644-9414b50a5633
 )
 
 require (
@@ -93,6 +93,7 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/planetscale/vtprotobuf v0.6.1-0.20240319094008-0393e58bdf10 // indirect
 	github.com/puzpuzpuz/xsync v1.5.2 // indirect
+	github.com/sagernet/sing v0.7.13 // indirect
 	github.com/stacklok/frizbee v0.1.7 // indirect
 	github.com/vishvananda/netns v0.0.5 // indirect
 	go.etcd.io/bbolt v1.3.11 // indirect
@@ -112,7 +113,7 @@ require (
 	github.com/fatih/color v1.18.0 // indirect
 	github.com/go-git/go-billy/v5 v5.6.2 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
-	github.com/google/btree v1.1.2 // indirect
+	github.com/google/btree v1.1.3 // indirect
 	github.com/gorilla/csrf v1.7.3
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/mattn/go-runewidth v0.0.14 // indirect
