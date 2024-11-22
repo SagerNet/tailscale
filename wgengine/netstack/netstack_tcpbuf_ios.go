@@ -6,7 +6,7 @@
 package netstack
 
 import (
-	"gvisor.dev/gvisor/pkg/tcpip/transport/tcp"
+	"github.com/sagernet/gvisor/pkg/tcpip/transport/tcp"
 )
 
 const (

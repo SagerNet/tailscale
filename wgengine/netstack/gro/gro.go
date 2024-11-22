@@ -7,14 +7,14 @@ package gro
 import (
 	"bytes"
 
+	"github.com/sagernet/gvisor/pkg/buffer"
+	"github.com/sagernet/gvisor/pkg/tcpip"
+	"github.com/sagernet/gvisor/pkg/tcpip/header"
+	"github.com/sagernet/gvisor/pkg/tcpip/header/parse"
+	"github.com/sagernet/gvisor/pkg/tcpip/stack"
 	"github.com/sagernet/tailscale/net/packet"
 	"github.com/sagernet/tailscale/types/ipproto"
 	"github.com/tailscale/wireguard-go/tun"
-	"gvisor.dev/gvisor/pkg/buffer"
-	"gvisor.dev/gvisor/pkg/tcpip"
-	"gvisor.dev/gvisor/pkg/tcpip/header"
-	"gvisor.dev/gvisor/pkg/tcpip/header/parse"
-	"gvisor.dev/gvisor/pkg/tcpip/stack"
 )
 
 // RXChecksumOffload validates IPv4, TCP, and UDP header checksums in p,
