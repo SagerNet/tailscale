@@ -15,6 +15,12 @@ import (
 	"sync"
 
 	"github.com/insomniacslk/dhcp/dhcpv4"
+	"github.com/sagernet/gvisor/pkg/tcpip"
+	"github.com/sagernet/gvisor/pkg/tcpip/checksum"
+	"github.com/sagernet/gvisor/pkg/tcpip/header"
+	"github.com/sagernet/gvisor/pkg/tcpip/network/ipv4"
+	"github.com/sagernet/gvisor/pkg/tcpip/network/ipv6"
+	"github.com/sagernet/gvisor/pkg/tcpip/transport/udp"
 	"github.com/sagernet/tailscale/net/netaddr"
 	"github.com/sagernet/tailscale/net/packet"
 	"github.com/sagernet/tailscale/net/tsaddr"
@@ -24,12 +30,6 @@ import (
 	"github.com/sagernet/tailscale/util/multierr"
 	"github.com/tailscale/wireguard-go/tun"
 	"golang.org/x/sys/unix"
-	"gvisor.dev/gvisor/pkg/tcpip"
-	"gvisor.dev/gvisor/pkg/tcpip/checksum"
-	"gvisor.dev/gvisor/pkg/tcpip/header"
-	"gvisor.dev/gvisor/pkg/tcpip/network/ipv4"
-	"gvisor.dev/gvisor/pkg/tcpip/network/ipv6"
-	"gvisor.dev/gvisor/pkg/tcpip/transport/udp"
 )
 
 // TODO: this was randomly generated once. Maybe do it per process start? But

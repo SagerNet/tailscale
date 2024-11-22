@@ -40,6 +40,7 @@ require (
 	github.com/prometheus/client_golang v1.19.1
 	github.com/prometheus/common v0.48.0
 	github.com/safchain/ethtool v0.3.0
+	github.com/sagernet/gvisor v0.0.0-20241021032506-a4324256e4a3
 	github.com/tailscale/certstore v0.1.1-0.20231202035212-d3fa0460f47e
 	github.com/tailscale/depaware v0.0.0-20210622194025-720c4b409502
 	github.com/tailscale/golang-x-crypto v0.0.0-20240604161659-3fde5e568aa4
@@ -61,10 +62,9 @@ require (
 	golang.org/x/sync v0.9.0
 	golang.org/x/sys v0.27.0
 	golang.org/x/term v0.22.0
-	golang.org/x/time v0.5.0
+	golang.org/x/time v0.7.0
 	golang.org/x/tools v0.23.0
 	golang.zx2c4.com/wireguard/windows v0.5.3
-	gvisor.dev/gvisor v0.0.0-20240722211153-64c016c92987
 )
 
 require (
@@ -92,6 +92,7 @@ require (
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/onsi/ginkgo/v2 v2.17.2 // indirect
 	github.com/onsi/gomega v1.33.1 // indirect
+	github.com/sagernet/sing v0.5.0-rc.4 // indirect
 	github.com/santhosh-tekuri/jsonschema/v5 v5.3.1 // indirect
 	github.com/vishvananda/netns v0.0.4 // indirect
 	github.com/xen0n/gosmopolitan v1.2.2 // indirect
@@ -155,7 +156,7 @@ require (
 	github.com/golangci/misspell v0.4.1 // indirect
 	github.com/golangci/revgrep v0.5.2 // indirect
 	github.com/golangci/unconvert v0.0.0-20240309020433-c5143eacb3ed // indirect
-	github.com/google/btree v1.1.2 // indirect
+	github.com/google/btree v1.1.3 // indirect
 	github.com/gordonklaus/ineffassign v0.1.0 // indirect
 	github.com/gorilla/csrf v1.7.2
 	github.com/gostaticanalysis/analysisutil v0.7.1 // indirect
