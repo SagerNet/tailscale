@@ -51,7 +51,6 @@ import (
 	"github.com/sagernet/tailscale/ipn/ipnext"
 	"github.com/sagernet/tailscale/ipn/ipnstate"
 	"github.com/sagernet/tailscale/log/sockstatlog"
-	"github.com/sagernet/tailscale/logpolicy"
 	"github.com/sagernet/tailscale/net/dns"
 	"github.com/sagernet/tailscale/net/dnscache"
 	"github.com/sagernet/tailscale/net/dnsfallback"
@@ -467,6 +466,10 @@ type LocalBackend struct {
 	// It is used to prevent goroutines from piling up to do the same
 	// work of [LocalBackend.authReconfigLocked].
 	existsPendingAuthReconfig atomic.Bool
+
+	cfg  *wgcfg.Config
+	rcfg *router.Config
+	dcfg *dns.Config
 }
 
 // SetHardwareAttested enables hardware attestation key signatures in map
@@ -646,10 +649,10 @@ func NewLocalBackend(logf logger.Logf, logID logid.PublicID, sys *tsd.System, lo
 	}()
 
 	netMon := sys.NetMon.Get()
-	b.sockstatLogger, err = sockstatlog.NewLogger(logpolicy.LogsDir(logf), logf, logID, netMon, sys.HealthTracker.Get(), sys.Bus.Get())
-	if err != nil {
-		logf("error setting up sockstat logger: %v", err)
-	}
+	//b.sockstatLogger, err = sockstatlog.NewLogger(logpolicy.LogsDir(logf), logf, logID, netMon, sys.HealthTracker.Get(), sys.Bus.Get())
+	//if err != nil {
+	//	logf("error setting up sockstat logger: %v", err)
+	//}
 	// Enable sockstats logs only on non-mobile unstable builds
 	if version.IsUnstableBuild() && !version.IsMobile() && b.sockstatLogger != nil {
 		b.sockstatLogger.SetLoggingEnabled(true)
@@ -6160,6 +6163,10 @@ func (b *LocalBackend) authReconfigLocked() {
 	if buildfeatures.HasAppConnectors {
 		go b.goTracker.Go(b.readvertiseAppConnectorRoutes)
 	}
+
+	b.cfg = cfg
+	b.rcfg = rcfg
+	b.dcfg = dcfg
 }
 
 // setDataPlanePeerRoutes pushes the route manager's outbound table and
