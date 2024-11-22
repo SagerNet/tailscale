@@ -61,7 +61,7 @@ import (
 	"github.com/sagernet/tailscale/util/usermetric"
 	"github.com/sagernet/tailscale/wgengine/filter"
 	"github.com/sagernet/tailscale/wgengine/wgint"
-	"github.com/tailscale/wireguard-go/conn"
+	"github.com/sagernet/wireguard-go/conn"
 	"github.com/tailscale/wireguard-go/device"
 	"go4.org/mem"
 	"golang.org/x/net/ipv6"
@@ -3314,6 +3314,9 @@ func (c *connBind) isClosed() bool {
 	c.mu.Lock()
 	defer c.mu.Unlock()
 	return c.closed
+}
+
+func (c *connBind) SetReservedForEndpoint(destination netip.AddrPort, reserved [3]byte) {
 }
 
 // Close closes the connection.
