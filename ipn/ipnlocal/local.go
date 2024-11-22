@@ -58,7 +58,6 @@ import (
 	"github.com/sagernet/tailscale/ipn/ipnstate"
 	"github.com/sagernet/tailscale/ipn/policy"
 	"github.com/sagernet/tailscale/log/sockstatlog"
-	"github.com/sagernet/tailscale/logpolicy"
 	"github.com/sagernet/tailscale/net/captivedetection"
 	"github.com/sagernet/tailscale/net/dns"
 	"github.com/sagernet/tailscale/net/dnscache"
@@ -378,6 +377,10 @@ type LocalBackend struct {
 	// backend is healthy and captive portal detection is not required
 	// (sending false).
 	needsCaptiveDetection chan bool
+
+	cfg  *wgcfg.Config
+	rcfg *router.Config
+	dcfg *dns.Config
 }
 
 // HealthTracker returns the health tracker for the backend.
@@ -502,10 +505,10 @@ func NewLocalBackend(logf logger.Logf, logID logid.PublicID, sys *tsd.System, lo
 	}()
 
 	netMon := sys.NetMon.Get()
-	b.sockstatLogger, err = sockstatlog.NewLogger(logpolicy.LogsDir(logf), logf, logID, netMon, sys.HealthTracker())
-	if err != nil {
-		log.Printf("error setting up sockstat logger: %v", err)
-	}
+	//b.sockstatLogger, err = sockstatlog.NewLogger(logpolicy.LogsDir(logf), logf, logID, netMon, sys.HealthTracker())
+	//if err != nil {
+	//	log.Printf("error setting up sockstat logger: %v", err)
+	//}
 	// Enable sockstats logs only on non-mobile unstable builds
 	if version.IsUnstableBuild() && !version.IsMobile() && b.sockstatLogger != nil {
 		b.sockstatLogger.SetLoggingEnabled(true)
@@ -4344,6 +4347,10 @@ func (b *LocalBackend) authReconfig() {
 	}
 
 	b.initPeerAPIListener()
+
+	b.cfg = cfg
+	b.rcfg = rcfg
+	b.dcfg = dcfg
 }
 
 // shouldUseOneCGNATRoute reports whether we should prefer to make one big
