@@ -20,17 +20,17 @@ import (
 	"time"
 
 	xmaps "golang.org/x/exp/maps"
-	"tailscale.com/control/controlknobs"
-	"tailscale.com/health"
-	"tailscale.com/net/dns/resolver"
-	"tailscale.com/net/netmon"
-	"tailscale.com/net/tsdial"
-	"tailscale.com/syncs"
-	"tailscale.com/tstime/rate"
-	"tailscale.com/types/dnstype"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/clientmetric"
-	"tailscale.com/util/dnsname"
+	"github.com/sagernet/tailscale/control/controlknobs"
+	"github.com/sagernet/tailscale/health"
+	"github.com/sagernet/tailscale/net/dns/resolver"
+	"github.com/sagernet/tailscale/net/netmon"
+	"github.com/sagernet/tailscale/net/tsdial"
+	"github.com/sagernet/tailscale/syncs"
+	"github.com/sagernet/tailscale/tstime/rate"
+	"github.com/sagernet/tailscale/types/dnstype"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/clientmetric"
+	"github.com/sagernet/tailscale/util/dnsname"
 )
 
 var (

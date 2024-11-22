@@ -8,9 +8,9 @@ import (
 
 	jsonv2 "github.com/go-json-experiment/json"
 	"github.com/go-json-experiment/json/jsontext"
-	"tailscale.com/types/opt"
-	"tailscale.com/types/ptr"
-	"tailscale.com/types/views"
+	"github.com/sagernet/tailscale/types/opt"
+	"github.com/sagernet/tailscale/types/ptr"
+	"github.com/sagernet/tailscale/types/views"
 )
 
 // StructMap is a preference type that holds potentially mutable key-value pairs.
@@ -84,7 +84,7 @@ type StructMapView[K MapKeyType, T views.ViewCloner[T, V], V views.StructView[T]
 }
 
 // StructMapViewOf returns a readonly view of m.
-// It is used by [tailscale.com/cmd/viewer].
+// It is used by [github.com/sagernet/tailscale/cmd/viewer].
 func StructMapViewOf[K MapKeyType, T views.ViewCloner[T, V], V views.StructView[T]](m *StructMap[K, T]) StructMapView[K, T, V] {
 	return StructMapView[K, T, V]{m}
 }

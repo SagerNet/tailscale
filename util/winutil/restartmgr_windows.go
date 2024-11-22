@@ -18,8 +18,8 @@ import (
 
 	"github.com/dblohm7/wingoes"
 	"golang.org/x/sys/windows"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/multierr"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/multierr"
 )
 
 var (

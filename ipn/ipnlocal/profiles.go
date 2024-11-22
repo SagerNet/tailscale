@@ -13,13 +13,13 @@ import (
 	"slices"
 	"strings"
 
-	"tailscale.com/clientupdate"
-	"tailscale.com/envknob"
-	"tailscale.com/health"
-	"tailscale.com/ipn"
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/clientmetric"
+	"github.com/sagernet/tailscale/clientupdate"
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/health"
+	"github.com/sagernet/tailscale/ipn"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/clientmetric"
 )
 
 var debug = envknob.RegisterBool("TS_DEBUG_PROFILES")
@@ -485,9 +485,9 @@ func (pm *profileManager) loadSavedPrefs(key ipn.StateKey) (ipn.PrefsView, error
 	}
 	pm.logf("using backend prefs for %q: %v", key, savedPrefs.Pretty())
 
-	// Ignore any old stored preferences for https://login.tailscale.com
+	// Ignore any old stored preferences for https://login.github.com/sagernet/tailscale
 	// as the control server that would override the new default of
-	// controlplane.tailscale.com.
+	// controlplane.github.com/sagernet/tailscale.
 	if savedPrefs.ControlURL != "" &&
 		savedPrefs.ControlURL != ipn.DefaultControlURL &&
 		ipn.IsLoginServerSynonym(savedPrefs.ControlURL) {

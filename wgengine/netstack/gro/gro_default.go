@@ -10,7 +10,7 @@ import (
 
 	"gvisor.dev/gvisor/pkg/tcpip/stack"
 	nsgro "gvisor.dev/gvisor/pkg/tcpip/stack/gro"
-	"tailscale.com/net/packet"
+	"github.com/sagernet/tailscale/net/packet"
 )
 
 var (

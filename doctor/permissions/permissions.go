@@ -12,7 +12,7 @@ import (
 	"strings"
 
 	"golang.org/x/exp/constraints"
-	"tailscale.com/types/logger"
+	"github.com/sagernet/tailscale/types/logger"
 )
 
 // Check implements the doctor.Check interface.

@@ -29,16 +29,16 @@ import (
 	"unicode/utf8"
 
 	"golang.org/x/net/http2"
-	"tailscale.com/ipn"
-	"tailscale.com/logtail/backoff"
-	"tailscale.com/net/netutil"
-	"tailscale.com/syncs"
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/lazy"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/ctxkey"
-	"tailscale.com/util/mak"
-	"tailscale.com/version"
+	"github.com/sagernet/tailscale/ipn"
+	"github.com/sagernet/tailscale/logtail/backoff"
+	"github.com/sagernet/tailscale/net/netutil"
+	"github.com/sagernet/tailscale/syncs"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/lazy"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/ctxkey"
+	"github.com/sagernet/tailscale/util/mak"
+	"github.com/sagernet/tailscale/version"
 )
 
 const (
@@ -747,7 +747,7 @@ func (b *LocalBackend) addTailscaleIdentityHeaders(r *httputil.ProxyRequest) {
 	r.Out.Header.Set("Tailscale-User-Login", encTailscaleHeaderValue(user.LoginName))
 	r.Out.Header.Set("Tailscale-User-Name", encTailscaleHeaderValue(user.DisplayName))
 	r.Out.Header.Set("Tailscale-User-Profile-Pic", user.ProfilePicURL)
-	r.Out.Header.Set("Tailscale-Headers-Info", "https://tailscale.com/s/serve-headers")
+	r.Out.Header.Set("Tailscale-Headers-Info", "https://github.com/sagernet/tailscale/s/serve-headers")
 }
 
 // encTailscaleHeaderValue cleans or encodes as necessary v, to be suitable in

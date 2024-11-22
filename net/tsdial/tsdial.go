@@ -19,17 +19,17 @@ import (
 	"time"
 
 	"github.com/gaissmai/bart"
-	"tailscale.com/net/dnscache"
-	"tailscale.com/net/netknob"
-	"tailscale.com/net/netmon"
-	"tailscale.com/net/netns"
-	"tailscale.com/net/tsaddr"
-	"tailscale.com/types/logger"
-	"tailscale.com/types/netmap"
-	"tailscale.com/util/clientmetric"
-	"tailscale.com/util/mak"
-	"tailscale.com/util/testenv"
-	"tailscale.com/version"
+	"github.com/sagernet/tailscale/net/dnscache"
+	"github.com/sagernet/tailscale/net/netknob"
+	"github.com/sagernet/tailscale/net/netmon"
+	"github.com/sagernet/tailscale/net/netns"
+	"github.com/sagernet/tailscale/net/tsaddr"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/types/netmap"
+	"github.com/sagernet/tailscale/util/clientmetric"
+	"github.com/sagernet/tailscale/util/mak"
+	"github.com/sagernet/tailscale/util/testenv"
+	"github.com/sagernet/tailscale/version"
 )
 
 // NewDialer returns a new Dialer that can dial out of tailscaled.

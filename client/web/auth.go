@@ -15,9 +15,9 @@ import (
 	"strings"
 	"time"
 
-	"tailscale.com/client/tailscale/apitype"
-	"tailscale.com/ipn/ipnstate"
-	"tailscale.com/tailcfg"
+	"github.com/sagernet/tailscale/client/tailscale/apitype"
+	"github.com/sagernet/tailscale/ipn/ipnstate"
+	"github.com/sagernet/tailscale/tailcfg"
 )
 
 const (
@@ -182,7 +182,7 @@ func (s *Server) newSession(ctx context.Context, src *apitype.WhoIsResponse) (*b
 }
 
 // controlSupportsCheckMode returns whether the current control server supports web client check mode, to verify a user's identity.
-// We assume that only "tailscale.com" control servers support check mode.
+// We assume that only "github.com/sagernet/tailscale" control servers support check mode.
 // This allows the web client to be used with non-standard control servers.
 // If an error occurs getting the control URL, this method returns true to fail closed.
 //
@@ -196,7 +196,7 @@ func (s *Server) controlSupportsCheckMode(ctx context.Context) bool {
 	if err != nil {
 		return true
 	}
-	return strings.HasSuffix(controlURL.Host, ".tailscale.com")
+	return strings.HasSuffix(controlURL.Host, ".github.com/sagernet/tailscale")
 }
 
 // awaitUserAuth blocks until the given session auth has been completed

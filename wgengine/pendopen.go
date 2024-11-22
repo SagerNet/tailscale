@@ -11,13 +11,13 @@ import (
 	"time"
 
 	"github.com/gaissmai/bart"
-	"tailscale.com/net/flowtrack"
-	"tailscale.com/net/packet"
-	"tailscale.com/net/tstun"
-	"tailscale.com/types/ipproto"
-	"tailscale.com/types/lazy"
-	"tailscale.com/util/mak"
-	"tailscale.com/wgengine/filter"
+	"github.com/sagernet/tailscale/net/flowtrack"
+	"github.com/sagernet/tailscale/net/packet"
+	"github.com/sagernet/tailscale/net/tstun"
+	"github.com/sagernet/tailscale/types/ipproto"
+	"github.com/sagernet/tailscale/types/lazy"
+	"github.com/sagernet/tailscale/util/mak"
+	"github.com/sagernet/tailscale/wgengine/filter"
 )
 
 const tcpTimeoutBeforeDebug = 5 * time.Second

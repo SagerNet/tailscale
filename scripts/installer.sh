@@ -328,7 +328,7 @@ main() {
 		exit 1
 	fi
 
-	TEST_URL="https://pkgs.tailscale.com/"
+	TEST_URL="https://pkgs.github.com/sagernet/tailscale/"
 	RC=0
 	TEST_OUT=$($CURL "$TEST_URL" 2>&1) || RC=$?
 	if [ $RC != 0 ]; then
@@ -345,7 +345,7 @@ main() {
 	case "$OS" in
 		ubuntu|debian|raspbian|centos|oracle|rhel|amazon-linux|opensuse|photon)
 			# Check with the package server whether a given version is supported.
-			URL="https://pkgs.tailscale.com/$TRACK/$OS/$VERSION/installer-supported"
+			URL="https://pkgs.github.com/sagernet/tailscale/$TRACK/$OS/$VERSION/installer-supported"
 			$CURL "$URL" 2> /dev/null | grep -q OK || OS_UNSUPPORTED=1
 			;;
 		fedora)
@@ -393,7 +393,7 @@ main() {
 			other-linux)
 				echo "Couldn't determine what kind of Linux is running."
 				echo "You could try the static binaries at:"
-				echo "https://pkgs.tailscale.com/$TRACK/#static"
+				echo "https://pkgs.github.com/sagernet/tailscale/$TRACK/#static"
 				;;
 			"")
 				echo "Couldn't determine what operating system you're running."
@@ -403,7 +403,7 @@ main() {
 				;;
 		esac
 		echo
-		echo "If you'd like us to support your system better, please email support@tailscale.com"
+		echo "If you'd like us to support your system better, please email support@github.com/sagernet/tailscale"
 		echo "and tell us what OS you're running."
 		echo
 		echo "Please include the following information we gathered from your system:"
@@ -463,12 +463,12 @@ main() {
 			$SUDO mkdir -p --mode=0755 /usr/share/keyrings
 			case "$APT_KEY_TYPE" in
 				legacy)
-					$CURL "https://pkgs.tailscale.com/$TRACK/$OS/$VERSION.asc" | $SUDO apt-key add -
-					$CURL "https://pkgs.tailscale.com/$TRACK/$OS/$VERSION.list" | $SUDO tee /etc/apt/sources.list.d/tailscale.list
+					$CURL "https://pkgs.github.com/sagernet/tailscale/$TRACK/$OS/$VERSION.asc" | $SUDO apt-key add -
+					$CURL "https://pkgs.github.com/sagernet/tailscale/$TRACK/$OS/$VERSION.list" | $SUDO tee /etc/apt/sources.list.d/tailscale.list
 				;;
 				keyring)
-					$CURL "https://pkgs.tailscale.com/$TRACK/$OS/$VERSION.noarmor.gpg" | $SUDO tee /usr/share/keyrings/tailscale-archive-keyring.gpg >/dev/null
-					$CURL "https://pkgs.tailscale.com/$TRACK/$OS/$VERSION.tailscale-keyring.list" | $SUDO tee /etc/apt/sources.list.d/tailscale.list
+					$CURL "https://pkgs.github.com/sagernet/tailscale/$TRACK/$OS/$VERSION.noarmor.gpg" | $SUDO tee /usr/share/keyrings/tailscale-archive-keyring.gpg >/dev/null
+					$CURL "https://pkgs.github.com/sagernet/tailscale/$TRACK/$OS/$VERSION.tailscale-keyring.list" | $SUDO tee /etc/apt/sources.list.d/tailscale.list
 				;;
 			esac
 			$SUDO apt-get update
@@ -482,7 +482,7 @@ main() {
 		yum)
 			set -x
 			$SUDO yum install yum-utils -y
-			$SUDO yum-config-manager -y --add-repo "https://pkgs.tailscale.com/$TRACK/$OS/$VERSION/tailscale.repo"
+			$SUDO yum-config-manager -y --add-repo "https://pkgs.github.com/sagernet/tailscale/$TRACK/$OS/$VERSION/tailscale.repo"
 			$SUDO yum install tailscale -y
 			$SUDO systemctl enable --now tailscaled
 			set +x
@@ -515,10 +515,10 @@ main() {
 			set -x
 			if [ "$DNF_VERSION" = "3" ]; then
 				$SUDO dnf install -y 'dnf-command(config-manager)'
-				$SUDO dnf config-manager --add-repo "https://pkgs.tailscale.com/$TRACK/$OS/$VERSION/tailscale.repo"
+				$SUDO dnf config-manager --add-repo "https://pkgs.github.com/sagernet/tailscale/$TRACK/$OS/$VERSION/tailscale.repo"
 			elif [ "$DNF_VERSION" = "5" ]; then
 				# Already installed config-manager, above.
-				$SUDO dnf config-manager addrepo --from-repofile="https://pkgs.tailscale.com/$TRACK/$OS/$VERSION/tailscale.repo"
+				$SUDO dnf config-manager addrepo --from-repofile="https://pkgs.github.com/sagernet/tailscale/$TRACK/$OS/$VERSION/tailscale.repo"
 			else
 				echo "unexpected: unknown dnf version $DNF_VERSION"
 				exit 1
@@ -529,15 +529,15 @@ main() {
 		;;
 		tdnf)
 			set -x
-			curl -fsSL "https://pkgs.tailscale.com/$TRACK/$OS/$VERSION/tailscale.repo" > /etc/yum.repos.d/tailscale.repo
+			curl -fsSL "https://pkgs.github.com/sagernet/tailscale/$TRACK/$OS/$VERSION/tailscale.repo" > /etc/yum.repos.d/tailscale.repo
 			$SUDO tdnf install -y tailscale
 			$SUDO systemctl enable --now tailscaled
 			set +x
 		;;
 		zypper)
 			set -x
-			$SUDO rpm --import "https://pkgs.tailscale.com/$TRACK/$OS/$VERSION/repo.gpg"
-			$SUDO zypper --non-interactive ar -g -r "https://pkgs.tailscale.com/$TRACK/$OS/$VERSION/tailscale.repo"
+			$SUDO rpm --import "https://pkgs.github.com/sagernet/tailscale/$TRACK/$OS/$VERSION/repo.gpg"
+			$SUDO zypper --non-interactive ar -g -r "https://pkgs.github.com/sagernet/tailscale/$TRACK/$OS/$VERSION/tailscale.repo"
 			$SUDO zypper --non-interactive --gpg-auto-import-keys refresh
 			$SUDO zypper --non-interactive install tailscale
 			$SUDO systemctl enable --now tailscaled

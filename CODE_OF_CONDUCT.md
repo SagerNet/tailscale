@@ -62,7 +62,7 @@ event.
 
 Instances of abusive, harassing, or otherwise unacceptable behavior
 may be reported to the community leaders responsible for enforcement
-at [info@tailscale.com](mailto:info@tailscale.com). All complaints
+at [info@github.com/sagernet/tailscale](mailto:info@github.com/sagernet/tailscale). All complaints
 will be reviewed and investigated promptly and fairly.
 
 All community leaders are obligated to respect the privacy and

@@ -88,7 +88,7 @@ import (
 
 // CSP is the value of a Content-Security-Policy header. Keys are CSP
 // directives (like "default-src") and values are source expressions (like
-// "'self'" or "https://tailscale.com"). A nil slice value is allowed for some
+// "'self'" or "https://github.com/sagernet/tailscale"). A nil slice value is allowed for some
 // directives like "upgrade-insecure-requests" that don't expect a list of
 // source definitions.
 type CSP map[string][]string

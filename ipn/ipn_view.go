@@ -10,15 +10,15 @@ import (
 	"errors"
 	"net/netip"
 
-	"tailscale.com/drive"
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/opt"
-	"tailscale.com/types/persist"
-	"tailscale.com/types/preftype"
-	"tailscale.com/types/views"
+	"github.com/sagernet/tailscale/drive"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/opt"
+	"github.com/sagernet/tailscale/types/persist"
+	"github.com/sagernet/tailscale/types/preftype"
+	"github.com/sagernet/tailscale/types/views"
 )
 
-//go:generate go run tailscale.com/cmd/cloner  -clonefunc=false -type=Prefs,ServeConfig,TCPPortHandler,HTTPHandler,WebServerConfig
+//go:generate go run github.com/sagernet/tailscale/cmd/cloner  -clonefunc=false -type=Prefs,ServeConfig,TCPPortHandler,HTTPHandler,WebServerConfig
 
 // View returns a readonly view of Prefs.
 func (p *Prefs) View() PrefsView {

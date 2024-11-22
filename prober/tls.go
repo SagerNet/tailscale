@@ -17,7 +17,7 @@ import (
 
 	"github.com/pkg/errors"
 	"golang.org/x/crypto/ocsp"
-	"tailscale.com/util/multierr"
+	"github.com/sagernet/tailscale/util/multierr"
 )
 
 const expiresSoon = 7 * 24 * time.Hour // 7 days from now

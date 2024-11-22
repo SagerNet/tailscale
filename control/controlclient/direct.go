@@ -28,35 +28,35 @@ import (
 	"time"
 
 	"go4.org/mem"
-	"tailscale.com/control/controlknobs"
-	"tailscale.com/envknob"
-	"tailscale.com/health"
-	"tailscale.com/hostinfo"
-	"tailscale.com/ipn/ipnstate"
-	"tailscale.com/logtail"
-	"tailscale.com/net/dnscache"
-	"tailscale.com/net/dnsfallback"
-	"tailscale.com/net/netmon"
-	"tailscale.com/net/netutil"
-	"tailscale.com/net/tlsdial"
-	"tailscale.com/net/tsdial"
-	"tailscale.com/net/tshttpproxy"
-	"tailscale.com/tailcfg"
-	"tailscale.com/tka"
-	"tailscale.com/tstime"
-	"tailscale.com/types/key"
-	"tailscale.com/types/logger"
-	"tailscale.com/types/netmap"
-	"tailscale.com/types/persist"
-	"tailscale.com/types/ptr"
-	"tailscale.com/types/tkatype"
-	"tailscale.com/util/clientmetric"
-	"tailscale.com/util/multierr"
-	"tailscale.com/util/singleflight"
-	"tailscale.com/util/syspolicy"
-	"tailscale.com/util/systemd"
-	"tailscale.com/util/testenv"
-	"tailscale.com/util/zstdframe"
+	"github.com/sagernet/tailscale/control/controlknobs"
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/health"
+	"github.com/sagernet/tailscale/hostinfo"
+	"github.com/sagernet/tailscale/ipn/ipnstate"
+	"github.com/sagernet/tailscale/logtail"
+	"github.com/sagernet/tailscale/net/dnscache"
+	"github.com/sagernet/tailscale/net/dnsfallback"
+	"github.com/sagernet/tailscale/net/netmon"
+	"github.com/sagernet/tailscale/net/netutil"
+	"github.com/sagernet/tailscale/net/tlsdial"
+	"github.com/sagernet/tailscale/net/tsdial"
+	"github.com/sagernet/tailscale/net/tshttpproxy"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/tka"
+	"github.com/sagernet/tailscale/tstime"
+	"github.com/sagernet/tailscale/types/key"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/types/netmap"
+	"github.com/sagernet/tailscale/types/persist"
+	"github.com/sagernet/tailscale/types/ptr"
+	"github.com/sagernet/tailscale/types/tkatype"
+	"github.com/sagernet/tailscale/util/clientmetric"
+	"github.com/sagernet/tailscale/util/multierr"
+	"github.com/sagernet/tailscale/util/singleflight"
+	"github.com/sagernet/tailscale/util/syspolicy"
+	"github.com/sagernet/tailscale/util/systemd"
+	"github.com/sagernet/tailscale/util/testenv"
+	"github.com/sagernet/tailscale/util/zstdframe"
 )
 
 // Direct is the client that connects to a tailcontrol server for a node.
@@ -321,7 +321,7 @@ func NewDirect(opts Options) (*Direct, error) {
 		}
 		c.serverNoiseKey = key.NewMachine().Public() // prevent early error before hitting test client
 	}
-	if strings.Contains(opts.ServerURL, "controlplane.tailscale.com") && envknob.Bool("TS_PANIC_IF_HIT_MAIN_CONTROL") {
+	if strings.Contains(opts.ServerURL, "controlplane.github.com/sagernet/tailscale") && envknob.Bool("TS_PANIC_IF_HIT_MAIN_CONTROL") {
 		c.panicOnUse = true
 	}
 	return c, nil
@@ -417,7 +417,7 @@ func (c *Direct) TryLogout(ctx context.Context) error {
 }
 
 func (c *Direct) TryLogin(ctx context.Context, flags LoginFlags) (url string, err error) {
-	if strings.Contains(c.serverURL, "controlplane.tailscale.com") && envknob.Bool("TS_PANIC_IF_HIT_MAIN_CONTROL") {
+	if strings.Contains(c.serverURL, "controlplane.github.com/sagernet/tailscale") && envknob.Bool("TS_PANIC_IF_HIT_MAIN_CONTROL") {
 		panic(fmt.Sprintf("[unexpected] controlclient: TryLogin called on %s; tainted=%v", c.serverURL, c.panicOnUse))
 	}
 	c.logf("[v1] direct.TryLogin(flags=%v)", flags)

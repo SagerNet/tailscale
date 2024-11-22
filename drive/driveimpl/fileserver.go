@@ -13,7 +13,7 @@ import (
 	"sync"
 
 	"github.com/tailscale/xnet/webdav"
-	"tailscale.com/drive/driveimpl/shared"
+	"github.com/sagernet/tailscale/drive/driveimpl/shared"
 )
 
 // FileServer is a standalone WebDAV server that dynamically serves up shares.

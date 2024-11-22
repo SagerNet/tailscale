@@ -28,10 +28,10 @@ import (
 	"github.com/tailscale/goupnp"
 	"github.com/tailscale/goupnp/dcps/internetgateway2"
 	"github.com/tailscale/goupnp/soap"
-	"tailscale.com/envknob"
-	"tailscale.com/net/netns"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/mak"
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/net/netns"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/mak"
 )
 
 // References:

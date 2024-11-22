@@ -12,8 +12,8 @@ import (
 
 	"github.com/fxamacker/cbor/v2"
 	"golang.org/x/crypto/blake2s"
-	"tailscale.com/types/tkatype"
-	"tailscale.com/util/set"
+	"github.com/sagernet/tailscale/types/tkatype"
+	"github.com/sagernet/tailscale/util/set"
 )
 
 // AUMHash represents the BLAKE2s digest of an Authority Update Message (AUM).

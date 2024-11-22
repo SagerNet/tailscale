@@ -14,12 +14,12 @@ import (
 	"time"
 
 	"github.com/godbus/dbus/v5"
-	"tailscale.com/control/controlknobs"
-	"tailscale.com/health"
-	"tailscale.com/net/netaddr"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/clientmetric"
-	"tailscale.com/util/cmpver"
+	"github.com/sagernet/tailscale/control/controlknobs"
+	"github.com/sagernet/tailscale/health"
+	"github.com/sagernet/tailscale/net/netaddr"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/clientmetric"
+	"github.com/sagernet/tailscale/util/cmpver"
 )
 
 type kv struct {
@@ -275,7 +275,7 @@ func dnsMode(logf logger.Logf, health *health.Tracker, env newOSConfigEnv) (ret 
 			return "direct", nil
 		}
 
-		health.SetDNSManagerHealth(errors.New("systemd-resolved and NetworkManager are wired together incorrectly; MagicDNS will probably not work. For more info, see https://tailscale.com/s/resolved-nm"))
+		health.SetDNSManagerHealth(errors.New("systemd-resolved and NetworkManager are wired together incorrectly; MagicDNS will probably not work. For more info, see https://github.com/sagernet/tailscale/s/resolved-nm"))
 		dbg("nm-safe", "no")
 		return "systemd-resolved", nil
 	default:

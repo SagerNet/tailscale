@@ -9,8 +9,8 @@ import (
 	"strconv"
 	"strings"
 
-	"tailscale.com/types/ipproto"
-	"tailscale.com/util/vizerror"
+	"github.com/sagernet/tailscale/types/ipproto"
+	"github.com/sagernet/tailscale/util/vizerror"
 )
 
 var (

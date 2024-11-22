@@ -10,8 +10,8 @@ import (
 	"unsafe"
 
 	"golang.org/x/sys/windows"
-	"tailscale.com/types/logger"
-	"tailscale.com/types/nettype"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/types/nettype"
 )
 
 func trySetUDPSocketOptions(pconn nettype.PacketConn, logf logger.Logf) {

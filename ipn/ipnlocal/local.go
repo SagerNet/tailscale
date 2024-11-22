@@ -41,84 +41,84 @@ import (
 	xmaps "golang.org/x/exp/maps"
 	"golang.org/x/net/dns/dnsmessage"
 	"gvisor.dev/gvisor/pkg/tcpip"
-	"tailscale.com/appc"
-	"tailscale.com/client/tailscale/apitype"
-	"tailscale.com/clientupdate"
-	"tailscale.com/control/controlclient"
-	"tailscale.com/control/controlknobs"
-	"tailscale.com/doctor"
-	"tailscale.com/doctor/ethtool"
-	"tailscale.com/doctor/permissions"
-	"tailscale.com/doctor/routetable"
-	"tailscale.com/drive"
-	"tailscale.com/envknob"
-	"tailscale.com/envknob/featureknob"
-	"tailscale.com/health"
-	"tailscale.com/health/healthmsg"
-	"tailscale.com/hostinfo"
-	"tailscale.com/ipn"
-	"tailscale.com/ipn/conffile"
-	"tailscale.com/ipn/ipnauth"
-	"tailscale.com/ipn/ipnstate"
-	"tailscale.com/ipn/policy"
-	"tailscale.com/log/sockstatlog"
-	"tailscale.com/logpolicy"
-	"tailscale.com/net/captivedetection"
-	"tailscale.com/net/dns"
-	"tailscale.com/net/dnscache"
-	"tailscale.com/net/dnsfallback"
-	"tailscale.com/net/ipset"
-	"tailscale.com/net/netcheck"
-	"tailscale.com/net/netkernelconf"
-	"tailscale.com/net/netmon"
-	"tailscale.com/net/netns"
-	"tailscale.com/net/netutil"
-	"tailscale.com/net/tsaddr"
-	"tailscale.com/net/tsdial"
-	"tailscale.com/paths"
-	"tailscale.com/portlist"
-	"tailscale.com/syncs"
-	"tailscale.com/tailcfg"
-	"tailscale.com/taildrop"
-	"tailscale.com/tka"
-	"tailscale.com/tsd"
-	"tailscale.com/tstime"
-	"tailscale.com/types/appctype"
-	"tailscale.com/types/dnstype"
-	"tailscale.com/types/empty"
-	"tailscale.com/types/key"
-	"tailscale.com/types/lazy"
-	"tailscale.com/types/logger"
-	"tailscale.com/types/logid"
-	"tailscale.com/types/netmap"
-	"tailscale.com/types/opt"
-	"tailscale.com/types/persist"
-	"tailscale.com/types/preftype"
-	"tailscale.com/types/ptr"
-	"tailscale.com/types/views"
-	"tailscale.com/util/deephash"
-	"tailscale.com/util/dnsname"
-	"tailscale.com/util/httpm"
-	"tailscale.com/util/mak"
-	"tailscale.com/util/multierr"
-	"tailscale.com/util/osshare"
-	"tailscale.com/util/osuser"
-	"tailscale.com/util/rands"
-	"tailscale.com/util/set"
-	"tailscale.com/util/syspolicy"
-	"tailscale.com/util/systemd"
-	"tailscale.com/util/testenv"
-	"tailscale.com/util/uniq"
-	"tailscale.com/util/usermetric"
-	"tailscale.com/version"
-	"tailscale.com/version/distro"
-	"tailscale.com/wgengine"
-	"tailscale.com/wgengine/capture"
-	"tailscale.com/wgengine/filter"
-	"tailscale.com/wgengine/magicsock"
-	"tailscale.com/wgengine/router"
-	"tailscale.com/wgengine/wgcfg"
-	"tailscale.com/wgengine/wgcfg/nmcfg"
+	"github.com/sagernet/tailscale/appc"
+	"github.com/sagernet/tailscale/client/tailscale/apitype"
+	"github.com/sagernet/tailscale/clientupdate"
+	"github.com/sagernet/tailscale/control/controlclient"
+	"github.com/sagernet/tailscale/control/controlknobs"
+	"github.com/sagernet/tailscale/doctor"
+	"github.com/sagernet/tailscale/doctor/ethtool"
+	"github.com/sagernet/tailscale/doctor/permissions"
+	"github.com/sagernet/tailscale/doctor/routetable"
+	"github.com/sagernet/tailscale/drive"
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/envknob/featureknob"
+	"github.com/sagernet/tailscale/health"
+	"github.com/sagernet/tailscale/health/healthmsg"
+	"github.com/sagernet/tailscale/hostinfo"
+	"github.com/sagernet/tailscale/ipn"
+	"github.com/sagernet/tailscale/ipn/conffile"
+	"github.com/sagernet/tailscale/ipn/ipnauth"
+	"github.com/sagernet/tailscale/ipn/ipnstate"
+	"github.com/sagernet/tailscale/ipn/policy"
+	"github.com/sagernet/tailscale/log/sockstatlog"
+	"github.com/sagernet/tailscale/logpolicy"
+	"github.com/sagernet/tailscale/net/captivedetection"
+	"github.com/sagernet/tailscale/net/dns"
+	"github.com/sagernet/tailscale/net/dnscache"
+	"github.com/sagernet/tailscale/net/dnsfallback"
+	"github.com/sagernet/tailscale/net/ipset"
+	"github.com/sagernet/tailscale/net/netcheck"
+	"github.com/sagernet/tailscale/net/netkernelconf"
+	"github.com/sagernet/tailscale/net/netmon"
+	"github.com/sagernet/tailscale/net/netns"
+	"github.com/sagernet/tailscale/net/netutil"
+	"github.com/sagernet/tailscale/net/tsaddr"
+	"github.com/sagernet/tailscale/net/tsdial"
+	"github.com/sagernet/tailscale/paths"
+	"github.com/sagernet/tailscale/portlist"
+	"github.com/sagernet/tailscale/syncs"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/taildrop"
+	"github.com/sagernet/tailscale/tka"
+	"github.com/sagernet/tailscale/tsd"
+	"github.com/sagernet/tailscale/tstime"
+	"github.com/sagernet/tailscale/types/appctype"
+	"github.com/sagernet/tailscale/types/dnstype"
+	"github.com/sagernet/tailscale/types/empty"
+	"github.com/sagernet/tailscale/types/key"
+	"github.com/sagernet/tailscale/types/lazy"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/types/logid"
+	"github.com/sagernet/tailscale/types/netmap"
+	"github.com/sagernet/tailscale/types/opt"
+	"github.com/sagernet/tailscale/types/persist"
+	"github.com/sagernet/tailscale/types/preftype"
+	"github.com/sagernet/tailscale/types/ptr"
+	"github.com/sagernet/tailscale/types/views"
+	"github.com/sagernet/tailscale/util/deephash"
+	"github.com/sagernet/tailscale/util/dnsname"
+	"github.com/sagernet/tailscale/util/httpm"
+	"github.com/sagernet/tailscale/util/mak"
+	"github.com/sagernet/tailscale/util/multierr"
+	"github.com/sagernet/tailscale/util/osshare"
+	"github.com/sagernet/tailscale/util/osuser"
+	"github.com/sagernet/tailscale/util/rands"
+	"github.com/sagernet/tailscale/util/set"
+	"github.com/sagernet/tailscale/util/syspolicy"
+	"github.com/sagernet/tailscale/util/systemd"
+	"github.com/sagernet/tailscale/util/testenv"
+	"github.com/sagernet/tailscale/util/uniq"
+	"github.com/sagernet/tailscale/util/usermetric"
+	"github.com/sagernet/tailscale/version"
+	"github.com/sagernet/tailscale/version/distro"
+	"github.com/sagernet/tailscale/wgengine"
+	"github.com/sagernet/tailscale/wgengine/capture"
+	"github.com/sagernet/tailscale/wgengine/filter"
+	"github.com/sagernet/tailscale/wgengine/magicsock"
+	"github.com/sagernet/tailscale/wgengine/router"
+	"github.com/sagernet/tailscale/wgengine/wgcfg"
+	"github.com/sagernet/tailscale/wgengine/wgcfg/nmcfg"
 )
 
 var controlDebugFlags = getControlDebugFlags()
@@ -3050,8 +3050,8 @@ func (b *LocalBackend) validPopBrowserURL(urlStr string) bool {
 	serverURL := b.Prefs().ControlURLOrDefault()
 	if ipn.IsLoginServerSynonym(serverURL) {
 		// When connected to the official Tailscale control plane, only allow
-		// URLs from tailscale.com or its subdomains.
-		if h := u.Hostname(); h != "tailscale.com" && !strings.HasSuffix(u.Hostname(), ".tailscale.com") {
+		// URLs from github.com/sagernet/tailscale or its subdomains.
+		if h := u.Hostname(); h != "github.com/sagernet/tailscale" && !strings.HasSuffix(u.Hostname(), ".github.com/sagernet/tailscale") {
 			return false
 		}
 		// When using a different ControlURL, we cannot be sure what legitimate
@@ -3603,7 +3603,7 @@ func (b *LocalBackend) checkSSHPrefsLocked(p *ipn.Prefs) error {
 	if b.netMap != nil {
 		if !b.netMap.HasCap(tailcfg.CapabilitySSH) {
 			if b.isDefaultServerLocked() {
-				return errors.New("Unable to enable local Tailscale SSH server; not enabled on Tailnet. See https://tailscale.com/s/ssh")
+				return errors.New("Unable to enable local Tailscale SSH server; not enabled on Tailnet. See https://github.com/sagernet/tailscale/s/ssh")
 			}
 			return errors.New("Unable to enable local Tailscale SSH server; not enabled on Tailnet.")
 		}
@@ -3633,7 +3633,7 @@ func (b *LocalBackend) sshOnButUnusableHealthCheckMessageLocked() (healthMessage
 	if !isDefault {
 		return healthmsg.TailscaleSSHOnBut + "access controls don't allow anyone to access this device. Update your tailnet's ACLs to allow access."
 	}
-	return healthmsg.TailscaleSSHOnBut + "access controls don't allow anyone to access this device. Update your tailnet's ACLs at https://tailscale.com/s/ssh-policy"
+	return healthmsg.TailscaleSSHOnBut + "access controls don't allow anyone to access this device. Update your tailnet's ACLs at https://github.com/sagernet/tailscale/s/ssh-policy"
 }
 
 func (b *LocalBackend) isDefaultServerLocked() bool {
@@ -4123,7 +4123,7 @@ func (b *LocalBackend) blockEngineUpdates(block bool) {
 // current network map and preferences.
 // b.mu must be held.
 func (b *LocalBackend) reconfigAppConnectorLocked(nm *netmap.NetworkMap, prefs ipn.PrefsView) {
-	const appConnectorCapName = "tailscale.com/app-connectors"
+	const appConnectorCapName = "github.com/sagernet/tailscale/app-connectors"
 	defer func() {
 		if b.hostinfo != nil {
 			b.hostinfo.AppConnector.Set(b.appConnector != nil)
@@ -6210,7 +6210,7 @@ func (b *LocalBackend) CheckUDPGROForwarding() error {
 // acting as Tailscale subnet routers or exit nodes. Currently (9/5/2024) this
 // functionality is considered experimental and only safe to use via explicit
 // user opt-in for ephemeral devices, such as containers.
-// https://tailscale.com/kb/1320/performance-best-practices#linux-optimizations-for-subnet-routers-and-exit-nodes
+// https://github.com/sagernet/tailscale/kb/1320/performance-best-practices#linux-optimizations-for-subnet-routers-and-exit-nodes
 func (b *LocalBackend) SetUDPGROForwarding() error {
 	if b.sys.IsNetstackRouter() {
 		return errors.New("UDP GRO forwarding cannot be enabled in userspace mode")
@@ -6493,7 +6493,7 @@ var warnSSHSELinuxWarnable = health.Register(&health.Warnable{
 	Code:     "ssh-unavailable-selinux-enabled",
 	Title:    "Tailscale SSH and SELinux",
 	Severity: health.SeverityLow,
-	Text:     health.StaticMessage("SELinux is enabled; Tailscale SSH may not work. See https://tailscale.com/s/ssh-selinux"),
+	Text:     health.StaticMessage("SELinux is enabled; Tailscale SSH may not work. See https://github.com/sagernet/tailscale/s/ssh-selinux"),
 })
 
 func (b *LocalBackend) updateSELinuxHealthWarning() {

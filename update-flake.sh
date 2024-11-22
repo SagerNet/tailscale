@@ -7,7 +7,7 @@ OUT=$(mktemp -d -t nar-hash-XXXXXX)
 rm -rf "$OUT"
 
 ./tool/go mod vendor -o "$OUT"
-./tool/go run tailscale.com/cmd/nardump --sri "$OUT" >go.mod.sri
+./tool/go run github.com/sagernet/tailscale/cmd/nardump --sri "$OUT" >go.mod.sri
 rm -rf "$OUT"
 
 # nix-direnv only watches the top-level nix file for changes. As a

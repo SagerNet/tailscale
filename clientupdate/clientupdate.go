@@ -27,10 +27,10 @@ import (
 	"strconv"
 	"strings"
 
-	"tailscale.com/types/logger"
-	"tailscale.com/util/cmpver"
-	"tailscale.com/version"
-	"tailscale.com/version/distro"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/cmpver"
+	"github.com/sagernet/tailscale/version"
+	"github.com/sagernet/tailscale/version/distro"
 )
 
 const (
@@ -91,7 +91,7 @@ type Arguments struct {
 	// update is aborted.
 	Confirm func(newVer string) bool
 	// PkgsAddr is the address of the pkgs server to fetch updates from.
-	// Defaults to "https://pkgs.tailscale.com".
+	// Defaults to "https://pkgs.github.com/sagernet/tailscale".
 	PkgsAddr string
 	// ForAutoUpdate should be true when Updater is created in auto-update
 	// context. When true, NewUpdater returns an error if it cannot be used for
@@ -161,7 +161,7 @@ func NewUpdater(args Arguments) (*Updater, error) {
 		}
 	}
 	if up.Arguments.PkgsAddr == "" {
-		up.Arguments.PkgsAddr = "https://pkgs.tailscale.com"
+		up.Arguments.PkgsAddr = "https://pkgs.github.com/sagernet/tailscale"
 	}
 	return &up, nil
 }
@@ -179,7 +179,7 @@ func (up *Updater) getUpdateFunction() (fn updateFunction, canAutoUpdate bool) {
 			// configuration.
 			return up.updateNixos, false
 		case distro.Synology:
-			// Synology updates use our own pkgs.tailscale.com instead of the
+			// Synology updates use our own pkgs.github.com/sagernet/tailscale instead of the
 			// Synology Package Center. We should eventually get to a regular
 			// release cadence with Synology Package Center and use their
 			// auto-update mechanism.
@@ -298,7 +298,7 @@ func (up *Updater) updateSynology() error {
 		return err
 	}
 
-	// Get the latest version and list of SPKs from pkgs.tailscale.com.
+	// Get the latest version and list of SPKs from pkgs.github.com/sagernet/tailscale.
 	dsmVersion := distro.DSMVersion()
 	osName := fmt.Sprintf("dsm%d", dsmVersion)
 	arch, err := synoArch(runtime.GOARCH, synoinfoConfPath)
@@ -357,7 +357,7 @@ func (up *Updater) updateSynology() error {
 }
 
 // synoArch returns the Synology CPU architecture matching one of the SPK
-// architectures served from pkgs.tailscale.com.
+// architectures served from pkgs.github.com/sagernet/tailscale.
 func synoArch(goArch, synoinfoPath string) (string, error) {
 	// Most Synology boxes just use a different arch name from GOARCH.
 	arch := map[string]string{
@@ -494,7 +494,7 @@ func updateDebianAptSourcesList(dstTrack string) (rewrote bool, err error) {
 }
 
 func updateDebianAptSourcesListBytes(was []byte, dstTrack string) (newContent []byte, err error) {
-	trackURLPrefix := []byte("https://pkgs.tailscale.com/" + dstTrack + "/")
+	trackURLPrefix := []byte("https://pkgs.github.com/sagernet/tailscale/" + dstTrack + "/")
 	var buf bytes.Buffer
 	var changes int
 	bs := bufio.NewScanner(bytes.NewReader(was))
@@ -602,7 +602,7 @@ func updateYUMRepoTrack(repoFile, dstTrack string) (rewrote bool, err error) {
 	}
 
 	urlRe := regexp.MustCompile(`^(baseurl|gpgkey)=https://pkgs\.tailscale\.com/(un)?stable/`)
-	urlReplacement := fmt.Sprintf("$1=https://pkgs.tailscale.com/%s/", dstTrack)
+	urlReplacement := fmt.Sprintf("$1=https://pkgs.github.com/sagernet/tailscale/%s/", dstTrack)
 
 	s := bufio.NewScanner(bytes.NewReader(was))
 	newContent := bytes.NewBuffer(make([]byte, 0, len(was)))
@@ -1139,7 +1139,7 @@ func requestedTailscaleVersion(ver, track string) (string, error) {
 }
 
 // LatestTailscaleVersion returns the latest released version for the given
-// track from pkgs.tailscale.com.
+// track from pkgs.github.com/sagernet/tailscale.
 func LatestTailscaleVersion(track string) (string, error) {
 	if track == "" {
 		track = CurrentTrack
@@ -1183,7 +1183,7 @@ type trackPackages struct {
 }
 
 func latestPackages(track string) (*trackPackages, error) {
-	url := fmt.Sprintf("https://pkgs.tailscale.com/%s/?mode=json&os=%s", track, runtime.GOOS)
+	url := fmt.Sprintf("https://pkgs.github.com/sagernet/tailscale/%s/?mode=json&os=%s", track, runtime.GOOS)
 	res, err := http.Get(url)
 	if err != nil {
 		return nil, fmt.Errorf("fetching latest tailscale version: %w", err)

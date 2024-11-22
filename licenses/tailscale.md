@@ -4,9 +4,9 @@ The following open source dependencies are used to build the [tailscale][] and
 [tailscaled][] commands. These are primarily used on Linux and BSD variants as
 well as an [option for macOS][].
 
-[tailscale]: https://pkg.go.dev/tailscale.com/cmd/tailscale
-[tailscaled]: https://pkg.go.dev/tailscale.com/cmd/tailscaled
-[option for macOS]: https://tailscale.com/kb/1065/macos-variants/
+[tailscale]: https://pkg.go.dev/github.com/sagernet/tailscale/cmd/tailscale
+[tailscaled]: https://pkg.go.dev/github.com/sagernet/tailscale/cmd/tailscaled
+[option for macOS]: https://github.com/sagernet/tailscale/kb/1065/macos-variants/
 
 ## Go Packages
 
@@ -110,6 +110,6 @@ Some packages may only be included on certain architectures or operating systems
  - [sigs.k8s.io/yaml](https://pkg.go.dev/sigs.k8s.io/yaml) ([Apache-2.0](https://github.com/kubernetes-sigs/yaml/blob/v1.4.0/LICENSE))
  - [sigs.k8s.io/yaml/goyaml.v2](https://pkg.go.dev/sigs.k8s.io/yaml/goyaml.v2) ([Apache-2.0](https://github.com/kubernetes-sigs/yaml/blob/v1.4.0/goyaml.v2/LICENSE))
  - [software.sslmate.com/src/go-pkcs12](https://pkg.go.dev/software.sslmate.com/src/go-pkcs12) ([BSD-3-Clause](https://github.com/SSLMate/go-pkcs12/blob/v0.4.0/LICENSE))
- - [tailscale.com](https://pkg.go.dev/tailscale.com) ([BSD-3-Clause](https://github.com/tailscale/tailscale/blob/HEAD/LICENSE))
- - [tailscale.com/tempfork/gliderlabs/ssh](https://pkg.go.dev/tailscale.com/tempfork/gliderlabs/ssh) ([BSD-3-Clause](https://github.com/tailscale/tailscale/blob/HEAD/tempfork/gliderlabs/ssh/LICENSE))
- - [tailscale.com/tempfork/spf13/cobra](https://pkg.go.dev/tailscale.com/tempfork/spf13/cobra) ([Apache-2.0](https://github.com/tailscale/tailscale/blob/HEAD/tempfork/spf13/cobra/LICENSE.txt))
+ - [github.com/sagernet/tailscale](https://pkg.go.dev/github.com/sagernet/tailscale) ([BSD-3-Clause](https://github.com/tailscale/tailscale/blob/HEAD/LICENSE))
+ - [github.com/sagernet/tailscale/tempfork/gliderlabs/ssh](https://pkg.go.dev/github.com/sagernet/tailscale/tempfork/gliderlabs/ssh) ([BSD-3-Clause](https://github.com/tailscale/tailscale/blob/HEAD/tempfork/gliderlabs/ssh/LICENSE))
+ - [github.com/sagernet/tailscale/tempfork/spf13/cobra](https://pkg.go.dev/github.com/sagernet/tailscale/tempfork/spf13/cobra) ([Apache-2.0](https://github.com/tailscale/tailscale/blob/HEAD/tempfork/spf13/cobra/LICENSE.txt))

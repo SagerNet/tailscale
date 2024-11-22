@@ -18,7 +18,7 @@ import (
 
 	"golang.org/x/crypto/blake2s"
 	chp "golang.org/x/crypto/chacha20poly1305"
-	"tailscale.com/types/key"
+	"github.com/sagernet/tailscale/types/key"
 )
 
 const (

@@ -20,9 +20,9 @@ import (
 	"time"
 
 	"golang.org/x/net/http2"
-	"tailscale.com/tailcfg"
-	"tailscale.com/util/httpm"
-	"tailscale.com/util/multierr"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/util/httpm"
+	"github.com/sagernet/tailscale/util/multierr"
 )
 
 const (

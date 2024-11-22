@@ -12,10 +12,10 @@ import (
 
 	"github.com/tailscale/wireguard-go/tun"
 	"go4.org/netipx"
-	"tailscale.com/health"
-	"tailscale.com/net/netmon"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/set"
+	"github.com/sagernet/tailscale/health"
+	"github.com/sagernet/tailscale/net/netmon"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/set"
 )
 
 // For now this router only supports the WireGuard userspace implementation.

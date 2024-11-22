@@ -37,21 +37,21 @@ import (
 
 	"go4.org/mem"
 	"golang.org/x/sync/errgroup"
-	"tailscale.com/client/tailscale"
-	"tailscale.com/disco"
-	"tailscale.com/envknob"
-	"tailscale.com/metrics"
-	"tailscale.com/syncs"
-	"tailscale.com/tailcfg"
-	"tailscale.com/tstime"
-	"tailscale.com/tstime/rate"
-	"tailscale.com/types/key"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/ctxkey"
-	"tailscale.com/util/mak"
-	"tailscale.com/util/set"
-	"tailscale.com/util/slicesx"
-	"tailscale.com/version"
+	"github.com/sagernet/tailscale/client/tailscale"
+	"github.com/sagernet/tailscale/disco"
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/metrics"
+	"github.com/sagernet/tailscale/syncs"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/tstime"
+	"github.com/sagernet/tailscale/tstime/rate"
+	"github.com/sagernet/tailscale/types/key"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/ctxkey"
+	"github.com/sagernet/tailscale/util/mak"
+	"github.com/sagernet/tailscale/util/set"
+	"github.com/sagernet/tailscale/util/slicesx"
+	"github.com/sagernet/tailscale/version"
 )
 
 // verboseDropKeys is the set of destination public keys that should
@@ -1142,7 +1142,7 @@ func (c *sclient) debugLogf(format string, v ...any) {
 // dropReason is why we dropped a DERP frame.
 type dropReason int
 
-//go:generate go run tailscale.com/cmd/addlicense -file dropreason_string.go go run golang.org/x/tools/cmd/stringer -type=dropReason -trimprefix=dropReason
+//go:generate go run github.com/sagernet/tailscale/cmd/addlicense -file dropreason_string.go go run golang.org/x/tools/cmd/stringer -type=dropReason -trimprefix=dropReason
 
 const (
 	dropReasonUnknownDest      dropReason = iota // unknown destination pubkey

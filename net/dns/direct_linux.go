@@ -8,7 +8,7 @@ import (
 	"context"
 
 	"github.com/illarion/gonotify/v2"
-	"tailscale.com/health"
+	"github.com/sagernet/tailscale/health"
 )
 
 func (m *directManager) runFileWatcher() {
@@ -60,7 +60,7 @@ var resolvTrampleWarnable = health.Register(&health.Warnable{
 	Code:     "resolv-conf-overwritten",
 	Severity: health.SeverityMedium,
 	Title:    "Linux DNS configuration issue",
-	Text:     health.StaticMessage("Linux DNS config not ideal. /etc/resolv.conf overwritten. See https://tailscale.com/s/dns-fight"),
+	Text:     health.StaticMessage("Linux DNS config not ideal. /etc/resolv.conf overwritten. See https://github.com/sagernet/tailscale/s/dns-fight"),
 })
 
 // checkForFileTrample checks whether /etc/resolv.conf has been trampled

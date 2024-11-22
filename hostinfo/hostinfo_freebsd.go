@@ -11,8 +11,8 @@ import (
 	"os/exec"
 
 	"golang.org/x/sys/unix"
-	"tailscale.com/types/ptr"
-	"tailscale.com/version/distro"
+	"github.com/sagernet/tailscale/types/ptr"
+	"github.com/sagernet/tailscale/version/distro"
 )
 
 func init() {

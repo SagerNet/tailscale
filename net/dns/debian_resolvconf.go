@@ -14,8 +14,8 @@ import (
 	"os/exec"
 	"path/filepath"
 
-	"tailscale.com/atomicfile"
-	"tailscale.com/types/logger"
+	"github.com/sagernet/tailscale/atomicfile"
+	"github.com/sagernet/tailscale/types/logger"
 )
 
 //go:embed resolvconf-workaround.sh

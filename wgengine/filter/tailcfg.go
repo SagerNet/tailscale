@@ -9,11 +9,11 @@ import (
 	"strings"
 
 	"go4.org/netipx"
-	"tailscale.com/net/ipset"
-	"tailscale.com/net/netaddr"
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/ipproto"
-	"tailscale.com/types/views"
+	"github.com/sagernet/tailscale/net/ipset"
+	"github.com/sagernet/tailscale/net/netaddr"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/ipproto"
+	"github.com/sagernet/tailscale/types/views"
 )
 
 var defaultProtos = []ipproto.Proto{

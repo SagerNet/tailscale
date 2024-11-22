@@ -33,17 +33,17 @@ import (
 	"time"
 
 	"github.com/tailscale/golang-x-crypto/acme"
-	"tailscale.com/atomicfile"
-	"tailscale.com/envknob"
-	"tailscale.com/hostinfo"
-	"tailscale.com/ipn"
-	"tailscale.com/ipn/ipnstate"
-	"tailscale.com/ipn/store"
-	"tailscale.com/ipn/store/mem"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/testenv"
-	"tailscale.com/version"
-	"tailscale.com/version/distro"
+	"github.com/sagernet/tailscale/atomicfile"
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/hostinfo"
+	"github.com/sagernet/tailscale/ipn"
+	"github.com/sagernet/tailscale/ipn/ipnstate"
+	"github.com/sagernet/tailscale/ipn/store"
+	"github.com/sagernet/tailscale/ipn/store/mem"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/testenv"
+	"github.com/sagernet/tailscale/version"
+	"github.com/sagernet/tailscale/version/distro"
 )
 
 // Process-wide cache. (A new *Handler is created per connection,

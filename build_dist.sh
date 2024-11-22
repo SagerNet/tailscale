@@ -29,7 +29,7 @@ EOF
 fi
 
 tags=""
-ldflags="-X tailscale.com/version.longStamp=${VERSION_LONG} -X tailscale.com/version.shortStamp=${VERSION_SHORT}"
+ldflags="-X github.com/sagernet/tailscale/version.longStamp=${VERSION_LONG} -X github.com/sagernet/tailscale/version.shortStamp=${VERSION_SHORT}"
 
 # build_dist.sh arguments must precede go build arguments.
 while [ "$#" -gt 1 ]; do

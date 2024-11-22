@@ -16,10 +16,10 @@ import (
 	"reflect"
 	"time"
 
-	"tailscale.com/util/syspolicy/internal/loggerx"
-	"tailscale.com/util/syspolicy/rsop"
-	"tailscale.com/util/syspolicy/setting"
-	"tailscale.com/util/syspolicy/source"
+	"github.com/sagernet/tailscale/util/syspolicy/internal/loggerx"
+	"github.com/sagernet/tailscale/util/syspolicy/rsop"
+	"github.com/sagernet/tailscale/util/syspolicy/setting"
+	"github.com/sagernet/tailscale/util/syspolicy/source"
 )
 
 var (
@@ -165,11 +165,11 @@ func convertPolicySettingValueTo[T setting.ValueType](value any, def T) (T, erro
 //
 // See https://github.com/tailscale/tailscale/issues/2798 for some background.
 func SelectControlURL(reg, disk string) string {
-	const def = "https://controlplane.tailscale.com"
+	const def = "https://controlplane.github.com/sagernet/tailscale"
 
 	// Prior to Dec 2020's commit 739b02e6, the installer
-	// wrote a LoginURL value of https://login.tailscale.com to the registry.
-	const oldRegDef = "https://login.tailscale.com"
+	// wrote a LoginURL value of https://login.github.com/sagernet/tailscale to the registry.
+	const oldRegDef = "https://login.github.com/sagernet/tailscale"
 
 	// If they have an explicit value in the registry, use it,
 	// unless it's an old default value from an old installer.
@@ -186,7 +186,7 @@ func SelectControlURL(reg, disk string) string {
 		}
 		if disk != def && disk != oldRegDef {
 			// The value in the registry is the old
-			// default (login.tailscale.com) but the value
+			// default (login.github.com/sagernet/tailscale) but the value
 			// on disk is neither our old nor new default
 			// value, so it must be some custom thing that
 			// the user cares about. Prefer the disk value.

@@ -12,7 +12,7 @@ import (
 	"sync"
 
 	"golang.org/x/sys/windows/registry"
-	"tailscale.com/types/logger"
+	"github.com/sagernet/tailscale/types/logger"
 )
 
 const (

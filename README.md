@@ -1,6 +1,6 @@
 # Tailscale
 
-https://tailscale.com
+https://github.com/sagernet/tailscale
 
 Private WireGuard® networks made easy
 
@@ -9,7 +9,7 @@ Private WireGuard® networks made easy
 This repository contains the majority of Tailscale's open source code.
 Notably, it includes the `tailscaled` daemon and
 the `tailscale` CLI tool. The `tailscaled` daemon runs on Linux, Windows,
-[macOS](https://tailscale.com/kb/1065/macos-variants/), and to varying degrees
+[macOS](https://github.com/sagernet/tailscale/kb/1065/macos-variants/), and to varying degrees
 on FreeBSD and OpenBSD. The Tailscale iOS and Android apps use this repo's
 code, but this repo doesn't contain the mobile GUI code.
 
@@ -21,16 +21,16 @@ Other [Tailscale repos](https://github.com/orgs/tailscale/repositories) of note:
 * the Chocolatey packaging is at https://github.com/tailscale/tailscale-chocolatey
 
 For background on which parts of Tailscale are open source and why,
-see [https://tailscale.com/opensource/](https://tailscale.com/opensource/).
+see [https://github.com/sagernet/tailscale/opensource/](https://github.com/sagernet/tailscale/opensource/).
 
 ## Using
 
 We serve packages for a variety of distros and platforms at
-[https://pkgs.tailscale.com](https://pkgs.tailscale.com/).
+[https://pkgs.github.com/sagernet/tailscale](https://pkgs.github.com/sagernet/tailscale/).
 
 ## Other clients
 
-The [macOS, iOS, and Windows clients](https://tailscale.com/download)
+The [macOS, iOS, and Windows clients](https://github.com/sagernet/tailscale/download)
 use the code in this repository but additionally include small GUI
 wrappers. The GUI wrappers on non-open source platforms are themselves
 not open source.
@@ -42,15 +42,15 @@ releases with our [Go fork](https://github.com/tailscale/go/), its use is not
 required.)
 
 ```
-go install tailscale.com/cmd/tailscale{,d}
+go install github.com/sagernet/tailscale/cmd/tailscale{,d}
 ```
 
 If you're packaging Tailscale for distribution, use `build_dist.sh`
 instead, to burn commit IDs and version info into the binaries:
 
 ```
-./build_dist.sh tailscale.com/cmd/tailscale
-./build_dist.sh tailscale.com/cmd/tailscaled
+./build_dist.sh github.com/sagernet/tailscale/cmd/tailscale
+./build_dist.sh github.com/sagernet/tailscale/cmd/tailscaled
 ```
 
 If your distro has conventions that preclude the use of
@@ -76,7 +76,7 @@ See `git log` for our commit message style. It's basically the same as
 
 ## About Us
 
-[Tailscale](https://tailscale.com/) is primarily developed by the
+[Tailscale](https://github.com/sagernet/tailscale/) is primarily developed by the
 people at https://github.com/orgs/tailscale/people. For other contributors,
 see:
 

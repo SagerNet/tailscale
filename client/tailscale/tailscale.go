@@ -27,7 +27,7 @@ var I_Acknowledge_This_API_Is_Unstable = false
 
 // TODO: use url.PathEscape() for deviceID and tailnets when constructing requests.
 
-const defaultAPIBase = "https://api.tailscale.com"
+const defaultAPIBase = "https://api.github.com/sagernet/tailscale"
 
 // maxSize is the maximum read size (10MB) of responses from the server.
 const maxReadSize = 10 << 20
@@ -45,7 +45,7 @@ type Client struct {
 	auth AuthMethod
 
 	// BaseURL optionally specifies an alternate API server to use.
-	// If empty, "https://api.tailscale.com" is used.
+	// If empty, "https://api.github.com/sagernet/tailscale" is used.
 	BaseURL string
 
 	// HTTPClient optionally specifies an alternate HTTP client to use.
@@ -96,7 +96,7 @@ func (c *Client) setAuth(r *http.Request) {
 // tailnet is the globally unique identifier for a Tailscale network, such
 // as "example.com" or "user@gmail.com".
 // If httpClient is nil, then http.DefaultClient is used.
-// "api.tailscale.com" is set as the BaseURL for the returned client
+// "api.github.com/sagernet/tailscale" is set as the BaseURL for the returned client
 // and can be changed manually by the user.
 func NewClient(tailnet string, auth AuthMethod) *Client {
 	return &Client{

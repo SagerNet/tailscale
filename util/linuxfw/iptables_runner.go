@@ -18,10 +18,10 @@ import (
 	"strings"
 
 	"github.com/coreos/go-iptables/iptables"
-	"tailscale.com/net/tsaddr"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/multierr"
-	"tailscale.com/version/distro"
+	"github.com/sagernet/tailscale/net/tsaddr"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/multierr"
+	"github.com/sagernet/tailscale/version/distro"
 )
 
 // isNotExistError needs to be overridden in tests that rely on distinguishing

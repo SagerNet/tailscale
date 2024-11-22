@@ -9,9 +9,9 @@ import (
 	"sync"
 	"time"
 
-	"tailscale.com/util/set"
-	"tailscale.com/util/syspolicy/internal/loggerx"
-	"tailscale.com/util/syspolicy/setting"
+	"github.com/sagernet/tailscale/util/set"
+	"github.com/sagernet/tailscale/util/syspolicy/internal/loggerx"
+	"github.com/sagernet/tailscale/util/syspolicy/setting"
 )
 
 // Change represents a change from the Old to the New value of type T.

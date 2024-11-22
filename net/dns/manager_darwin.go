@@ -8,12 +8,12 @@ import (
 	"os"
 
 	"go4.org/mem"
-	"tailscale.com/control/controlknobs"
-	"tailscale.com/health"
-	"tailscale.com/net/dns/resolvconffile"
-	"tailscale.com/net/tsaddr"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/mak"
+	"github.com/sagernet/tailscale/control/controlknobs"
+	"github.com/sagernet/tailscale/health"
+	"github.com/sagernet/tailscale/net/dns/resolvconffile"
+	"github.com/sagernet/tailscale/net/tsaddr"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/mak"
 )
 
 // NewOSConfigurator creates a new OS configurator.

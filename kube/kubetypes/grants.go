@@ -22,7 +22,7 @@ type KubernetesCapRule struct {
 	// name matches the `Recorder` field with equal semantics for Tailscale
 	// SSH session recorder. This field is set by users in ACL grants and is
 	// then parsed by control, which resolves the tags and populates `RecorderAddrs``.
-	// https://tailscale.com/kb/1246/tailscale-ssh-session-recording#turn-on-session-recording-in-acls
+	// https://github.com/sagernet/tailscale/kb/1246/tailscale-ssh-session-recording#turn-on-session-recording-in-acls
 	Recorders []string `json:"recorder,omitempty"`
 	// RecorderAddrs is a list of addresses that should be addresses of one
 	// or more tsrecorder instance(s). If set, any `kubectl exec` session
@@ -38,7 +38,7 @@ type KubernetesCapRule struct {
 	// Default is to fail open.
 	// The field name matches `EnforceRecorder` field with equal semantics for Tailscale SSH
 	// session recorder.
-	// https://tailscale.com/kb/1246/tailscale-ssh-session-recording#turn-on-session-recording-in-acls
+	// https://github.com/sagernet/tailscale/kb/1246/tailscale-ssh-session-recording#turn-on-session-recording-in-acls
 	EnforceRecorder bool `json:"enforceRecorder,omitempty"`
 }
 

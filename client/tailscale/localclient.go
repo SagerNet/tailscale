@@ -27,20 +27,20 @@ import (
 	"time"
 
 	"go4.org/mem"
-	"tailscale.com/client/tailscale/apitype"
-	"tailscale.com/drive"
-	"tailscale.com/envknob"
-	"tailscale.com/ipn"
-	"tailscale.com/ipn/ipnstate"
-	"tailscale.com/net/netutil"
-	"tailscale.com/paths"
-	"tailscale.com/safesocket"
-	"tailscale.com/tailcfg"
-	"tailscale.com/tka"
-	"tailscale.com/types/dnstype"
-	"tailscale.com/types/key"
-	"tailscale.com/types/tkatype"
-	"tailscale.com/util/syspolicy/setting"
+	"github.com/sagernet/tailscale/client/tailscale/apitype"
+	"github.com/sagernet/tailscale/drive"
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/ipn"
+	"github.com/sagernet/tailscale/ipn/ipnstate"
+	"github.com/sagernet/tailscale/net/netutil"
+	"github.com/sagernet/tailscale/paths"
+	"github.com/sagernet/tailscale/safesocket"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/tka"
+	"github.com/sagernet/tailscale/types/dnstype"
+	"github.com/sagernet/tailscale/types/key"
+	"github.com/sagernet/tailscale/types/tkatype"
+	"github.com/sagernet/tailscale/util/syspolicy/setting"
 )
 
 // defaultLocalClient is the default LocalClient when using the legacy
@@ -766,7 +766,7 @@ func (lc *LocalClient) CheckUDPGROForwarding(ctx context.Context) error {
 // SetUDPGROForwarding enables UDP GRO forwarding for the main interface of this
 // node. This can be done to improve performance of tailnet nodes acting as exit
 // nodes or subnet routers.
-// See https://tailscale.com/kb/1320/performance-best-practices#linux-optimizations-for-subnet-routers-and-exit-nodes
+// See https://github.com/sagernet/tailscale/kb/1320/performance-best-practices#linux-optimizations-for-subnet-routers-and-exit-nodes
 func (lc *LocalClient) SetUDPGROForwarding(ctx context.Context) error {
 	body, err := lc.get200(ctx, "/localapi/v0/set-udp-gro-forwarding")
 	if err != nil {

@@ -16,7 +16,7 @@
 //   - https://pkg.go.dev/golang.org/x/sync/singleflight
 //
 // This fork adds generics.
-package singleflight // import "tailscale.com/util/singleflight"
+package singleflight // import "github.com/sagernet/tailscale/util/singleflight"
 
 import (
 	"bytes"

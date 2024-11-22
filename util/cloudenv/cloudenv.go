@@ -16,8 +16,8 @@ import (
 	"strings"
 	"time"
 
-	"tailscale.com/syncs"
-	"tailscale.com/types/lazy"
+	"github.com/sagernet/tailscale/syncs"
+	"github.com/sagernet/tailscale/types/lazy"
 )
 
 // CommonNonRoutableMetadataIP is the IP address of the metadata server

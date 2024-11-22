@@ -8,10 +8,10 @@ import (
 
 	jsonv2 "github.com/go-json-experiment/json"
 	"github.com/go-json-experiment/json/jsontext"
-	"tailscale.com/types/opt"
-	"tailscale.com/types/ptr"
-	"tailscale.com/types/views"
-	"tailscale.com/util/must"
+	"github.com/sagernet/tailscale/types/opt"
+	"github.com/sagernet/tailscale/types/ptr"
+	"github.com/sagernet/tailscale/types/views"
+	"github.com/sagernet/tailscale/util/must"
 )
 
 // Item is a single preference item that can be configured.
@@ -87,7 +87,7 @@ type ItemView[T views.ViewCloner[T, V], V views.StructView[T]] struct {
 }
 
 // ItemViewOf returns a read-only view of i.
-// It is used by [tailscale.com/cmd/viewer].
+// It is used by [github.com/sagernet/tailscale/cmd/viewer].
 func ItemViewOf[T views.ViewCloner[T, V], V views.StructView[T]](i *Item[T]) ItemView[T, V] {
 	return ItemView[T, V]{i}
 }

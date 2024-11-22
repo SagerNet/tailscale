@@ -26,19 +26,19 @@ import (
 	"sync/atomic"
 	"time"
 
-	"tailscale.com/atomicfile"
-	"tailscale.com/envknob"
-	"tailscale.com/health"
-	"tailscale.com/net/dns/recursive"
-	"tailscale.com/net/netmon"
-	"tailscale.com/net/netns"
-	"tailscale.com/net/tlsdial"
-	"tailscale.com/net/tshttpproxy"
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/clientmetric"
-	"tailscale.com/util/singleflight"
-	"tailscale.com/util/slicesx"
+	"github.com/sagernet/tailscale/atomicfile"
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/health"
+	"github.com/sagernet/tailscale/net/dns/recursive"
+	"github.com/sagernet/tailscale/net/netmon"
+	"github.com/sagernet/tailscale/net/netns"
+	"github.com/sagernet/tailscale/net/tlsdial"
+	"github.com/sagernet/tailscale/net/tshttpproxy"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/clientmetric"
+	"github.com/sagernet/tailscale/util/singleflight"
+	"github.com/sagernet/tailscale/util/slicesx"
 )
 
 var (
@@ -274,8 +274,8 @@ func lookup(ctx context.Context, host string, logf logger.Logf, ht *health.Track
 	return nil, fmt.Errorf("no DNS fallback candidates remain for %q", host)
 }
 
-// serverName and serverIP of are, say, "derpN.tailscale.com".
-// queryName is the name being sought (e.g. "controlplane.tailscale.com"), passed as hint.
+// serverName and serverIP of are, say, "derpN.github.com/sagernet/tailscale".
+// queryName is the name being sought (e.g. "controlplane.github.com/sagernet/tailscale"), passed as hint.
 //
 // ht may be nil.
 func bootstrapDNSMap(ctx context.Context, serverName string, serverIP netip.Addr, queryName string, logf logger.Logf, ht *health.Tracker, netMon *netmon.Monitor) (dnsMap, error) {
@@ -308,7 +308,7 @@ func bootstrapDNSMap(ctx context.Context, serverName string, serverIP netip.Addr
 }
 
 // dnsMap is the JSON type returned by the DERP /bootstrap-dns handler:
-// https://derp10.tailscale.com/bootstrap-dns
+// https://derp10.github.com/sagernet/tailscale/bootstrap-dns
 type dnsMap map[string][]netip.Addr
 
 // GetDERPMap returns a fallback DERP map that is always available, useful for basic

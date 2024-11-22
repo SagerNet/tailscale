@@ -13,8 +13,8 @@ import (
 	"gvisor.dev/gvisor/pkg/tcpip"
 	"gvisor.dev/gvisor/pkg/tcpip/checksum"
 	"gvisor.dev/gvisor/pkg/tcpip/header"
-	"tailscale.com/envknob"
-	"tailscale.com/net/tsaddr"
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/net/tsaddr"
 )
 
 // SetLinkFeaturesPostUp configures link features on t based on select TS_TUN_

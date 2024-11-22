@@ -9,7 +9,7 @@ import (
 	"fmt"
 
 	"github.com/hdevalence/ed25519consensus"
-	"tailscale.com/types/tkatype"
+	"github.com/sagernet/tailscale/types/tkatype"
 )
 
 // KeyKind describes the different varieties of a Key.

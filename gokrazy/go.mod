@@ -1,4 +1,4 @@
-module tailscale.com/gokrazy
+module github.com/sagernet/tailscale/gokrazy
 
 go 1.23.1
 

@@ -17,7 +17,7 @@ import (
 
 	"golang.org/x/net/route"
 	"golang.org/x/sys/unix"
-	"tailscale.com/net/netaddr"
+	"github.com/sagernet/tailscale/net/netaddr"
 )
 
 // ErrNoGatewayIndexFound is returned by DefaultRouteInterfaceIndex when no

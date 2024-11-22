@@ -2,13 +2,13 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
 // Package appcfg contains an experimental configuration structure for
-// "tailscale.com/app-connectors" capmap extensions.
+// "github.com/sagernet/tailscale/app-connectors" capmap extensions.
 package appctype
 
 import (
 	"net/netip"
 
-	"tailscale.com/tailcfg"
+	"github.com/sagernet/tailscale/tailcfg"
 )
 
 // ConfigID is an opaque identifier for a configuration.

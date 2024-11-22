@@ -14,9 +14,9 @@ import (
 	"sync"
 	"time"
 
-	"tailscale.com/types/logger"
-	"tailscale.com/util/clientmetric"
-	"tailscale.com/util/set"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/clientmetric"
+	"github.com/sagernet/tailscale/util/set"
 )
 
 // pollWallTimeInterval is how often we check the time to check

@@ -35,7 +35,7 @@ type VersionInfo struct {
 	// Long is the long version string. See the documentation for version.Long
 	// for possible values.
 	Long string
-	// GitHash is the git hash of the tailscale.com Go module.
+	// GitHash is the git hash of the github.com/sagernet/tailscale Go module.
 	GitHash string
 	// OtherHash is the git hash of a supplemental git repository, if any. For
 	// example, the commit of the tailscale-android repository.
@@ -132,8 +132,8 @@ func InfoFrom(dir string) (VersionInfo, error) {
 	if modPath == "" {
 		return VersionInfo{}, fmt.Errorf("no module path in go.mod")
 	}
-	if modPath == "tailscale.com" {
-		// Invoked in the tailscale.com repo directly, just no further info to
+	if modPath == "github.com/sagernet/tailscale" {
+		// Invoked in the github.com/sagernet/tailscale repo directly, just no further info to
 		// collect.
 		v, err := infoFromDir(gitRoot)
 		if err != nil {
@@ -142,8 +142,8 @@ func InfoFrom(dir string) (VersionInfo, error) {
 		return mkOutput(v)
 	}
 
-	// We seem to be in a repo that imports tailscale.com. Find the
-	// tailscale.com repo and collect additional info from it.
+	// We seem to be in a repo that imports github.com/sagernet/tailscale. Find the
+	// github.com/sagernet/tailscale repo and collect additional info from it.
 	otherHash, err := runner.output("git", "rev-parse", "HEAD")
 	if err != nil {
 		return VersionInfo{}, fmt.Errorf("getting git hash: %w", err)
@@ -175,7 +175,7 @@ func InfoFrom(dir string) (VersionInfo, error) {
 	return mkOutput(v)
 }
 
-// tailscaleModuleRef returns the git ref of the 'require tailscale.com' line
+// tailscaleModuleRef returns the git ref of the 'require github.com/sagernet/tailscale' line
 // in the given go.mod bytes. The ref is either a short commit hash, or a git
 // tag.
 func tailscaleModuleRef(modBs []byte) (string, error) {
@@ -184,7 +184,7 @@ func tailscaleModuleRef(modBs []byte) (string, error) {
 		return "", err
 	}
 	for _, req := range mod.Require {
-		if req.Mod.Path != "tailscale.com" {
+		if req.Mod.Path != "github.com/sagernet/tailscale" {
 			continue
 		}
 		// Get the last - separated part of req.Mod.Version
@@ -195,7 +195,7 @@ func tailscaleModuleRef(modBs []byte) (string, error) {
 		// If there are no dashes, the version is a tag.
 		return req.Mod.Version, nil
 	}
-	return "", fmt.Errorf("no require tailscale.com line in go.mod")
+	return "", fmt.Errorf("no require github.com/sagernet/tailscale line in go.mod")
 }
 
 func mkOutput(v verInfo) (VersionInfo, error) {
@@ -305,7 +305,7 @@ func mkOutput(v verInfo) (VersionInfo, error) {
 // url that would be used for the current version, thus ensuring that product IDs
 // are mapped 1:1 to a unique version number.
 func makeMSIProductCodes(v verInfo, track string) map[string]string {
-	urlBase := fmt.Sprintf("https://pkgs.tailscale.com/%s/tailscale-setup-%d.%d.%d-", track, v.major, v.minor, v.patch)
+	urlBase := fmt.Sprintf("https://pkgs.github.com/sagernet/tailscale/%s/tailscale-setup-%d.%d.%d-", track, v.major, v.minor, v.patch)
 
 	result := map[string]string{}
 
@@ -329,7 +329,7 @@ type verInfo struct {
 	otherDate string
 }
 
-// unknownPatchVersion is the patch version used when the tailscale.com package
+// unknownPatchVersion is the patch version used when the github.com/sagernet/tailscale package
 // doesn't contain enough version information to derive the correct version.
 // Such builds only get used when generating bug reports in an ephemeral working
 // environment, so will never be distributed. As such, we use a highly visible
@@ -349,7 +349,7 @@ func infoFromCache(ref string, runner dirRunner) (verInfo, error) {
 
 	if _, err := os.Stat(tailscaleCache); err != nil {
 		if !runner.ok("git", "clone", "https://github.com/tailscale/tailscale", tailscaleCache) {
-			return verInfo{}, fmt.Errorf("cloning tailscale.com repo failed")
+			return verInfo{}, fmt.Errorf("cloning github.com/sagernet/tailscale repo failed")
 		}
 	}
 

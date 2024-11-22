@@ -12,11 +12,11 @@ import (
 	"net/http"
 	"os"
 
-	"tailscale.com/tailcfg"
+	"github.com/sagernet/tailscale/tailcfg"
 )
 
 func main() {
-	res, err := http.Get("https://login.tailscale.com/derpmap/default")
+	res, err := http.Get("https://login.github.com/sagernet/tailscale/derpmap/default")
 	if err != nil {
 		log.Fatal(err)
 	}

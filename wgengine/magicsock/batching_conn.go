@@ -8,7 +8,7 @@ import (
 
 	"golang.org/x/net/ipv4"
 	"golang.org/x/net/ipv6"
-	"tailscale.com/types/nettype"
+	"github.com/sagernet/tailscale/types/nettype"
 )
 
 var (

@@ -12,8 +12,8 @@ import (
 	"strings"
 	"unicode"
 
-	"tailscale.com/types/logger"
-	"tailscale.com/util/multierr"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/multierr"
 )
 
 // DebugNetfilter prints debug information about iptables rules to the

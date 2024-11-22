@@ -20,17 +20,17 @@ import (
 	"time"
 
 	"go4.org/mem"
-	"tailscale.com/control/controlknobs"
-	"tailscale.com/envknob"
-	"tailscale.com/net/netaddr"
-	"tailscale.com/net/neterror"
-	"tailscale.com/net/netmon"
-	"tailscale.com/net/netns"
-	"tailscale.com/net/sockstats"
-	"tailscale.com/syncs"
-	"tailscale.com/types/logger"
-	"tailscale.com/types/nettype"
-	"tailscale.com/util/clientmetric"
+	"github.com/sagernet/tailscale/control/controlknobs"
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/net/netaddr"
+	"github.com/sagernet/tailscale/net/neterror"
+	"github.com/sagernet/tailscale/net/netmon"
+	"github.com/sagernet/tailscale/net/netns"
+	"github.com/sagernet/tailscale/net/sockstats"
+	"github.com/sagernet/tailscale/syncs"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/types/nettype"
+	"github.com/sagernet/tailscale/util/clientmetric"
 )
 
 var disablePortMapperEnv = envknob.RegisterBool("TS_DISABLE_PORTMAPPER")
@@ -707,7 +707,7 @@ func (c *Client) createOrGetMapping(ctx context.Context) (external netip.AddrPor
 	}
 }
 
-//go:generate go run tailscale.com/cmd/addlicense -file pmpresultcode_string.go go run golang.org/x/tools/cmd/stringer -type=pmpResultCode -trimprefix=pmpCode
+//go:generate go run github.com/sagernet/tailscale/cmd/addlicense -file pmpresultcode_string.go go run golang.org/x/tools/cmd/stringer -type=pmpResultCode -trimprefix=pmpCode
 
 type pmpResultCode uint16
 

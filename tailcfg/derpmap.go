@@ -7,7 +7,7 @@ import (
 	"net/netip"
 	"sort"
 
-	"tailscale.com/types/key"
+	"github.com/sagernet/tailscale/types/key"
 )
 
 // DERPMap describes the set of DERP packet relay servers that are available.
@@ -71,9 +71,9 @@ type DERPHomeParams struct {
 type DERPRegion struct {
 	// RegionID is a unique integer for a geographic region.
 	//
-	// It corresponds to the legacy derpN.tailscale.com hostnames
+	// It corresponds to the legacy derpN.github.com/sagernet/tailscale hostnames
 	// used by older clients. (Older clients will continue to resolve
-	// derpN.tailscale.com when contacting peers, rather than use
+	// derpN.github.com/sagernet/tailscale when contacting peers, rather than use
 	// the server-provided DERPMap)
 	//
 	// RegionIDs must be non-zero, positive, and guaranteed to fit

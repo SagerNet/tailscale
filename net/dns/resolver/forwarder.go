@@ -24,22 +24,22 @@ import (
 	"time"
 
 	dns "golang.org/x/net/dns/dnsmessage"
-	"tailscale.com/control/controlknobs"
-	"tailscale.com/envknob"
-	"tailscale.com/health"
-	"tailscale.com/net/dns/publicdns"
-	"tailscale.com/net/dnscache"
-	"tailscale.com/net/neterror"
-	"tailscale.com/net/netmon"
-	"tailscale.com/net/sockstats"
-	"tailscale.com/net/tsdial"
-	"tailscale.com/types/dnstype"
-	"tailscale.com/types/logger"
-	"tailscale.com/types/nettype"
-	"tailscale.com/util/cloudenv"
-	"tailscale.com/util/dnsname"
-	"tailscale.com/util/race"
-	"tailscale.com/version"
+	"github.com/sagernet/tailscale/control/controlknobs"
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/health"
+	"github.com/sagernet/tailscale/net/dns/publicdns"
+	"github.com/sagernet/tailscale/net/dnscache"
+	"github.com/sagernet/tailscale/net/neterror"
+	"github.com/sagernet/tailscale/net/netmon"
+	"github.com/sagernet/tailscale/net/sockstats"
+	"github.com/sagernet/tailscale/net/tsdial"
+	"github.com/sagernet/tailscale/types/dnstype"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/types/nettype"
+	"github.com/sagernet/tailscale/util/cloudenv"
+	"github.com/sagernet/tailscale/util/dnsname"
+	"github.com/sagernet/tailscale/util/race"
+	"github.com/sagernet/tailscale/version"
 )
 
 // headerBytes is the number of bytes in a DNS message header.
@@ -439,7 +439,7 @@ func (f *forwarder) getKnownDoHClientForProvider(urlBase string) (c *http.Client
 	})
 	tlsConfig := &tls.Config{
 		// Enforce TLS 1.3, as all of our supported DNS-over-HTTPS servers are compatible with it
-		// (see tailscale.com/net/dns/publicdns/publicdns.go).
+		// (see github.com/sagernet/tailscale/net/dns/publicdns/publicdns.go).
 		MinVersion: tls.VersionTLS13,
 	}
 	c = &http.Client{

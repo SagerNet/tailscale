@@ -15,8 +15,8 @@ import (
 
 	_ "embed"
 
-	"tailscale.com/net/packet"
-	"tailscale.com/util/set"
+	"github.com/sagernet/tailscale/net/packet"
+	"github.com/sagernet/tailscale/util/set"
 )
 
 //go:embed ts-dissector.lua

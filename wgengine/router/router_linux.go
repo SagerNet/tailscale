@@ -21,15 +21,15 @@ import (
 	"go4.org/netipx"
 	"golang.org/x/sys/unix"
 	"golang.org/x/time/rate"
-	"tailscale.com/envknob"
-	"tailscale.com/health"
-	"tailscale.com/net/netmon"
-	"tailscale.com/types/logger"
-	"tailscale.com/types/opt"
-	"tailscale.com/types/preftype"
-	"tailscale.com/util/linuxfw"
-	"tailscale.com/util/multierr"
-	"tailscale.com/version/distro"
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/health"
+	"github.com/sagernet/tailscale/net/netmon"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/types/opt"
+	"github.com/sagernet/tailscale/types/preftype"
+	"github.com/sagernet/tailscale/util/linuxfw"
+	"github.com/sagernet/tailscale/util/multierr"
+	"github.com/sagernet/tailscale/version/distro"
 )
 
 const (
@@ -449,7 +449,7 @@ var dockerStatefulFilteringWarnable = health.Register(&health.Warnable{
 	Code:     "docker-stateful-filtering",
 	Title:    "Docker with stateful filtering",
 	Severity: health.SeverityMedium,
-	Text:     health.StaticMessage("Stateful filtering is enabled and Docker was detected; this may prevent Docker containers on this host from resolving DNS and connecting to Tailscale nodes. See https://tailscale.com/s/stateful-docker"),
+	Text:     health.StaticMessage("Stateful filtering is enabled and Docker was detected; this may prevent Docker containers on this host from resolving DNS and connecting to Tailscale nodes. See https://github.com/sagernet/tailscale/s/stateful-docker"),
 })
 
 func (r *linuxRouter) updateStatefulFilteringWithDockerWarning(cfg *Config) {

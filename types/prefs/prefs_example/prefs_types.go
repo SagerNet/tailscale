@@ -1,12 +1,12 @@
 // Copyright (c) Tailscale Inc & AUTHORS
 // SPDX-License-Identifier: BSD-3-Clause
 
-// Package prefs_example contains a [Prefs] type, which is like [tailscale.com/ipn.Prefs],
+// Package prefs_example contains a [Prefs] type, which is like [github.com/sagernet/tailscale/ipn.Prefs],
 // but uses the [prefs] package to enhance individual preferences with state and metadata.
 //
 // It also includes testable examples utilizing the [Prefs] type.
 // We made it a separate package to avoid circular dependencies
-// and due to limitations in [tailscale.com/cmd/viewer] when
+// and due to limitations in [github.com/sagernet/tailscale/cmd/viewer] when
 // generating code for test packages.
 package prefs_example
 
@@ -15,17 +15,17 @@ import (
 
 	jsonv2 "github.com/go-json-experiment/json"
 	"github.com/go-json-experiment/json/jsontext"
-	"tailscale.com/drive"
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/opt"
-	"tailscale.com/types/persist"
-	"tailscale.com/types/prefs"
-	"tailscale.com/types/preftype"
+	"github.com/sagernet/tailscale/drive"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/opt"
+	"github.com/sagernet/tailscale/types/persist"
+	"github.com/sagernet/tailscale/types/prefs"
+	"github.com/sagernet/tailscale/types/preftype"
 )
 
-//go:generate go run tailscale.com/cmd/viewer --type=Prefs,AutoUpdatePrefs,AppConnectorPrefs
+//go:generate go run github.com/sagernet/tailscale/cmd/viewer --type=Prefs,AutoUpdatePrefs,AppConnectorPrefs
 
-// Prefs is like [tailscale.com/ipn.Prefs], but with individual preferences wrapped in
+// Prefs is like [github.com/sagernet/tailscale/ipn.Prefs], but with individual preferences wrapped in
 // [prefs.Item], [prefs.List], and [prefs.StructList] to include preference
 // state and metadata. Related preferences can be grouped together in a nested
 // struct (e.g., [AutoUpdatePrefs] or [AppConnectorPrefs]), whereas each
@@ -34,7 +34,7 @@ import (
 //
 // Non-preference fields, such as ExitNodePrior and Persist, can be included as-is.
 //
-// Just like [tailscale.com/ipn.Prefs], [Prefs] is a mutable struct. It should
+// Just like [github.com/sagernet/tailscale/ipn.Prefs], [Prefs] is a mutable struct. It should
 // only be used in well-defined contexts where mutability is expected and desired,
 // such as when the LocalBackend receives a request from the GUI/CLI to change a
 // preference, when a preference is managed via syspolicy and needs to be

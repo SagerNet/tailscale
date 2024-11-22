@@ -5,7 +5,7 @@
 // the node and the coordination server.
 package tailcfg
 
-//go:generate go run tailscale.com/cmd/viewer --type=User,Node,Hostinfo,NetInfo,Login,DNSConfig,RegisterResponse,RegisterResponseAuth,RegisterRequest,DERPHomeParams,DERPRegion,DERPMap,DERPNode,SSHRule,SSHAction,SSHPrincipal,ControlDialPlan,Location,UserProfile --clonefunc
+//go:generate go run github.com/sagernet/tailscale/cmd/viewer --type=User,Node,Hostinfo,NetInfo,Login,DNSConfig,RegisterResponse,RegisterResponseAuth,RegisterRequest,DERPHomeParams,DERPRegion,DERPMap,DERPNode,SSHRule,SSHAction,SSHPrincipal,ControlDialPlan,Location,UserProfile --clonefunc
 
 import (
 	"bytes"
@@ -20,13 +20,13 @@ import (
 	"strings"
 	"time"
 
-	"tailscale.com/types/dnstype"
-	"tailscale.com/types/key"
-	"tailscale.com/types/opt"
-	"tailscale.com/types/structs"
-	"tailscale.com/types/tkatype"
-	"tailscale.com/util/dnsname"
-	"tailscale.com/util/slicesx"
+	"github.com/sagernet/tailscale/types/dnstype"
+	"github.com/sagernet/tailscale/types/key"
+	"github.com/sagernet/tailscale/types/opt"
+	"github.com/sagernet/tailscale/types/structs"
+	"github.com/sagernet/tailscale/types/tkatype"
+	"github.com/sagernet/tailscale/util/dnsname"
+	"github.com/sagernet/tailscale/util/slicesx"
 )
 
 // CapabilityVersion represents the client's capability level. That
@@ -354,8 +354,8 @@ type Node struct {
 	// Capabilities are capabilities that the node has.
 	// They're free-form strings, but should be in the form of URLs/URIs
 	// such as:
-	//    "https://tailscale.com/cap/is-admin"
-	//    "https://tailscale.com/cap/file-sharing"
+	//    "https://github.com/sagernet/tailscale/cap/is-admin"
+	//    "https://github.com/sagernet/tailscale/cap/file-sharing"
 	//
 	// Deprecated: use CapMap instead. See https://github.com/tailscale/tailscale/issues/11508
 	Capabilities []NodeCapability `json:",omitempty"`
@@ -1160,7 +1160,7 @@ type RegisterResponseAuth struct {
 // It is encoded to JSON, encrypted with golang.org/x/crypto/nacl/box,
 // using the local machine key, and sent to:
 //
-//	https://login.tailscale.com/machine/<mkey hex>
+//	https://login.github.com/sagernet/tailscale/machine/<mkey hex>
 type RegisterRequest struct {
 	_ structs.Incomparable
 
@@ -1279,7 +1279,7 @@ type Endpoint struct {
 // The request is encoded to JSON, encrypted with golang.org/x/crypto/nacl/box,
 // using the local machine key, and sent to:
 //
-//	https://login.tailscale.com/machine/<mkey hex>/map
+//	https://login.github.com/sagernet/tailscale/machine/<mkey hex>/map
 type MapRequest struct {
 	// Version is incremented whenever the client code changes enough that
 	// we want to signal to the control server that we're capable of something
@@ -1420,43 +1420,43 @@ type CapGrant struct {
 // the peer communicates with the node that has this rule. Its meaning is
 // application-defined.
 //
-// It must be a URL like "https://tailscale.com/cap/file-send".
+// It must be a URL like "https://github.com/sagernet/tailscale/cap/file-send".
 type PeerCapability string
 
 const (
 	// PeerCapabilityFileSharingTarget grants the current node the ability to send
 	// files to the peer which has this capability.
-	PeerCapabilityFileSharingTarget PeerCapability = "https://tailscale.com/cap/file-sharing-target"
+	PeerCapabilityFileSharingTarget PeerCapability = "https://github.com/sagernet/tailscale/cap/file-sharing-target"
 	// PeerCapabilityFileSharingSend grants the ability to receive files from a
 	// node that's owned by a different user.
-	PeerCapabilityFileSharingSend PeerCapability = "https://tailscale.com/cap/file-send"
+	PeerCapabilityFileSharingSend PeerCapability = "https://github.com/sagernet/tailscale/cap/file-send"
 	// PeerCapabilityDebugPeer grants the ability for a peer to read this node's
 	// goroutines, metrics, magicsock internal state, etc.
-	PeerCapabilityDebugPeer PeerCapability = "https://tailscale.com/cap/debug-peer"
+	PeerCapabilityDebugPeer PeerCapability = "https://github.com/sagernet/tailscale/cap/debug-peer"
 	// PeerCapabilityWakeOnLAN grants the ability to send a Wake-On-LAN packet.
-	PeerCapabilityWakeOnLAN PeerCapability = "https://tailscale.com/cap/wake-on-lan"
+	PeerCapabilityWakeOnLAN PeerCapability = "https://github.com/sagernet/tailscale/cap/wake-on-lan"
 	// PeerCapabilityIngress grants the ability for a peer to send ingress traffic.
-	PeerCapabilityIngress PeerCapability = "https://tailscale.com/cap/ingress"
+	PeerCapabilityIngress PeerCapability = "https://github.com/sagernet/tailscale/cap/ingress"
 	// PeerCapabilityWebUI grants the ability for a peer to edit features from the
 	// device Web UI.
-	PeerCapabilityWebUI PeerCapability = "tailscale.com/cap/webui"
+	PeerCapabilityWebUI PeerCapability = "github.com/sagernet/tailscale/cap/webui"
 	// PeerCapabilityTaildrive grants the ability for a peer to access Taildrive
 	// shares.
-	PeerCapabilityTaildrive PeerCapability = "tailscale.com/cap/drive"
+	PeerCapabilityTaildrive PeerCapability = "github.com/sagernet/tailscale/cap/drive"
 	// PeerCapabilityTaildriveSharer indicates that a peer has the ability to
 	// share folders with us.
-	PeerCapabilityTaildriveSharer PeerCapability = "tailscale.com/cap/drive-sharer"
+	PeerCapabilityTaildriveSharer PeerCapability = "github.com/sagernet/tailscale/cap/drive-sharer"
 
 	// PeerCapabilityKubernetes grants a peer Kubernetes-specific
 	// capabilities, such as the ability to impersonate specific Tailscale
 	// user groups as Kubernetes user groups. This capability is read by
 	// peers that are Tailscale Kubernetes operator instances.
-	PeerCapabilityKubernetes PeerCapability = "tailscale.com/cap/kubernetes"
+	PeerCapabilityKubernetes PeerCapability = "github.com/sagernet/tailscale/cap/kubernetes"
 
 	// PeerCapabilityServicesDestination grants a peer the ability to serve as
 	// a destination for a set of given VIP services, which is provided as the
 	// value of this key in NodeCapMap.
-	PeerCapabilityServicesDestination PeerCapability = "tailscale.com/cap/services-destination"
+	PeerCapabilityServicesDestination PeerCapability = "github.com/sagernet/tailscale/cap/services-destination"
 )
 
 // NodeCapMap is a map of capabilities to their optional values. It is valid for
@@ -2186,7 +2186,7 @@ type Oauth2Token struct {
 // NodeCapability represents a capability granted to the self node as listed in
 // MapResponse.Node.Capabilities.
 //
-// It must be a URL like "https://tailscale.com/cap/file-sharing", or a
+// It must be a URL like "https://github.com/sagernet/tailscale/cap/file-sharing", or a
 // well-known capability name like "funnel". The latter is only allowed for
 // Tailscale-defined capabilities.
 //
@@ -2197,55 +2197,55 @@ type Oauth2Token struct {
 type NodeCapability string
 
 const (
-	CapabilityFileSharing        NodeCapability = "https://tailscale.com/cap/file-sharing"
-	CapabilityAdmin              NodeCapability = "https://tailscale.com/cap/is-admin"
-	CapabilitySSH                NodeCapability = "https://tailscale.com/cap/ssh"                   // feature enabled/available
-	CapabilitySSHRuleIn          NodeCapability = "https://tailscale.com/cap/ssh-rule-in"           // some SSH rule reach this node
-	CapabilityDataPlaneAuditLogs NodeCapability = "https://tailscale.com/cap/data-plane-audit-logs" // feature enabled
-	CapabilityDebug              NodeCapability = "https://tailscale.com/cap/debug"                 // exposes debug endpoints over the PeerAPI
+	CapabilityFileSharing        NodeCapability = "https://github.com/sagernet/tailscale/cap/file-sharing"
+	CapabilityAdmin              NodeCapability = "https://github.com/sagernet/tailscale/cap/is-admin"
+	CapabilitySSH                NodeCapability = "https://github.com/sagernet/tailscale/cap/ssh"                   // feature enabled/available
+	CapabilitySSHRuleIn          NodeCapability = "https://github.com/sagernet/tailscale/cap/ssh-rule-in"           // some SSH rule reach this node
+	CapabilityDataPlaneAuditLogs NodeCapability = "https://github.com/sagernet/tailscale/cap/data-plane-audit-logs" // feature enabled
+	CapabilityDebug              NodeCapability = "https://github.com/sagernet/tailscale/cap/debug"                 // exposes debug endpoints over the PeerAPI
 	CapabilityHTTPS              NodeCapability = "https"
 
 	// CapabilityBindToInterfaceByRoute changes how Darwin nodes create
 	// sockets (in the net/netns package). See that package for more
 	// details on the behaviour of this capability.
-	CapabilityBindToInterfaceByRoute NodeCapability = "https://tailscale.com/cap/bind-to-interface-by-route"
+	CapabilityBindToInterfaceByRoute NodeCapability = "https://github.com/sagernet/tailscale/cap/bind-to-interface-by-route"
 
 	// CapabilityDebugDisableAlternateDefaultRouteInterface changes how Darwin
 	// nodes get the default interface. There is an optional hook (used by the
 	// macOS and iOS clients) to override the default interface, this capability
 	// disables that and uses the default behavior (of parsing the routing
 	// table).
-	CapabilityDebugDisableAlternateDefaultRouteInterface NodeCapability = "https://tailscale.com/cap/debug-disable-alternate-default-route-interface"
+	CapabilityDebugDisableAlternateDefaultRouteInterface NodeCapability = "https://github.com/sagernet/tailscale/cap/debug-disable-alternate-default-route-interface"
 
 	// CapabilityDebugDisableBindConnToInterface disables the automatic binding
 	// of connections to the default network interface on Darwin nodes.
-	CapabilityDebugDisableBindConnToInterface NodeCapability = "https://tailscale.com/cap/debug-disable-bind-conn-to-interface"
+	CapabilityDebugDisableBindConnToInterface NodeCapability = "https://github.com/sagernet/tailscale/cap/debug-disable-bind-conn-to-interface"
 
 	// CapabilityTailnetLock indicates the node may initialize tailnet lock.
-	CapabilityTailnetLock NodeCapability = "https://tailscale.com/cap/tailnet-lock"
+	CapabilityTailnetLock NodeCapability = "https://github.com/sagernet/tailscale/cap/tailnet-lock"
 
 	// Funnel warning capabilities used for reporting errors to the user.
 
 	// CapabilityWarnFunnelNoInvite indicates whether Funnel is enabled for the tailnet.
 	// This cap is no longer used 2023-08-09 onwards.
-	CapabilityWarnFunnelNoInvite NodeCapability = "https://tailscale.com/cap/warn-funnel-no-invite"
+	CapabilityWarnFunnelNoInvite NodeCapability = "https://github.com/sagernet/tailscale/cap/warn-funnel-no-invite"
 
 	// CapabilityWarnFunnelNoHTTPS indicates HTTPS has not been enabled for the tailnet.
 	// This cap is no longer used 2023-08-09 onwards.
-	CapabilityWarnFunnelNoHTTPS NodeCapability = "https://tailscale.com/cap/warn-funnel-no-https"
+	CapabilityWarnFunnelNoHTTPS NodeCapability = "https://github.com/sagernet/tailscale/cap/warn-funnel-no-https"
 
 	// Debug logging capabilities
 
 	// CapabilityDebugTSDNSResolution enables verbose debug logging for DNS
 	// resolution for Tailscale-controlled domains (the control server, log
 	// server, DERP servers, etc.)
-	CapabilityDebugTSDNSResolution NodeCapability = "https://tailscale.com/cap/debug-ts-dns-resolution"
+	CapabilityDebugTSDNSResolution NodeCapability = "https://github.com/sagernet/tailscale/cap/debug-ts-dns-resolution"
 
 	// CapabilityFunnelPorts specifies the ports that the Funnel is available on.
 	// The ports are specified as a comma-separated list of port numbers or port
 	// ranges (e.g. "80,443,8080-8090") in the ports query parameter.
-	// e.g. https://tailscale.com/cap/funnel-ports?ports=80,443,8080-8090
-	CapabilityFunnelPorts NodeCapability = "https://tailscale.com/cap/funnel-ports"
+	// e.g. https://github.com/sagernet/tailscale/cap/funnel-ports?ports=80,443,8080-8090
+	CapabilityFunnelPorts NodeCapability = "https://github.com/sagernet/tailscale/cap/funnel-ports"
 
 	// NodeAttrOnlyTCP443 specifies that the client should not attempt to generate
 	// any outbound traffic that isn't TCP on port 443 (HTTPS). This is used for
@@ -2410,7 +2410,7 @@ const (
 // The request is encoded to JSON, encrypted with golang.org/x/crypto/nacl/box,
 // using the local machine key, and sent to:
 //
-//	https://login.tailscale.com/machine/<mkey hex>/set-dns
+//	https://login.github.com/sagernet/tailscale/machine/<mkey hex>/set-dns
 type SetDNSRequest struct {
 	// Version is the client's capabilities
 	// (CurrentCapabilityVersion) when using the Noise transport.

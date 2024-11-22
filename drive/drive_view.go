@@ -9,10 +9,10 @@ import (
 	"encoding/json"
 	"errors"
 
-	"tailscale.com/types/views"
+	"github.com/sagernet/tailscale/types/views"
 )
 
-//go:generate go run tailscale.com/cmd/cloner  -clonefunc=true -type=Share
+//go:generate go run github.com/sagernet/tailscale/cmd/cloner  -clonefunc=true -type=Share
 
 // View returns a readonly view of Share.
 func (p *Share) View() ShareView {

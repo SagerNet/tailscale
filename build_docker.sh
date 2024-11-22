@@ -38,13 +38,13 @@ case "$TARGET" in
     REPOS="${REPOS:-${DEFAULT_REPOS}}"
     go run github.com/tailscale/mkctr \
       --gopaths="\
-        tailscale.com/cmd/tailscale:/usr/local/bin/tailscale, \
-        tailscale.com/cmd/tailscaled:/usr/local/bin/tailscaled, \
-        tailscale.com/cmd/containerboot:/usr/local/bin/containerboot" \
+        github.com/sagernet/tailscale/cmd/tailscale:/usr/local/bin/tailscale, \
+        github.com/sagernet/tailscale/cmd/tailscaled:/usr/local/bin/tailscaled, \
+        github.com/sagernet/tailscale/cmd/containerboot:/usr/local/bin/containerboot" \
       --ldflags="\
-        -X tailscale.com/version.longStamp=${VERSION_LONG} \
-        -X tailscale.com/version.shortStamp=${VERSION_SHORT} \
-        -X tailscale.com/version.gitCommitStamp=${VERSION_GIT_HASH}" \
+        -X github.com/sagernet/tailscale/version.longStamp=${VERSION_LONG} \
+        -X github.com/sagernet/tailscale/version.shortStamp=${VERSION_SHORT} \
+        -X github.com/sagernet/tailscale/version.gitCommitStamp=${VERSION_GIT_HASH}" \
       --base="${BASE}" \
       --tags="${TAGS}" \
       --gotags="ts_kube,ts_package_container" \
@@ -58,11 +58,11 @@ case "$TARGET" in
     DEFAULT_REPOS="tailscale/k8s-operator"
     REPOS="${REPOS:-${DEFAULT_REPOS}}"
     go run github.com/tailscale/mkctr \
-      --gopaths="tailscale.com/cmd/k8s-operator:/usr/local/bin/operator" \
+      --gopaths="github.com/sagernet/tailscale/cmd/k8s-operator:/usr/local/bin/operator" \
       --ldflags="\
-        -X tailscale.com/version.longStamp=${VERSION_LONG} \
-        -X tailscale.com/version.shortStamp=${VERSION_SHORT} \
-        -X tailscale.com/version.gitCommitStamp=${VERSION_GIT_HASH}" \
+        -X github.com/sagernet/tailscale/version.longStamp=${VERSION_LONG} \
+        -X github.com/sagernet/tailscale/version.shortStamp=${VERSION_SHORT} \
+        -X github.com/sagernet/tailscale/version.gitCommitStamp=${VERSION_GIT_HASH}" \
       --base="${BASE}" \
       --tags="${TAGS}" \
       --gotags="ts_kube,ts_package_container" \
@@ -76,11 +76,11 @@ case "$TARGET" in
     DEFAULT_REPOS="tailscale/k8s-nameserver"
     REPOS="${REPOS:-${DEFAULT_REPOS}}"
     go run github.com/tailscale/mkctr \
-      --gopaths="tailscale.com/cmd/k8s-nameserver:/usr/local/bin/k8s-nameserver" \
+      --gopaths="github.com/sagernet/tailscale/cmd/k8s-nameserver:/usr/local/bin/k8s-nameserver" \
       --ldflags=" \
-        -X tailscale.com/version.longStamp=${VERSION_LONG} \
-        -X tailscale.com/version.shortStamp=${VERSION_SHORT} \
-        -X tailscale.com/version.gitCommitStamp=${VERSION_GIT_HASH}" \
+        -X github.com/sagernet/tailscale/version.longStamp=${VERSION_LONG} \
+        -X github.com/sagernet/tailscale/version.shortStamp=${VERSION_SHORT} \
+        -X github.com/sagernet/tailscale/version.gitCommitStamp=${VERSION_GIT_HASH}" \
       --base="${BASE}" \
       --tags="${TAGS}" \
       --gotags="ts_kube,ts_package_container" \

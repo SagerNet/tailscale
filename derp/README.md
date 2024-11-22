@@ -9,7 +9,7 @@ using WireGuard public keys instead of IP addresses.
 It relays two types of packets:
 
 * "Disco" discovery messages (see `../disco`) as the a side channel during [NAT
-  traversal](https://tailscale.com/blog/how-nat-traversal-works/).
+  traversal](https://github.com/sagernet/tailscale/blog/how-nat-traversal-works/).
 
 * Encrypted WireGuard packets as the fallback of last resort when UDP is blocked
   or NAT traversal fails.
@@ -17,7 +17,7 @@ It relays two types of packets:
 ## DERP Map
 
 Each client receives a "[DERP
-Map](https://pkg.go.dev/tailscale.com/tailcfg#DERPMap)" from the coordination
+Map](https://pkg.go.dev/github.com/sagernet/tailscale/tailcfg#DERPMap)" from the coordination
 server describing the DERP servers the client should try to use.
 
 The client picks its home "DERP home" based on latency. This is done to keep

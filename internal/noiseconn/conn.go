@@ -19,8 +19,8 @@ import (
 	"sync"
 
 	"golang.org/x/net/http2"
-	"tailscale.com/control/controlbase"
-	"tailscale.com/tailcfg"
+	"github.com/sagernet/tailscale/control/controlbase"
+	"github.com/sagernet/tailscale/tailcfg"
 )
 
 // Conn is a wrapper around controlbase.Conn.

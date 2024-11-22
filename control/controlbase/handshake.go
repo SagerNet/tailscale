@@ -20,7 +20,7 @@ import (
 	chp "golang.org/x/crypto/chacha20poly1305"
 	"golang.org/x/crypto/curve25519"
 	"golang.org/x/crypto/hkdf"
-	"tailscale.com/types/key"
+	"github.com/sagernet/tailscale/types/key"
 )
 
 const (

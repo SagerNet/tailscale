@@ -20,13 +20,13 @@ import (
 
 	xmaps "golang.org/x/exp/maps"
 	"golang.org/x/net/dns/dnsmessage"
-	"tailscale.com/types/logger"
-	"tailscale.com/types/views"
-	"tailscale.com/util/clientmetric"
-	"tailscale.com/util/dnsname"
-	"tailscale.com/util/execqueue"
-	"tailscale.com/util/mak"
-	"tailscale.com/util/slicesx"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/types/views"
+	"github.com/sagernet/tailscale/util/clientmetric"
+	"github.com/sagernet/tailscale/util/dnsname"
+	"github.com/sagernet/tailscale/util/execqueue"
+	"github.com/sagernet/tailscale/util/mak"
+	"github.com/sagernet/tailscale/util/slicesx"
 )
 
 // rateLogger responds to calls to update by adding a count for the current period and

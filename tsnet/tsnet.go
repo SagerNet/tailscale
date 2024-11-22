@@ -26,35 +26,35 @@ import (
 	"sync"
 	"time"
 
-	"tailscale.com/client/tailscale"
-	"tailscale.com/control/controlclient"
-	"tailscale.com/envknob"
-	"tailscale.com/health"
-	"tailscale.com/hostinfo"
-	"tailscale.com/ipn"
-	"tailscale.com/ipn/ipnlocal"
-	"tailscale.com/ipn/ipnstate"
-	"tailscale.com/ipn/localapi"
-	"tailscale.com/ipn/store"
-	"tailscale.com/ipn/store/mem"
-	"tailscale.com/logpolicy"
-	"tailscale.com/logtail"
-	"tailscale.com/logtail/filch"
-	"tailscale.com/net/memnet"
-	"tailscale.com/net/netmon"
-	"tailscale.com/net/proxymux"
-	"tailscale.com/net/socks5"
-	"tailscale.com/net/tsdial"
-	"tailscale.com/tsd"
-	"tailscale.com/types/logger"
-	"tailscale.com/types/logid"
-	"tailscale.com/types/nettype"
-	"tailscale.com/util/clientmetric"
-	"tailscale.com/util/mak"
-	"tailscale.com/util/set"
-	"tailscale.com/util/testenv"
-	"tailscale.com/wgengine"
-	"tailscale.com/wgengine/netstack"
+	"github.com/sagernet/tailscale/client/tailscale"
+	"github.com/sagernet/tailscale/control/controlclient"
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/health"
+	"github.com/sagernet/tailscale/hostinfo"
+	"github.com/sagernet/tailscale/ipn"
+	"github.com/sagernet/tailscale/ipn/ipnlocal"
+	"github.com/sagernet/tailscale/ipn/ipnstate"
+	"github.com/sagernet/tailscale/ipn/localapi"
+	"github.com/sagernet/tailscale/ipn/store"
+	"github.com/sagernet/tailscale/ipn/store/mem"
+	"github.com/sagernet/tailscale/logpolicy"
+	"github.com/sagernet/tailscale/logtail"
+	"github.com/sagernet/tailscale/logtail/filch"
+	"github.com/sagernet/tailscale/net/memnet"
+	"github.com/sagernet/tailscale/net/netmon"
+	"github.com/sagernet/tailscale/net/proxymux"
+	"github.com/sagernet/tailscale/net/socks5"
+	"github.com/sagernet/tailscale/net/tsdial"
+	"github.com/sagernet/tailscale/tsd"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/types/logid"
+	"github.com/sagernet/tailscale/types/nettype"
+	"github.com/sagernet/tailscale/util/clientmetric"
+	"github.com/sagernet/tailscale/util/mak"
+	"github.com/sagernet/tailscale/util/set"
+	"github.com/sagernet/tailscale/util/testenv"
+	"github.com/sagernet/tailscale/wgengine"
+	"github.com/sagernet/tailscale/wgengine/netstack"
 )
 
 // Server is an embedded Tailscale server.
@@ -76,7 +76,7 @@ type Server struct {
 	// Store specifies the state store to use.
 	//
 	// If nil, a new FileStore is initialized at `Dir/tailscaled.state`.
-	// See tailscale.com/ipn/store for supported stores.
+	// See github.com/sagernet/tailscale/ipn/store for supported stores.
 	//
 	// Logs will automatically be uploaded to log.tailscale.io,
 	// where the configuration file for logging will be saved at
@@ -98,7 +98,7 @@ type Server struct {
 	Logf logger.Logf
 
 	// Ephemeral, if true, specifies that the instance should register
-	// as an Ephemeral node (https://tailscale.com/s/ephemeral-nodes).
+	// as an Ephemeral node (https://github.com/sagernet/tailscale/s/ephemeral-nodes).
 	Ephemeral bool
 
 	// AuthKey, if non-empty, is the auth key to create the node
@@ -962,10 +962,10 @@ func (s *Server) ListenTLS(network, addr string) (net.Listener, error) {
 		return nil, err
 	}
 	if !st.CurrentTailnet.MagicDNSEnabled {
-		return nil, errors.New("tsnet: you must enable MagicDNS in the DNS page of the admin panel to proceed. See https://tailscale.com/s/https")
+		return nil, errors.New("tsnet: you must enable MagicDNS in the DNS page of the admin panel to proceed. See https://github.com/sagernet/tailscale/s/https")
 	}
 	if len(st.CertDomains) == 0 {
-		return nil, errors.New("tsnet: you must enable HTTPS in the admin panel to proceed. See https://tailscale.com/s/https")
+		return nil, errors.New("tsnet: you must enable HTTPS in the admin panel to proceed. See https://github.com/sagernet/tailscale/s/https")
 	}
 
 	ln, err := s.listen(network, addr, listenOnTailnet)
@@ -1078,7 +1078,7 @@ func (s *Server) ListenFunnel(network, addr string, opts ...FunnelOption) (net.L
 		srvConfig = &ipn.ServeConfig{}
 	}
 	if len(st.CertDomains) == 0 {
-		return nil, errors.New("Funnel not available; HTTPS must be enabled. See https://tailscale.com/s/https")
+		return nil, errors.New("Funnel not available; HTTPS must be enabled. See https://github.com/sagernet/tailscale/s/https")
 	}
 	domain := st.CertDomains[0]
 	hp := ipn.HostPort(domain + ":" + portStr)
@@ -1206,7 +1206,7 @@ func (s *Server) listen(network, addr string, lnOn listenOn) (net.Listener, erro
 // Packets will be written to the pcap until the process exits. The pcap needs a Lua dissector
 // to be installed in WireShark in order to decode properly: wgengine/capture/ts-dissector.lua
 // in this repository.
-// https://tailscale.com/kb/1023/troubleshooting/#can-i-examine-network-traffic-inside-the-encrypted-tunnel
+// https://github.com/sagernet/tailscale/kb/1023/troubleshooting/#can-i-examine-network-traffic-inside-the-encrypted-tunnel
 func (s *Server) CapturePcap(ctx context.Context, pcapFile string) error {
 	stream, err := s.localClient.StreamDebugCapture(ctx)
 	if err != nil {

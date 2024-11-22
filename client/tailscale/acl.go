@@ -116,7 +116,7 @@ func (c *Client) ACL(ctx context.Context) (acl *ACL, err error) {
 // it as a string.
 // HuJSON is JSON with a few modifications to make it more human-friendly. The primary
 // changes are allowing comments and trailing comments. See the following links for more info:
-// https://tailscale.com/s/acl-format
+// https://github.com/sagernet/tailscale/s/acl-format
 // https://github.com/tailscale/hujson
 func (c *Client) ACLHuJSON(ctx context.Context) (acl *ACLHuJSON, err error) {
 	// Format return errors to be descriptive.
@@ -289,7 +289,7 @@ type UserRuleMatch struct {
 	Ports      []string `json:"ports"`
 	LineNumber int      `json:"lineNumber"`
 	// Via is the list of targets through which Users can access Ports.
-	// See https://tailscale.com/kb/1378/via for more information.
+	// See https://github.com/sagernet/tailscale/kb/1378/via for more information.
 	Via []string `json:"via,omitempty"`
 
 	// Postures is a list of posture policies that are
@@ -297,7 +297,7 @@ type UserRuleMatch struct {
 	// up in the ACLPreviewResponse parent struct.
 	// The source of the list is from srcPosture on
 	// an ACL or Grant rule:
-	// https://tailscale.com/kb/1288/device-posture#posture-conditions
+	// https://github.com/sagernet/tailscale/kb/1288/device-posture#posture-conditions
 	Postures []string `json:"postures"`
 }
 
@@ -310,7 +310,7 @@ type ACLPreviewResponse struct {
 	// Postures is a map of postures and associated rules that apply
 	// to this preview.
 	// For more details about the posture mapping, see:
-	// https://tailscale.com/kb/1288/device-posture#postures
+	// https://github.com/sagernet/tailscale/kb/1288/device-posture#postures
 	Postures map[string][]string `json:"postures,omitempty"`
 }
 
@@ -323,7 +323,7 @@ type ACLPreview struct {
 	// Postures is a map of postures and associated rules that apply
 	// to this preview.
 	// For more details about the posture mapping, see:
-	// https://tailscale.com/kb/1288/device-posture#postures
+	// https://github.com/sagernet/tailscale/kb/1288/device-posture#postures
 	Postures map[string][]string `json:"postures,omitempty"`
 }
 

@@ -14,16 +14,16 @@ import (
 	"sort"
 	"strings"
 
-	"tailscale.com/envknob"
-	"tailscale.com/hostinfo"
-	"tailscale.com/net/netaddr"
-	"tailscale.com/net/tsaddr"
-	"tailscale.com/net/tshttpproxy"
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/hostinfo"
+	"github.com/sagernet/tailscale/net/netaddr"
+	"github.com/sagernet/tailscale/net/tsaddr"
+	"github.com/sagernet/tailscale/net/tshttpproxy"
 )
 
 // LoginEndpointForProxyDetermination is the URL used for testing
 // which HTTP proxy the system should use.
-var LoginEndpointForProxyDetermination = "https://controlplane.tailscale.com/"
+var LoginEndpointForProxyDetermination = "https://controlplane.github.com/sagernet/tailscale/"
 
 func isUp(nif *net.Interface) bool       { return nif.Flags&net.FlagUp != 0 }
 func isLoopback(nif *net.Interface) bool { return nif.Flags&net.FlagLoopback != 0 }

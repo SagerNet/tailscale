@@ -8,7 +8,7 @@ import (
 	"runtime"
 	"strings"
 
-	"tailscale.com/types/lazy"
+	"github.com/sagernet/tailscale/types/lazy"
 )
 
 var stringLazy = lazy.SyncFunc(func() string {

@@ -9,12 +9,12 @@ import (
 	"net/netip"
 	"strings"
 
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/ipproto"
-	"tailscale.com/types/views"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/ipproto"
+	"github.com/sagernet/tailscale/types/views"
 )
 
-//go:generate go run tailscale.com/cmd/cloner --type=Match,CapMatch
+//go:generate go run github.com/sagernet/tailscale/cmd/cloner --type=Match,CapMatch
 
 // PortRange is a range of TCP and UDP ports.
 type PortRange struct {

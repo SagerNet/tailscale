@@ -9,7 +9,7 @@ import (
 	"syscall"
 
 	"golang.org/x/sys/unix"
-	"tailscale.com/types/logger"
+	"github.com/sagernet/tailscale/types/logger"
 )
 
 // setSocketInterfaceIndex sets the IP_BOUND_IF socket option on the given RawConn.

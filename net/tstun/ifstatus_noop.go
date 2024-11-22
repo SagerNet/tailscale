@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/tailscale/wireguard-go/tun"
-	"tailscale.com/types/logger"
+	"github.com/sagernet/tailscale/types/logger"
 )
 
 // Dummy implementation that does nothing.

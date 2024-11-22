@@ -3,7 +3,7 @@
 The following open source dependencies are used to build [Tailscale on
 Windows][].  See also the dependencies in the [Tailscale CLI][].
 
-[Tailscale on Windows]: https://tailscale.com/kb/1022/install-windows/
+[Tailscale on Windows]: https://github.com/sagernet/tailscale/kb/1022/install-windows/
 [Tailscale CLI]: ./tailscale.md
 
 ## Go Packages
@@ -77,7 +77,7 @@ Windows][].  See also the dependencies in the [Tailscale CLI][].
  - [golang.zx2c4.com/wintun](https://pkg.go.dev/golang.zx2c4.com/wintun) ([MIT](https://git.zx2c4.com/wintun-go/tree/LICENSE?id=0fa3db229ce2))
  - [golang.zx2c4.com/wireguard/windows/tunnel/winipcfg](https://pkg.go.dev/golang.zx2c4.com/wireguard/windows/tunnel/winipcfg) ([MIT](https://git.zx2c4.com/wireguard-windows/tree/COPYING?h=v0.5.3))
  - [gopkg.in/Knetic/govaluate.v3](https://pkg.go.dev/gopkg.in/Knetic/govaluate.v3) ([MIT](https://github.com/Knetic/govaluate/blob/v3.0.0/LICENSE))
- - [tailscale.com](https://pkg.go.dev/tailscale.com) ([BSD-3-Clause](https://github.com/tailscale/tailscale/blob/HEAD/LICENSE))
+ - [github.com/sagernet/tailscale](https://pkg.go.dev/github.com/sagernet/tailscale) ([BSD-3-Clause](https://github.com/tailscale/tailscale/blob/HEAD/LICENSE))
 
 ## Additional Dependencies
 

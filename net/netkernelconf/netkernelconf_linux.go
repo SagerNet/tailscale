@@ -21,7 +21,7 @@ const (
 // It returns a non-nil err in the case that an error is encountered while
 // performing the check.
 func CheckUDPGROForwarding(tunInterface, defaultRouteInterface string) (warn, err error) {
-	const kbLink = "\nSee https://tailscale.com/s/ethtool-config-udp-gro"
+	const kbLink = "\nSee https://github.com/sagernet/tailscale/s/ethtool-config-udp-gro"
 	errWithPrefix := func(format string, a ...any) error {
 		const errPrefix = "couldn't check system's UDP GRO forwarding configuration, "
 		return fmt.Errorf(errPrefix+format, a...)
@@ -59,7 +59,7 @@ func CheckUDPGROForwarding(tunInterface, defaultRouteInterface string) (warn, er
 // SetUDPGROForwarding enables UDP GRO forwarding for the provided default
 // interface. It validates if the provided tun interface has UDP segmentation
 // enabled and, if not, returns an error. See
-// https://tailscale.com/kb/1320/performance-best-practices#linux-optimizations-for-subnet-routers-and-exit-nodes
+// https://github.com/sagernet/tailscale/kb/1320/performance-best-practices#linux-optimizations-for-subnet-routers-and-exit-nodes
 func SetUDPGROForwarding(tunInterface, defaultInterface string) error {
 	e, err := ethtool.NewEthtool()
 	if err != nil {
