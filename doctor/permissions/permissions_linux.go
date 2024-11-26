@@ -10,8 +10,8 @@ import (
 	"strings"
 	"unsafe"
 
+	"github.com/sagernet/tailscale/types/logger"
 	"golang.org/x/sys/unix"
-	"tailscale.com/types/logger"
 )
 
 func permissionsImpl(logf logger.Logf) error {

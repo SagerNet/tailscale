@@ -25,11 +25,11 @@ import (
 	"unicode"
 	"unicode/utf8"
 
-	"tailscale.com/ipn"
-	"tailscale.com/syncs"
-	"tailscale.com/tstime"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/multierr"
+	"github.com/sagernet/tailscale/ipn"
+	"github.com/sagernet/tailscale/syncs"
+	"github.com/sagernet/tailscale/tstime"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/multierr"
 )
 
 var (

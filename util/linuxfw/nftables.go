@@ -16,8 +16,8 @@ import (
 	"github.com/google/nftables/expr"
 	"github.com/google/nftables/xt"
 	"github.com/josharian/native"
+	"github.com/sagernet/tailscale/types/logger"
 	"golang.org/x/sys/unix"
-	"tailscale.com/types/logger"
 )
 
 // DebugNetfilter prints debug information about netfilter rules to the

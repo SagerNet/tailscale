@@ -17,13 +17,13 @@ import (
 	"strings"
 	"time"
 
-	"tailscale.com/tailcfg"
-	"tailscale.com/tka"
-	"tailscale.com/types/key"
-	"tailscale.com/types/ptr"
-	"tailscale.com/types/views"
-	"tailscale.com/util/dnsname"
-	"tailscale.com/version"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/tka"
+	"github.com/sagernet/tailscale/types/key"
+	"github.com/sagernet/tailscale/types/ptr"
+	"github.com/sagernet/tailscale/types/views"
+	"github.com/sagernet/tailscale/util/dnsname"
+	"github.com/sagernet/tailscale/version"
 )
 
 //go:generate go run tailscale.com/cmd/cloner  -clonefunc=false -type=TKAPeer

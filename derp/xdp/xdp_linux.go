@@ -14,7 +14,7 @@ import (
 	"github.com/cilium/ebpf"
 	"github.com/cilium/ebpf/link"
 	"github.com/prometheus/client_golang/prometheus"
-	"tailscale.com/util/multierr"
+	"github.com/sagernet/tailscale/util/multierr"
 )
 
 //go:generate go run github.com/cilium/ebpf/cmd/bpf2go -type config -type counters_key -type counter_key_af -type counter_key_packets_bytes_action -type counter_key_prog_end bpf xdp.c -- -I headers

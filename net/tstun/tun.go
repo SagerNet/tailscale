@@ -13,8 +13,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/sagernet/tailscale/types/logger"
 	"github.com/tailscale/wireguard-go/tun"
-	"tailscale.com/types/logger"
 )
 
 // createTAP is non-nil on Linux.

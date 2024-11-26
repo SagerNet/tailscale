@@ -16,9 +16,9 @@ import (
 	"syscall"
 	"time"
 
-	"tailscale.com/net/netmon"
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/logger"
+	"github.com/sagernet/tailscale/net/netmon"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/logger"
 )
 
 // Detector checks whether the system is behind a captive portal.

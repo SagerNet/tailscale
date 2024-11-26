@@ -15,8 +15,8 @@ import (
 	"fmt"
 	"net/netip"
 
-	"tailscale.com/net/flowtrack"
-	"tailscale.com/types/ipproto"
+	"github.com/sagernet/tailscale/net/flowtrack"
+	"github.com/sagernet/tailscale/types/ipproto"
 )
 
 // TailscaleRejectedHeader is a TSMP message that says that one

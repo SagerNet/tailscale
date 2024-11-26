@@ -10,8 +10,8 @@ import (
 	"strconv"
 	"strings"
 
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/lazy"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/lazy"
 )
 
 // IsMobile reports whether this is a mobile client build.

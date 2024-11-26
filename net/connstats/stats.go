@@ -11,10 +11,10 @@ import (
 	"sync"
 	"time"
 
+	"github.com/sagernet/tailscale/net/packet"
+	"github.com/sagernet/tailscale/net/tsaddr"
+	"github.com/sagernet/tailscale/types/netlogtype"
 	"golang.org/x/sync/errgroup"
-	"tailscale.com/net/packet"
-	"tailscale.com/net/tsaddr"
-	"tailscale.com/types/netlogtype"
 )
 
 // Statistics maintains counters for every connection.

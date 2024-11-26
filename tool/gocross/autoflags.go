@@ -9,7 +9,7 @@ import (
 	"runtime"
 	"strings"
 
-	"tailscale.com/version/mkversion"
+	"github.com/sagernet/tailscale/version/mkversion"
 )
 
 // Autoflags adjusts the commandline argv into a new commandline

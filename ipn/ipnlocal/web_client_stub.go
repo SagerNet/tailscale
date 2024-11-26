@@ -9,7 +9,7 @@ import (
 	"errors"
 	"net"
 
-	"tailscale.com/client/tailscale"
+	"github.com/sagernet/tailscale/client/tailscale"
 )
 
 const webClientPort = 5252

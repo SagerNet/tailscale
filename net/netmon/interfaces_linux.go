@@ -20,10 +20,10 @@ import (
 
 	"github.com/jsimonetti/rtnetlink"
 	"github.com/mdlayher/netlink"
+	"github.com/sagernet/tailscale/net/netaddr"
+	"github.com/sagernet/tailscale/util/lineiter"
 	"go4.org/mem"
 	"golang.org/x/sys/unix"
-	"tailscale.com/net/netaddr"
-	"tailscale.com/util/lineiter"
 )
 
 func init() {

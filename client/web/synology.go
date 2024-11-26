@@ -13,7 +13,7 @@ import (
 	"os/exec"
 	"strings"
 
-	"tailscale.com/util/groupmember"
+	"github.com/sagernet/tailscale/util/groupmember"
 )
 
 // authorizeSynology authenticates the logged-in Synology user and verifies

@@ -6,7 +6,7 @@ package ipnauth
 import (
 	"fmt"
 
-	"tailscale.com/ipn"
+	"github.com/sagernet/tailscale/ipn"
 )
 
 // Actor is any actor using the [ipnlocal.LocalBackend].

@@ -11,8 +11,8 @@ import (
 	"os"
 
 	"github.com/dblohm7/wingoes"
+	"github.com/sagernet/tailscale/util/winutil"
 	"golang.org/x/sys/windows"
-	"tailscale.com/util/winutil"
 )
 
 var (

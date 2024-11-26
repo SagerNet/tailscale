@@ -10,11 +10,11 @@ import (
 	"os/exec"
 	"sync/atomic"
 
+	"github.com/sagernet/tailscale/net/netaddr"
+	"github.com/sagernet/tailscale/syncs"
+	"github.com/sagernet/tailscale/util/lineiter"
 	"go4.org/mem"
 	"golang.org/x/sys/unix"
-	"tailscale.com/net/netaddr"
-	"tailscale.com/syncs"
-	"tailscale.com/util/lineiter"
 )
 
 var (

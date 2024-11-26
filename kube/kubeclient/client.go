@@ -27,9 +27,9 @@ import (
 	"sync"
 	"time"
 
-	"tailscale.com/kube/kubeapi"
-	"tailscale.com/tstime"
-	"tailscale.com/util/multierr"
+	"github.com/sagernet/tailscale/kube/kubeapi"
+	"github.com/sagernet/tailscale/tstime"
+	"github.com/sagernet/tailscale/util/multierr"
 )
 
 const (

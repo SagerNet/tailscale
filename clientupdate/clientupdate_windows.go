@@ -18,9 +18,9 @@ import (
 	"strings"
 
 	"github.com/google/uuid"
+	"github.com/sagernet/tailscale/util/winutil"
+	"github.com/sagernet/tailscale/util/winutil/authenticode"
 	"golang.org/x/sys/windows"
-	"tailscale.com/util/winutil"
-	"tailscale.com/util/winutil/authenticode"
 )
 
 const (

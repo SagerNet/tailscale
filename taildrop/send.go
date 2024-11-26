@@ -12,10 +12,10 @@ import (
 	"sync"
 	"time"
 
-	"tailscale.com/envknob"
-	"tailscale.com/ipn"
-	"tailscale.com/tstime"
-	"tailscale.com/version/distro"
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/ipn"
+	"github.com/sagernet/tailscale/tstime"
+	"github.com/sagernet/tailscale/version/distro"
 )
 
 type incomingFileKey struct {

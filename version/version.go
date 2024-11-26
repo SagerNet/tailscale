@@ -10,8 +10,8 @@ import (
 	"strconv"
 	"strings"
 
-	tailscaleroot "tailscale.com"
-	"tailscale.com/types/lazy"
+	tailscaleroot "github.com/sagernet/tailscale"
+	"github.com/sagernet/tailscale/types/lazy"
 )
 
 // Stamp vars can have their value set at build time by linker flags (see

@@ -12,13 +12,13 @@ import (
 	"os/exec"
 	"runtime"
 
+	"github.com/sagernet/tailscale/health"
+	"github.com/sagernet/tailscale/net/netmon"
+	"github.com/sagernet/tailscale/net/tsaddr"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/version"
 	"github.com/tailscale/wireguard-go/tun"
 	"go4.org/netipx"
-	"tailscale.com/health"
-	"tailscale.com/net/netmon"
-	"tailscale.com/net/tsaddr"
-	"tailscale.com/types/logger"
-	"tailscale.com/version"
 )
 
 type userspaceBSDRouter struct {

@@ -12,7 +12,7 @@ import (
 	"time"
 
 	"github.com/jellydator/ttlcache/v3"
-	"tailscale.com/drive/driveimpl/shared"
+	"github.com/sagernet/tailscale/drive/driveimpl/shared"
 )
 
 var (

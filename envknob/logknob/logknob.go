@@ -8,10 +8,10 @@ package logknob
 import (
 	"sync/atomic"
 
-	"tailscale.com/envknob"
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/logger"
-	"tailscale.com/types/views"
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/types/views"
 )
 
 // TODO(andrew-d): should we have a package-global registry of logknobs? It

@@ -10,7 +10,7 @@ import (
 	"strings"
 	"unicode"
 
-	"tailscale.com/envknob"
+	"github.com/sagernet/tailscale/envknob"
 )
 
 // TODO(bradfitz): this is all too simplistic and static. It needs to run

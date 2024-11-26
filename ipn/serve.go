@@ -13,9 +13,9 @@ import (
 	"strconv"
 	"strings"
 
-	"tailscale.com/ipn/ipnstate"
-	"tailscale.com/tailcfg"
-	"tailscale.com/util/mak"
+	"github.com/sagernet/tailscale/ipn/ipnstate"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/util/mak"
 )
 
 // ServeConfigKey returns a StateKey that stores the

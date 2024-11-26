@@ -8,7 +8,7 @@ package testenv
 import (
 	"flag"
 
-	"tailscale.com/types/lazy"
+	"github.com/sagernet/tailscale/types/lazy"
 )
 
 var lazyInTest lazy.SyncValue[bool]

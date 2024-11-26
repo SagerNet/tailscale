@@ -11,9 +11,9 @@ import (
 	"net/netip"
 	"os"
 
+	"github.com/sagernet/tailscale/net/netaddr"
 	"github.com/tailscale/wf"
 	"golang.org/x/sys/windows"
-	"tailscale.com/net/netaddr"
 )
 
 // Known addresses.

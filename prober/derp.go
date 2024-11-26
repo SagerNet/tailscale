@@ -21,15 +21,15 @@ import (
 	"time"
 
 	"github.com/prometheus/client_golang/prometheus"
-	"tailscale.com/client/tailscale"
-	"tailscale.com/derp"
-	"tailscale.com/derp/derphttp"
-	"tailscale.com/net/netmon"
-	"tailscale.com/net/stun"
-	"tailscale.com/syncs"
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/key"
-	"tailscale.com/types/logger"
+	"github.com/sagernet/tailscale/client/tailscale"
+	"github.com/sagernet/tailscale/derp"
+	"github.com/sagernet/tailscale/derp/derphttp"
+	"github.com/sagernet/tailscale/net/netmon"
+	"github.com/sagernet/tailscale/net/stun"
+	"github.com/sagernet/tailscale/syncs"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/key"
+	"github.com/sagernet/tailscale/types/logger"
 )
 
 // derpProber dynamically manages several probes for each DERP server

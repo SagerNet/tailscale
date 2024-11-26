@@ -11,8 +11,8 @@ import (
 	"os/user"
 	"strings"
 
+	"github.com/sagernet/tailscale/types/logger"
 	"golang.org/x/exp/constraints"
-	"tailscale.com/types/logger"
 )
 
 // Check implements the doctor.Check interface.
