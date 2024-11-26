@@ -1070,6 +1070,14 @@ func (t *Wrapper) injectedRead(res tunInjectedRead, outBuffs [][]byte, sizes []i
 	defer parsedPacketPool.Put(p)
 	p.Decode(pkt)
 
+	if !t.disableFilter {
+		response, _ := t.filterPacketOutboundToWireGuard(p, pc, nil)
+		if response != filter.Accept {
+			metricPacketOutDrop.Add(1)
+			return 0, nil
+		}
+	}
+
 	invertGSOChecksum(pkt, gso)
 	pc.snat(p)
 	invertGSOChecksum(pkt, gso)
