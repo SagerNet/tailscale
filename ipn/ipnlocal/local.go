@@ -385,10 +385,6 @@ type LocalBackend struct {
 	// backend is healthy and captive portal detection is not required
 	// (sending false).
 	needsCaptiveDetection chan bool
-
-	cfg  *wgcfg.Config
-	rcfg *router.Config
-	dcfg *dns.Config
 }
 
 // HealthTracker returns the health tracker for the backend.
@@ -4556,10 +4552,6 @@ func (b *LocalBackend) authReconfig() {
 
 	b.initPeerAPIListener()
 	b.readvertiseAppConnectorRoutes()
-
-	b.cfg = cfg
-	b.rcfg = rcfg
-	b.dcfg = dcfg
 }
 
 // shouldUseOneCGNATRoute reports whether we should prefer to make one big
