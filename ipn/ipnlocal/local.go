@@ -5184,10 +5184,6 @@ func (b *LocalBackend) authReconfig() {
 
 	b.initPeerAPIListener()
 	b.readvertiseAppConnectorRoutes()
-
-	b.cfg = cfg
-	b.rcfg = rcfg
-	b.dcfg = dcfg
 }
 
 // shouldUseOneCGNATRoute reports whether we should prefer to make one big
