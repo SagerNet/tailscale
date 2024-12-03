@@ -76,6 +76,7 @@ type userspaceEngine struct {
 	wgLogger       *wglog.Logger // a wireguard-go logging wrapper
 	ctx            context.Context
 	workers        int
+	onReconfig     ReconfigListener
 	reqCh          chan struct{}
 	waitCh         chan struct{} // chan is closed when first Close call completes; contrast with closing bool
 	timeNow        func() mono.Time
@@ -953,6 +954,10 @@ func (e *userspaceEngine) Reconfig(cfg *wgcfg.Config, routerCfg *router.Config, 
 	// primary-subnet-router transition.
 	if e.bird != nil {
 		e.bird.ReconfigDone()
+	}
+
+	if (engineChanged || routerChanged || dnsChanged) && e.onReconfig != nil {
+		e.onReconfig(cfg, routerCfg, dnsCfg)
 	}
 
 	e.logf("[v1] wgengine: Reconfig done")
