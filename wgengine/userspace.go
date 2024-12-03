@@ -95,8 +95,9 @@ const statusPollInterval = 1 * time.Minute
 const networkLoggerUploadTimeout = 5 * time.Second
 
 type userspaceEngine struct {
-	ctx     context.Context
-	workers int
+	ctx        context.Context
+	workers    int
+	onReconfig ReconfigListener
 
 	// eventBus will eventually become required, but for now may be nil.
 	eventBus    *eventbus.Bus
@@ -1171,6 +1172,10 @@ func (e *userspaceEngine) Reconfig(cfg *wgcfg.Config, routerCfg *router.Config, 
 		} else {
 			e.lastIsSubnetRouter = isSubnetRouter
 		}
+	}
+
+	if routerChanged && e.onReconfig != nil {
+		e.onReconfig(cfg, routerCfg, dnsCfg)
 	}
 
 	e.logf("[v1] wgengine: Reconfig done")
