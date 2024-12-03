@@ -399,10 +399,6 @@ type LocalBackend struct {
 	// hardwareAttested is whether backend should use a hardware-backed key to
 	// bind the node identity to this device.
 	hardwareAttested atomic.Bool
-
-	cfg  *wgcfg.Config
-	rcfg *router.Config
-	dcfg *dns.Config
 }
 
 // SetHardwareAttested enables hardware attestation key signatures in map
@@ -5088,10 +5084,6 @@ func (b *LocalBackend) authReconfigLocked() {
 	if buildfeatures.HasAppConnectors {
 		go b.goTracker.Go(b.readvertiseAppConnectorRoutes)
 	}
-
-	b.cfg = cfg
-	b.rcfg = rcfg
-	b.dcfg = dcfg
 }
 
 // shouldUseOneCGNATRoute reports whether we should prefer to make one big
