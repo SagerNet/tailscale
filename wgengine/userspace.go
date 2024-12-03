@@ -89,8 +89,10 @@ const statusPollInterval = 1 * time.Minute
 const networkLoggerUploadTimeout = 5 * time.Second
 
 type userspaceEngine struct {
-	ctx              context.Context
-	workers          int
+	ctx        context.Context
+	workers    int
+	onReconfig ReconfigListener
+
 	logf             logger.Logf
 	wgLogger         *wglog.Logger // a wireguard-go logging wrapper
 	reqCh            chan struct{}
@@ -1048,6 +1050,10 @@ func (e *userspaceEngine) Reconfig(cfg *wgcfg.Config, routerCfg *router.Config, 
 		} else {
 			e.lastIsSubnetRouter = isSubnetRouter
 		}
+	}
+
+	if routerChanged && e.onReconfig != nil {
+		e.onReconfig(cfg, routerCfg, dnsCfg)
 	}
 
 	e.logf("[v1] wgengine: Reconfig done")
