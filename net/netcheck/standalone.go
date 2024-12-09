@@ -8,12 +8,12 @@ import (
 	"errors"
 	"net/netip"
 
-	"tailscale.com/net/netaddr"
-	"tailscale.com/net/netns"
-	"tailscale.com/net/stun"
-	"tailscale.com/types/logger"
-	"tailscale.com/types/nettype"
-	"tailscale.com/util/multierr"
+	"github.com/sagernet/tailscale/net/netaddr"
+	"github.com/sagernet/tailscale/net/netns"
+	"github.com/sagernet/tailscale/net/stun"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/types/nettype"
+	"github.com/sagernet/tailscale/util/multierr"
 )
 
 // Standalone creates the necessary UDP sockets on the given bindAddr and starts

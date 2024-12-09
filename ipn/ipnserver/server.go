@@ -20,16 +20,16 @@ import (
 	"sync/atomic"
 	"unicode"
 
-	"tailscale.com/envknob"
-	"tailscale.com/ipn"
-	"tailscale.com/ipn/ipnlocal"
-	"tailscale.com/ipn/localapi"
-	"tailscale.com/net/netmon"
-	"tailscale.com/types/logger"
-	"tailscale.com/types/logid"
-	"tailscale.com/util/mak"
-	"tailscale.com/util/set"
-	"tailscale.com/util/systemd"
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/ipn"
+	"github.com/sagernet/tailscale/ipn/ipnlocal"
+	"github.com/sagernet/tailscale/ipn/localapi"
+	"github.com/sagernet/tailscale/net/netmon"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/types/logid"
+	"github.com/sagernet/tailscale/util/mak"
+	"github.com/sagernet/tailscale/util/set"
+	"github.com/sagernet/tailscale/util/systemd"
 )
 
 // Server is an IPN backend and its set of 0 or more active localhost

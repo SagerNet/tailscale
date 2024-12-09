@@ -14,7 +14,7 @@ import (
 	"sync"
 	"time"
 
-	"tailscale.com/tstime/mono"
+	"github.com/sagernet/tailscale/tstime/mono"
 )
 
 // Limit defines the maximum frequency of some events.

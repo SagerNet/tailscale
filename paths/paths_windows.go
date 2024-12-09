@@ -8,8 +8,8 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/sagernet/tailscale/util/winutil"
 	"golang.org/x/sys/windows"
-	"tailscale.com/util/winutil"
 )
 
 func init() {

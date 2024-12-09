@@ -27,14 +27,14 @@ import (
 	"sync"
 	"time"
 
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/metrics"
+	"github.com/sagernet/tailscale/net/tsaddr"
+	"github.com/sagernet/tailscale/tsweb/varz"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/ctxkey"
+	"github.com/sagernet/tailscale/util/vizerror"
 	"go4.org/mem"
-	"tailscale.com/envknob"
-	"tailscale.com/metrics"
-	"tailscale.com/net/tsaddr"
-	"tailscale.com/tsweb/varz"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/ctxkey"
-	"tailscale.com/util/vizerror"
 )
 
 // DevMode controls whether extra output in shown, for when the binary is being run in dev mode.

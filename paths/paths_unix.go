@@ -11,8 +11,8 @@ import (
 	"path/filepath"
 	"runtime"
 
+	"github.com/sagernet/tailscale/version/distro"
 	"golang.org/x/sys/unix"
-	"tailscale.com/version/distro"
 )
 
 func init() {

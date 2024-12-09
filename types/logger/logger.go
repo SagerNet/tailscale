@@ -10,6 +10,7 @@ import (
 	"bufio"
 	"bytes"
 	"container/list"
+	"context"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -18,11 +19,9 @@ import (
 	"sync"
 	"time"
 
-	"context"
-
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/util/ctxkey"
 	"go4.org/mem"
-	"tailscale.com/envknob"
-	"tailscale.com/util/ctxkey"
 )
 
 // Logf is the basic Tailscale logger type: a printf-like func.

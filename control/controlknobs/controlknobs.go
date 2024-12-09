@@ -8,9 +8,9 @@ package controlknobs
 import (
 	"sync/atomic"
 
-	"tailscale.com/syncs"
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/opt"
+	"github.com/sagernet/tailscale/syncs"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/opt"
 )
 
 // Knobs is the set of knobs that the control plane's coordination server can

@@ -11,7 +11,7 @@ import (
 	"sync"
 	"time"
 
-	"tailscale.com/util/lru"
+	"github.com/sagernet/tailscale/util/lru"
 )
 
 // Limiter is a keyed token bucket rate limiter.

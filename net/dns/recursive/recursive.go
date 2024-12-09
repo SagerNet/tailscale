@@ -15,13 +15,13 @@ import (
 	"time"
 
 	"github.com/miekg/dns"
-	"tailscale.com/envknob"
-	"tailscale.com/net/netns"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/dnsname"
-	"tailscale.com/util/mak"
-	"tailscale.com/util/multierr"
-	"tailscale.com/util/slicesx"
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/net/netns"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/dnsname"
+	"github.com/sagernet/tailscale/util/mak"
+	"github.com/sagernet/tailscale/util/multierr"
+	"github.com/sagernet/tailscale/util/slicesx"
 )
 
 const (

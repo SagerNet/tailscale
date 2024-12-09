@@ -14,11 +14,11 @@ import (
 	"sort"
 	"strings"
 
-	"tailscale.com/envknob"
-	"tailscale.com/hostinfo"
-	"tailscale.com/net/netaddr"
-	"tailscale.com/net/tsaddr"
-	"tailscale.com/net/tshttpproxy"
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/hostinfo"
+	"github.com/sagernet/tailscale/net/netaddr"
+	"github.com/sagernet/tailscale/net/tsaddr"
+	"github.com/sagernet/tailscale/net/tshttpproxy"
 )
 
 // LoginEndpointForProxyDetermination is the URL used for testing

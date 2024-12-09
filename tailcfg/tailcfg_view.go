@@ -11,12 +11,12 @@ import (
 	"net/netip"
 	"time"
 
-	"tailscale.com/types/dnstype"
-	"tailscale.com/types/key"
-	"tailscale.com/types/opt"
-	"tailscale.com/types/structs"
-	"tailscale.com/types/tkatype"
-	"tailscale.com/types/views"
+	"github.com/sagernet/tailscale/types/dnstype"
+	"github.com/sagernet/tailscale/types/key"
+	"github.com/sagernet/tailscale/types/opt"
+	"github.com/sagernet/tailscale/types/structs"
+	"github.com/sagernet/tailscale/types/tkatype"
+	"github.com/sagernet/tailscale/types/views"
 )
 
 //go:generate go run tailscale.com/cmd/cloner  -clonefunc=true -type=User,Node,Hostinfo,NetInfo,Login,DNSConfig,RegisterResponse,RegisterResponseAuth,RegisterRequest,DERPHomeParams,DERPRegion,DERPMap,DERPNode,SSHRule,SSHAction,SSHPrincipal,ControlDialPlan,Location,UserProfile

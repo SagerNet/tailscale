@@ -14,8 +14,8 @@ import (
 	"sort"
 	"time"
 
-	"tailscale.com/client/tailscale/apitype"
-	"tailscale.com/logtail/backoff"
+	"github.com/sagernet/tailscale/client/tailscale/apitype"
+	"github.com/sagernet/tailscale/logtail/backoff"
 )
 
 // HasFilesWaiting reports whether any files are buffered in [Handler.Dir].

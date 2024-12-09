@@ -7,16 +7,15 @@ package capture
 import (
 	"bytes"
 	"context"
+	_ "embed"
 	"encoding/binary"
 	"io"
 	"net/http"
 	"sync"
 	"time"
 
-	_ "embed"
-
-	"tailscale.com/net/packet"
-	"tailscale.com/util/set"
+	"github.com/sagernet/tailscale/net/packet"
+	"github.com/sagernet/tailscale/util/set"
 )
 
 //go:embed ts-dissector.lua

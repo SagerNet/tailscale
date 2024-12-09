@@ -8,7 +8,7 @@ import (
 	"slices"
 	"strings"
 
-	"tailscale.com/ipn"
+	"github.com/sagernet/tailscale/ipn"
 )
 
 // UpdateOutgoingFiles updates b.outgoingFiles to reflect the given updates and

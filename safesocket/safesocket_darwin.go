@@ -17,7 +17,7 @@ import (
 	"sync"
 	"time"
 
-	"tailscale.com/version"
+	"github.com/sagernet/tailscale/version"
 )
 
 func init() {

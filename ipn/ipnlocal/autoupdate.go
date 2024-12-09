@@ -9,9 +9,9 @@ import (
 	"context"
 	"time"
 
-	"tailscale.com/clientupdate"
-	"tailscale.com/ipn"
-	"tailscale.com/version"
+	"github.com/sagernet/tailscale/clientupdate"
+	"github.com/sagernet/tailscale/ipn"
+	"github.com/sagernet/tailscale/version"
 )
 
 func (b *LocalBackend) stopOfflineAutoUpdate() {
