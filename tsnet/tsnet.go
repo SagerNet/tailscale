@@ -26,6 +26,7 @@ import (
 	"sync"
 	"time"
 
+	N "github.com/sagernet/sing/common/network"
 	"github.com/sagernet/tailscale/client/tailscale"
 	"github.com/sagernet/tailscale/control/controlclient"
 	"github.com/sagernet/tailscale/envknob"
@@ -122,6 +123,7 @@ type Server struct {
 	// field at zero unless you know what you are doing.
 	Port uint16
 
+	Dialer     N.Dialer
 	LookupHook dnscache.LookupHookFunc
 
 	getCertForTesting func(*tls.ClientHelloInfo) (*tls.Certificate, error)
@@ -274,7 +276,7 @@ func (s *Server) Loopback() (addr string, proxyCred, localAPICred string, err er
 		// out the CONNECT code from tailscaled/proxy.go that uses
 		// httputil.ReverseProxy and adding auth support.
 		go func() {
-			lah := localapi.NewHandler(s.lb, s.logf, s.logid)
+			lah := localapi.NewHandler(s.lb, s.logf, s.logid, s.netMon.Dialer())
 			lah.PermitWrite = true
 			lah.PermitRead = true
 			lah.RequiredPassword = s.localAPICred
@@ -557,13 +559,13 @@ func (s *Server) start() (reterr error) {
 		return err
 	}
 
-	s.netMon, err = netmon.New(tsLogf)
+	s.netMon, err = netmon.New(tsLogf, s.Dialer)
 	if err != nil {
 		return err
 	}
 	closePool.add(s.netMon)
 
-	s.dialer = &tsdial.Dialer{Logf: tsLogf} // mutated below (before used)
+	s.dialer = &tsdial.Dialer{Logf: tsLogf, Dialer: s.Dialer} // mutated below (before used)
 	eng, err := wgengine.NewUserspaceEngine(tsLogf, wgengine.Config{
 		ListenPort:    s.Port,
 		NetMon:        s.netMon,
@@ -668,7 +670,7 @@ func (s *Server) start() (reterr error) {
 	// go s.printAuthURLLoop()
 
 	// Run the localapi handler, to allow fetching LetsEncrypt certs.
-	lah := localapi.NewHandler(lb, tsLogf, s.logid)
+	lah := localapi.NewHandler(lb, tsLogf, s.logid, s.netMon.Dialer())
 	lah.PermitWrite = true
 	lah.PermitRead = true
 

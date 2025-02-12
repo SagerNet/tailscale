@@ -31,6 +31,7 @@ import (
 	"sync"
 	"time"
 
+	N "github.com/sagernet/sing/common/network"
 	"github.com/sagernet/tailscale/client/tailscale/apitype"
 	"github.com/sagernet/tailscale/clientupdate"
 	"github.com/sagernet/tailscale/drive"
@@ -171,8 +172,8 @@ var (
 
 // NewHandler creates a new LocalAPI HTTP handler. All parameters except netMon
 // are required (if non-nil it's used to do faster interface lookups).
-func NewHandler(b *ipnlocal.LocalBackend, logf logger.Logf, logID logid.PublicID) *Handler {
-	return &Handler{b: b, logf: logf, backendLogID: logID, clock: tstime.StdClock{}}
+func NewHandler(b *ipnlocal.LocalBackend, logf logger.Logf, logID logid.PublicID, dialer N.Dialer) *Handler {
+	return &Handler{b: b, logf: logf, backendLogID: logID, clock: tstime.StdClock{}, dialer: dialer}
 }
 
 type Handler struct {
@@ -201,6 +202,8 @@ type Handler struct {
 	logf         logger.Logf
 	backendLogID logid.PublicID
 	clock        tstime.Clock
+
+	dialer N.Dialer
 }
 
 func (h *Handler) LocalBackend() *ipnlocal.LocalBackend {
@@ -835,7 +838,7 @@ func (h *Handler) serveDebugPortmap(w http.ResponseWriter, r *http.Request) {
 	})
 	defer c.Close()
 
-	netMon, err := netmon.New(logger.WithPrefix(logf, "monitor: "))
+	netMon, err := netmon.New(logger.WithPrefix(logf, "monitor: "), h.dialer)
 	if err != nil {
 		logf("error creating monitor: %v", err)
 		return

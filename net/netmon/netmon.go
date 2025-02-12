@@ -14,6 +14,7 @@ import (
 	"sync"
 	"time"
 
+	N "github.com/sagernet/sing/common/network"
 	"github.com/sagernet/tailscale/types/logger"
 	"github.com/sagernet/tailscale/util/clientmetric"
 	"github.com/sagernet/tailscale/util/set"
@@ -73,6 +74,7 @@ type Monitor struct {
 	wallTimer  *time.Timer // nil until Started; re-armed AfterFunc per tick
 	lastWall   time.Time
 	timeJumped bool // whether we need to send a changed=true after a big time jump
+	dialer     N.Dialer
 }
 
 // ChangeFunc is a callback function registered with Monitor that's called when the
@@ -114,13 +116,14 @@ type ChangeDelta struct {
 // New instantiates and starts a monitoring instance.
 // The returned monitor is inactive until it's started by the Start method.
 // Use RegisterChangeCallback to get notified of network changes.
-func New(logf logger.Logf) (*Monitor, error) {
+func New(logf logger.Logf, dialer N.Dialer) (*Monitor, error) {
 	logf = logger.WithPrefix(logf, "monitor: ")
 	m := &Monitor{
 		logf:     logf,
 		change:   make(chan bool, 1),
 		stop:     make(chan struct{}),
 		lastWall: wallTime(),
+		dialer:   dialer,
 	}
 	st, err := m.interfaceStateUncached()
 	if err != nil {
