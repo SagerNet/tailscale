@@ -484,6 +484,7 @@ func NewLocalBackend(logf logger.Logf, logID logid.PublicID, sys *tsd.System, lo
 		captiveCtx:            captiveCtx,
 		captiveCancel:         nil, // so that we start checkCaptivePortalLoop when Running
 		needsCaptiveDetection: make(chan bool),
+		lookupHook:            lookupHook,
 	}
 	mConn.SetNetInfoCallback(b.setNetInfo)
 

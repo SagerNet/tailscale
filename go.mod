@@ -40,6 +40,7 @@ require (
 	github.com/prometheus/common v0.48.0
 	github.com/safchain/ethtool v0.3.0
 	github.com/sagernet/gvisor v0.0.0-20241021032506-a4324256e4a3
+	github.com/sagernet/sing v0.6.1
 	github.com/sagernet/wireguard-go v0.0.1-beta.4
 	github.com/tailscale/certstore v0.1.1-0.20231202035212-d3fa0460f47e
 	github.com/tailscale/golang-x-crypto v0.0.0-20240604161659-3fde5e568aa4
@@ -68,7 +69,6 @@ require (
 	github.com/bits-and-blooms/bitset v1.13.0 // indirect
 	github.com/google/go-cmp v0.6.0 // indirect
 	github.com/gorilla/securecookie v1.1.2 // indirect
-	github.com/sagernet/sing v0.5.1 // indirect
 	github.com/vishvananda/netns v0.0.4 // indirect
 	go.uber.org/goleak v1.3.0 // indirect
 	golang.zx2c4.com/wintun v0.0.0-20230126152724-0fa3db229ce2 // indirect

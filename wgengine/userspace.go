@@ -358,7 +358,7 @@ func NewUserspaceEngine(logf logger.Logf, conf Config) (_ Engine, reterr error) 
 	if conf.NetMon != nil {
 		e.netMon = conf.NetMon
 	} else {
-		mon, err := netmon.New(logf)
+		mon, err := netmon.New(logf, nil)
 		if err != nil {
 			return nil, err
 		}
