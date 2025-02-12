@@ -466,6 +466,8 @@ type LocalBackend struct {
 	// It is used to prevent goroutines from piling up to do the same
 	// work of [LocalBackend.authReconfigLocked].
 	existsPendingAuthReconfig atomic.Bool
+
+	lookupHook dnscache.LookupHookFunc
 }
 
 // SetHardwareAttested enables hardware attestation key signatures in map
@@ -538,7 +540,7 @@ type clientGen func(controlclient.Options) (controlclient.Client, error)
 // If dialer is nil, a new one is made.
 //
 // The logID may be the zero value if logging is not in use.
-func NewLocalBackend(logf logger.Logf, logID logid.PublicID, sys *tsd.System, loginFlags controlclient.LoginFlags) (_ *LocalBackend, err error) {
+func NewLocalBackend(logf logger.Logf, logID logid.PublicID, sys *tsd.System, loginFlags controlclient.LoginFlags, lookupHook dnscache.LookupHookFunc) (_ *LocalBackend, err error) {
 	e := sys.Engine.Get()
 	store := sys.StateStore.Get()
 	dialer := sys.Dialer.Get()
@@ -3226,6 +3228,7 @@ func (b *LocalBackend) startLocked(opts ipn.Options) error {
 		Shutdown:             ccShutdown,
 		Bus:                  b.sys.Bus.Get(),
 		StartPaused:          b.shouldPauseControlClientLocked(prefs),
+		LookupHook:           b.lookupHook,
 	})
 	if err != nil {
 		return err
