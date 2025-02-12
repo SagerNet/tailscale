@@ -26,6 +26,7 @@ import (
 	"sync"
 	"time"
 
+	N "github.com/sagernet/sing/common/network"
 	"github.com/sagernet/tailscale/client/local"
 	"github.com/sagernet/tailscale/control/controlclient"
 	"github.com/sagernet/tailscale/envknob"
@@ -134,6 +135,7 @@ type Server struct {
 	// that the control server will allow the node to adopt that tag.
 	AdvertiseTags []string
 
+	Dialer     N.Dialer
 	LookupHook dnscache.LookupHookFunc
 
 	getCertForTesting func(*tls.ClientHelloInfo) (*tls.Certificate, error)
@@ -292,6 +294,7 @@ func (s *Server) Loopback() (addr string, proxyCred, localAPICred string, err er
 				Logf:     s.logf,
 				LogID:    s.logid,
 				EventBus: s.sys.Bus.Get(),
+				Dialer:   s.netMon.Dialer(),
 			})
 			lah.PermitWrite = true
 			lah.PermitRead = true
@@ -587,13 +590,13 @@ func (s *Server) start() (reterr error) {
 		return err
 	}
 
-	s.netMon, err = netmon.New(sys.Bus.Get(), tsLogf)
+	s.netMon, err = netmon.New(sys.Bus.Get(), tsLogf, s.Dialer)
 	if err != nil {
 		return err
 	}
 	closePool.add(s.netMon)
 
-	s.dialer = &tsdial.Dialer{Logf: tsLogf} // mutated below (before used)
+	s.dialer = &tsdial.Dialer{Logf: tsLogf, Dialer: s.Dialer} // mutated below (before used)
 	s.dialer.SetBus(sys.Bus.Get())
 	eng, err := wgengine.NewUserspaceEngine(tsLogf, wgengine.Config{
 		EventBus:      sys.Bus.Get(),
@@ -719,6 +722,7 @@ func (s *Server) start() (reterr error) {
 		Logf:     tsLogf,
 		LogID:    s.logid,
 		EventBus: sys.Bus.Get(),
+		Dialer:   s.netMon.Dialer(),
 	})
 	lah.PermitWrite = true
 	lah.PermitRead = true

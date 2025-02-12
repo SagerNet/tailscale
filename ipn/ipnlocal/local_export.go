@@ -8,7 +8,7 @@ import (
 )
 
 func (b *LocalBackend) ExportFilter() *atomic.Pointer[filter.Filter] {
-	return &b.filterAtomic
+	return &b.currentNode().filterAtomic
 }
 
 func (b *LocalBackend) ExportEngine() wgengine.Engine {

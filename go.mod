@@ -48,6 +48,7 @@ require (
 	github.com/prometheus/common v0.65.0
 	github.com/safchain/ethtool v0.3.0
 	github.com/sagernet/gvisor v0.0.0-20250811.0-sing-box-mod.1
+	github.com/sagernet/sing v0.7.13
 	github.com/sagernet/wireguard-go v0.0.2-beta.1.0.20250917110311-16510ac47288
 	github.com/tailscale/certstore v0.1.1-0.20231202035212-d3fa0460f47e
 	github.com/tailscale/goupnp v1.0.1-0.20210804011211-c64d0f06ea05
@@ -94,7 +95,6 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/planetscale/vtprotobuf v0.6.1-0.20240319094008-0393e58bdf10 // indirect
 	github.com/puzpuzpuz/xsync v1.5.2 // indirect
-	github.com/sagernet/sing v0.7.10 // indirect
 	github.com/stacklok/frizbee v0.1.7 // indirect
 	github.com/vishvananda/netns v0.0.5 // indirect
 	go.etcd.io/bbolt v1.3.11 // indirect

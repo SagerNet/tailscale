@@ -48,7 +48,6 @@ import (
 	"github.com/sagernet/tailscale/ipn/ipnext"
 	"github.com/sagernet/tailscale/ipn/ipnstate"
 	"github.com/sagernet/tailscale/log/sockstatlog"
-	"github.com/sagernet/tailscale/logpolicy"
 	"github.com/sagernet/tailscale/net/dns"
 	"github.com/sagernet/tailscale/net/dnscache"
 	"github.com/sagernet/tailscale/net/dnsfallback"
@@ -518,6 +517,7 @@ func NewLocalBackend(logf logger.Logf, logID logid.PublicID, sys *tsd.System, lo
 		captiveCtx:            captiveCtx,
 		captiveCancel:         nil, // so that we start checkCaptivePortalLoop when Running
 		needsCaptiveDetection: make(chan bool),
+		lookupHook:            lookupHook,
 	}
 
 	nb := newNodeBackend(ctx, b.logf, b.sys.Bus.Get())
