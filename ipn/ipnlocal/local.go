@@ -431,6 +431,7 @@ type LocalBackend struct {
 	cfg  *wgcfg.Config
 	rcfg *router.Config
 	dcfg *dns.Config
+	lookupHook dnscache.LookupHookFunc
 }
 
 // HealthTracker returns the health tracker for the backend.
@@ -470,7 +471,7 @@ type clientGen func(controlclient.Options) (controlclient.Client, error)
 // but is not actually running.
 //
 // If dialer is nil, a new one is made.
-func NewLocalBackend(logf logger.Logf, logID logid.PublicID, sys *tsd.System, loginFlags controlclient.LoginFlags) (_ *LocalBackend, err error) {
+func NewLocalBackend(logf logger.Logf, logID logid.PublicID, sys *tsd.System, loginFlags controlclient.LoginFlags, lookupHook dnscache.LookupHookFunc) (_ *LocalBackend, err error) {
 	e := sys.Engine.Get()
 	store := sys.StateStore.Get()
 	dialer := sys.Dialer.Get()
@@ -2465,6 +2466,7 @@ func (b *LocalBackend) Start(opts ipn.Options) error {
 		// Don't warn about broken Linux IP forwarding when
 		// netstack is being used.
 		SkipIPForwardingCheck: isNetstack,
+		LookupHook:            b.lookupHook,
 	})
 	if err != nil {
 		return err
