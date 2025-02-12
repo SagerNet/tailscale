@@ -48,6 +48,7 @@ require (
 	github.com/prometheus/client_golang v1.23.2
 	github.com/prometheus/common v0.69.0
 	github.com/safchain/ethtool v0.3.0
+	github.com/sagernet/sing v0.8.12-0.20260731081310-cb3e09a281aa
 	github.com/skip2/go-qrcode v0.0.0-20200617195104-da1b6568686e
 	github.com/tailscale/certstore v0.1.1-0.20260409135935-3638fb84b77d
 	github.com/tailscale/hujson v0.0.0-20260302212456-ecc657c15afd
@@ -88,7 +89,6 @@ require (
 	github.com/hashicorp/go-metrics v0.5.4 // indirect
 	github.com/hashicorp/go-msgpack/v2 v2.1.2 // indirect
 	github.com/hashicorp/golang-lru v1.0.2 // indirect
-	github.com/sagernet/sing v0.7.10 // indirect
 	go.etcd.io/bbolt v1.4.2 // indirect
 )
 

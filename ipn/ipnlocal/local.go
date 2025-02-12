@@ -605,6 +605,7 @@ func NewLocalBackend(logf logger.Logf, logID logid.PublicID, sys *tsd.System, lo
 		em:           newExpiryManager(logf, sys.Bus.Get()),
 		loginFlags:   loginFlags,
 		clock:        clock,
+		lookupHook:   lookupHook,
 	}
 
 	sys.NoiseRoundTripper.Set(noiseRoundTripper{b})

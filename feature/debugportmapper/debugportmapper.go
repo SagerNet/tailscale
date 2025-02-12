@@ -132,7 +132,7 @@ func serveDebugPortmap(h *localapi.Handler, w http.ResponseWriter, r *http.Reque
 
 	bus := eventbus.New()
 	defer bus.Close()
-	netMon, err := netmon.New(bus, logger.WithPrefix(logf, "monitor: "))
+	netMon, err := netmon.New(bus, logger.WithPrefix(logf, "monitor: "), nil)
 	if err != nil {
 		logf("error creating monitor: %v", err)
 		return

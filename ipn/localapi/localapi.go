@@ -24,6 +24,7 @@ import (
 	"sync"
 	"time"
 
+	N "github.com/sagernet/sing/common/network"
 	"github.com/sagernet/tailscale/client/tailscale/apitype"
 	"github.com/sagernet/tailscale/envknob"
 	"github.com/sagernet/tailscale/feature"
@@ -192,6 +193,7 @@ func NewHandler(cfg HandlerConfig) *Handler {
 		backendLogID: cfg.LogID,
 		clock:        tstime.StdClock{},
 		eventBus:     cfg.EventBus,
+		dialer:       cfg.Dialer,
 	}
 }
 
@@ -203,6 +205,7 @@ type HandlerConfig struct {
 	Logf     logger.Logf
 	LogID    logid.PublicID
 	EventBus *eventbus.Bus
+	Dialer   N.Dialer
 }
 
 type Handler struct {
@@ -232,6 +235,8 @@ type Handler struct {
 	backendLogID logid.PublicID
 	clock        tstime.Clock
 	eventBus     *eventbus.Bus // read-only after initialization
+
+	dialer N.Dialer
 }
 
 func (h *Handler) Logf(format string, args ...any) {

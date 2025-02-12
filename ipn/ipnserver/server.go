@@ -213,6 +213,7 @@ func (s *Server) serveHTTP(w http.ResponseWriter, r *http.Request) {
 			Logf:     s.logf,
 			LogID:    s.backendLogID,
 			EventBus: lb.Sys().Bus.Get(),
+			Dialer:   s.netMon.Dialer(),
 		})
 		if actor, ok := ci.(*actor); ok {
 			lah.PermitRead, lah.PermitWrite = actor.Permissions(lb.OperatorUserID())

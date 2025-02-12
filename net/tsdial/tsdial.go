@@ -20,6 +20,8 @@ import (
 	"time"
 
 	"github.com/gaissmai/bart"
+	M "github.com/sagernet/sing/common/metadata"
+	N "github.com/sagernet/sing/common/network"
 	"github.com/sagernet/tailscale/envknob"
 	"github.com/sagernet/tailscale/feature"
 	"github.com/sagernet/tailscale/feature/buildfeatures"
@@ -76,6 +78,8 @@ type Dialer struct {
 	// NetstackDialUDP dials the provided IPPort using netstack.
 	// If nil, it's not used.
 	NetstackDialUDP func(context.Context, netip.AddrPort) (net.Conn, error)
+
+	Dialer N.Dialer
 
 	peerClientOnce sync.Once
 	peerClient     *http.Client
@@ -230,6 +234,7 @@ func (d *Dialer) SetNetMon(netMon *netmon.Monitor) {
 		d.eventClient = nil
 	}
 	d.netMonUnregister = d.netMon.RegisterChangeCallback(d.linkChanged)
+	d.Dialer = netMon.Dialer()
 }
 
 // NetMon returns the Dialer's network monitor.
@@ -529,11 +534,10 @@ func (d *Dialer) SystemDial(ctx context.Context, network, addr string) (net.Conn
 	if closed {
 		return nil, net.ErrClosed
 	}
-
 	var c net.Conn
 	var err error
-	if d.sysDialForTest != nil {
-		c, err = d.sysDialForTest(ctx, network, addr)
+	if d.Dialer != nil {
+		c, err = d.Dialer.DialContext(ctx, network, M.ParseSocksaddr(addr))
 	} else {
 		d.netnsDialerOnce.Do(func() {
 			d.netnsDialer = netns.NewDialer(d.logf, d.netMon)
