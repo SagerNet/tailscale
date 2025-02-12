@@ -180,6 +180,8 @@ type Options struct {
 	// attempted. It is used to allow the client to clean up any resources or complete any
 	// tasks that are dependent on a live client.
 	Shutdown func()
+
+	LookupHook dnscache.LookupHookFunc
 }
 
 // ControlDialPlanner is the interface optionally supplied when creating a
@@ -273,6 +275,7 @@ func NewDirect(opts Options) (*Direct, error) {
 		UseLastGood:      true,
 		LookupIPFallback: dnsfallback.MakeLookupFunc(opts.Logf, netMon),
 		Logf:             opts.Logf,
+		LookupHook:       opts.LookupHook,
 	}
 
 	httpc := opts.HTTPTestClient

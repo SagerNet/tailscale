@@ -399,6 +399,8 @@ type LocalBackend struct {
 	// hardwareAttested is whether backend should use a hardware-backed key to
 	// bind the node identity to this device.
 	hardwareAttested atomic.Bool
+
+	lookupHook dnscache.LookupHookFunc
 }
 
 // SetHardwareAttested enables hardware attestation key signatures in map
@@ -453,7 +455,7 @@ type clientGen func(controlclient.Options) (controlclient.Client, error)
 // If dialer is nil, a new one is made.
 //
 // The logID may be the zero value if logging is not in use.
-func NewLocalBackend(logf logger.Logf, logID logid.PublicID, sys *tsd.System, loginFlags controlclient.LoginFlags) (_ *LocalBackend, err error) {
+func NewLocalBackend(logf logger.Logf, logID logid.PublicID, sys *tsd.System, loginFlags controlclient.LoginFlags, lookupHook dnscache.LookupHookFunc) (_ *LocalBackend, err error) {
 	e := sys.Engine.Get()
 	store := sys.StateStore.Get()
 	dialer := sys.Dialer.Get()
@@ -2584,6 +2586,7 @@ func (b *LocalBackend) startLocked(opts ipn.Options) error {
 		// Don't warn about broken Linux IP forwarding when
 		// netstack is being used.
 		SkipIPForwardingCheck: isNetstack,
+		LookupHook:            b.lookupHook,
 	})
 	if err != nil {
 		return err
