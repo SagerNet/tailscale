@@ -40,6 +40,7 @@ import (
 	"github.com/sagernet/tailscale/logpolicy"
 	"github.com/sagernet/tailscale/logtail"
 	"github.com/sagernet/tailscale/logtail/filch"
+	"github.com/sagernet/tailscale/net/dnscache"
 	"github.com/sagernet/tailscale/net/memnet"
 	"github.com/sagernet/tailscale/net/netmon"
 	"github.com/sagernet/tailscale/net/proxymux"
@@ -120,6 +121,8 @@ type Server struct {
 	// traffic. If zero, a port is automatically selected. Leave this
 	// field at zero unless you know what you are doing.
 	Port uint16
+
+	LookupHook dnscache.LookupHookFunc
 
 	getCertForTesting func(*tls.ClientHelloInfo) (*tls.Certificate, error)
 
@@ -628,7 +631,7 @@ func (s *Server) start() (reterr error) {
 	if s.Ephemeral {
 		loginFlags = controlclient.LoginEphemeral
 	}
-	lb, err := ipnlocal.NewLocalBackend(tsLogf, s.logid, sys, loginFlags|controlclient.LocalBackendStartKeyOSNeutral)
+	lb, err := ipnlocal.NewLocalBackend(tsLogf, s.logid, sys, loginFlags|controlclient.LocalBackendStartKeyOSNeutral, s.LookupHook)
 	if err != nil {
 		return fmt.Errorf("NewLocalBackend: %v", err)
 	}

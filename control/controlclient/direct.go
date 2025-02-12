@@ -156,6 +156,8 @@ type Options struct {
 	// If we receive a new DialPlan from the server, this value will be
 	// updated.
 	DialPlan ControlDialPlanner
+
+	LookupHook dnscache.LookupHookFunc
 }
 
 // ControlDialPlanner is the interface optionally supplied when creating a
@@ -251,6 +253,7 @@ func NewDirect(opts Options) (*Direct, error) {
 		UseLastGood:      true,
 		LookupIPFallback: dnsfallback.MakeLookupFunc(opts.Logf, netMon),
 		Logf:             opts.Logf,
+		LookupHook:       opts.LookupHook,
 	}
 
 	httpc := opts.HTTPTestClient
