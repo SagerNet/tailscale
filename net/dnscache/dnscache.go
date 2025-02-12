@@ -285,14 +285,19 @@ func (r *Resolver) lookupIP(ctx context.Context, host string) (ip, ip6 netip.Add
 
 	lookupCtx, lookupCancel := context.WithTimeout(ctx, r.lookupTimeoutForHost(host))
 	defer lookupCancel()
-	ips, err := r.fwd().LookupNetIP(lookupCtx, "ip", host)
+	var ips []netip.Addr
+	if r.LookupHook != nil {
+		ips, err = r.LookupHook(lookupCtx, host)
+	} else {
+		ips, err = r.fwd().LookupNetIP(lookupCtx, "ip", host)
+	}
 	if err != nil || len(ips) == 0 {
 		if resolver, ok := r.cloudHostResolver(); ok {
 			r.dlogf("resolving %q via cloud resolver", host)
 			ips, err = resolver.LookupNetIP(lookupCtx, "ip", host)
 		}
 	}
-	if (err != nil || len(ips) == 0) && r.LookupIPFallback != nil {
+	if (err != nil || len(ips) == 0) && r.LookupIPFallback != nil && r.LookupHook == nil {
 		lookupCtx, lookupCancel := context.WithTimeout(ctx, 30*time.Second)
 		defer lookupCancel()
 		if err != nil {
