@@ -199,7 +199,7 @@ func (s *Server) serveHTTP(w http.ResponseWriter, r *http.Request) {
 			ci = actorWithAccessOverride(actor, string(reason))
 		}
 
-		lah := localapi.NewHandler(ci, lb, s.logf, s.backendLogID)
+		lah := localapi.NewHandler(ci, lb, s.logf, s.backendLogID, s.netMon.Dialer())
 		if actor, ok := ci.(*actor); ok {
 			lah.PermitRead, lah.PermitWrite = actor.Permissions(lb.OperatorUserID())
 			lah.PermitCert = actor.CanFetchCerts()
