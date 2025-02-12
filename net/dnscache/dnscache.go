@@ -66,6 +66,8 @@ type Resolver struct {
 	// to use if Forward returns an error or no results.
 	LookupIPFallback func(ctx context.Context, host string) ([]netip.Addr, error)
 
+	LookupHook LookupHookFunc
+
 	// TTL is how long to keep entries cached
 	//
 	// If zero, a default (currently 10 minutes) is used.
