@@ -87,6 +87,9 @@ func FromDialer(logf logger.Logf, netMon *netmon.Monitor, d *net.Dialer) Dialer 
 	if netMon == nil {
 		panic("netns.FromDialer called with nil netMon")
 	}
+	if dialer := netMon.Dialer(); dialer != nil {
+		return dialerWrapper{dialer}
+	}
 	if disabled.Load() {
 		return d
 	}

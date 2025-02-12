@@ -28,6 +28,7 @@ import (
 	"sync"
 	"time"
 
+	N "github.com/sagernet/sing/common/network"
 	"github.com/sagernet/tailscale/client/tailscale/apitype"
 	"github.com/sagernet/tailscale/clientupdate"
 	"github.com/sagernet/tailscale/drive"
@@ -173,8 +174,8 @@ var (
 )
 
 // NewHandler creates a new LocalAPI HTTP handler. All parameters are required.
-func NewHandler(actor ipnauth.Actor, b *ipnlocal.LocalBackend, logf logger.Logf, logID logid.PublicID) *Handler {
-	return &Handler{Actor: actor, b: b, logf: logf, backendLogID: logID, clock: tstime.StdClock{}}
+func NewHandler(actor ipnauth.Actor, b *ipnlocal.LocalBackend, logf logger.Logf, logID logid.PublicID, dialer N.Dialer) *Handler {
+	return &Handler{Actor: actor, b: b, logf: logf, backendLogID: logID, clock: tstime.StdClock{}, dialer: dialer}
 }
 
 type Handler struct {
@@ -203,6 +204,8 @@ type Handler struct {
 	logf         logger.Logf
 	backendLogID logid.PublicID
 	clock        tstime.Clock
+
+	dialer N.Dialer
 }
 
 func (h *Handler) Logf(format string, args ...any) {
@@ -869,7 +872,7 @@ func (h *Handler) serveDebugPortmap(w http.ResponseWriter, r *http.Request) {
 
 	bus := eventbus.New()
 	defer bus.Close()
-	netMon, err := netmon.New(bus, logger.WithPrefix(logf, "monitor: "))
+	netMon, err := netmon.New(bus, logger.WithPrefix(logf, "monitor: "), h.dialer)
 	if err != nil {
 		logf("error creating monitor: %v", err)
 		return

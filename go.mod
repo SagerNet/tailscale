@@ -43,6 +43,7 @@ require (
 	github.com/prometheus/common v0.55.0
 	github.com/safchain/ethtool v0.3.0
 	github.com/sagernet/gvisor v0.0.0-20241123041152-536d05261cff
+	github.com/sagernet/sing v0.7.10
 	github.com/sagernet/wireguard-go v0.0.2-beta.1
 	github.com/tailscale/certstore v0.1.1-0.20231202035212-d3fa0460f47e
 	github.com/tailscale/goupnp v1.0.1-0.20210804011211-c64d0f06ea05
@@ -79,7 +80,6 @@ require (
 	github.com/hashicorp/golang-lru v0.5.0 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
-	github.com/sagernet/sing v0.7.10 // indirect
 	github.com/vishvananda/netns v0.0.4 // indirect
 	go.etcd.io/bbolt v1.3.11 // indirect
 	go.uber.org/goleak v1.3.0 // indirect

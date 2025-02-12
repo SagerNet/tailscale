@@ -428,9 +428,9 @@ type LocalBackend struct {
 	// See tailscale/corp#29969.
 	overrideExitNodePolicy bool
 
-	cfg  *wgcfg.Config
-	rcfg *router.Config
-	dcfg *dns.Config
+	cfg        *wgcfg.Config
+	rcfg       *router.Config
+	dcfg       *dns.Config
 	lookupHook dnscache.LookupHookFunc
 }
 
@@ -536,6 +536,7 @@ func NewLocalBackend(logf logger.Logf, logID logid.PublicID, sys *tsd.System, lo
 		captiveCtx:            captiveCtx,
 		captiveCancel:         nil, // so that we start checkCaptivePortalLoop when Running
 		needsCaptiveDetection: make(chan bool),
+		lookupHook:            lookupHook,
 	}
 	nb := newNodeBackend(ctx, b.sys.Bus.Get())
 	b.currentNodeAtomic.Store(nb)
