@@ -11,6 +11,7 @@ import (
 	"encoding/hex"
 	"errors"
 	"fmt"
+	"github.com/sagernet/tailscale/net/dnscache"
 	"io"
 	"log"
 	"math"
@@ -119,6 +120,8 @@ type Server struct {
 	// traffic. If zero, a port is automatically selected. Leave this
 	// field at zero unless you know what you are doing.
 	Port uint16
+
+	LookupHook      dnscache.LookupHookFunc
 
 	getCertForTesting func(*tls.ClientHelloInfo) (*tls.Certificate, error)
 
@@ -595,7 +598,7 @@ func (s *Server) start() (reterr error) {
 	if s.Ephemeral {
 		loginFlags = controlclient.LoginEphemeral
 	}
-	lb, err := ipnlocal.NewLocalBackend(tsLogf, s.logid, sys, loginFlags|controlclient.LocalBackendStartKeyOSNeutral)
+	lb, err := ipnlocal.NewLocalBackend(tsLogf, s.logid, sys, loginFlags|controlclient.LocalBackendStartKeyOSNeutral, s.LookupHook)
 	if err != nil {
 		return fmt.Errorf("NewLocalBackend: %v", err)
 	}
