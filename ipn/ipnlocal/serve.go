@@ -28,17 +28,17 @@ import (
 	"time"
 	"unicode/utf8"
 
+	"github.com/sagernet/tailscale/ipn"
+	"github.com/sagernet/tailscale/logtail/backoff"
+	"github.com/sagernet/tailscale/net/netutil"
+	"github.com/sagernet/tailscale/syncs"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/lazy"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/ctxkey"
+	"github.com/sagernet/tailscale/util/mak"
+	"github.com/sagernet/tailscale/version"
 	"golang.org/x/net/http2"
-	"tailscale.com/ipn"
-	"tailscale.com/logtail/backoff"
-	"tailscale.com/net/netutil"
-	"tailscale.com/syncs"
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/lazy"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/ctxkey"
-	"tailscale.com/util/mak"
-	"tailscale.com/version"
 )
 
 const (

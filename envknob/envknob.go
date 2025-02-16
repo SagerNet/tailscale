@@ -32,10 +32,10 @@ import (
 	"sync/atomic"
 	"time"
 
-	"tailscale.com/kube/kubetypes"
-	"tailscale.com/types/opt"
-	"tailscale.com/version"
-	"tailscale.com/version/distro"
+	"github.com/sagernet/tailscale/kube/kubetypes"
+	"github.com/sagernet/tailscale/types/opt"
+	"github.com/sagernet/tailscale/version"
+	"github.com/sagernet/tailscale/version/distro"
 )
 
 var (

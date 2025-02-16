@@ -4,8 +4,8 @@
 package router
 
 import (
+	"github.com/sagernet/tailscale/types/logger"
 	"go4.org/netipx"
-	"tailscale.com/types/logger"
 )
 
 // ConsolidatingRoutes wraps a Router with logic that consolidates Routes

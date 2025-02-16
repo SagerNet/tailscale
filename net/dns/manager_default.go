@@ -6,9 +6,9 @@
 package dns
 
 import (
-	"tailscale.com/control/controlknobs"
-	"tailscale.com/health"
-	"tailscale.com/types/logger"
+	"github.com/sagernet/tailscale/control/controlknobs"
+	"github.com/sagernet/tailscale/health"
+	"github.com/sagernet/tailscale/types/logger"
 )
 
 // NewOSConfigurator creates a new OS configurator.

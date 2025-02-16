@@ -12,7 +12,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"tailscale.com/health"
+	"github.com/sagernet/tailscale/health"
 )
 
 func init() {

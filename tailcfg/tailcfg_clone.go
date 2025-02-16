@@ -10,12 +10,12 @@ import (
 	"net/netip"
 	"time"
 
-	"tailscale.com/types/dnstype"
-	"tailscale.com/types/key"
-	"tailscale.com/types/opt"
-	"tailscale.com/types/ptr"
-	"tailscale.com/types/structs"
-	"tailscale.com/types/tkatype"
+	"github.com/sagernet/tailscale/types/dnstype"
+	"github.com/sagernet/tailscale/types/key"
+	"github.com/sagernet/tailscale/types/opt"
+	"github.com/sagernet/tailscale/types/ptr"
+	"github.com/sagernet/tailscale/types/structs"
+	"github.com/sagernet/tailscale/types/tkatype"
 )
 
 // Clone makes a deep copy of User.

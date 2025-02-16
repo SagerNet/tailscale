@@ -11,7 +11,7 @@ import (
 
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/common/expfmt"
-	"tailscale.com/tsweb/varz"
+	"github.com/sagernet/tailscale/tsweb/varz"
 )
 
 // Handler returns Prometheus metrics exported by our expvar converter

@@ -13,10 +13,10 @@ import (
 	"sync"
 	"time"
 
-	"tailscale.com/feature"
-	"tailscale.com/ipn/localapi"
-	"tailscale.com/net/packet"
-	"tailscale.com/util/set"
+	"github.com/sagernet/tailscale/feature"
+	"github.com/sagernet/tailscale/ipn/localapi"
+	"github.com/sagernet/tailscale/net/packet"
+	"github.com/sagernet/tailscale/util/set"
 )
 
 func init() {

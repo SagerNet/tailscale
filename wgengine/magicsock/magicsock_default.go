@@ -10,8 +10,8 @@ import (
 	"fmt"
 	"io"
 
-	"tailscale.com/types/logger"
-	"tailscale.com/types/nettype"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/types/nettype"
 )
 
 func (c *Conn) listenRawDisco(family string) (io.Closer, error) {

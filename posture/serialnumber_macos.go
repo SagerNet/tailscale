@@ -54,11 +54,12 @@ package posture
 //     return serialNumberBuf;
 // }
 import "C"
+
 import (
 	"fmt"
 	"strings"
 
-	"tailscale.com/types/logger"
+	"github.com/sagernet/tailscale/types/logger"
 )
 
 // GetSerialNumber returns the platform serial sumber as reported by IOKit.

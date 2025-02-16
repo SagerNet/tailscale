@@ -17,8 +17,8 @@ import (
 	"strings"
 	"time"
 
-	"tailscale.com/types/logger"
-	"tailscale.com/util/cloudenv"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/cloudenv"
 )
 
 const maxCloudInfoWait = 2 * time.Second

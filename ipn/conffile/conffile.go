@@ -13,7 +13,7 @@ import (
 	"os"
 	"runtime"
 
-	"tailscale.com/ipn"
+	"github.com/sagernet/tailscale/ipn"
 )
 
 // Config describes a config file.

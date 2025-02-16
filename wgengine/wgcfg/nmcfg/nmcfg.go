@@ -10,11 +10,11 @@ import (
 	"net/netip"
 	"strings"
 
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/logger"
-	"tailscale.com/types/logid"
-	"tailscale.com/types/netmap"
-	"tailscale.com/wgengine/wgcfg"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/types/logid"
+	"github.com/sagernet/tailscale/types/netmap"
+	"github.com/sagernet/tailscale/wgengine/wgcfg"
 )
 
 func nodeDebugName(n tailcfg.NodeView) string {

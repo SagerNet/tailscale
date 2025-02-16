@@ -9,7 +9,7 @@ import (
 	"log"
 	"net"
 
-	"tailscale.com/syncs"
+	"github.com/sagernet/tailscale/syncs"
 )
 
 var (

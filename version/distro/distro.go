@@ -10,8 +10,8 @@ import (
 	"runtime"
 	"strconv"
 
-	"tailscale.com/types/lazy"
-	"tailscale.com/util/lineiter"
+	"github.com/sagernet/tailscale/types/lazy"
+	"github.com/sagernet/tailscale/util/lineiter"
 )
 
 type Distro string

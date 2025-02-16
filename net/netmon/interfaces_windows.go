@@ -11,9 +11,9 @@ import (
 	"syscall"
 	"unsafe"
 
+	"github.com/sagernet/tailscale/tsconst"
 	"golang.org/x/sys/windows"
 	"golang.zx2c4.com/wireguard/windows/tunnel/winipcfg"
-	"tailscale.com/tsconst"
 )
 
 const (

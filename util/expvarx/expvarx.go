@@ -10,7 +10,7 @@ import (
 	"sync"
 	"time"
 
-	"tailscale.com/types/lazy"
+	"github.com/sagernet/tailscale/types/lazy"
 )
 
 // SafeFunc is a wrapper around [expvar.Func] that guards against unbounded call

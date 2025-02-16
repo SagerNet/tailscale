@@ -14,7 +14,7 @@ package posture
 import (
 	"errors"
 
-	"tailscale.com/types/logger"
+	"github.com/sagernet/tailscale/types/logger"
 )
 
 // GetSerialNumber returns client machine serial number(s).

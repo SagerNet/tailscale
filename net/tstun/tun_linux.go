@@ -11,8 +11,8 @@ import (
 	"strings"
 	"syscall"
 
-	"tailscale.com/types/logger"
-	"tailscale.com/version/distro"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/version/distro"
 )
 
 func init() {

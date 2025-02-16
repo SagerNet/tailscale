@@ -11,7 +11,7 @@ import (
 	"log"
 	"net/http"
 
-	"tailscale.com/client/tailscale"
+	"github.com/sagernet/tailscale/client/tailscale"
 )
 
 func main() {

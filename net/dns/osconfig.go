@@ -11,8 +11,8 @@ import (
 	"slices"
 	"strings"
 
-	"tailscale.com/types/logger"
-	"tailscale.com/util/dnsname"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/dnsname"
 )
 
 // An OSConfigurator applies DNS settings to the operating system.

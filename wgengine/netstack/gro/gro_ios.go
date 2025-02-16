@@ -6,8 +6,8 @@
 package gro
 
 import (
+	"github.com/sagernet/tailscale/net/packet"
 	"gvisor.dev/gvisor/pkg/tcpip/stack"
-	"tailscale.com/net/packet"
 )
 
 type GRO struct{}

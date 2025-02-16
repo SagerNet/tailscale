@@ -8,8 +8,8 @@ import (
 	"net/netip"
 	"time"
 
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/ipproto"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/ipproto"
 )
 
 // TODO(joetsai): Remove "omitempty" if "omitzero" is ever supported in both

@@ -10,7 +10,7 @@ package usermetric
 import (
 	"sync"
 
-	"tailscale.com/metrics"
+	"github.com/sagernet/tailscale/metrics"
 )
 
 // Metrics contains user-facing metrics that are used by multiple packages.

@@ -15,8 +15,8 @@ import (
 	"reflect"
 	"slices"
 
+	"github.com/sagernet/tailscale/types/ptr"
 	"go4.org/mem"
-	"tailscale.com/types/ptr"
 )
 
 func unmarshalSliceFromJSON[T any](b []byte, x *[]T) error {

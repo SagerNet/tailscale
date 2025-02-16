@@ -7,7 +7,7 @@ import (
 	"context"
 	"net"
 
-	"tailscale.com/kube/kubeapi"
+	"github.com/sagernet/tailscale/kube/kubeapi"
 )
 
 var _ Client = &FakeClient{}

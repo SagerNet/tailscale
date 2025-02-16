@@ -6,7 +6,7 @@ package setting
 import (
 	"errors"
 
-	"tailscale.com/types/ptr"
+	"github.com/sagernet/tailscale/types/ptr"
 )
 
 var (

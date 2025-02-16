@@ -8,7 +8,7 @@ import (
 	"context"
 
 	"github.com/illarion/gonotify/v2"
-	"tailscale.com/health"
+	"github.com/sagernet/tailscale/health"
 )
 
 func (m *directManager) runFileWatcher() {

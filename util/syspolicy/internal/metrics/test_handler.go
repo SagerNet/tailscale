@@ -6,9 +6,9 @@ package metrics
 import (
 	"strings"
 
-	"tailscale.com/util/clientmetric"
-	"tailscale.com/util/set"
-	"tailscale.com/util/syspolicy/internal"
+	"github.com/sagernet/tailscale/util/clientmetric"
+	"github.com/sagernet/tailscale/util/set"
+	"github.com/sagernet/tailscale/util/syspolicy/internal"
 )
 
 // TestState represents a metric name and its expected value.

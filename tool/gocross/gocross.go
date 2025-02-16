@@ -16,8 +16,8 @@ import (
 	"os"
 	"path/filepath"
 
-	"tailscale.com/atomicfile"
-	"tailscale.com/version"
+	"github.com/sagernet/tailscale/atomicfile"
+	"github.com/sagernet/tailscale/version"
 )
 
 func main() {

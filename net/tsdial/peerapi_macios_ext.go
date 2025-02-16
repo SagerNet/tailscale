@@ -14,7 +14,7 @@ import (
 	"net"
 	"syscall"
 
-	"tailscale.com/net/netns"
+	"github.com/sagernet/tailscale/net/netns"
 )
 
 func init() {

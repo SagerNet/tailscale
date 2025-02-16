@@ -16,7 +16,7 @@ import (
 	"time"
 	"unicode/utf8"
 
-	"tailscale.com/version/distro"
+	"github.com/sagernet/tailscale/version/distro"
 )
 
 // LookupByUIDWithShell is like os/user.LookupId but handles a few edge cases

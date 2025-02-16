@@ -8,9 +8,9 @@ package ipnstate
 import (
 	"net/netip"
 
-	"tailscale.com/tailcfg"
-	"tailscale.com/tka"
-	"tailscale.com/types/key"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/tka"
+	"github.com/sagernet/tailscale/types/key"
 )
 
 // Clone makes a deep copy of TKAPeer.

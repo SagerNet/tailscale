@@ -8,7 +8,7 @@ package clientupdate
 import (
 	"context"
 
-	"tailscale.com/clientupdate/distsign"
+	"github.com/sagernet/tailscale/clientupdate/distsign"
 )
 
 func (up *Updater) downloadURLToFile(pathSrc, fileDst string) (ret error) {

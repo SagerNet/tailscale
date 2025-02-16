@@ -10,7 +10,7 @@ import (
 	"sort"
 	"strings"
 
-	"tailscale.com/net/tsaddr"
+	"github.com/sagernet/tailscale/net/tsaddr"
 )
 
 func validateViaPrefix(ipp netip.Prefix) error {

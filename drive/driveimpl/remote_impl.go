@@ -22,13 +22,13 @@ import (
 	"sync"
 	"time"
 
+	"github.com/sagernet/tailscale/drive"
+	"github.com/sagernet/tailscale/drive/driveimpl/compositedav"
+	"github.com/sagernet/tailscale/drive/driveimpl/dirfs"
+	"github.com/sagernet/tailscale/drive/driveimpl/shared"
+	"github.com/sagernet/tailscale/safesocket"
+	"github.com/sagernet/tailscale/types/logger"
 	"github.com/tailscale/xnet/webdav"
-	"tailscale.com/drive"
-	"tailscale.com/drive/driveimpl/compositedav"
-	"tailscale.com/drive/driveimpl/dirfs"
-	"tailscale.com/drive/driveimpl/shared"
-	"tailscale.com/safesocket"
-	"tailscale.com/types/logger"
 )
 
 func NewFileSystemForRemote(logf logger.Logf) *FileSystemForRemote {

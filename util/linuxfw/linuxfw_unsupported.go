@@ -12,7 +12,7 @@ package linuxfw
 import (
 	"errors"
 
-	"tailscale.com/types/logger"
+	"github.com/sagernet/tailscale/types/logger"
 )
 
 // ErrUnsupported is the error returned from all functions on non-Linux

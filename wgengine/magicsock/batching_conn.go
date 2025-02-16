@@ -6,9 +6,9 @@ package magicsock
 import (
 	"net/netip"
 
+	"github.com/sagernet/tailscale/types/nettype"
 	"golang.org/x/net/ipv4"
 	"golang.org/x/net/ipv6"
-	"tailscale.com/types/nettype"
 )
 
 var (

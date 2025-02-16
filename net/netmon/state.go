@@ -14,12 +14,12 @@ import (
 	"sort"
 	"strings"
 
-	"tailscale.com/envknob"
-	"tailscale.com/hostinfo"
-	"tailscale.com/net/netaddr"
-	"tailscale.com/net/tsaddr"
-	"tailscale.com/net/tshttpproxy"
-	"tailscale.com/util/mak"
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/hostinfo"
+	"github.com/sagernet/tailscale/net/netaddr"
+	"github.com/sagernet/tailscale/net/tsaddr"
+	"github.com/sagernet/tailscale/net/tshttpproxy"
+	"github.com/sagernet/tailscale/util/mak"
 )
 
 // forceAllIPv6Endpoints is a debug knob that when set forces the client to

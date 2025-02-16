@@ -6,7 +6,7 @@ package router
 import (
 	"sync"
 
-	"tailscale.com/net/dns"
+	"github.com/sagernet/tailscale/net/dns"
 )
 
 // CallbackRouter is an implementation of both Router and dns.OSConfigurator.

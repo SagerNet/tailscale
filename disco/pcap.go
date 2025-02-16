@@ -8,8 +8,8 @@ import (
 	"encoding/binary"
 	"net/netip"
 
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/key"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/key"
 )
 
 // ToPCAPFrame marshals the bytes for a pcap record that describe a disco frame.

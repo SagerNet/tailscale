@@ -25,16 +25,16 @@ import (
 	"time"
 
 	"github.com/go-json-experiment/json/jsontext"
-	"tailscale.com/envknob"
-	"tailscale.com/net/netmon"
-	"tailscale.com/net/sockstats"
-	"tailscale.com/net/tsaddr"
-	"tailscale.com/tstime"
-	tslogger "tailscale.com/types/logger"
-	"tailscale.com/types/logid"
-	"tailscale.com/util/set"
-	"tailscale.com/util/truncate"
-	"tailscale.com/util/zstdframe"
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/net/netmon"
+	"github.com/sagernet/tailscale/net/sockstats"
+	"github.com/sagernet/tailscale/net/tsaddr"
+	"github.com/sagernet/tailscale/tstime"
+	tslogger "github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/types/logid"
+	"github.com/sagernet/tailscale/util/set"
+	"github.com/sagernet/tailscale/util/truncate"
+	"github.com/sagernet/tailscale/util/zstdframe"
 )
 
 // maxSize is the maximum size that a single log entry can be.

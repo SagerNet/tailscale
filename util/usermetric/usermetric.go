@@ -12,9 +12,9 @@ import (
 	"net/http"
 	"strings"
 
-	"tailscale.com/metrics"
-	"tailscale.com/tsweb/varz"
-	"tailscale.com/util/set"
+	"github.com/sagernet/tailscale/metrics"
+	"github.com/sagernet/tailscale/tsweb/varz"
+	"github.com/sagernet/tailscale/util/set"
 )
 
 // Registry tracks user-facing metrics of various Tailscale subsystems.

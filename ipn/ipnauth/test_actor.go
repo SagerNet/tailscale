@@ -4,7 +4,7 @@
 package ipnauth
 
 import (
-	"tailscale.com/ipn"
+	"github.com/sagernet/tailscale/ipn"
 )
 
 var _ Actor = (*TestActor)(nil)

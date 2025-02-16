@@ -11,7 +11,7 @@ import (
 	"strings"
 	"unicode/utf8"
 
-	"tailscale.com/util/syspolicy/setting"
+	"github.com/sagernet/tailscale/util/syspolicy/setting"
 )
 
 var lookupEnv = os.LookupEnv // test hook

@@ -8,7 +8,7 @@ import (
 	"runtime"
 	"time"
 
-	"tailscale.com/version"
+	"github.com/sagernet/tailscale/version"
 )
 
 /**

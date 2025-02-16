@@ -7,7 +7,7 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"tailscale.com/util/set"
+	"github.com/sagernet/tailscale/util/set"
 )
 
 // Tracker tracks a set of goroutines.

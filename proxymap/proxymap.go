@@ -12,7 +12,7 @@ import (
 	"sync"
 	"time"
 
-	"tailscale.com/util/mak"
+	"github.com/sagernet/tailscale/util/mak"
 )
 
 // Mapper tracks which localhost ip:ports correspond to which remote Tailscale

@@ -15,10 +15,10 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/key"
+	"github.com/sagernet/tailscale/util/syspolicy"
 	"github.com/tailscale/certstore"
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/key"
-	"tailscale.com/util/syspolicy"
 )
 
 // getMachineCertificateSubject returns the exact name of a Subject that needs
