@@ -46,6 +46,7 @@ import (
 	"github.com/sagernet/tailscale/logpolicy"
 	"github.com/sagernet/tailscale/logtail"
 	"github.com/sagernet/tailscale/logtail/filch"
+	"github.com/sagernet/tailscale/net/dns"
 	"github.com/sagernet/tailscale/net/dnscache"
 	"github.com/sagernet/tailscale/net/memnet"
 	"github.com/sagernet/tailscale/net/netmon"
@@ -137,6 +138,7 @@ type Server struct {
 
 	Dialer     N.Dialer
 	LookupHook dnscache.LookupHookFunc
+	DNS        dns.OSConfigurator
 
 	getCertForTesting func(*tls.ClientHelloInfo) (*tls.Certificate, error)
 
@@ -599,6 +601,7 @@ func (s *Server) start() (reterr error) {
 	s.dialer = &tsdial.Dialer{Logf: tsLogf, Dialer: s.Dialer} // mutated below (before used)
 	s.dialer.SetBus(sys.Bus.Get())
 	eng, err := wgengine.NewUserspaceEngine(tsLogf, wgengine.Config{
+		DNS:           s.DNS,
 		EventBus:      sys.Bus.Get(),
 		ListenPort:    s.Port,
 		NetMon:        s.netMon,
