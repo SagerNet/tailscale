@@ -8,9 +8,9 @@ package store
 import (
 	"strings"
 
-	"tailscale.com/ipn"
-	"tailscale.com/ipn/store/kubestore"
-	"tailscale.com/types/logger"
+	"github.com/sagernet/tailscale/ipn"
+	"github.com/sagernet/tailscale/ipn/store/kubestore"
+	"github.com/sagernet/tailscale/types/logger"
 )
 
 func init() {

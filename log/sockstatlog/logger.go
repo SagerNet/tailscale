@@ -17,15 +17,15 @@ import (
 	"sync/atomic"
 	"time"
 
-	"tailscale.com/health"
-	"tailscale.com/logpolicy"
-	"tailscale.com/logtail"
-	"tailscale.com/logtail/filch"
-	"tailscale.com/net/netmon"
-	"tailscale.com/net/sockstats"
-	"tailscale.com/types/logger"
-	"tailscale.com/types/logid"
-	"tailscale.com/util/mak"
+	"github.com/sagernet/tailscale/health"
+	"github.com/sagernet/tailscale/logpolicy"
+	"github.com/sagernet/tailscale/logtail"
+	"github.com/sagernet/tailscale/logtail/filch"
+	"github.com/sagernet/tailscale/net/netmon"
+	"github.com/sagernet/tailscale/net/sockstats"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/types/logid"
+	"github.com/sagernet/tailscale/util/mak"
 )
 
 // pollInterval specifies how often to poll for socket stats.
@@ -104,7 +104,7 @@ func NewLogger(logdir string, logf logger.Logf, logID logid.PublicID, netMon *ne
 		netMon = netmon.NewStatic()
 	}
 
-	if err := os.MkdirAll(logdir, 0755); err != nil && !os.IsExist(err) {
+	if err := os.MkdirAll(logdir, 0o755); err != nil && !os.IsExist(err) {
 		return nil, err
 	}
 	filchPrefix := filepath.Join(logdir, "sockstats")

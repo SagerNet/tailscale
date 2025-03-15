@@ -29,32 +29,32 @@ import (
 	"sync"
 	"time"
 
+	"github.com/sagernet/tailscale/atomicfile"
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/health"
+	"github.com/sagernet/tailscale/hostinfo"
+	"github.com/sagernet/tailscale/log/filelogger"
+	"github.com/sagernet/tailscale/logtail"
+	"github.com/sagernet/tailscale/logtail/filch"
+	"github.com/sagernet/tailscale/net/dnscache"
+	"github.com/sagernet/tailscale/net/dnsfallback"
+	"github.com/sagernet/tailscale/net/netknob"
+	"github.com/sagernet/tailscale/net/netmon"
+	"github.com/sagernet/tailscale/net/netns"
+	"github.com/sagernet/tailscale/net/tlsdial"
+	"github.com/sagernet/tailscale/net/tshttpproxy"
+	"github.com/sagernet/tailscale/paths"
+	"github.com/sagernet/tailscale/safesocket"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/types/logid"
+	"github.com/sagernet/tailscale/util/clientmetric"
+	"github.com/sagernet/tailscale/util/must"
+	"github.com/sagernet/tailscale/util/racebuild"
+	"github.com/sagernet/tailscale/util/syspolicy"
+	"github.com/sagernet/tailscale/util/testenv"
+	"github.com/sagernet/tailscale/version"
+	"github.com/sagernet/tailscale/version/distro"
 	"golang.org/x/term"
-	"tailscale.com/atomicfile"
-	"tailscale.com/envknob"
-	"tailscale.com/health"
-	"tailscale.com/hostinfo"
-	"tailscale.com/log/filelogger"
-	"tailscale.com/logtail"
-	"tailscale.com/logtail/filch"
-	"tailscale.com/net/dnscache"
-	"tailscale.com/net/dnsfallback"
-	"tailscale.com/net/netknob"
-	"tailscale.com/net/netmon"
-	"tailscale.com/net/netns"
-	"tailscale.com/net/tlsdial"
-	"tailscale.com/net/tshttpproxy"
-	"tailscale.com/paths"
-	"tailscale.com/safesocket"
-	"tailscale.com/types/logger"
-	"tailscale.com/types/logid"
-	"tailscale.com/util/clientmetric"
-	"tailscale.com/util/must"
-	"tailscale.com/util/racebuild"
-	"tailscale.com/util/syspolicy"
-	"tailscale.com/util/testenv"
-	"tailscale.com/version"
-	"tailscale.com/version/distro"
 )
 
 var getLogTargetOnce struct {
@@ -148,11 +148,11 @@ func (c *Config) ToBytes() []byte {
 // Save writes the JSON representation of c to stateFile.
 func (c *Config) Save(stateFile string) error {
 	c.PublicID = c.PrivateID.Public()
-	if err := os.MkdirAll(filepath.Dir(stateFile), 0750); err != nil {
+	if err := os.MkdirAll(filepath.Dir(stateFile), 0o750); err != nil {
 		return err
 	}
 	data := c.ToBytes()
-	if err := atomicfile.WriteFile(stateFile, data, 0600); err != nil {
+	if err := atomicfile.WriteFile(stateFile, data, 0o600); err != nil {
 		return err
 	}
 	return nil
@@ -239,7 +239,7 @@ func LogsDir(logf logger.Logf) string {
 	// Default to e.g. /var/lib/tailscale or /var/db/tailscale on Unix.
 	if d := paths.DefaultTailscaledStateFile(); d != "" {
 		d = filepath.Dir(d) // directory of e.g. "/var/lib/tailscale/tailscaled.state"
-		if err := os.MkdirAll(d, 0700); err == nil {
+		if err := os.MkdirAll(d, 0o700); err == nil {
 			logf("logpolicy: using system state directory %q", d)
 			return d
 		}
@@ -288,7 +288,7 @@ func redirectStderrToLogPanics() bool {
 // be a Windows %ProgramData% directory) is accessible to the current
 // process. It's created if needed.
 func winProgramDataAccessible(dir string) bool {
-	if err := os.MkdirAll(dir, 0700); err != nil {
+	if err := os.MkdirAll(dir, 0o700); err != nil {
 		// TODO: windows ACLs
 		return false
 	}
@@ -686,7 +686,7 @@ func attachFilchBuffer(conf *logtail.Config, dir, cmdName string, logf logger.Lo
 	// https://github.com/tailscale/tailscale/issues/3551
 	if runtime.GOOS == "linux" && (distro.Get() == distro.Synology || distro.Get() == distro.QNAP) {
 		tmpfsLogs := "/tmp/tailscale-logs"
-		if err := os.MkdirAll(tmpfsLogs, 0755); err == nil {
+		if err := os.MkdirAll(tmpfsLogs, 0o755); err == nil {
 			filchPrefix = filepath.Join(tmpfsLogs, cmdName)
 			filchOptions.MaxFileSize = 1 << 20
 		} else {

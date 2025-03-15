@@ -24,11 +24,11 @@ import (
 	"sync/atomic"
 	"time"
 
-	"tailscale.com/envknob"
-	"tailscale.com/health"
-	"tailscale.com/hostinfo"
-	"tailscale.com/net/bakedroots"
-	"tailscale.com/net/tlsdial/blockblame"
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/health"
+	"github.com/sagernet/tailscale/hostinfo"
+	"github.com/sagernet/tailscale/net/bakedroots"
+	"github.com/sagernet/tailscale/net/tlsdial/blockblame"
 )
 
 var counterFallbackOK int32 // atomic
@@ -70,7 +70,7 @@ func Config(host string, ht *health.Tracker, base *tls.Config) *tls.Config {
 	conf.ServerName = host
 
 	if n := sslKeyLogFile; n != "" {
-		f, err := os.OpenFile(n, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600)
+		f, err := os.OpenFile(n, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0o600)
 		if err != nil {
 			log.Fatal(err)
 		}

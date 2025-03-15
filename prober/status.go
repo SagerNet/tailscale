@@ -11,21 +11,23 @@ import (
 	"strings"
 	"time"
 
-	"tailscale.com/tsweb"
-	"tailscale.com/util/mak"
+	"github.com/sagernet/tailscale/tsweb"
+	"github.com/sagernet/tailscale/util/mak"
 )
 
 //go:embed status.html
 var statusFiles embed.FS
 var statusTpl = template.Must(template.ParseFS(statusFiles, "status.html"))
 
-type statusHandlerOpt func(*statusHandlerParams)
-type statusHandlerParams struct {
-	title string
+type (
+	statusHandlerOpt    func(*statusHandlerParams)
+	statusHandlerParams struct {
+		title string
 
-	pageLinks  map[string]string
-	probeLinks map[string]string
-}
+		pageLinks  map[string]string
+		probeLinks map[string]string
+	}
+)
 
 // WithTitle sets the title of the status page.
 func WithTitle(title string) statusHandlerOpt {

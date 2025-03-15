@@ -8,10 +8,10 @@ package wgcfg
 import (
 	"net/netip"
 
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/key"
-	"tailscale.com/types/logid"
-	"tailscale.com/types/ptr"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/key"
+	"github.com/sagernet/tailscale/types/logid"
+	"github.com/sagernet/tailscale/types/ptr"
 )
 
 // Clone makes a deep copy of Config.

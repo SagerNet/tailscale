@@ -23,19 +23,15 @@ const (
 	prefix        = "libbpf-" + libbpfVersion
 )
 
-var (
-	filesToExtract = map[string]struct{}{
-		prefix + "/LICENSE.BSD-2-Clause":  {},
-		prefix + "/src/bpf_endian.h":      {},
-		prefix + "/src/bpf_helper_defs.h": {},
-		prefix + "/src/bpf_helpers.h":     {},
-		prefix + "/src/bpf_tracing.h":     {},
-	}
-)
+var filesToExtract = map[string]struct{}{
+	prefix + "/LICENSE.BSD-2-Clause":  {},
+	prefix + "/src/bpf_endian.h":      {},
+	prefix + "/src/bpf_helper_defs.h": {},
+	prefix + "/src/bpf_helpers.h":     {},
+	prefix + "/src/bpf_tracing.h":     {},
+}
 
-var (
-	flagDest = flag.String("dest", ".", "destination directory")
-)
+var flagDest = flag.String("dest", ".", "destination directory")
 
 // TODO(jwhited): go generate strategy for derp/xdp
 func main() {

@@ -24,7 +24,7 @@ func makeGoroot(toolchainRoot, outPath string) error {
 	}
 
 	os.RemoveAll(outPath)
-	if err := os.MkdirAll(filepath.Join(outPath, "bin"), 0750); err != nil {
+	if err := os.MkdirAll(filepath.Join(outPath, "bin"), 0o750); err != nil {
 		return fmt.Errorf("making %q: %v", outPath, err)
 	}
 	if err := os.Symlink(self, filepath.Join(outPath, "bin/go")); err != nil {

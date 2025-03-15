@@ -25,13 +25,13 @@ import (
 	"fyne.io/systray"
 	"github.com/atotto/clipboard"
 	dbus "github.com/godbus/dbus/v5"
+	"github.com/sagernet/tailscale/client/tailscale"
+	"github.com/sagernet/tailscale/ipn"
+	"github.com/sagernet/tailscale/ipn/ipnstate"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/util/slicesx"
+	"github.com/sagernet/tailscale/util/stringsx"
 	"github.com/toqueteos/webbrowser"
-	"tailscale.com/client/tailscale"
-	"tailscale.com/ipn"
-	"tailscale.com/ipn/ipnstate"
-	"tailscale.com/tailcfg"
-	"tailscale.com/util/slicesx"
-	"tailscale.com/util/stringsx"
 )
 
 var (

@@ -14,12 +14,12 @@ import (
 	"strings"
 	"sync"
 
-	"tailscale.com/atomicfile"
-	"tailscale.com/ipn"
-	"tailscale.com/ipn/store/mem"
-	"tailscale.com/paths"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/mak"
+	"github.com/sagernet/tailscale/atomicfile"
+	"github.com/sagernet/tailscale/ipn"
+	"github.com/sagernet/tailscale/ipn/store/mem"
+	"github.com/sagernet/tailscale/paths"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/mak"
 )
 
 // Provider returns a StateStore for the provided path.
@@ -139,7 +139,7 @@ func NewFileStore(logf logger.Logf, path string) (ipn.StateStore, error) {
 		if os.IsNotExist(err) {
 			// Write out an initial file, to verify that we can write
 			// to the path.
-			if err = atomicfile.WriteFile(path, []byte("{}"), 0600); err != nil {
+			if err = atomicfile.WriteFile(path, []byte("{}"), 0o600); err != nil {
 				return nil, err
 			}
 			return &FileStore{
@@ -184,5 +184,5 @@ func (s *FileStore) WriteState(id ipn.StateKey, bs []byte) error {
 	if err != nil {
 		return err
 	}
-	return atomicfile.WriteFile(s.path, bs, 0600)
+	return atomicfile.WriteFile(s.path, bs, 0o600)
 }

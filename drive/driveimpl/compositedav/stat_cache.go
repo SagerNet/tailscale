@@ -12,12 +12,10 @@ import (
 	"time"
 
 	"github.com/jellydator/ttlcache/v3"
-	"tailscale.com/drive/driveimpl/shared"
+	"github.com/sagernet/tailscale/drive/driveimpl/shared"
 )
 
-var (
-	notFound = newCacheEntry(http.StatusNotFound, nil)
-)
+var notFound = newCacheEntry(http.StatusNotFound, nil)
 
 // StatCache provides a cache for directory listings and file metadata.
 // Especially when used from the command-line, mapped WebDAV drives can

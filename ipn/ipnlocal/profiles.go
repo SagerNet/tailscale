@@ -13,13 +13,13 @@ import (
 	"slices"
 	"strings"
 
-	"tailscale.com/clientupdate"
-	"tailscale.com/envknob"
-	"tailscale.com/health"
-	"tailscale.com/ipn"
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/clientmetric"
+	"github.com/sagernet/tailscale/clientupdate"
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/health"
+	"github.com/sagernet/tailscale/ipn"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/clientmetric"
 )
 
 var debug = envknob.RegisterBool("TS_DEBUG_PROFILES")
@@ -243,7 +243,6 @@ func (pm *profileManager) SetPrefs(prefsIn ipn.PrefsView, np ipn.NetworkProfile)
 		return err
 	}
 	return pm.setProfileAsUserDefault(cp)
-
 }
 
 // SetProfilePrefs is like [profileManager.SetPrefs], but sets prefs for the specified [ipn.LoginProfile]

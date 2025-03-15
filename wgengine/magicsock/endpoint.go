@@ -21,23 +21,25 @@ import (
 	"sync/atomic"
 	"time"
 
+	"github.com/sagernet/tailscale/disco"
+	"github.com/sagernet/tailscale/ipn/ipnstate"
+	"github.com/sagernet/tailscale/net/stun"
+	"github.com/sagernet/tailscale/net/tstun"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/tstime/mono"
+	"github.com/sagernet/tailscale/types/key"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/mak"
+	"github.com/sagernet/tailscale/util/ringbuffer"
+	"github.com/sagernet/tailscale/util/slicesx"
 	"golang.org/x/net/ipv4"
 	"golang.org/x/net/ipv6"
-	"tailscale.com/disco"
-	"tailscale.com/ipn/ipnstate"
-	"tailscale.com/net/stun"
-	"tailscale.com/net/tstun"
-	"tailscale.com/tailcfg"
-	"tailscale.com/tstime/mono"
-	"tailscale.com/types/key"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/mak"
-	"tailscale.com/util/ringbuffer"
-	"tailscale.com/util/slicesx"
 )
 
-var mtuProbePingSizesV4 []int
-var mtuProbePingSizesV6 []int
+var (
+	mtuProbePingSizesV4 []int
+	mtuProbePingSizesV6 []int
+)
 
 func init() {
 	for _, m := range tstun.WireMTUsToProbe {
@@ -207,22 +209,20 @@ type ProbeUDPLifetimeConfig struct {
 	CycleCanStartEvery time.Duration
 }
 
-var (
-	// defaultProbeUDPLifetimeConfig is the configuration that must be used
-	// for UDP path lifetime probing until it can be wholly disseminated (not
-	// just on/off) from upstream control components, and associated metrics
-	// (metricUDPLifetime*) have lifetime management.
-	//
-	// TODO(#10928): support dynamic config via tailcfg.PeerCapMap.
-	defaultProbeUDPLifetimeConfig = &ProbeUDPLifetimeConfig{
-		Cliffs: []time.Duration{
-			time.Second * 10,
-			time.Second * 30,
-			time.Second * 60,
-		},
-		CycleCanStartEvery: time.Hour * 24,
-	}
-)
+// defaultProbeUDPLifetimeConfig is the configuration that must be used
+// for UDP path lifetime probing until it can be wholly disseminated (not
+// just on/off) from upstream control components, and associated metrics
+// (metricUDPLifetime*) have lifetime management.
+//
+// TODO(#10928): support dynamic config via tailcfg.PeerCapMap.
+var defaultProbeUDPLifetimeConfig = &ProbeUDPLifetimeConfig{
+	Cliffs: []time.Duration{
+		time.Second * 10,
+		time.Second * 30,
+		time.Second * 60,
+	},
+	CycleCanStartEvery: time.Hour * 24,
+}
 
 // Equals returns true if b equals p, otherwise false. If both sides are nil,
 // Equals returns true. If only one side is nil, Equals returns false.
@@ -1205,7 +1205,6 @@ func (de *endpoint) startDiscoPingLocked(ep netip.AddrPort, now mono.Time, purpo
 		}
 		go de.sendDiscoPing(ep, epDisco.key, txid, s, logLevel)
 	}
-
 }
 
 // sendDiscoPingsLocked starts pinging all of ep's endpoints.
@@ -1386,7 +1385,8 @@ func (de *endpoint) updateFromNode(n tailcfg.NodeView, heartbeatDisabled bool, p
 
 func (de *endpoint) setEndpointsLocked(eps interface {
 	All() iter.Seq2[int, netip.AddrPort]
-}) {
+},
+) {
 	for _, st := range de.endpointState {
 		st.index = indexSentinelDeleted // assume deleted until updated in next loop
 	}

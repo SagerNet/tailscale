@@ -17,10 +17,10 @@ import (
 
 	"github.com/google/nftables"
 	"github.com/google/nftables/expr"
+	"github.com/sagernet/tailscale/net/tsaddr"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/types/ptr"
 	"golang.org/x/sys/unix"
-	"tailscale.com/net/tsaddr"
-	"tailscale.com/types/logger"
-	"tailscale.com/types/ptr"
 )
 
 const (
@@ -766,8 +766,8 @@ func createLoopbackRule(
 // the given chain as the first rule if it does not exist.
 func insertLoopbackRule(
 	conn *nftables.Conn, proto nftables.TableFamily,
-	table *nftables.Table, chain *nftables.Chain, addr netip.Addr) error {
-
+	table *nftables.Table, chain *nftables.Chain, addr netip.Addr,
+) error {
 	loopBackRule, err := createLoopbackRule(proto, table, chain, addr)
 	if err != nil {
 		return fmt.Errorf("create loopback rule: %w", err)
@@ -1181,7 +1181,6 @@ func createRangeRule(
 		},
 	}
 	return rule, nil
-
 }
 
 // addReturnChromeOSVMRangeRule adds a rule to return if the source IP

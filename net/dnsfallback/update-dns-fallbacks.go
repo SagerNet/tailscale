@@ -12,7 +12,7 @@ import (
 	"net/http"
 	"os"
 
-	"tailscale.com/tailcfg"
+	"github.com/sagernet/tailscale/tailcfg"
 )
 
 func main() {
@@ -39,7 +39,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	if err := os.WriteFile("dns-fallback-servers.json", out, 0644); err != nil {
+	if err := os.WriteFile("dns-fallback-servers.json", out, 0o644); err != nil {
 		log.Fatal(err)
 	}
 }

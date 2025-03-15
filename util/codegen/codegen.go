@@ -16,9 +16,9 @@ import (
 	"reflect"
 	"strings"
 
+	"github.com/sagernet/tailscale/util/mak"
 	"golang.org/x/tools/go/packages"
 	"golang.org/x/tools/imports"
-	"tailscale.com/util/mak"
 )
 
 var flagCopyright = flag.Bool("copyright", true, "add Tailscale copyright to generated file headers")
@@ -173,7 +173,7 @@ func writeFormatted(code []byte, path string) error {
 	if fmterr != nil {
 		out = code
 	}
-	ioerr := os.WriteFile(path, out, 0644)
+	ioerr := os.WriteFile(path, out, 0o644)
 	// Prefer I/O errors. They're usually easier to fix,
 	// and until they're fixed you can't do much else.
 	if ioerr != nil {

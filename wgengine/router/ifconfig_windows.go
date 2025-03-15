@@ -14,14 +14,13 @@ import (
 	"sort"
 	"time"
 
-	"tailscale.com/health"
-	"tailscale.com/net/netmon"
-	"tailscale.com/net/tsaddr"
-	"tailscale.com/net/tstun"
-	"tailscale.com/util/multierr"
-	"tailscale.com/wgengine/winnet"
-
 	ole "github.com/go-ole/go-ole"
+	"github.com/sagernet/tailscale/health"
+	"github.com/sagernet/tailscale/net/netmon"
+	"github.com/sagernet/tailscale/net/tsaddr"
+	"github.com/sagernet/tailscale/net/tstun"
+	"github.com/sagernet/tailscale/util/multierr"
+	"github.com/sagernet/tailscale/wgengine/winnet"
 	"github.com/tailscale/wireguard-go/tun"
 	"go4.org/netipx"
 	"golang.org/x/sys/windows"
@@ -99,7 +98,7 @@ func monitorDefaultRoutes(tun *tun.NativeTun) (*winipcfg.RouteChangeCallback, er
 		return nil, err
 	}
 	cb, err := winipcfg.RegisterRouteChangeCallback(func(notificationType winipcfg.MibNotificationType, route *winipcfg.MibIPforwardRow2) {
-		//fmt.Printf("MonitorDefaultRoutes: changed: %v\n", route.DestinationPrefix)
+		// fmt.Printf("MonitorDefaultRoutes: changed: %v\n", route.DestinationPrefix)
 		if route.DestinationPrefix.PrefixLength == 0 {
 			_ = doIt()
 		}
@@ -247,7 +246,7 @@ var networkCategoryWarnable = health.Register(&health.Warnable{
 })
 
 func configureInterface(cfg *Config, tun *tun.NativeTun, ht *health.Tracker) (retErr error) {
-	var mtu = tstun.DefaultTUNMTU()
+	mtu := tstun.DefaultTUNMTU()
 	luid := winipcfg.LUID(tun.LUID())
 	iface, err := interfaceFromLUID(luid,
 		// Issue 474: on early boot, when the network is still

@@ -54,11 +54,11 @@ import (
 	"time"
 
 	"github.com/hdevalence/ed25519consensus"
+	"github.com/sagernet/tailscale/net/tshttpproxy"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/httpm"
+	"github.com/sagernet/tailscale/util/must"
 	"golang.org/x/crypto/blake2s"
-	"tailscale.com/net/tshttpproxy"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/httpm"
-	"tailscale.com/util/must"
 )
 
 const (

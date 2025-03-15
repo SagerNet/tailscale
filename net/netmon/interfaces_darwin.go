@@ -11,9 +11,9 @@ import (
 	"syscall"
 	"unsafe"
 
+	"github.com/sagernet/tailscale/util/mak"
 	"golang.org/x/net/route"
 	"golang.org/x/sys/unix"
-	"tailscale.com/util/mak"
 )
 
 // fetchRoutingTable calls route.FetchRIB, fetching NET_RT_DUMP2.

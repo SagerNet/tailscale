@@ -32,19 +32,19 @@ import (
 	"sync"
 	"time"
 
-	"tailscale.com/atomicfile"
-	"tailscale.com/envknob"
-	"tailscale.com/hostinfo"
-	"tailscale.com/ipn"
-	"tailscale.com/ipn/ipnstate"
-	"tailscale.com/ipn/store"
-	"tailscale.com/ipn/store/mem"
-	"tailscale.com/net/bakedroots"
-	"tailscale.com/tempfork/acme"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/testenv"
-	"tailscale.com/version"
-	"tailscale.com/version/distro"
+	"github.com/sagernet/tailscale/atomicfile"
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/hostinfo"
+	"github.com/sagernet/tailscale/ipn"
+	"github.com/sagernet/tailscale/ipn/ipnstate"
+	"github.com/sagernet/tailscale/ipn/store"
+	"github.com/sagernet/tailscale/ipn/store/mem"
+	"github.com/sagernet/tailscale/net/bakedroots"
+	"github.com/sagernet/tailscale/tempfork/acme"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/testenv"
+	"github.com/sagernet/tailscale/version"
+	"github.com/sagernet/tailscale/version/distro"
 )
 
 // Process-wide cache. (A new *Handler is created per connection,
@@ -74,7 +74,7 @@ func (b *LocalBackend) certDir() (string, error) {
 		return "", errors.New("no TailscaleVarRoot")
 	}
 	full := filepath.Join(d, "certs")
-	if err := os.MkdirAll(full, 0700); err != nil {
+	if err := os.MkdirAll(full, 0o700); err != nil {
 		return "", err
 	}
 	return full, nil
@@ -312,7 +312,7 @@ func (f certFileStore) ACMEKey() ([]byte, error) {
 
 func (f certFileStore) WriteACMEKey(b []byte) error {
 	pemName := filepath.Join(f.dir, acmePEMName)
-	return atomicfile.WriteFile(pemName, b, 0600)
+	return atomicfile.WriteFile(pemName, b, 0o600)
 }
 
 func (f certFileStore) Read(domain string, now time.Time) (*TLSCertKeyPair, error) {
@@ -337,11 +337,11 @@ func (f certFileStore) Read(domain string, now time.Time) (*TLSCertKeyPair, erro
 }
 
 func (f certFileStore) WriteCert(domain string, cert []byte) error {
-	return atomicfile.WriteFile(certFile(f.dir, domain), cert, 0644)
+	return atomicfile.WriteFile(certFile(f.dir, domain), cert, 0o644)
 }
 
 func (f certFileStore) WriteKey(domain string, key []byte) error {
-	return atomicfile.WriteFile(keyFile(f.dir, domain), key, 0600)
+	return atomicfile.WriteFile(keyFile(f.dir, domain), key, 0o600)
 }
 
 // certStateStore implements certStore by storing the cert & key files in an ipn.StateStore.

@@ -14,12 +14,12 @@ import (
 	"sort"
 	"strings"
 
-	"tailscale.com/envknob"
-	"tailscale.com/hostinfo"
-	"tailscale.com/net/netaddr"
-	"tailscale.com/net/tsaddr"
-	"tailscale.com/net/tshttpproxy"
-	"tailscale.com/util/mak"
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/hostinfo"
+	"github.com/sagernet/tailscale/net/netaddr"
+	"github.com/sagernet/tailscale/net/tsaddr"
+	"github.com/sagernet/tailscale/net/tshttpproxy"
+	"github.com/sagernet/tailscale/util/mak"
 )
 
 // forceAllIPv6Endpoints is a debug knob that when set forces the client to
@@ -544,7 +544,6 @@ func HTTPOfListener(ln net.Listener) string {
 		return fmt.Sprintf("http://%v/", net.JoinHostPort(goodIP, fmt.Sprint(ta.Port)))
 	}
 	return fmt.Sprintf("http://localhost:%v/", fmt.Sprint(ta.Port))
-
 }
 
 // likelyHomeRouterIP, if present, is a platform-specific function that is used
@@ -656,9 +655,7 @@ func isUsableV6(ip netip.Addr) bool {
 		(ip.Is6() && ip.IsPrivate() && !tsaddr.TailscaleULARange().Contains(ip))
 }
 
-var (
-	v6Global1 = netip.MustParsePrefix("2000::/3")
-)
+var v6Global1 = netip.MustParsePrefix("2000::/3")
 
 // keepInterfaceInStringSummary reports whether the named interface should be included
 // in the String method's summary string.

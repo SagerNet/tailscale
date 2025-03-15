@@ -17,7 +17,7 @@ import (
 	"sync"
 	"time"
 
-	"tailscale.com/version"
+	"github.com/sagernet/tailscale/version"
 )
 
 func init() {
@@ -32,7 +32,6 @@ func init() {
 //	/Library/Tailscale/ipnport => $port (symlink with localhost port number target)
 //	/Library/Tailscale/sameuserproof-$port is a file with auth
 func localTCPPortAndTokenMacsys() (port int, token string, err error) {
-
 	const dir = "/Library/Tailscale"
 	portStr, err := os.Readlink(filepath.Join(dir, "ipnport"))
 	if err != nil {

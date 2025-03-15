@@ -22,23 +22,23 @@ import (
 	"time"
 
 	"github.com/gorilla/csrf"
-	"tailscale.com/client/tailscale"
-	"tailscale.com/client/tailscale/apitype"
-	"tailscale.com/clientupdate"
-	"tailscale.com/envknob"
-	"tailscale.com/envknob/featureknob"
-	"tailscale.com/hostinfo"
-	"tailscale.com/ipn"
-	"tailscale.com/ipn/ipnstate"
-	"tailscale.com/licenses"
-	"tailscale.com/net/netutil"
-	"tailscale.com/net/tsaddr"
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/logger"
-	"tailscale.com/types/views"
-	"tailscale.com/util/httpm"
-	"tailscale.com/version"
-	"tailscale.com/version/distro"
+	"github.com/sagernet/tailscale/client/tailscale"
+	"github.com/sagernet/tailscale/client/tailscale/apitype"
+	"github.com/sagernet/tailscale/clientupdate"
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/envknob/featureknob"
+	"github.com/sagernet/tailscale/hostinfo"
+	"github.com/sagernet/tailscale/ipn"
+	"github.com/sagernet/tailscale/ipn/ipnstate"
+	"github.com/sagernet/tailscale/licenses"
+	"github.com/sagernet/tailscale/net/netutil"
+	"github.com/sagernet/tailscale/net/tsaddr"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/types/views"
+	"github.com/sagernet/tailscale/util/httpm"
+	"github.com/sagernet/tailscale/version"
+	"github.com/sagernet/tailscale/version/distro"
 )
 
 // ListenPort is the static port used for the web client when run inside tailscaled.
@@ -1298,7 +1298,7 @@ func (s *Server) csrfKey() []byte {
 
 	// if running in CGI mode, try to write the newly created key to disk, and exit if it fails.
 	if s.cgiMode {
-		if err := os.WriteFile(csrfFile, key, 0600); err != nil {
+		if err := os.WriteFile(csrfFile, key, 0o600); err != nil {
 			log.Fatalf("unable to store CSRF key: %v", err)
 		}
 	}

@@ -11,7 +11,7 @@ package controlclient
 import (
 	"context"
 
-	"tailscale.com/tailcfg"
+	"github.com/sagernet/tailscale/tailcfg"
 )
 
 // LoginFlags is a bitmask of options to change the behavior of Client.Login

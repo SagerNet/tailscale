@@ -21,9 +21,7 @@ var (
 	ErrInvalidShareName = errors.New("Share names may only contain the letters a-z, underscore _, parentheses (), or spaces")
 )
 
-var (
-	shareNameRegex = regexp.MustCompile(`^[a-z0-9_\(\) ]+$`)
-)
+var shareNameRegex = regexp.MustCompile(`^[a-z0-9_\(\) ]+$`)
 
 // AllowShareAs reports whether sharing files as a specific user is allowed.
 func AllowShareAs() bool {

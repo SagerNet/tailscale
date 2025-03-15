@@ -14,8 +14,8 @@ import (
 	"sort"
 	"time"
 
-	"tailscale.com/client/tailscale/apitype"
-	"tailscale.com/logtail/backoff"
+	"github.com/sagernet/tailscale/client/tailscale/apitype"
+	"github.com/sagernet/tailscale/logtail/backoff"
 )
 
 // HasFilesWaiting reports whether any files are buffered in [Handler.Dir].
@@ -142,7 +142,7 @@ func (m *Manager) DeleteFile(baseName string) error {
 }
 
 func touchFile(path string) error {
-	f, err := os.OpenFile(path, os.O_RDWR|os.O_CREATE, 0666)
+	f, err := os.OpenFile(path, os.O_RDWR|os.O_CREATE, 0o666)
 	if err != nil {
 		return redactError(err)
 	}

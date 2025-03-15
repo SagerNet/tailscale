@@ -9,7 +9,7 @@ import (
 	"encoding/json"
 	"errors"
 
-	"tailscale.com/types/views"
+	"github.com/sagernet/tailscale/types/views"
 )
 
 //go:generate go run tailscale.com/cmd/cloner  -clonefunc=true -type=Share

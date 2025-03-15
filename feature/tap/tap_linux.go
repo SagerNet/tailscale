@@ -14,6 +14,14 @@ import (
 	"sync"
 
 	"github.com/insomniacslk/dhcp/dhcpv4"
+	"github.com/sagernet/tailscale/net/netaddr"
+	"github.com/sagernet/tailscale/net/packet"
+	"github.com/sagernet/tailscale/net/tsaddr"
+	"github.com/sagernet/tailscale/net/tstun"
+	"github.com/sagernet/tailscale/syncs"
+	"github.com/sagernet/tailscale/types/ipproto"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/multierr"
 	"github.com/tailscale/wireguard-go/tun"
 	"golang.org/x/sys/unix"
 	"gvisor.dev/gvisor/pkg/tcpip"
@@ -22,14 +30,6 @@ import (
 	"gvisor.dev/gvisor/pkg/tcpip/network/ipv4"
 	"gvisor.dev/gvisor/pkg/tcpip/network/ipv6"
 	"gvisor.dev/gvisor/pkg/tcpip/transport/udp"
-	"tailscale.com/net/netaddr"
-	"tailscale.com/net/packet"
-	"tailscale.com/net/tsaddr"
-	"tailscale.com/net/tstun"
-	"tailscale.com/syncs"
-	"tailscale.com/types/ipproto"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/multierr"
 )
 
 // TODO: this was randomly generated once. Maybe do it per process start? But
@@ -104,7 +104,6 @@ const (
 // handleTAPFrame handles receiving a raw TAP ethernet frame and reports whether
 // it's been handled (that is, whether it should NOT be passed to wireguard).
 func (t *tapDevice) handleTAPFrame(ethBuf []byte) bool {
-
 	if len(ethBuf) < ethernetFrameSize {
 		// Corrupt. Ignore.
 		if tapDebug {
@@ -258,9 +257,9 @@ func (t *tapDevice) handleDHCPRequest(ethBuf []byte) bool {
 			dhcpv4.WithOption(dhcpv4.OptServerIdentifier(routerIP)),
 			dhcpv4.WithYourIP(net.ParseIP(ips)),
 			dhcpv4.WithLeaseTime(3600), // hour works
-			//dhcpv4.WithHwAddr(ethSrcMAC),
+			// dhcpv4.WithHwAddr(ethSrcMAC),
 			dhcpv4.WithNetmask(cgnatNetMask),
-			//dhcpv4.WithTransactionID(dp.TransactionID),
+			// dhcpv4.WithTransactionID(dp.TransactionID),
 		)
 		if err != nil {
 			t.logf("error building DHCP offer: %v", err)

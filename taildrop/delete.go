@@ -13,10 +13,10 @@ import (
 	"sync"
 	"time"
 
-	"tailscale.com/ipn"
-	"tailscale.com/syncs"
-	"tailscale.com/tstime"
-	"tailscale.com/types/logger"
+	"github.com/sagernet/tailscale/ipn"
+	"github.com/sagernet/tailscale/syncs"
+	"github.com/sagernet/tailscale/tstime"
+	"github.com/sagernet/tailscale/types/logger"
 )
 
 // deleteDelay is the amount of time to wait before we delete a file.

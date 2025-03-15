@@ -17,13 +17,13 @@ import (
 	"strings"
 	"time"
 
-	"tailscale.com/tailcfg"
-	"tailscale.com/tka"
-	"tailscale.com/types/key"
-	"tailscale.com/types/ptr"
-	"tailscale.com/types/views"
-	"tailscale.com/util/dnsname"
-	"tailscale.com/version"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/tka"
+	"github.com/sagernet/tailscale/types/key"
+	"github.com/sagernet/tailscale/types/ptr"
+	"github.com/sagernet/tailscale/types/views"
+	"github.com/sagernet/tailscale/util/dnsname"
+	"github.com/sagernet/tailscale/version"
 )
 
 //go:generate go run tailscale.com/cmd/cloner  -clonefunc=false -type=TKAPeer
@@ -544,8 +544,8 @@ table tbody tr:nth-child(even) td { background-color: #f5f5f5; }
 <h1>Tailscale State</h1>
 `)
 
-	//f("<p><b>logid:</b> %s</p>\n", logid)
-	//f("<p><b>opts:</b> <code>%s</code></p>\n", html.EscapeString(fmt.Sprintf("%+v", opts)))
+	// f("<p><b>logid:</b> %s</p>\n", logid)
+	// f("<p><b>opts:</b> <code>%s</code></p>\n", html.EscapeString(fmt.Sprintf("%+v", opts)))
 
 	ips := make([]string, 0, len(st.TailscaleIPs))
 	for _, ip := range st.TailscaleIPs {

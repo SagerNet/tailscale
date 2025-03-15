@@ -9,12 +9,10 @@ import (
 	"log"
 	"net"
 
-	"tailscale.com/syncs"
+	"github.com/sagernet/tailscale/syncs"
 )
 
-var (
-	lastKnownDefaultRouteIfName syncs.AtomicValue[string]
-)
+var lastKnownDefaultRouteIfName syncs.AtomicValue[string]
 
 // UpdateLastKnownDefaultRouteInterface is called by ipn-go-bridge in the iOS app when
 // our NWPathMonitor instance detects a network path transition.

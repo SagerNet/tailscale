@@ -73,6 +73,7 @@ func (c DefaultClock) Now() time.Time {
 	}
 	return c.Clock.Now()
 }
+
 func (c DefaultClock) NewTimer(d time.Duration) (TimerController, <-chan time.Time) {
 	if c.Clock == nil {
 		t := time.NewTimer(d)
@@ -80,6 +81,7 @@ func (c DefaultClock) NewTimer(d time.Duration) (TimerController, <-chan time.Ti
 	}
 	return c.Clock.NewTimer(d)
 }
+
 func (c DefaultClock) NewTicker(d time.Duration) (TickerController, <-chan time.Time) {
 	if c.Clock == nil {
 		t := time.NewTicker(d)
@@ -87,12 +89,14 @@ func (c DefaultClock) NewTicker(d time.Duration) (TickerController, <-chan time.
 	}
 	return c.Clock.NewTicker(d)
 }
+
 func (c DefaultClock) AfterFunc(d time.Duration, f func()) TimerController {
 	if c.Clock == nil {
 		return time.AfterFunc(d, f)
 	}
 	return c.Clock.AfterFunc(d, f)
 }
+
 func (c DefaultClock) Since(t time.Time) time.Duration {
 	if c.Clock == nil {
 		return time.Since(t)

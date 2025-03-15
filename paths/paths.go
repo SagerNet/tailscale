@@ -10,8 +10,8 @@ import (
 	"path/filepath"
 	"runtime"
 
-	"tailscale.com/syncs"
-	"tailscale.com/version/distro"
+	"github.com/sagernet/tailscale/syncs"
+	"github.com/sagernet/tailscale/version/distro"
 )
 
 // AppSharedDir is a string set by the iOS or Android app on start
@@ -74,7 +74,7 @@ func DefaultTailscaledStateFile() string {
 // containing machine keys etc, both exists and has the correct permissions.
 // We want it to only be accessible to the user the daemon is running under.
 func MkStateDir(dirPath string) error {
-	if err := os.MkdirAll(dirPath, 0700); err != nil {
+	if err := os.MkdirAll(dirPath, 0o700); err != nil {
 		return err
 	}
 	return ensureStateDirPerms(dirPath)

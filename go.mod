@@ -1,4 +1,4 @@
-module tailscale.com
+module github.com/sagernet/tailscale
 
 go 1.23.1
 

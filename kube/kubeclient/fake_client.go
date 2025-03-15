@@ -7,7 +7,7 @@ import (
 	"context"
 	"net"
 
-	"tailscale.com/kube/kubeapi"
+	"github.com/sagernet/tailscale/kube/kubeapi"
 )
 
 var _ Client = &FakeClient{}
@@ -20,15 +20,18 @@ type FakeClient struct {
 func (fc *FakeClient) CheckSecretPermissions(ctx context.Context, name string) (bool, bool, error) {
 	return fc.CheckSecretPermissionsImpl(ctx, name)
 }
+
 func (fc *FakeClient) GetSecret(ctx context.Context, name string) (*kubeapi.Secret, error) {
 	return fc.GetSecretImpl(ctx, name)
 }
 func (fc *FakeClient) SetURL(_ string) {}
 func (fc *FakeClient) SetDialer(dialer func(ctx context.Context, network, addr string) (net.Conn, error)) {
 }
+
 func (fc *FakeClient) StrategicMergePatchSecret(context.Context, string, *kubeapi.Secret, string) error {
 	return nil
 }
+
 func (fc *FakeClient) Event(context.Context, string, string, string) error {
 	return nil
 }
