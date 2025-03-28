@@ -45,7 +45,6 @@ require (
 	github.com/pires/go-proxyproto v0.8.1
 	github.com/prometheus-community/pro-bing v0.4.0
 	github.com/prometheus/client_golang v1.23.0
-	github.com/prometheus/common v0.65.0
 	github.com/safchain/ethtool v0.3.0
 	github.com/sagernet/gvisor v0.0.0-20250811.0-sing-box-mod.1
 	github.com/sagernet/sing v0.7.13
@@ -94,6 +93,7 @@ require (
 	github.com/onsi/gomega v1.36.2 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/planetscale/vtprotobuf v0.6.1-0.20240319094008-0393e58bdf10 // indirect
+	github.com/prometheus/common v0.65.0 // indirect
 	github.com/puzpuzpuz/xsync v1.5.2 // indirect
 	github.com/stacklok/frizbee v0.1.7 // indirect
 	github.com/vishvananda/netns v0.0.5 // indirect
