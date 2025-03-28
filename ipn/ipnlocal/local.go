@@ -468,6 +468,7 @@ type LocalBackend struct {
 	existsPendingAuthReconfig atomic.Bool
 
 	lookupHook dnscache.LookupHookFunc
+	onlyTCP443 bool
 }
 
 // SetHardwareAttested enables hardware attestation key signatures in map
@@ -540,7 +541,7 @@ type clientGen func(controlclient.Options) (controlclient.Client, error)
 // If dialer is nil, a new one is made.
 //
 // The logID may be the zero value if logging is not in use.
-func NewLocalBackend(logf logger.Logf, logID logid.PublicID, sys *tsd.System, loginFlags controlclient.LoginFlags, lookupHook dnscache.LookupHookFunc) (_ *LocalBackend, err error) {
+func NewLocalBackend(logf logger.Logf, logID logid.PublicID, sys *tsd.System, loginFlags controlclient.LoginFlags, lookupHook dnscache.LookupHookFunc, onlyTCP443 bool) (_ *LocalBackend, err error) {
 	e := sys.Engine.Get()
 	store := sys.StateStore.Get()
 	dialer := sys.Dialer.Get()
@@ -606,6 +607,7 @@ func NewLocalBackend(logf logger.Logf, logID logid.PublicID, sys *tsd.System, lo
 		loginFlags:   loginFlags,
 		clock:        clock,
 		lookupHook:   lookupHook,
+		onlyTCP443:   onlyTCP443,
 	}
 
 	sys.NoiseRoundTripper.Set(noiseRoundTripper{b})
@@ -2063,7 +2065,7 @@ func (b *LocalBackend) setControlClientStatusLocked(c controlclient.Client, st c
 			b.MagicConn().SetDERPMap(st.NetMap.DERPMap)
 		}
 
-		b.MagicConn().SetOnlyTCP443(st.NetMap.HasCap(tailcfg.NodeAttrOnlyTCP443))
+		b.MagicConn().SetOnlyTCP443(b.onlyTCP443 || st.NetMap.HasCap(tailcfg.NodeAttrOnlyTCP443))
 
 		// Update our cached DERP map
 		dnsfallback.UpdateCache(st.NetMap.DERPMap, b.logf)
