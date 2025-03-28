@@ -139,6 +139,7 @@ type Server struct {
 	Dialer     N.Dialer
 	LookupHook dnscache.LookupHookFunc
 	DNS        dns.OSConfigurator
+	HTTPClient *http.Client
 
 	getCertForTesting func(*tls.ClientHelloInfo) (*tls.Certificate, error)
 
@@ -220,18 +221,6 @@ func (s *Server) awaitRunning(ctx context.Context) error {
 		default:
 			return fmt.Errorf("tsnet: backend in state %v", st)
 		}
-	}
-}
-
-// HTTPClient returns an HTTP client that is configured to connect over Tailscale.
-//
-// This is useful if you need to have your tsnet services connect to other devices on
-// your tailnet.
-func (s *Server) HTTPClient() *http.Client {
-	return &http.Client{
-		Transport: &http.Transport{
-			DialContext: s.Dial,
-		},
 	}
 }
 
@@ -679,6 +668,7 @@ func (s *Server) start() (reterr error) {
 	}
 	lb.SetTCPHandlerForFunnelFlow(s.getTCPHandlerForFunnelFlow)
 	lb.SetVarRoot(s.rootPath)
+	lb.SetHTTPTestClient(s.HTTPClient)
 	s.logf("tsnet starting with hostname %q, varRoot %q", s.hostname, s.rootPath)
 	s.lb = lb
 	if err := ns.Start(lb); err != nil {
