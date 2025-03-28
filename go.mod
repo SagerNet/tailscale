@@ -40,7 +40,6 @@ require (
 	github.com/mitchellh/go-ps v1.0.0
 	github.com/prometheus-community/pro-bing v0.4.0
 	github.com/prometheus/client_golang v1.19.1
-	github.com/prometheus/common v0.55.0
 	github.com/safchain/ethtool v0.3.0
 	github.com/sagernet/gvisor v0.0.0-20250811.0-sing-box-mod.1
 	github.com/sagernet/sing v0.7.10
@@ -80,6 +79,7 @@ require (
 	github.com/hashicorp/golang-lru v0.5.0 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
+	github.com/prometheus/common v0.55.0 // indirect
 	github.com/vishvananda/netns v0.0.4 // indirect
 	go.etcd.io/bbolt v1.3.11 // indirect
 	go.uber.org/goleak v1.3.0 // indirect
