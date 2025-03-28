@@ -76,18 +76,27 @@ func NewDialer(logf logger.Logf, netMon *netmon.Monitor) Dialer {
 	}
 	return FromDialer(logf, netMon, &net.Dialer{
 		KeepAlive: netknob.PlatformTCPKeepAlive(),
-	})
+	}, false)
+}
+
+func NewDialerAlwaysDirect(logf logger.Logf, netMon *netmon.Monitor) Dialer {
+	if netMon == nil {
+		panic("netns.NewDialer called with nil netMon")
+	}
+	return FromDialer(logf, netMon, &net.Dialer{
+		KeepAlive: netknob.PlatformTCPKeepAlive(),
+	}, true)
 }
 
 // FromDialer returns sets d.Control as necessary to run in a logical
 // network namespace that doesn't route back into Tailscale. It also
 // handles using a SOCKS if configured in the environment with
 // ALL_PROXY.
-func FromDialer(logf logger.Logf, netMon *netmon.Monitor, d *net.Dialer) Dialer {
+func FromDialer(logf logger.Logf, netMon *netmon.Monitor, d *net.Dialer, ad bool) Dialer {
 	if netMon == nil {
 		panic("netns.FromDialer called with nil netMon")
 	}
-	if dialer := netMon.Dialer(); dialer != nil {
+	if dialer := netMon.Dialer(); dialer != nil && !ad {
 		return dialerWrapper{dialer}
 	}
 	if disabled.Load() {
