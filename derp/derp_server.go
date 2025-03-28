@@ -18,6 +18,7 @@ import (
 	"errors"
 	"expvar"
 	"fmt"
+	E "github.com/sagernet/sing/common/exceptions"
 	"io"
 	"log"
 	"math"
@@ -174,9 +175,10 @@ type Server struct {
 	// server if the clientKey is a known peer in the network, as specified by a
 	// running tailscaled's client's LocalAPI.
 	verifyClientsLocalTailscaled bool
-
-	verifyClientsURL         string
-	verifyClientsURLFailOpen bool
+	verifyClientLocalClient      []*tailscale.LocalClient
+	verifyClientHTTPClient       []*http.Client
+	verifyClientsURL             []string
+	verifyClientsURLFailOpen     bool
 
 	mu       sync.Mutex
 	closed   bool
@@ -471,10 +473,18 @@ func (s *Server) SetVerifyClient(v bool) {
 	s.verifyClientsLocalTailscaled = v
 }
 
+func (s *Server) SetVerifyClientLocalClient(localClient []*tailscale.LocalClient) {
+	s.verifyClientLocalClient = localClient
+}
+
+func (s *Server) SetVerifyClientHTTPClient(httpClient []*http.Client) {
+	s.verifyClientHTTPClient = httpClient
+}
+
 // SetVerifyClientURL sets the admission controller URL to use for verifying clients.
 // If empty, all clients are accepted (unless restricted by SetVerifyClient checking
 // against tailscaled).
-func (s *Server) SetVerifyClientURL(v string) {
+func (s *Server) SetVerifyClientURL(v []string) {
 	s.verifyClientsURL = v
 }
 
@@ -1352,11 +1362,28 @@ func (s *Server) verifyClient(ctx context.Context, clientKey key.NodePublic, inf
 		}
 	}
 
+	var errors []error
+	if len(s.verifyClientLocalClient) > 0 {
+		for _, verifyClient := range s.verifyClientLocalClient {
+			_, err := verifyClient.WhoIsNodeKey(ctx, clientKey)
+			if err == tailscale.ErrPeerNotFound {
+				errors = append(errors, fmt.Errorf("peer %v not authorized (not found in local tailscaled)", clientKey))
+				continue
+			}
+			if err != nil {
+				if strings.Contains(err.Error(), "invalid 'addr' parameter") {
+					// Issue 12617
+					errors = append(errors, E.New("tailscaled version is too old (out of sync with derper binary)"))
+					continue
+				}
+				errors = append(errors, fmt.Errorf("failed to query local tailscaled status for %v: %w", clientKey, err))
+				continue
+			}
+			return nil
+		}
+	}
 	// admission controller-based verification:
-	if s.verifyClientsURL != "" {
-		ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
-		defer cancel()
-
+	if len(s.verifyClientsURL) > 0 {
 		jreq, err := json.Marshal(&tailcfg.DERPAdmitClientRequest{
 			NodePublic: clientKey,
 			Source:     clientIP,
@@ -1364,30 +1391,43 @@ func (s *Server) verifyClient(ctx context.Context, clientKey key.NodePublic, inf
 		if err != nil {
 			return err
 		}
-		req, err := http.NewRequestWithContext(ctx, "POST", s.verifyClientsURL, bytes.NewReader(jreq))
-		if err != nil {
-			return err
-		}
-		res, err := http.DefaultClient.Do(req)
-		if err != nil {
-			if s.verifyClientsURLFailOpen {
-				s.logf("admission controller unreachable; allowing client %v", clientKey)
-				return nil
+
+		for i, verifyClientsURL := range s.verifyClientsURL {
+			ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
+			defer cancel()
+			req, err := http.NewRequestWithContext(ctx, "POST", verifyClientsURL, bytes.NewReader(jreq))
+			if err != nil {
+				return err
 			}
-			return err
+			res, err := s.verifyClientHTTPClient[i].Do(req)
+			if err != nil {
+				if s.verifyClientsURLFailOpen {
+					s.logf("admission controller unreachable; allowing client %v", clientKey)
+					continue
+				}
+				errors = append(errors, err)
+				continue
+			}
+			defer res.Body.Close()
+			if res.StatusCode != 200 {
+				errors = append(errors, fmt.Errorf("admission controller: %v", res.Status))
+				continue
+			}
+			var jres tailcfg.DERPAdmitClientResponse
+			if err := json.NewDecoder(io.LimitReader(res.Body, 4<<10)).Decode(&jres); err != nil {
+				errors = append(errors, err)
+				continue
+			}
+			if !jres.Allow {
+				errors = append(errors, fmt.Errorf("admission controller: %v/%v not allowed", clientKey, clientIP))
+				continue
+			}
+			// TODO(bradfitz): add policy for configurable bandwidth rate per client?
+			return nil
 		}
-		defer res.Body.Close()
-		if res.StatusCode != 200 {
-			return fmt.Errorf("admission controller: %v", res.Status)
-		}
-		var jres tailcfg.DERPAdmitClientResponse
-		if err := json.NewDecoder(io.LimitReader(res.Body, 4<<10)).Decode(&jres); err != nil {
-			return err
-		}
-		if !jres.Allow {
-			return fmt.Errorf("admission controller: %v/%v not allowed", clientKey, clientIP)
-		}
-		// TODO(bradfitz): add policy for configurable bandwidth rate per client?
+	}
+	if len(errors) > 0 {
+		return E.Errors(errors...)
 	}
 	return nil
 }

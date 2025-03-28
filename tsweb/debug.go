@@ -14,7 +14,6 @@ import (
 	"os"
 	"runtime"
 
-	"github.com/sagernet/tailscale/tsweb/promvarz"
 	"github.com/sagernet/tailscale/tsweb/varz"
 	"github.com/sagernet/tailscale/version"
 )
@@ -51,7 +50,6 @@ func Debugger(mux *http.ServeMux) *DebugHandler {
 	ret.KVFunc("Uptime", func() any { return varz.Uptime() })
 	ret.KV("Version", version.Long())
 	ret.Handle("vars", "Metrics (Go)", expvar.Handler())
-	ret.Handle("varz", "Metrics (Prometheus)", http.HandlerFunc(promvarz.Handler))
 
 	// pprof.Index serves everything that runtime/pprof.Lookup finds:
 	// goroutine, threadcreate, heap, allocs, block, mutex
