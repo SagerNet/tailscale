@@ -57,11 +57,6 @@ func Debugger(mux *http.ServeMux) *DebugHandler {
 	ret.KVFunc("Uptime", func() any { return varz.Uptime() })
 	ret.KV("Version", version.Long())
 	ret.Handle("vars", "Metrics (Go)", expvar.Handler())
-	if PrometheusHandler.IsSet() {
-		PrometheusHandler.Get()(ret)
-	} else {
-		ret.Handle("varz", "Metrics (Prometheus)", http.HandlerFunc(varz.Handler))
-	}
 
 	addProfilingHandlers(ret)
 	ret.Handle("gc", "force GC", http.HandlerFunc(gcHandler))

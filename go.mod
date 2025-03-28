@@ -46,7 +46,6 @@ require (
 	github.com/mitchellh/go-ps v1.0.0
 	github.com/pires/go-proxyproto v0.8.1
 	github.com/prometheus/client_golang v1.23.2
-	github.com/prometheus/common v0.69.0
 	github.com/safchain/ethtool v0.3.0
 	github.com/sagernet/sing v0.8.12-0.20260731081310-cb3e09a281aa
 	github.com/skip2/go-qrcode v0.0.0-20200617195104-da1b6568686e
@@ -89,6 +88,7 @@ require (
 	github.com/hashicorp/go-metrics v0.5.4 // indirect
 	github.com/hashicorp/go-msgpack/v2 v2.1.2 // indirect
 	github.com/hashicorp/golang-lru v1.0.2 // indirect
+	github.com/prometheus/common v0.69.0 // indirect
 	go.etcd.io/bbolt v1.4.2 // indirect
 )
 
