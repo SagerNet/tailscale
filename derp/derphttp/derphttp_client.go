@@ -668,7 +668,7 @@ func (c *Client) tlsClient(nc net.Conn, node *tailcfg.DERPNode) *tls.Conn {
 // DERP nodes for a region are tried in sequence according to their order
 // in the DERP map. TLS is initiated on the first node where a socket is
 // established.
-func (c *Client) DialRegionTLS(ctx context.Context, reg *tailcfg.DERPRegion) (tlsConn *tls.Conn, connClose io.Closer, node *tailcfg.DERPNode, err error) {
+func (c *Client) _DialRegionTLS(ctx context.Context, reg *tailcfg.DERPRegion) (tlsConn *tls.Conn, connClose io.Closer, node *tailcfg.DERPNode, err error) {
 	tcpConn, node, err := c.dialRegion(ctx, reg)
 	if err != nil {
 		return nil, nil, nil, err

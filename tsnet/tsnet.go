@@ -126,6 +126,7 @@ type Server struct {
 
 	Dialer     N.Dialer
 	LookupHook dnscache.LookupHookFunc
+	OnlyTCP443 bool
 	DNS        dns.OSConfigurator
 	HTTPClient *http.Client
 
@@ -625,7 +626,7 @@ func (s *Server) start() (reterr error) {
 	if s.Ephemeral {
 		loginFlags = controlclient.LoginEphemeral
 	}
-	lb, err := ipnlocal.NewLocalBackend(tsLogf, s.logid, sys, loginFlags|controlclient.LocalBackendStartKeyOSNeutral, s.LookupHook)
+	lb, err := ipnlocal.NewLocalBackend(tsLogf, s.logid, sys, loginFlags|controlclient.LocalBackendStartKeyOSNeutral, s.LookupHook, s.OnlyTCP443)
 	if err != nil {
 		return fmt.Errorf("NewLocalBackend: %v", err)
 	}

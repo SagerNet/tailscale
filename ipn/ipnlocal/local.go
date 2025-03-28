@@ -387,6 +387,7 @@ type LocalBackend struct {
 	needsCaptiveDetection chan bool
 
 	lookupHook dnscache.LookupHookFunc
+	onlyTCP443 bool
 }
 
 // HealthTracker returns the health tracker for the backend.
@@ -426,7 +427,7 @@ type clientGen func(controlclient.Options) (controlclient.Client, error)
 // but is not actually running.
 //
 // If dialer is nil, a new one is made.
-func NewLocalBackend(logf logger.Logf, logID logid.PublicID, sys *tsd.System, loginFlags controlclient.LoginFlags, lookupHook dnscache.LookupHookFunc) (_ *LocalBackend, err error) {
+func NewLocalBackend(logf logger.Logf, logID logid.PublicID, sys *tsd.System, loginFlags controlclient.LoginFlags, lookupHook dnscache.LookupHookFunc, onlyTCP443 bool) (_ *LocalBackend, err error) {
 	e := sys.Engine.Get()
 	store := sys.StateStore.Get()
 	dialer := sys.Dialer.Get()
@@ -493,6 +494,7 @@ func NewLocalBackend(logf logger.Logf, logID logid.PublicID, sys *tsd.System, lo
 		captiveCancel:         nil, // so that we start checkCaptivePortalLoop when Running
 		needsCaptiveDetection: make(chan bool),
 		lookupHook:            lookupHook,
+		onlyTCP443:            onlyTCP443,
 	}
 	mConn.SetNetInfoCallback(b.setNetInfo)
 
@@ -1662,7 +1664,7 @@ func (b *LocalBackend) SetControlClientStatus(c controlclient.Client, st control
 
 		b.e.SetNetworkMap(st.NetMap)
 		b.MagicConn().SetDERPMap(st.NetMap.DERPMap)
-		b.MagicConn().SetOnlyTCP443(st.NetMap.HasCap(tailcfg.NodeAttrOnlyTCP443))
+		b.MagicConn().SetOnlyTCP443(b.onlyTCP443 || st.NetMap.HasCap(tailcfg.NodeAttrOnlyTCP443))
 
 		// Update our cached DERP map
 		dnsfallback.UpdateCache(st.NetMap.DERPMap, b.logf)
