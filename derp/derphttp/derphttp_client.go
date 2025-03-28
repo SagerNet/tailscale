@@ -697,7 +697,7 @@ func (c *Client) _DialRegionTLS(ctx context.Context, reg *tailcfg.DERPRegion) (t
 }
 
 func (c *Client) dialContext(ctx context.Context, proto, addr string) (net.Conn, error) {
-	return netns.NewDialer(c.logf, c.netMon).DialContext(ctx, proto, addr)
+	return netns.NewDialerAlwaysDirect(c.logf, c.netMon).DialContext(ctx, proto, addr)
 }
 
 // shouldDialProto reports whether an explicitly provided IPv4 or IPv6

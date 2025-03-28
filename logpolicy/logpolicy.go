@@ -768,7 +768,7 @@ func dialContext(ctx context.Context, netw, addr string, netMon *netmon.Monitor,
 	nd := netns.FromDialer(logf, netMon, &net.Dialer{
 		Timeout:   30 * time.Second,
 		KeepAlive: netknob.PlatformTCPKeepAlive(),
-	})
+	}, false)
 	t0 := time.Now()
 	c, err := nd.DialContext(ctx, netw, addr)
 	d := time.Since(t0).Round(time.Millisecond)
