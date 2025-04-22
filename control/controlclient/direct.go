@@ -40,7 +40,6 @@ import (
 	"github.com/sagernet/tailscale/ipn/ipnstate"
 	"github.com/sagernet/tailscale/logtail"
 	"github.com/sagernet/tailscale/net/dnscache"
-	"github.com/sagernet/tailscale/net/dnsfallback"
 	"github.com/sagernet/tailscale/net/netmon"
 	"github.com/sagernet/tailscale/net/netutil"
 	"github.com/sagernet/tailscale/net/netx"
@@ -335,11 +334,11 @@ func NewDirect(opts Options) (*Direct, error) {
 	}
 
 	dnsCache := &dnscache.Resolver{
-		Forward:          dnscache.Get().Forward, // use default cache's forwarder
-		UseLastGood:      true,
-		LookupIPFallback: dnsfallback.MakeLookupFunc(opts.Logf, netMon),
-		Logf:             opts.Logf,
-		LookupHook:       opts.LookupHook,
+		Forward:     dnscache.Get().Forward, // use default cache's forwarder
+		UseLastGood: true,
+		// LookupIPFallback: dnsfallback.MakeLookupFunc(opts.Logf, netMon),
+		Logf:       opts.Logf,
+		LookupHook: opts.LookupHook,
 	}
 
 	httpc := opts.HTTPTestClient
