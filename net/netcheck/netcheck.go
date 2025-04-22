@@ -27,7 +27,6 @@ import (
 	"github.com/sagernet/tailscale/derp/derphttp"
 	"github.com/sagernet/tailscale/envknob"
 	"github.com/sagernet/tailscale/feature"
-	"github.com/sagernet/tailscale/feature/buildfeatures"
 	"github.com/sagernet/tailscale/hostinfo"
 	"github.com/sagernet/tailscale/net/dnscache"
 	"github.com/sagernet/tailscale/net/neterror"
@@ -912,10 +911,10 @@ func (c *Client) GetReport(ctx context.Context, dm *tailcfg.DERPMap, opts *GetRe
 	// it's unnecessary.
 	captivePortalDone := syncs.ClosedChan()
 	captivePortalStop := func() {}
-	if buildfeatures.HasCaptivePortal && !rs.incremental && !onlySTUN {
-		start := hookStartCaptivePortalDetection.Get()
-		captivePortalDone, captivePortalStop = start(ctx, rs, dm, preferredDERP)
-	}
+	//if buildfeatures.HasCaptivePortal && !rs.incremental && !onlySTUN {
+	//	start := hookStartCaptivePortalDetection.Get()
+	//	captivePortalDone, captivePortalStop = start(ctx, rs, dm, preferredDERP)
+	//}
 
 	wg := syncs.NewWaitGroupChan()
 	wg.Add(len(plan))
