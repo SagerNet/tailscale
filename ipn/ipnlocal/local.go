@@ -5596,7 +5596,7 @@ func (b *LocalBackend) enterStateLocked(newState ipn.State) {
 			if b.captiveCancel == nil {
 				captiveCtx, captiveCancel := context.WithCancel(b.ctx)
 				b.captiveCtx, b.captiveCancel = captiveCtx, captiveCancel
-				b.goTracker.Go(func() { hookCheckCaptivePortalLoop.Get()(b, captiveCtx) })
+				// b.goTracker.Go(func() { hookCheckCaptivePortalLoop.Get()(b, captiveCtx) })
 			}
 		}
 	} else if oldState == ipn.Running {
