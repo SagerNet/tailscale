@@ -37,7 +37,6 @@ import (
 	"github.com/sagernet/tailscale/logtail"
 	"github.com/sagernet/tailscale/logtail/filch"
 	"github.com/sagernet/tailscale/net/dnscache"
-	"github.com/sagernet/tailscale/net/dnsfallback"
 	"github.com/sagernet/tailscale/net/netknob"
 	"github.com/sagernet/tailscale/net/netmon"
 	"github.com/sagernet/tailscale/net/netns"
@@ -798,9 +797,9 @@ func dialContext(ctx context.Context, netw, addr string, netMon *netmon.Monitor,
 	// If we failed to dial, try again with bootstrap DNS.
 	logf("logtail: dial %q failed: %v (in %v), trying bootstrap...", addr, err, d)
 	dnsCache := &dnscache.Resolver{
-		Forward:          dnscache.Get().Forward, // use default cache's forwarder
-		UseLastGood:      true,
-		LookupIPFallback: dnsfallback.MakeLookupFunc(logf, netMon),
+		Forward:     dnscache.Get().Forward, // use default cache's forwarder
+		UseLastGood: true,
+		//LookupIPFallback: dnsfallback.MakeLookupFunc(logf, netMon),
 	}
 	dialer := dnscache.Dialer(nd.DialContext, dnsCache)
 	c, err = dialer(ctx, netw, addr)

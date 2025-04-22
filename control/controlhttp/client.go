@@ -42,7 +42,6 @@ import (
 	"github.com/sagernet/tailscale/envknob"
 	"github.com/sagernet/tailscale/health"
 	"github.com/sagernet/tailscale/net/dnscache"
-	"github.com/sagernet/tailscale/net/dnsfallback"
 	"github.com/sagernet/tailscale/net/netutil"
 	"github.com/sagernet/tailscale/net/sockstats"
 	"github.com/sagernet/tailscale/net/tlsdial"
@@ -430,10 +429,10 @@ func (a *Dialer) resolver() *dnscache.Resolver {
 	}
 
 	return &dnscache.Resolver{
-		Forward:          dnscache.Get().Forward,
-		LookupIPFallback: dnsfallback.MakeLookupFunc(a.logf, a.NetMon),
-		UseLastGood:      true,
-		Logf:             a.Logf, // not a.logf method; we want to propagate nil-ness
+		Forward: dnscache.Get().Forward,
+		//LookupIPFallback: dnsfallback.MakeLookupFunc(a.logf, a.NetMon),
+		UseLastGood: true,
+		Logf:        a.Logf, // not a.logf method; we want to propagate nil-ness
 	}
 }
 
