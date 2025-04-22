@@ -25,7 +25,6 @@ import (
 
 	"github.com/sagernet/tailscale/derp/derphttp"
 	"github.com/sagernet/tailscale/envknob"
-	"github.com/sagernet/tailscale/net/captivedetection"
 	"github.com/sagernet/tailscale/net/dnscache"
 	"github.com/sagernet/tailscale/net/neterror"
 	"github.com/sagernet/tailscale/net/netmon"
@@ -907,7 +906,7 @@ func (c *Client) GetReport(ctx context.Context, dm *tailcfg.DERPMap, opts *GetRe
 		// `NewWaitGroupChan` below, since we don't wait for that
 		// waitgroup to finish when exiting this function and thus get
 		// a data race.
-		ch := make(chan struct{})
+		/*ch := make(chan struct{})
 		captivePortalDone = ch
 
 		tmr := time.AfterFunc(c.captivePortalDelay(), func() {
@@ -933,7 +932,7 @@ func (c *Client) GetReport(ctx context.Context, dm *tailcfg.DERPMap, opts *GetRe
 
 			// Did not stop; do nothing and it'll finish by itself
 			// and close the signal channel.
-		}
+		}*/
 	}
 
 	wg := syncs.NewWaitGroupChan()

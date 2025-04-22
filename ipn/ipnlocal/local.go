@@ -5235,7 +5235,7 @@ func (b *LocalBackend) enterStateLockedOnEntry(newState ipn.State, unlock unlock
 		// can be shut down if we transition away from Running.
 		if b.captiveCancel == nil {
 			b.captiveCtx, b.captiveCancel = context.WithCancel(b.ctx)
-			b.goTracker.Go(func() { b.checkCaptivePortalLoop(b.captiveCtx) })
+			//b.goTracker.Go(func() { b.checkCaptivePortalLoop(b.captiveCtx) })
 		}
 	} else if oldState == ipn.Running {
 		// Transitioning away from running.
