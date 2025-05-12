@@ -6,7 +6,6 @@
 package osshare
 
 import (
-	"fmt"
 	"os"
 	"path/filepath"
 	"sync"
@@ -55,12 +54,12 @@ func getIpnExePath(logf logger.Logf) string {
 
 // SetFileSharingEnabled adds/removes "Send with Tailscale" from the Windows shell menu.
 func SetFileSharingEnabled(enabled bool, logf logger.Logf) {
-	logf = logger.WithPrefix(logf, fmt.Sprintf("SetFileSharingEnabled(%v) error: ", enabled))
+	/*logf = logger.WithPrefix(logf, fmt.Sprintf("SetFileSharingEnabled(%v) error: ", enabled))
 	if enabled {
 		enableFileSharing(logf)
 	} else {
 		disableFileSharing(logf)
-	}
+	}*/
 }
 
 func enableFileSharing(logf logger.Logf) {
