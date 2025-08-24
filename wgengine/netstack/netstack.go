@@ -28,6 +28,7 @@ import (
 	"github.com/sagernet/gvisor/pkg/tcpip/network/ipv6"
 	"github.com/sagernet/gvisor/pkg/tcpip/stack"
 	"github.com/sagernet/gvisor/pkg/tcpip/transport/icmp"
+	"github.com/sagernet/gvisor/pkg/tcpip/transport/raw"
 	"github.com/sagernet/gvisor/pkg/tcpip/transport/tcp"
 	"github.com/sagernet/gvisor/pkg/tcpip/transport/udp"
 	"github.com/sagernet/gvisor/pkg/waiter"
@@ -309,6 +310,7 @@ func Create(logf logger.Logf, tundev *tstun.Wrapper, e wgengine.Engine, mc *magi
 		return nil, errors.New("nil Dialer")
 	}
 	ipstack := stack.New(stack.Options{
+		RawFactory:         new(raw.EndpointFactory),
 		NetworkProtocols:   []stack.NetworkProtocolFactory{ipv4.NewProtocol, ipv6.NewProtocol},
 		TransportProtocols: []stack.TransportProtocolFactory{tcp.NewProtocol, udp.NewProtocol, icmp.NewProtocol4, icmp.NewProtocol6},
 	})
@@ -779,27 +781,6 @@ func (ns *Impl) handleLocalPackets(p *packet.Parsed, t *tstun.Wrapper, gro *gro.
 				p.IPVersion, p.IPProto, p.Dst, p.Src)
 		}
 
-		// If this is a ping message, handle it and don't pass to
-		// netstack.
-		pingIP, handlePing := ns.shouldHandlePing(p)
-		if handlePing {
-			ns.logf("netstack: handling local 4via6 ping: dst=%v pingIP=%v", dst, pingIP)
-
-			var pong []byte // the reply to the ping, if our relayed ping works
-			if dst.Is4() {
-				h := p.ICMP4Header()
-				h.ToResponse()
-				pong = packet.Generate(&h, p.Payload())
-			} else if dst.Is6() {
-				h := p.ICMP6Header()
-				h.ToResponse()
-				pong = packet.Generate(&h, p.Payload())
-			}
-
-			go ns.userPing(pingIP, pong, userPingDirectionInbound)
-			return filter.DropSilently, gro
-		}
-
 		// Fall through to writing inbound so netstack handles the
 		// 4via6 via connection.
 
@@ -1112,26 +1093,6 @@ func (ns *Impl) injectInbound(p *packet.Parsed, t *tstun.Wrapper, gro *gro.GRO) 
 	if !ns.shouldProcessInbound(p, t) {
 		// Let the host network stack (if any) deal with it.
 		return filter.Accept, gro
-	}
-
-	destIP := p.Dst.Addr()
-
-	// If this is an echo request and we're a subnet router, handle pings
-	// ourselves instead of forwarding the packet on.
-	pingIP, handlePing := ns.shouldHandlePing(p)
-	if handlePing {
-		var pong []byte // the reply to the ping, if our relayed ping works
-		if destIP.Is4() {
-			h := p.ICMP4Header()
-			h.ToResponse()
-			pong = packet.Generate(&h, p.Payload())
-		} else if destIP.Is6() {
-			h := p.ICMP6Header()
-			h.ToResponse()
-			pong = packet.Generate(&h, p.Payload())
-		}
-		go ns.userPing(pingIP, pong, userPingDirectionOutbound)
-		return filter.DropSilently, gro
 	}
 
 	if debugPackets {
