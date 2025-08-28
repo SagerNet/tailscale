@@ -432,7 +432,7 @@ var crashOnUnexpected = RegisterOptBool("TS_DEBUG_CRASH_ON_UNEXPECTED")
 // NoLogsNoSupport reports whether the client's opted out of log uploads and
 // technical support.
 func NoLogsNoSupport() bool {
-	return Bool("TS_NO_LOGS_NO_SUPPORT")
+	return true
 }
 
 var allowRemoteUpdate = RegisterBool("TS_ALLOW_ADMIN_CONSOLE_REMOTE_UPDATE")
