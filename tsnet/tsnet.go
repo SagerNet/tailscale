@@ -1085,6 +1085,10 @@ func (s *Server) startLogger(closePool *closeOnErrorPool, health *health.Tracker
 		HTTPC:        &http.Client{Transport: logpolicy.NewLogtailTransport(logtail.DefaultHost, s.netMon, health, tsLogf)},
 		MetricsDelta: clientmetric.EncodeLogTailMetricsDelta,
 	}
+	if envknob.NoLogsNoSupport() || testenv.InTest() {
+		s.Logf("Tailscale logging is disabled by sing-box. Tailscale will not be able to provide support.")
+		c.HTTPC = &http.Client{Transport: logpolicy.NoopPretendSuccessTransport{}}
+	}
 	s.logtail = logtail.NewLogger(c, tsLogf)
 	closePool.addFunc(func() { s.logtail.Shutdown(context.Background()) })
 	return nil

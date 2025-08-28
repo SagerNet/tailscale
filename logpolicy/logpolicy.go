@@ -647,8 +647,8 @@ func (opts Options) init(disableLogging bool) (*logtail.Config, *Policy) {
 	}
 
 	if disableLogging {
-		opts.Logf("You have disabled logging. Tailscale will not be able to provide support.")
-		conf.HTTPC = &http.Client{Transport: noopPretendSuccessTransport{}}
+		opts.Logf("Tailscale logging is disabled by sing-box. Tailscale will not be able to provide support.")
+		conf.HTTPC = &http.Client{Transport: NoopPretendSuccessTransport{}}
 	} else {
 		// Only attach an on-disk filch buffer if we are going to be sending logs.
 		// No reason to persist them locally just to drop them later.
@@ -889,7 +889,7 @@ type TransportOptions struct {
 // to the given host name. See [DialContext] for details on how it works.
 func (opts TransportOptions) New() http.RoundTripper {
 	if testenv.InTest() || envknob.NoLogsNoSupport() {
-		return noopPretendSuccessTransport{}
+		return NoopPretendSuccessTransport{}
 	}
 	if opts.NetMon == nil {
 		opts.NetMon = netmon.NewStatic()
@@ -953,9 +953,9 @@ func goVersion() string {
 	return v
 }
 
-type noopPretendSuccessTransport struct{}
+type NoopPretendSuccessTransport struct{}
 
-func (noopPretendSuccessTransport) RoundTrip(req *http.Request) (*http.Response, error) {
+func (NoopPretendSuccessTransport) RoundTrip(req *http.Request) (*http.Response, error) {
 	io.Copy(io.Discard, req.Body)
 	req.Body.Close()
 	return &http.Response{
