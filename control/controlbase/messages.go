@@ -56,6 +56,7 @@ func (m *initiationMessage) Length() int     { return int(binary.BigEndian.Uint1
 func (m *initiationMessage) EphemeralPub() []byte {
 	return m[initiationHeaderLen : initiationHeaderLen+32]
 }
+
 func (m *initiationMessage) MachinePub() []byte {
 	return m[initiationHeaderLen+32 : initiationHeaderLen+32+48]
 }

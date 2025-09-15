@@ -10,13 +10,13 @@ import (
 	"sync"
 	"time"
 
-	"tailscale.com/disco"
-	"tailscale.com/net/stun"
-	udprelay "tailscale.com/net/udprelay/endpoint"
-	"tailscale.com/tailcfg"
-	"tailscale.com/tstime"
-	"tailscale.com/types/key"
-	"tailscale.com/util/set"
+	"github.com/sagernet/tailscale/disco"
+	"github.com/sagernet/tailscale/net/stun"
+	udprelay "github.com/sagernet/tailscale/net/udprelay/endpoint"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/tstime"
+	"github.com/sagernet/tailscale/types/key"
+	"github.com/sagernet/tailscale/util/set"
 )
 
 // relayManager manages allocation, handshaking, and initial probing (disco

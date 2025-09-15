@@ -10,7 +10,7 @@ import (
 	"net"
 	"net/http"
 
-	"tailscale.com/logpolicy"
+	"github.com/sagernet/tailscale/logpolicy"
 )
 
 // handleProxyConnectConn handles a CONNECT request to

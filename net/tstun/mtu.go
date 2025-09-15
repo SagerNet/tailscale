@@ -4,7 +4,7 @@
 package tstun
 
 import (
-	"tailscale.com/envknob"
+	"github.com/sagernet/tailscale/envknob"
 )
 
 // The MTU (Maximum Transmission Unit) of a network interface is the largest

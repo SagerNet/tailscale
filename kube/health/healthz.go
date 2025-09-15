@@ -13,10 +13,10 @@ import (
 	"net/http"
 	"sync"
 
-	"tailscale.com/client/local"
-	"tailscale.com/ipn"
-	"tailscale.com/kube/kubetypes"
-	"tailscale.com/types/logger"
+	"github.com/sagernet/tailscale/client/local"
+	"github.com/sagernet/tailscale/ipn"
+	"github.com/sagernet/tailscale/kube/kubetypes"
+	"github.com/sagernet/tailscale/types/logger"
 )
 
 // Healthz is a simple health check server, if enabled it returns 200 OK if

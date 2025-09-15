@@ -25,13 +25,13 @@ import (
 	"sync/atomic"
 	"time"
 
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/net/netns"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/mak"
 	"github.com/tailscale/goupnp"
 	"github.com/tailscale/goupnp/dcps/internetgateway2"
 	"github.com/tailscale/goupnp/soap"
-	"tailscale.com/envknob"
-	"tailscale.com/net/netns"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/mak"
 )
 
 // References:
@@ -78,6 +78,7 @@ func (u *upnpMapping) MappingDebug() string {
 		u.renewAfter.Unix(), u.goodUntil.Unix(),
 		u.loc)
 }
+
 func (u *upnpMapping) Release(ctx context.Context) {
 	u.client.DeletePortMapping(ctx, "", u.external.Port(), upnpProtocolUDP)
 }
@@ -421,9 +422,7 @@ func (c *Client) upnpHTTPClientLocked() *http.Client {
 	return c.uPnPHTTPClient
 }
 
-var (
-	disableUPnpEnv = envknob.RegisterBool("TS_DISABLE_UPNP")
-)
+var disableUPnpEnv = envknob.RegisterBool("TS_DISABLE_UPNP")
 
 // getUPnPPortMapping attempts to create a port-mapping over the UPnP protocol. On success,
 // it will return the externally exposed IP and port. Otherwise, it will return a zeroed IP and

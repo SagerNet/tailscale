@@ -17,7 +17,7 @@ import (
 	"path/filepath"
 	"runtime/debug"
 
-	"tailscale.com/atomicfile"
+	"github.com/sagernet/tailscale/atomicfile"
 )
 
 func main() {
@@ -68,7 +68,7 @@ func main() {
 				fmt.Fprintf(os.Stderr, "usage: gocross write-wrapper-script <path>\n")
 				os.Exit(1)
 			}
-			if err := atomicfile.WriteFile(os.Args[2], wrapperScript, 0755); err != nil {
+			if err := atomicfile.WriteFile(os.Args[2], wrapperScript, 0o755); err != nil {
 				fmt.Fprintf(os.Stderr, "writing wrapper script: %v\n", err)
 				os.Exit(1)
 			}
@@ -126,7 +126,7 @@ func debugf(format string, args ...any) {
 	case "1":
 		out = os.Stderr
 	default:
-		out, err = os.OpenFile(debug, os.O_APPEND|os.O_CREATE|os.O_RDWR, 0640)
+		out, err = os.OpenFile(debug, os.O_APPEND|os.O_CREATE|os.O_RDWR, 0o640)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "opening debug file %q: %v", debug, err)
 			out = os.Stderr

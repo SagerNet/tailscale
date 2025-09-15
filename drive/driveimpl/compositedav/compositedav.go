@@ -16,11 +16,11 @@ import (
 	"strings"
 	"sync"
 
+	"github.com/sagernet/tailscale/drive/driveimpl/dirfs"
+	"github.com/sagernet/tailscale/drive/driveimpl/shared"
+	"github.com/sagernet/tailscale/tstime"
+	"github.com/sagernet/tailscale/types/logger"
 	"github.com/tailscale/xnet/webdav"
-	"tailscale.com/drive/driveimpl/dirfs"
-	"tailscale.com/drive/driveimpl/shared"
-	"tailscale.com/tstime"
-	"tailscale.com/types/logger"
 )
 
 // Child is a child folder of this compositedav.

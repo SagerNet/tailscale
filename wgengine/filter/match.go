@@ -6,10 +6,10 @@ package filter
 import (
 	"net/netip"
 
-	"tailscale.com/net/packet"
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/views"
-	"tailscale.com/wgengine/filter/filtertype"
+	"github.com/sagernet/tailscale/net/packet"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/views"
+	"github.com/sagernet/tailscale/wgengine/filter/filtertype"
 )
 
 type matches []filtertype.Match

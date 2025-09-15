@@ -7,7 +7,7 @@ import (
 	"reflect"
 	"sync"
 
-	"tailscale.com/util/set"
+	"github.com/sagernet/tailscale/util/set"
 )
 
 // A Client can publish and subscribe to events on its attached

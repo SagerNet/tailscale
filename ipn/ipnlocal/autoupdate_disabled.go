@@ -6,7 +6,7 @@
 package ipnlocal
 
 import (
-	"tailscale.com/ipn"
+	"github.com/sagernet/tailscale/ipn"
 )
 
 func (b *LocalBackend) stopOfflineAutoUpdate() {

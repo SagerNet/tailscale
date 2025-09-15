@@ -8,7 +8,7 @@ package ipnlocal
 import (
 	"errors"
 
-	"tailscale.com/tailcfg"
+	"github.com/sagernet/tailscale/tailcfg"
 )
 
 func (b *LocalBackend) getSSHHostKeyPublicStrings() ([]string, error) {

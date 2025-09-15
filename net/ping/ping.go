@@ -19,12 +19,12 @@ import (
 	"sync/atomic"
 	"time"
 
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/mak"
+	"github.com/sagernet/tailscale/util/multierr"
 	"golang.org/x/net/icmp"
 	"golang.org/x/net/ipv4"
 	"golang.org/x/net/ipv6"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/mak"
-	"tailscale.com/util/multierr"
 )
 
 const (
@@ -123,7 +123,7 @@ func (p *Pinger) getConn(ctx context.Context, typ string) (net.PacketConn, error
 		return c, nil
 	}
 
-	var addr = "0.0.0.0"
+	addr := "0.0.0.0"
 	if typ == v6Type {
 		addr = "::"
 	}

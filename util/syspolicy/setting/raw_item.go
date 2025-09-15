@@ -9,8 +9,8 @@ import (
 
 	jsonv2 "github.com/go-json-experiment/json"
 	"github.com/go-json-experiment/json/jsontext"
-	"tailscale.com/types/opt"
-	"tailscale.com/types/structs"
+	"github.com/sagernet/tailscale/types/opt"
+	"github.com/sagernet/tailscale/types/structs"
 )
 
 // RawItem contains a raw policy setting value as read from a policy store, or an

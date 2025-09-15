@@ -6,7 +6,7 @@ package netmon
 import (
 	"sync"
 
-	"tailscale.com/types/logger"
+	"github.com/sagernet/tailscale/types/logger"
 )
 
 // LinkChangeLogLimiter returns a new [logger.Logf] that logs each unique

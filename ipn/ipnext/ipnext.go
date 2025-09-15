@@ -11,16 +11,16 @@ import (
 	"iter"
 	"net/netip"
 
-	"tailscale.com/control/controlclient"
-	"tailscale.com/feature"
-	"tailscale.com/ipn"
-	"tailscale.com/ipn/ipnauth"
-	"tailscale.com/ipn/ipnstate"
-	"tailscale.com/tailcfg"
-	"tailscale.com/tsd"
-	"tailscale.com/tstime"
-	"tailscale.com/types/logger"
-	"tailscale.com/types/mapx"
+	"github.com/sagernet/tailscale/control/controlclient"
+	"github.com/sagernet/tailscale/feature"
+	"github.com/sagernet/tailscale/ipn"
+	"github.com/sagernet/tailscale/ipn/ipnauth"
+	"github.com/sagernet/tailscale/ipn/ipnstate"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/tsd"
+	"github.com/sagernet/tailscale/tstime"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/types/mapx"
 )
 
 // Extension augments LocalBackend with additional functionality.

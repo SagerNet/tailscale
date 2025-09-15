@@ -6,7 +6,7 @@
 package magicsock
 
 import (
-	"tailscale.com/types/nettype"
+	"github.com/sagernet/tailscale/types/nettype"
 )
 
 func tryUpgradeToBatchingConn(pconn nettype.PacketConn, _ string, _ int) nettype.PacketConn {

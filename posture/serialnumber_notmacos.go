@@ -12,7 +12,7 @@ import (
 	"strings"
 
 	"github.com/digitalocean/go-smbios/smbios"
-	"tailscale.com/types/logger"
+	"github.com/sagernet/tailscale/types/logger"
 )
 
 // getByteFromSmbiosStructure retrieves a 8-bit unsigned integer at the given specOffset.

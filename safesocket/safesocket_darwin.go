@@ -20,8 +20,8 @@ import (
 	"sync"
 	"time"
 
+	"github.com/sagernet/tailscale/version"
 	"golang.org/x/sys/unix"
-	"tailscale.com/version"
 )
 
 func init() {
@@ -235,7 +235,7 @@ func initSameUserProofToken(sharedDir string, port int, token string) error {
 	var baseFile string
 	var perm fs.FileMode
 	if ssd.isMacSysExt() {
-		perm = 0640 // allow wheel to read
+		perm = 0o640 // allow wheel to read
 		baseFile = fmt.Sprintf("sameuserproof-%d", port)
 		portFile := filepath.Join(sharedDir, "ipnport")
 		err := os.Remove(portFile)
@@ -247,7 +247,7 @@ func initSameUserProofToken(sharedDir string, port int, token string) error {
 			log.Printf("failed to symlink portfile: %v", symlinkErr)
 		}
 	} else {
-		perm = 0666
+		perm = 0o666
 		baseFile = fmt.Sprintf("sameuserproof-%d-%s", port, token)
 	}
 

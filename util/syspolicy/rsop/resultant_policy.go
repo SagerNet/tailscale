@@ -11,11 +11,10 @@ import (
 	"sync/atomic"
 	"time"
 
-	"tailscale.com/util/syspolicy/internal/loggerx"
-	"tailscale.com/util/syspolicy/setting"
-	"tailscale.com/util/testenv"
-
-	"tailscale.com/util/syspolicy/source"
+	"github.com/sagernet/tailscale/util/syspolicy/internal/loggerx"
+	"github.com/sagernet/tailscale/util/syspolicy/setting"
+	"github.com/sagernet/tailscale/util/syspolicy/source"
+	"github.com/sagernet/tailscale/util/testenv"
 )
 
 // ErrPolicyClosed is returned by [Policy.Reload], [Policy.addSource],

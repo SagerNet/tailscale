@@ -37,21 +37,21 @@ import (
 	"sync/atomic"
 	"time"
 
-	"tailscale.com/control/controlbase"
-	"tailscale.com/control/controlhttp/controlhttpcommon"
-	"tailscale.com/envknob"
-	"tailscale.com/health"
-	"tailscale.com/net/dnscache"
-	"tailscale.com/net/dnsfallback"
-	"tailscale.com/net/netutil"
-	"tailscale.com/net/netx"
-	"tailscale.com/net/sockstats"
-	"tailscale.com/net/tlsdial"
-	"tailscale.com/net/tshttpproxy"
-	"tailscale.com/syncs"
-	"tailscale.com/tailcfg"
-	"tailscale.com/tstime"
-	"tailscale.com/util/multierr"
+	"github.com/sagernet/tailscale/control/controlbase"
+	"github.com/sagernet/tailscale/control/controlhttp/controlhttpcommon"
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/health"
+	"github.com/sagernet/tailscale/net/dnscache"
+	"github.com/sagernet/tailscale/net/dnsfallback"
+	"github.com/sagernet/tailscale/net/netutil"
+	"github.com/sagernet/tailscale/net/netx"
+	"github.com/sagernet/tailscale/net/sockstats"
+	"github.com/sagernet/tailscale/net/tlsdial"
+	"github.com/sagernet/tailscale/net/tshttpproxy"
+	"github.com/sagernet/tailscale/syncs"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/tstime"
+	"github.com/sagernet/tailscale/util/multierr"
 )
 
 var stdDialer net.Dialer
@@ -97,7 +97,6 @@ func (a *Dialer) httpsFallbackDelay() time.Duration {
 var _ = envknob.RegisterBool("TS_USE_CONTROL_DIAL_PLAN") // to record at init time whether it's in use
 
 func (a *Dialer) dial(ctx context.Context) (*ClientConn, error) {
-
 	a.logPort80Failure.Store(true)
 
 	// If we don't have a dial plan, just fall back to dialing the single

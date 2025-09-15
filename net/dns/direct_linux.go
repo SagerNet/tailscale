@@ -11,7 +11,7 @@ import (
 	"fmt"
 
 	"github.com/illarion/gonotify/v3"
-	"tailscale.com/health"
+	"github.com/sagernet/tailscale/health"
 )
 
 func (m *directManager) runFileWatcher() {

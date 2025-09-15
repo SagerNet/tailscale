@@ -15,8 +15,8 @@ import (
 	"fmt"
 	"net/netip"
 
-	"tailscale.com/net/flowtrack"
-	"tailscale.com/types/ipproto"
+	"github.com/sagernet/tailscale/net/flowtrack"
+	"github.com/sagernet/tailscale/types/ipproto"
 )
 
 const minTSMPSize = 7 // the rejected body is 7 bytes

@@ -8,7 +8,7 @@ package ethtool
 import (
 	"context"
 
-	"tailscale.com/types/logger"
+	"github.com/sagernet/tailscale/types/logger"
 )
 
 // Check implements the doctor.Check interface.

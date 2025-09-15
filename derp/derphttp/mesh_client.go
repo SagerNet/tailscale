@@ -8,9 +8,9 @@ import (
 	"sync"
 	"time"
 
-	"tailscale.com/derp"
-	"tailscale.com/types/key"
-	"tailscale.com/types/logger"
+	"github.com/sagernet/tailscale/derp"
+	"github.com/sagernet/tailscale/types/key"
+	"github.com/sagernet/tailscale/types/logger"
 )
 
 var retryInterval = 5 * time.Second
@@ -49,7 +49,8 @@ var testHookWatchLookConnectResult func(connectError error, wasSelfConnect bool)
 // clients are likely still connected and their add message will appear after
 // reconnect.
 func (c *Client) RunWatchConnectionLoop(ctx context.Context, ignoreServerKey key.NodePublic, infoLogf logger.Logf,
-	add func(derp.PeerPresentMessage), remove func(derp.PeerGoneMessage), notifyError func(error)) {
+	add func(derp.PeerPresentMessage), remove func(derp.PeerGoneMessage), notifyError func(error),
+) {
 	if !c.WatchConnectionChanges {
 		if c.isStarted() {
 			panic("invalid use of RunWatchConnectionLoop on already-started Client without setting Client.RunWatchConnectionLoop")

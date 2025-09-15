@@ -8,7 +8,7 @@ package appctype
 import (
 	"net/netip"
 
-	"tailscale.com/tailcfg"
+	"github.com/sagernet/tailscale/tailcfg"
 )
 
 // ConfigID is an opaque identifier for a configuration.

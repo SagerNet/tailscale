@@ -12,11 +12,11 @@ import (
 	"sync"
 	"syscall"
 
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/net/netmon"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/linuxfw"
 	"golang.org/x/sys/unix"
-	"tailscale.com/envknob"
-	"tailscale.com/net/netmon"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/linuxfw"
 )
 
 // socketMarkWorksOnce is the sync.Once & cached value for useSocketMark.

@@ -9,7 +9,6 @@ package rands
 
 import (
 	"math/bits"
-
 	randv2 "math/rand/v2"
 )
 

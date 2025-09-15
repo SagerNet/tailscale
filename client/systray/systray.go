@@ -28,13 +28,13 @@ import (
 	ico "github.com/Kodeworks/golang-image-ico"
 	"github.com/atotto/clipboard"
 	dbus "github.com/godbus/dbus/v5"
+	"github.com/sagernet/tailscale/client/local"
+	"github.com/sagernet/tailscale/ipn"
+	"github.com/sagernet/tailscale/ipn/ipnstate"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/util/slicesx"
+	"github.com/sagernet/tailscale/util/stringsx"
 	"github.com/toqueteos/webbrowser"
-	"tailscale.com/client/local"
-	"tailscale.com/ipn"
-	"tailscale.com/ipn/ipnstate"
-	"tailscale.com/tailcfg"
-	"tailscale.com/util/slicesx"
-	"tailscale.com/util/stringsx"
 )
 
 var (

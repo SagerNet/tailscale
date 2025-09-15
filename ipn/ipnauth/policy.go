@@ -7,10 +7,10 @@ import (
 	"errors"
 	"fmt"
 
-	"tailscale.com/client/tailscale/apitype"
-	"tailscale.com/ipn"
-	"tailscale.com/tailcfg"
-	"tailscale.com/util/syspolicy"
+	"github.com/sagernet/tailscale/client/tailscale/apitype"
+	"github.com/sagernet/tailscale/ipn"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/util/syspolicy"
 )
 
 type actorWithPolicyChecks struct{ Actor }

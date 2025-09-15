@@ -13,14 +13,14 @@ import (
 	"slices"
 	"strings"
 
-	"tailscale.com/clientupdate"
-	"tailscale.com/envknob"
-	"tailscale.com/health"
-	"tailscale.com/ipn"
-	"tailscale.com/ipn/ipnext"
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/clientmetric"
+	"github.com/sagernet/tailscale/clientupdate"
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/health"
+	"github.com/sagernet/tailscale/ipn"
+	"github.com/sagernet/tailscale/ipn/ipnext"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/clientmetric"
 )
 
 var debug = envknob.RegisterBool("TS_DEBUG_PROFILES")
@@ -918,7 +918,6 @@ func newProfileManagerWithGOOS(store ipn.StateStore, logf logger.Logf, ht *healt
 		// No known profiles, try a migration.
 		pm.dlogf("no known profiles; trying to migrate from legacy prefs")
 		if initialProfile, err = pm.migrateFromLegacyPrefs(pm.currentUserID); err != nil {
-
 		}
 	}
 	if !initialProfile.Valid() {

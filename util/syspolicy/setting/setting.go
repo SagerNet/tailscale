@@ -14,9 +14,9 @@ import (
 	"sync"
 	"time"
 
-	"tailscale.com/types/lazy"
-	"tailscale.com/util/syspolicy/internal"
-	"tailscale.com/util/testenv"
+	"github.com/sagernet/tailscale/types/lazy"
+	"github.com/sagernet/tailscale/util/syspolicy/internal"
+	"github.com/sagernet/tailscale/util/testenv"
 )
 
 // Scope indicates the broadest scope at which a policy setting may apply,

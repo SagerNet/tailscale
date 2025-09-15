@@ -17,8 +17,10 @@ import (
 
 const CLSID_NetworkListManager = "{DCB00C01-570F-4A9B-8D69-199FDBA5723B}"
 
-var IID_INetwork = ole.NewGUID("{8A40A45D-055C-4B62-ABD7-6D613E2CEAEC}")
-var IID_INetworkConnection = ole.NewGUID("{DCB00005-570F-4A9B-8D69-199FDBA5723B}")
+var (
+	IID_INetwork           = ole.NewGUID("{8A40A45D-055C-4B62-ABD7-6D613E2CEAEC}")
+	IID_INetworkConnection = ole.NewGUID("{DCB00005-570F-4A9B-8D69-199FDBA5723B}")
+)
 
 type NetworkListManager struct {
 	d *ole.Dispatch
@@ -124,7 +126,6 @@ func (m *NetworkListManager) GetNetworkConnections() (ConnectionList, error) {
 		cl = append(cl, nco)
 		return nil
 	})
-
 	if err != nil {
 		cl.Release()
 		return nil, err

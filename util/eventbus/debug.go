@@ -11,7 +11,7 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"tailscale.com/tsweb"
+	"github.com/sagernet/tailscale/tsweb"
 )
 
 // A Debugger offers access to a bus's privileged introspection and

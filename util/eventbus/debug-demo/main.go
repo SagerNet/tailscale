@@ -14,9 +14,9 @@ import (
 	"net/netip"
 	"time"
 
-	"tailscale.com/tsweb"
-	"tailscale.com/types/key"
-	"tailscale.com/util/eventbus"
+	"github.com/sagernet/tailscale/tsweb"
+	"github.com/sagernet/tailscale/types/key"
+	"github.com/sagernet/tailscale/util/eventbus"
 )
 
 func main() {

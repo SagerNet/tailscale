@@ -5,7 +5,7 @@
 
 package eventbus
 
-import "tailscale.com/tsweb"
+import "github.com/sagernet/tailscale/tsweb"
 
 func registerHTTPDebugger(d *Debugger, td *tsweb.DebugHandler) {
 	// The event bus debugging UI uses html/template, which uses

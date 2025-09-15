@@ -19,11 +19,11 @@ import (
 	"sync/atomic"
 	"time"
 
+	"github.com/sagernet/tailscale/net/netx"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/util/httpm"
+	"github.com/sagernet/tailscale/util/multierr"
 	"golang.org/x/net/http2"
-	"tailscale.com/net/netx"
-	"tailscale.com/tailcfg"
-	"tailscale.com/util/httpm"
-	"tailscale.com/util/multierr"
 )
 
 const (

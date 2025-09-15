@@ -17,9 +17,9 @@ import (
 	"unsafe"
 
 	"github.com/dblohm7/wingoes"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/multierr"
 	"golang.org/x/sys/windows"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/multierr"
 )
 
 var (

@@ -18,10 +18,10 @@ import (
 	"strings"
 
 	"github.com/coreos/go-iptables/iptables"
-	"tailscale.com/net/tsaddr"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/multierr"
-	"tailscale.com/version/distro"
+	"github.com/sagernet/tailscale/net/tsaddr"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/multierr"
+	"github.com/sagernet/tailscale/version/distro"
 )
 
 // isNotExistError needs to be overridden in tests that rely on distinguishing
@@ -96,7 +96,8 @@ func newIPTablesRunner(logf logger.Logf) (*iptablesRunner, error) {
 		ipt6:              ipt6,
 		v6Available:       supportsV6,
 		v6NATAvailable:    supportsV6NAT,
-		v6FilterAvailable: supportsV6Filter}, nil
+		v6FilterAvailable: supportsV6Filter,
+	}, nil
 }
 
 // checkSupportsV6Filter returns whether the system has a "filter" table in the

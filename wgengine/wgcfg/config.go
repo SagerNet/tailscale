@@ -7,9 +7,9 @@ package wgcfg
 import (
 	"net/netip"
 
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/key"
-	"tailscale.com/types/logid"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/key"
+	"github.com/sagernet/tailscale/types/logid"
 )
 
 //go:generate go run tailscale.com/cmd/cloner -type=Config,Peer

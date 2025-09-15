@@ -17,10 +17,10 @@ import (
 	"strings"
 	"unicode"
 
-	"tailscale.com/control/controlknobs"
-	"tailscale.com/health"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/set"
+	"github.com/sagernet/tailscale/control/controlknobs"
+	"github.com/sagernet/tailscale/health"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/set"
 )
 
 func NewOSConfigurator(logf logger.Logf, ht *health.Tracker, knobs *controlknobs.Knobs, interfaceName string) (OSConfigurator, error) {
@@ -128,7 +128,7 @@ func (m *plan9DNSManager) SetDNS(c OSConfig) error {
 
 	newBuf := setNDBSuffix(tsFree, suffix)
 	if !bytes.Equal(newBuf, ndbOnDisk) {
-		if err := os.WriteFile("/net/ndb", newBuf, 0644); err != nil {
+		if err := os.WriteFile("/net/ndb", newBuf, 0o644); err != nil {
 			return fmt.Errorf("writing /net/ndb: %w", err)
 		}
 		if f, err := os.OpenFile("/net/dns", os.O_RDWR, 0); err == nil {

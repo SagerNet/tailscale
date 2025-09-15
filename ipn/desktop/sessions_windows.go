@@ -12,11 +12,11 @@ import (
 	"syscall"
 	"unsafe"
 
+	"github.com/sagernet/tailscale/ipn/ipnauth"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/must"
+	"github.com/sagernet/tailscale/util/set"
 	"golang.org/x/sys/windows"
-	"tailscale.com/ipn/ipnauth"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/must"
-	"tailscale.com/util/set"
 )
 
 // wtsManager is a [SessionManager] implementation for Windows.

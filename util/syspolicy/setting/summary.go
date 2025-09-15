@@ -6,7 +6,7 @@ package setting
 import (
 	jsonv2 "github.com/go-json-experiment/json"
 	"github.com/go-json-experiment/json/jsontext"
-	"tailscale.com/types/opt"
+	"github.com/sagernet/tailscale/types/opt"
 )
 
 // Summary is an immutable [PolicyScope] and [Origin].

@@ -10,8 +10,8 @@ import (
 	"strings"
 	"time"
 
-	"tailscale.com/drive/driveimpl/shared"
-	"tailscale.com/tstime"
+	"github.com/sagernet/tailscale/drive/driveimpl/shared"
+	"github.com/sagernet/tailscale/tstime"
 )
 
 // Child is subdirectory of an FS.

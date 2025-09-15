@@ -9,7 +9,7 @@ import (
 	"slices"
 	"sync"
 
-	"tailscale.com/util/set"
+	"github.com/sagernet/tailscale/util/set"
 )
 
 type PublishedEvent struct {

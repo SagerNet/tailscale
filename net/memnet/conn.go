@@ -74,6 +74,7 @@ func (c *connHalf) RemoteAddr() net.Addr {
 func (c *connHalf) Read(b []byte) (n int, err error) {
 	return c.r.Read(b)
 }
+
 func (c *connHalf) Write(b []byte) (n int, err error) {
 	return c.w.Write(b)
 }
@@ -93,9 +94,11 @@ func (c *connHalf) SetDeadline(t time.Time) error {
 	}
 	return err2
 }
+
 func (c *connHalf) SetReadDeadline(t time.Time) error {
 	return c.r.SetReadDeadline(t)
 }
+
 func (c *connHalf) SetWriteDeadline(t time.Time) error {
 	return c.w.SetWriteDeadline(t)
 }
@@ -106,6 +109,7 @@ func (c *connHalf) SetReadBlock(b bool) error {
 	}
 	return c.r.Unblock()
 }
+
 func (c *connHalf) SetWriteBlock(b bool) error {
 	if b {
 		return c.w.Block()

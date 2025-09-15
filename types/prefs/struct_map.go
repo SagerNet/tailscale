@@ -8,9 +8,9 @@ import (
 
 	jsonv2 "github.com/go-json-experiment/json"
 	"github.com/go-json-experiment/json/jsontext"
-	"tailscale.com/types/opt"
-	"tailscale.com/types/ptr"
-	"tailscale.com/types/views"
+	"github.com/sagernet/tailscale/types/opt"
+	"github.com/sagernet/tailscale/types/ptr"
+	"github.com/sagernet/tailscale/types/views"
 )
 
 // StructMap is a preference type that holds potentially mutable key-value pairs.

@@ -10,7 +10,7 @@ import (
 	"net/http"
 	"strings"
 
-	"tailscale.com/omit"
+	"github.com/sagernet/tailscale/omit"
 )
 
 func getEC2MetadataToken() (string, error) {

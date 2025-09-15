@@ -6,7 +6,7 @@ package health
 import (
 	"time"
 
-	"tailscale.com/tailcfg"
+	"github.com/sagernet/tailscale/tailcfg"
 )
 
 // State contains the health status of the backend, and is

@@ -15,12 +15,12 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/sagernet/tailscale/types/key"
 	"go4.org/mem"
 	"golang.org/x/crypto/blake2s"
 	chp "golang.org/x/crypto/chacha20poly1305"
 	"golang.org/x/crypto/curve25519"
 	"golang.org/x/crypto/hkdf"
-	"tailscale.com/types/key"
 )
 
 const (

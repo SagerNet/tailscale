@@ -18,7 +18,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"tailscale.com/util/set"
+	"github.com/sagernet/tailscale/util/set"
 )
 
 var (

@@ -15,8 +15,8 @@ import (
 	"net/netip"
 	"time"
 
-	"tailscale.com/metrics"
-	"tailscale.com/net/stun"
+	"github.com/sagernet/tailscale/metrics"
+	"github.com/sagernet/tailscale/net/stun"
 )
 
 var (

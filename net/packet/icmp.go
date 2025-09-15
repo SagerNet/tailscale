@@ -5,7 +5,6 @@ package packet
 
 import (
 	crand "crypto/rand"
-
 	"encoding/binary"
 )
 

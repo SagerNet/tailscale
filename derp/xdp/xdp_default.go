@@ -12,8 +12,7 @@ import (
 )
 
 // STUNServer is unimplemented on these platforms, see xdp_linux.go.
-type STUNServer struct {
-}
+type STUNServer struct{}
 
 func NewSTUNServer(config *STUNServerConfig, opts ...STUNServerOption) (*STUNServer, error) {
 	return nil, errors.New("unimplemented on this GOOS")

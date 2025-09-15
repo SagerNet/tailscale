@@ -4,10 +4,10 @@
 package syspolicy
 
 import (
-	"tailscale.com/types/lazy"
-	"tailscale.com/util/syspolicy/internal"
-	"tailscale.com/util/syspolicy/setting"
-	"tailscale.com/util/testenv"
+	"github.com/sagernet/tailscale/types/lazy"
+	"github.com/sagernet/tailscale/util/syspolicy/internal"
+	"github.com/sagernet/tailscale/util/syspolicy/setting"
+	"github.com/sagernet/tailscale/util/testenv"
 )
 
 // Key is a string that uniquely identifies a policy and must remain unchanged
