@@ -14,7 +14,10 @@ function remove_unused() {
     ssh/ \
     wf/ \
     internal/tooldeps \
-    gokrazy/
+    gokrazy/ \
+    ipn/lapitest \
+    feature/taildrop \
+    feature/condregister/maybe_taildrop.go
 }
 
 remove_unused
