@@ -573,7 +573,12 @@ func (s *Server) start() (reterr error) {
 		if s.Logf == nil {
 			return
 		}
-		s.Logf(format, a...)
+		// Format the log message and remove the [v\x00JSON] prefix
+		// that is used internally by logtail for structured logging.
+		// See: https://github.com/SagerNet/sing-box/issues/3481
+		msg := fmt.Sprintf(format, a...)
+		msg = removeJSONLogPrefix(msg)
+		s.Logf("%s", msg)
 	}
 
 	sys := tsd.NewSystem()
@@ -1371,3 +1376,23 @@ type addr struct{ ln *listener }
 
 func (a addr) Network() string { return a.ln.keys[0].network }
 func (a addr) String() string  { return a.ln.addr }
+
+// vJSONPrefix is the magic prefix used by logtail for structured JSON logging.
+// The null byte (\x00) is used as a marker that logtail recognizes and strips,
+// but if the log bypasses logtail processing, it appears in the output.
+const vJSONPrefix = "[v\x00JSON]"
+
+// removeJSONLogPrefix removes the [v\x00JSON] prefix and log level digit
+// from a log message. This prefix is used internally by tailscale's logger
+// for structured logging, but should not appear in user-visible logs.
+func removeJSONLogPrefix(msg string) string {
+	if idx := strings.Index(msg, vJSONPrefix); idx != -1 {
+		rest := msg[idx+len(vJSONPrefix):]
+		if len(rest) >= 1 && rest[0] >= '0' && rest[0] <= '9' {
+			// Skip the log level digit
+			return msg[:idx] + rest[1:]
+		}
+		return msg[:idx] + rest
+	}
+	return msg
+}
