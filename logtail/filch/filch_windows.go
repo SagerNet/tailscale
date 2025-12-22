@@ -9,8 +9,10 @@ import (
 	"syscall"
 )
 
-var kernel32 = syscall.MustLoadDLL("kernel32.dll")
-var procSetStdHandle = kernel32.MustFindProc("SetStdHandle")
+var (
+	kernel32         = syscall.MustLoadDLL("kernel32.dll")
+	procSetStdHandle = kernel32.MustFindProc("SetStdHandle")
+)
 
 func setStdHandle(stdHandle int32, handle syscall.Handle) error {
 	r, _, e := syscall.Syscall(procSetStdHandle.Addr(), 2, uintptr(stdHandle), uintptr(handle), 0)

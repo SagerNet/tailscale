@@ -13,10 +13,10 @@ import (
 	"time"
 	"unicode/utf8"
 
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/bools"
-	"tailscale.com/types/netlogtype"
-	"tailscale.com/util/set"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/bools"
+	"github.com/sagernet/tailscale/types/netlogtype"
+	"github.com/sagernet/tailscale/util/set"
 )
 
 // maxLogSize is the maximum number of bytes for a log message.

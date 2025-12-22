@@ -8,8 +8,8 @@ import (
 	"net/http"
 	"time"
 
-	"tailscale.com/util/ctxkey"
-	"tailscale.com/util/rands"
+	"github.com/sagernet/tailscale/util/ctxkey"
+	"github.com/sagernet/tailscale/util/rands"
 )
 
 // RequestID is an opaque identifier for a HTTP request, used to correlate

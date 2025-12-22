@@ -8,9 +8,9 @@ import (
 	"fmt"
 	"reflect"
 
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/key"
-	"tailscale.com/types/structs"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/key"
+	"github.com/sagernet/tailscale/types/structs"
 )
 
 //go:generate go run tailscale.com/cmd/viewer -type=Persist
@@ -103,9 +103,7 @@ func (p *Persist) Equals(p2 *Persist) bool {
 }
 
 func (p *Persist) Pretty() string {
-	var (
-		ok, nk key.NodePublic
-	)
+	var ok, nk key.NodePublic
 	akString := "-"
 	if !p.OldPrivateNodeKey.IsZero() {
 		ok = p.OldPrivateNodeKey.Public()

@@ -8,7 +8,7 @@ import (
 	"errors"
 	"fmt"
 
-	"tailscale.com/types/tkatype"
+	"github.com/sagernet/tailscale/types/tkatype"
 )
 
 // KeyKind describes the different varieties of a Key.

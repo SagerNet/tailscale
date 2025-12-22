@@ -9,8 +9,8 @@ import (
 	"encoding/json"
 	"time"
 
-	"tailscale.com/feature/buildfeatures"
-	"tailscale.com/tailcfg"
+	"github.com/sagernet/tailscale/feature/buildfeatures"
+	"github.com/sagernet/tailscale/tailcfg"
 )
 
 // State contains the health status of the backend, and is

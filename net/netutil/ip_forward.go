@@ -15,7 +15,7 @@ import (
 	"strconv"
 	"strings"
 
-	"tailscale.com/net/netmon"
+	"github.com/sagernet/tailscale/net/netmon"
 )
 
 // protocolsRequiredForForwarding reports whether IPv4 and/or IPv6 protocols are

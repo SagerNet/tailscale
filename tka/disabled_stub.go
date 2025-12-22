@@ -9,9 +9,9 @@ import (
 	"crypto/ed25519"
 	"errors"
 
-	"tailscale.com/types/key"
-	"tailscale.com/types/logger"
-	"tailscale.com/types/tkatype"
+	"github.com/sagernet/tailscale/types/key"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/types/tkatype"
 )
 
 type Authority struct {
@@ -142,8 +142,7 @@ type NodeKeySignature struct {
 	WrappingPubkey []byte `cbor:"6,keyasint,omitempty"`
 }
 
-type DeeplinkValidationResult struct {
-}
+type DeeplinkValidationResult struct{}
 
 func DecodeWrappedAuthkey(wrappedAuthKey string, logf logger.Logf) (authKey string, isWrapped bool, sig *NodeKeySignature, priv ed25519.PrivateKey) {
 	return wrappedAuthKey, false, nil, nil

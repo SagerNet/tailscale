@@ -6,9 +6,9 @@ package eventbus
 import (
 	"reflect"
 
-	"tailscale.com/syncs"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/set"
+	"github.com/sagernet/tailscale/syncs"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/set"
 )
 
 // A Client can publish and subscribe to events on its attached

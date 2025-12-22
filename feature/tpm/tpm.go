@@ -21,18 +21,18 @@ import (
 
 	"github.com/google/go-tpm/tpm2"
 	"github.com/google/go-tpm/tpm2/transport"
+	"github.com/sagernet/tailscale/atomicfile"
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/feature"
+	"github.com/sagernet/tailscale/hostinfo"
+	"github.com/sagernet/tailscale/ipn"
+	"github.com/sagernet/tailscale/ipn/store"
+	"github.com/sagernet/tailscale/paths"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/key"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/testenv"
 	"golang.org/x/crypto/nacl/secretbox"
-	"tailscale.com/atomicfile"
-	"tailscale.com/envknob"
-	"tailscale.com/feature"
-	"tailscale.com/hostinfo"
-	"tailscale.com/ipn"
-	"tailscale.com/ipn/store"
-	"tailscale.com/paths"
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/key"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/testenv"
 )
 
 var (
@@ -261,7 +261,7 @@ func (s *tpmStore) writeSealed() error {
 	if err != nil {
 		return err
 	}
-	return atomicfile.WriteFile(s.path, buf, 0600)
+	return atomicfile.WriteFile(s.path, buf, 0o600)
 }
 
 func (s *tpmStore) All() iter.Seq2[ipn.StateKey, []byte] {

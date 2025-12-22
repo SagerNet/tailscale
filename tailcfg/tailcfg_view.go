@@ -13,12 +13,12 @@ import (
 
 	jsonv2 "github.com/go-json-experiment/json"
 	"github.com/go-json-experiment/json/jsontext"
-	"tailscale.com/types/dnstype"
-	"tailscale.com/types/key"
-	"tailscale.com/types/opt"
-	"tailscale.com/types/structs"
-	"tailscale.com/types/tkatype"
-	"tailscale.com/types/views"
+	"github.com/sagernet/tailscale/types/dnstype"
+	"github.com/sagernet/tailscale/types/key"
+	"github.com/sagernet/tailscale/types/opt"
+	"github.com/sagernet/tailscale/types/structs"
+	"github.com/sagernet/tailscale/types/tkatype"
+	"github.com/sagernet/tailscale/types/views"
 )
 
 //go:generate go run tailscale.com/cmd/cloner  -clonefunc=true -type=User,Node,Hostinfo,NetInfo,Login,DNSConfig,RegisterResponse,RegisterResponseAuth,RegisterRequest,DERPHomeParams,DERPRegion,DERPMap,DERPNode,SSHRule,SSHAction,SSHPrincipal,ControlDialPlan,Location,UserProfile,VIPService,SSHPolicy
@@ -194,6 +194,7 @@ func (v NodeView) Key() key.NodePublic { return v.ж.Key }
 
 // the zero value if this node does not expire
 func (v NodeView) KeyExpiry() time.Time { return v.ж.KeyExpiry }
+
 func (v NodeView) KeySignature() views.ByteSlice[tkatype.MarshaledSignature] {
 	return views.ByteSliceOf(v.ж.KeySignature)
 }

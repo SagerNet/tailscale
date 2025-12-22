@@ -6,9 +6,9 @@ package tailscale
 import (
 	"context"
 
-	"tailscale.com/client/local"
-	"tailscale.com/client/tailscale/apitype"
-	"tailscale.com/ipn/ipnstate"
+	"github.com/sagernet/tailscale/client/local"
+	"github.com/sagernet/tailscale/client/tailscale/apitype"
+	"github.com/sagernet/tailscale/ipn/ipnstate"
 )
 
 // ErrPeerNotFound is an alias for [tailscale.com/client/local.ErrPeerNotFound].

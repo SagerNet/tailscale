@@ -8,9 +8,9 @@ import (
 	"runtime"
 	"time"
 
-	"tailscale.com/feature/buildfeatures"
-	"tailscale.com/tsconst"
-	"tailscale.com/version"
+	"github.com/sagernet/tailscale/feature/buildfeatures"
+	"github.com/sagernet/tailscale/tsconst"
+	"github.com/sagernet/tailscale/version"
 )
 
 func condRegister(f func() *Warnable) *Warnable {

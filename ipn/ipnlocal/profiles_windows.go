@@ -11,9 +11,9 @@ import (
 	"os/user"
 	"path/filepath"
 
-	"tailscale.com/atomicfile"
-	"tailscale.com/ipn"
-	"tailscale.com/util/winutil/policy"
+	"github.com/sagernet/tailscale/atomicfile"
+	"github.com/sagernet/tailscale/ipn"
+	"github.com/sagernet/tailscale/util/winutil/policy"
 )
 
 const (
@@ -75,5 +75,5 @@ func (pm *profileManager) loadLegacyPrefs(uid ipn.WindowsUserID) (string, ipn.Pr
 }
 
 func (pm *profileManager) completeMigration(migrationSentinel string) {
-	atomicfile.WriteFile(migrationSentinel, []byte{}, 0600)
+	atomicfile.WriteFile(migrationSentinel, []byte{}, 0o600)
 }

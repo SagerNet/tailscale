@@ -34,20 +34,20 @@ import (
 	"unicode/utf8"
 
 	"github.com/pires/go-proxyproto"
+	"github.com/sagernet/tailscale/ipn"
+	"github.com/sagernet/tailscale/net/netutil"
+	"github.com/sagernet/tailscale/syncs"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/lazy"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/types/views"
+	"github.com/sagernet/tailscale/util/backoff"
+	"github.com/sagernet/tailscale/util/clientmetric"
+	"github.com/sagernet/tailscale/util/ctxkey"
+	"github.com/sagernet/tailscale/util/mak"
+	"github.com/sagernet/tailscale/util/slicesx"
+	"github.com/sagernet/tailscale/version"
 	"go4.org/mem"
-	"tailscale.com/ipn"
-	"tailscale.com/net/netutil"
-	"tailscale.com/syncs"
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/lazy"
-	"tailscale.com/types/logger"
-	"tailscale.com/types/views"
-	"tailscale.com/util/backoff"
-	"tailscale.com/util/clientmetric"
-	"tailscale.com/util/ctxkey"
-	"tailscale.com/util/mak"
-	"tailscale.com/util/slicesx"
-	"tailscale.com/version"
 )
 
 func init() {
@@ -139,7 +139,6 @@ func (b *LocalBackend) newServeListener(ctx context.Context, ap netip.AddrPort, 
 		},
 		bo: backoff.NewBackoff("serve-listener", logf, 30*time.Second),
 	}
-
 }
 
 // Close cancels the context and closes the listener, if any.
@@ -1314,7 +1313,6 @@ var metricIngressCalls = clientmetric.NewCounter("peerapi_ingress")
 
 func init() {
 	RegisterPeerAPIHandler("/v0/ingress", handleServeIngress)
-
 }
 
 func handleServeIngress(ph PeerAPIHandler, w http.ResponseWriter, r *http.Request) {

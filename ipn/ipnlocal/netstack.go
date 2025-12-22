@@ -10,8 +10,8 @@ import (
 	"net/netip"
 	"time"
 
+	"github.com/sagernet/tailscale/types/ptr"
 	"gvisor.dev/gvisor/pkg/tcpip"
-	"tailscale.com/types/ptr"
 )
 
 // TCPHandlerForDst returns a TCP handler for connections to dst, or nil if

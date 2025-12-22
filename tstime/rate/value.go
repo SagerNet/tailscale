@@ -10,7 +10,7 @@ import (
 	"sync"
 	"time"
 
-	"tailscale.com/tstime/mono"
+	"github.com/sagernet/tailscale/tstime/mono"
 )
 
 // Value measures the rate at which events occur,
@@ -119,6 +119,7 @@ func (r *Value) Add(n float64) {
 	defer r.mu.Unlock()
 	r.addNow(mono.Now(), n)
 }
+
 func (r *Value) addNow(now mono.Time, n float64) {
 	if n < 0 || math.IsInf(n, 0) || math.IsNaN(n) {
 		panic(fmt.Sprintf("invalid count %f; must be a finite, non-negative number", n))
@@ -149,6 +150,7 @@ func (r *Value) Rate() float64 {
 	defer r.mu.Unlock()
 	return r.rateNow(mono.Now())
 }
+
 func (r *Value) rateNow(now mono.Time) float64 {
 	// The stored value carries the units "events"
 	// while we want to compute "events / second".

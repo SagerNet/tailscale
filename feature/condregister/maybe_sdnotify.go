@@ -5,4 +5,4 @@
 
 package condregister
 
-import _ "tailscale.com/feature/sdnotify"
+import _ "github.com/sagernet/tailscale/feature/sdnotify"

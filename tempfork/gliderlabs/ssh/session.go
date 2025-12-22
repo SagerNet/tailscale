@@ -255,7 +255,7 @@ func (sess *session) handleRequests(reqs <-chan *gossh.Request) {
 				continue
 			}
 
-			var payload = struct{ Value string }{}
+			payload := struct{ Value string }{}
 			gossh.Unmarshal(req.Payload, &payload)
 			sess.rawCmd = payload.Value
 
@@ -280,7 +280,7 @@ func (sess *session) handleRequests(reqs <-chan *gossh.Request) {
 				continue
 			}
 
-			var payload = struct{ Value string }{}
+			payload := struct{ Value string }{}
 			gossh.Unmarshal(req.Payload, &payload)
 			sess.subsystem = payload.Value
 

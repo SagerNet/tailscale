@@ -19,20 +19,20 @@ import (
 	"sync/atomic"
 	"time"
 
-	"tailscale.com/control/controlknobs"
-	"tailscale.com/feature/buildfeatures"
-	"tailscale.com/health"
-	"tailscale.com/net/dns/resolver"
-	"tailscale.com/net/netmon"
-	"tailscale.com/net/tsdial"
-	"tailscale.com/syncs"
-	"tailscale.com/types/dnstype"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/clientmetric"
-	"tailscale.com/util/dnsname"
-	"tailscale.com/util/eventbus"
-	"tailscale.com/util/slicesx"
-	"tailscale.com/util/syspolicy/policyclient"
+	"github.com/sagernet/tailscale/control/controlknobs"
+	"github.com/sagernet/tailscale/feature/buildfeatures"
+	"github.com/sagernet/tailscale/health"
+	"github.com/sagernet/tailscale/net/dns/resolver"
+	"github.com/sagernet/tailscale/net/netmon"
+	"github.com/sagernet/tailscale/net/tsdial"
+	"github.com/sagernet/tailscale/syncs"
+	"github.com/sagernet/tailscale/types/dnstype"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/clientmetric"
+	"github.com/sagernet/tailscale/util/dnsname"
+	"github.com/sagernet/tailscale/util/eventbus"
+	"github.com/sagernet/tailscale/util/slicesx"
+	"github.com/sagernet/tailscale/util/syspolicy/policyclient"
 )
 
 var (
@@ -619,6 +619,4 @@ func CleanUp(logf logger.Logf, netMon *netmon.Monitor, bus *eventbus.Bus, health
 	}
 }
 
-var (
-	metricDNSQueryErrorQueue = clientmetric.NewCounter("dns_query_local_error_queue")
-)
+var metricDNSQueryErrorQueue = clientmetric.NewCounter("dns_query_local_error_queue")

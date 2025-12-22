@@ -20,19 +20,19 @@ import (
 	"sync"
 	"time"
 
-	"tailscale.com/clientupdate"
-	"tailscale.com/envknob"
-	"tailscale.com/feature"
-	"tailscale.com/ipn"
-	"tailscale.com/ipn/ipnext"
-	"tailscale.com/ipn/ipnlocal"
-	"tailscale.com/ipn/ipnstate"
-	"tailscale.com/ipn/localapi"
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/httpm"
-	"tailscale.com/version"
-	"tailscale.com/version/distro"
+	"github.com/sagernet/tailscale/clientupdate"
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/feature"
+	"github.com/sagernet/tailscale/ipn"
+	"github.com/sagernet/tailscale/ipn/ipnext"
+	"github.com/sagernet/tailscale/ipn/ipnlocal"
+	"github.com/sagernet/tailscale/ipn/ipnstate"
+	"github.com/sagernet/tailscale/ipn/localapi"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/httpm"
+	"github.com/sagernet/tailscale/version"
+	"github.com/sagernet/tailscale/version/distro"
 )
 
 func init() {
@@ -82,7 +82,6 @@ type extension struct {
 func (e *extension) Name() string { return "clientupdate" }
 
 func (e *extension) Init(h ipnext.Host) error {
-
 	h.Hooks().ProfileStateChange.Add(e.onChangeProfile)
 	h.Hooks().BackendStateChange.Add(e.onBackendStateChange)
 

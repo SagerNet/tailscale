@@ -8,8 +8,8 @@ package dns
 import (
 	"net/netip"
 
-	"tailscale.com/types/dnstype"
-	"tailscale.com/util/dnsname"
+	"github.com/sagernet/tailscale/types/dnstype"
+	"github.com/sagernet/tailscale/util/dnsname"
 )
 
 // Clone makes a deep copy of Config.

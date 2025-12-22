@@ -16,10 +16,10 @@ import (
 	"strings"
 	"time"
 
+	"github.com/sagernet/tailscale/feature"
+	"github.com/sagernet/tailscale/feature/buildfeatures"
+	"github.com/sagernet/tailscale/types/logger"
 	"github.com/tailscale/wireguard-go/tun"
-	"tailscale.com/feature"
-	"tailscale.com/feature/buildfeatures"
-	"tailscale.com/types/logger"
 )
 
 // CreateTAP is the hook maybe set by feature/tap.

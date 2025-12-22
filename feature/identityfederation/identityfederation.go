@@ -15,10 +15,10 @@ import (
 	"strings"
 	"time"
 
+	"github.com/sagernet/tailscale/feature"
+	"github.com/sagernet/tailscale/internal/client/tailscale"
+	"github.com/sagernet/tailscale/ipn"
 	"golang.org/x/oauth2"
-	"tailscale.com/feature"
-	"tailscale.com/internal/client/tailscale"
-	"tailscale.com/ipn"
 )
 
 func init() {

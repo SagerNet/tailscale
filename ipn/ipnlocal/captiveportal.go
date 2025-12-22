@@ -9,9 +9,9 @@ import (
 	"context"
 	"time"
 
-	"tailscale.com/health"
-	"tailscale.com/net/captivedetection"
-	"tailscale.com/util/clientmetric"
+	"github.com/sagernet/tailscale/health"
+	"github.com/sagernet/tailscale/net/captivedetection"
+	"github.com/sagernet/tailscale/util/clientmetric"
 )
 
 func init() {

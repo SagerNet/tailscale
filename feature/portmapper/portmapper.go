@@ -6,12 +6,12 @@
 package portmapper
 
 import (
-	"tailscale.com/feature"
-	"tailscale.com/net/netmon"
-	"tailscale.com/net/portmapper"
-	"tailscale.com/net/portmapper/portmappertype"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/eventbus"
+	"github.com/sagernet/tailscale/feature"
+	"github.com/sagernet/tailscale/net/netmon"
+	"github.com/sagernet/tailscale/net/portmapper"
+	"github.com/sagernet/tailscale/net/portmapper/portmappertype"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/eventbus"
 )
 
 func init() {
@@ -24,8 +24,8 @@ func newPortMapper(
 	bus *eventbus.Bus,
 	netMon *netmon.Monitor,
 	disableUPnPOrNil func() bool,
-	onlyTCP443OrNil func() bool) portmappertype.Client {
-
+	onlyTCP443OrNil func() bool,
+) portmappertype.Client {
 	pm := portmapper.NewClient(portmapper.Config{
 		EventBus: bus,
 		Logf:     logf,

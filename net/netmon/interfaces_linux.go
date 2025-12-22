@@ -20,11 +20,11 @@ import (
 
 	"github.com/jsimonetti/rtnetlink"
 	"github.com/mdlayher/netlink"
+	"github.com/sagernet/tailscale/feature/buildfeatures"
+	"github.com/sagernet/tailscale/net/netaddr"
+	"github.com/sagernet/tailscale/util/lineiter"
 	"go4.org/mem"
 	"golang.org/x/sys/unix"
-	"tailscale.com/feature/buildfeatures"
-	"tailscale.com/net/netaddr"
-	"tailscale.com/util/lineiter"
 )
 
 func init() {
@@ -190,8 +190,10 @@ func defaultRouteFromNetlink() (d DefaultRouteDetails, err error) {
 	return d, errNoDefaultRoute
 }
 
-var zeroRouteBytes = []byte("00000000")
-var procNetRoutePath = "/proc/net/route"
+var (
+	zeroRouteBytes   = []byte("00000000")
+	procNetRoutePath = "/proc/net/route"
+)
 
 // maxProcNetRouteRead is the max number of lines to read from
 // /proc/net/route looking for a default route.

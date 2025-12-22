@@ -18,8 +18,8 @@ import (
 
 	jsonv2 "github.com/go-json-experiment/json"
 	"github.com/go-json-experiment/json/jsontext"
+	"github.com/sagernet/tailscale/types/ptr"
 	"go4.org/mem"
-	"tailscale.com/types/ptr"
 )
 
 // ByteSlice is a read-only accessor for types that are backed by a []byte.

@@ -6,7 +6,7 @@
 package batching
 
 import (
-	"tailscale.com/types/nettype"
+	"github.com/sagernet/tailscale/types/nettype"
 )
 
 // TryUpgradeToConn is no-op on all platforms except linux.

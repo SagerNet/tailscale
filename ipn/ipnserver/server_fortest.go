@@ -7,7 +7,7 @@ import (
 	"context"
 	"net/http"
 
-	"tailscale.com/ipn/ipnauth"
+	"github.com/sagernet/tailscale/ipn/ipnauth"
 )
 
 // BlockWhileInUseByOtherForTest blocks while the actor can't connect to the server because

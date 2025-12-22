@@ -15,10 +15,10 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/sagernet/tailscale/health"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/winutil"
 	"golang.org/x/sys/windows"
-	"tailscale.com/health"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/winutil"
 )
 
 // wslDistros reports the names of the installed WSL2 linux distributions.
@@ -108,11 +108,13 @@ func (wm *wslManager) SetDNS(cfg OSConfig) error {
 	return nil
 }
 
-const wslConf = "/etc/wsl.conf"
-const wslConfSection = `# added by tailscale
+const (
+	wslConf        = "/etc/wsl.conf"
+	wslConfSection = `# added by tailscale
 [network]
 generateResolvConf = false
 `
+)
 
 // setWSLConf attempts to disable generateResolvConf in each WSL2 linux.
 // If any are changed, it reports true.
@@ -126,7 +128,7 @@ func (wm *wslManager) setWSLConf(managers map[string]*directManager) (changed bo
 		ini := parseIni(string(b))
 		if v := ini["network"]["generateResolvConf"]; v == "" {
 			b = append(b, wslConfSection...)
-			if err := m.fs.WriteFile(wslConf, b, 0644); err != nil {
+			if err := m.fs.WriteFile(wslConf, b, 0o644); err != nil {
 				wm.logf("WSL(%q) wsl.conf: write: %v", distro, err)
 				continue
 			}
@@ -168,7 +170,7 @@ func (fs wslFS) Rename(oldName, newName string) error {
 }
 func (fs wslFS) Remove(name string) error { return wslRun(fs.cmd("rm", "--", name)) }
 
-func (fs wslFS) Truncate(name string) error { return fs.WriteFile(name, nil, 0644) }
+func (fs wslFS) Truncate(name string) error { return fs.WriteFile(name, nil, 0o644) }
 
 func (fs wslFS) ReadFile(name string) ([]byte, error) {
 	b, err := wslCombinedOutput(fs.cmd("cat", "--", name))

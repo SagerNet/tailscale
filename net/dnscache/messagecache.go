@@ -139,9 +139,7 @@ func (c *MessageCache) ReplyFromCache(w io.Writer, dnsQueryMessage []byte) error
 	return err
 }
 
-var (
-	errNotCacheable = errors.New("question not cacheable")
-)
+var errNotCacheable = errors.New("question not cacheable")
 
 // AddCacheEntry adds a cache entry to the cache.
 // It returns an error if the entry could not be cached.

@@ -10,15 +10,13 @@ import (
 	"sync"
 	"time"
 
+	"github.com/sagernet/tailscale/net/tsaddr"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/eventbus"
 	"golang.zx2c4.com/wireguard/windows/tunnel/winipcfg"
-	"tailscale.com/net/tsaddr"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/eventbus"
 )
 
-var (
-	errClosed = errors.New("closed")
-)
+var errClosed = errors.New("closed")
 
 type eventMessage struct {
 	eventType string

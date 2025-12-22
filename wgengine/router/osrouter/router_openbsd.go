@@ -10,14 +10,14 @@ import (
 	"net/netip"
 	"os/exec"
 
+	"github.com/sagernet/tailscale/health"
+	"github.com/sagernet/tailscale/net/netmon"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/eventbus"
+	"github.com/sagernet/tailscale/util/set"
+	"github.com/sagernet/tailscale/wgengine/router"
 	"github.com/tailscale/wireguard-go/tun"
 	"go4.org/netipx"
-	"tailscale.com/health"
-	"tailscale.com/net/netmon"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/eventbus"
-	"tailscale.com/util/set"
-	"tailscale.com/wgengine/router"
 )
 
 func init() {
@@ -107,8 +107,10 @@ func (r *openbsdRouter) Set(cfg *router.Config) error {
 
 	if localAddr4 != r.local4 {
 		if r.local4.IsValid() {
-			addrdel := []string{"ifconfig", r.tunname,
-				"inet", r.local4.String(), "-alias"}
+			addrdel := []string{
+				"ifconfig", r.tunname,
+				"inet", r.local4.String(), "-alias",
+			}
 			out, err := cmd(addrdel...).CombinedOutput()
 			if err != nil {
 				r.logf("addr del failed: %v: %v\n%s", addrdel, err, out)
@@ -117,9 +119,11 @@ func (r *openbsdRouter) Set(cfg *router.Config) error {
 				}
 			}
 
-			routedel := []string{"route", "-q", "-n",
+			routedel := []string{
+				"route", "-q", "-n",
 				"del", "-inet", r.local4.String(),
-				"-iface", r.local4.Addr().String()}
+				"-iface", r.local4.Addr().String(),
+			}
 			if out, err := cmd(routedel...).CombinedOutput(); err != nil {
 				r.logf("route del failed: %v: %v\n%s", routedel, err, out)
 				if errq == nil {
@@ -129,8 +133,10 @@ func (r *openbsdRouter) Set(cfg *router.Config) error {
 		}
 
 		if localAddr4.IsValid() {
-			addradd := []string{"ifconfig", r.tunname,
-				"inet", localAddr4.String(), "alias"}
+			addradd := []string{
+				"ifconfig", r.tunname,
+				"inet", localAddr4.String(), "alias",
+			}
 			out, err := cmd(addradd...).CombinedOutput()
 			if err != nil {
 				r.logf("addr add failed: %v: %v\n%s", addradd, err, out)
@@ -139,9 +145,11 @@ func (r *openbsdRouter) Set(cfg *router.Config) error {
 				}
 			}
 
-			routeadd := []string{"route", "-q", "-n",
+			routeadd := []string{
+				"route", "-q", "-n",
 				"add", "-inet", localAddr4.String(),
-				"-iface", localAddr4.Addr().String()}
+				"-iface", localAddr4.Addr().String(),
+			}
 			if out, err := cmd(routeadd...).CombinedOutput(); err != nil {
 				r.logf("route add failed: %v: %v\n%s", routeadd, err, out)
 				if errq == nil {
@@ -160,8 +168,10 @@ func (r *openbsdRouter) Set(cfg *router.Config) error {
 
 	if localAddr6 != r.local6 {
 		if r.local6.IsValid() {
-			addrdel := []string{"ifconfig", r.tunname,
-				"inet6", r.local6.String(), "delete"}
+			addrdel := []string{
+				"ifconfig", r.tunname,
+				"inet6", r.local6.String(), "delete",
+			}
 			out, err := cmd(addrdel...).CombinedOutput()
 			if err != nil {
 				r.logf("addr del failed: %v: %v\n%s", addrdel, err, out)
@@ -172,8 +182,10 @@ func (r *openbsdRouter) Set(cfg *router.Config) error {
 		}
 
 		if localAddr6.IsValid() {
-			addradd := []string{"ifconfig", r.tunname,
-				"inet6", localAddr6.String()}
+			addradd := []string{
+				"ifconfig", r.tunname,
+				"inet6", localAddr6.String(),
+			}
 			out, err := cmd(addradd...).CombinedOutput()
 			if err != nil {
 				r.logf("addr add failed: %v: %v\n%s", addradd, err, out)
@@ -197,9 +209,11 @@ func (r *openbsdRouter) Set(cfg *router.Config) error {
 			if route.Addr().Is6() {
 				dst = localAddr6.Addr().String()
 			}
-			routedel := []string{"route", "-q", "-n",
+			routedel := []string{
+				"route", "-q", "-n",
 				"del", "-" + inet(route), nstr,
-				"-iface", dst}
+				"-iface", dst,
+			}
 			out, err := cmd(routedel...).CombinedOutput()
 			if err != nil {
 				r.logf("route del failed: %v: %v\n%s", routedel, err, out)
@@ -218,9 +232,11 @@ func (r *openbsdRouter) Set(cfg *router.Config) error {
 			if route.Addr().Is6() {
 				dst = localAddr6.Addr().String()
 			}
-			routeadd := []string{"route", "-q", "-n",
+			routeadd := []string{
+				"route", "-q", "-n",
 				"add", "-" + inet(route), nstr,
-				"-iface", dst}
+				"-iface", dst,
+			}
 			out, err := cmd(routeadd...).CombinedOutput()
 			if err != nil {
 				r.logf("addr add failed: %v: %v\n%s", routeadd, err, out)

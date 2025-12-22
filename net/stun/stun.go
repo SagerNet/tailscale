@@ -235,7 +235,6 @@ func ParseResponse(b []byte) (tID TxID, addr netip.AddrPort, err error) {
 			}
 		}
 		return nil
-
 	}); err != nil {
 		return TxID{}, netip.AddrPort{}, err
 	}

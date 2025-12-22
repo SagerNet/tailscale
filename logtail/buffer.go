@@ -10,7 +10,7 @@ import (
 	"errors"
 	"fmt"
 
-	"tailscale.com/syncs"
+	"github.com/sagernet/tailscale/syncs"
 )
 
 type Buffer interface {

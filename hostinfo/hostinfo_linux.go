@@ -10,10 +10,10 @@ import (
 	"os"
 	"strings"
 
+	"github.com/sagernet/tailscale/types/ptr"
+	"github.com/sagernet/tailscale/util/lineiter"
+	"github.com/sagernet/tailscale/version/distro"
 	"golang.org/x/sys/unix"
-	"tailscale.com/types/ptr"
-	"tailscale.com/util/lineiter"
-	"tailscale.com/version/distro"
 )
 
 func init() {

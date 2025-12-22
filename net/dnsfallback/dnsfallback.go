@@ -25,15 +25,15 @@ import (
 	"sync/atomic"
 	"time"
 
-	"tailscale.com/atomicfile"
-	"tailscale.com/feature"
-	"tailscale.com/health"
-	"tailscale.com/net/netmon"
-	"tailscale.com/net/netns"
-	"tailscale.com/net/tlsdial"
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/slicesx"
+	"github.com/sagernet/tailscale/atomicfile"
+	"github.com/sagernet/tailscale/feature"
+	"github.com/sagernet/tailscale/health"
+	"github.com/sagernet/tailscale/net/netmon"
+	"github.com/sagernet/tailscale/net/netns"
+	"github.com/sagernet/tailscale/net/tlsdial"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/slicesx"
 )
 
 // MakeLookupFunc creates a function that can be used to resolve hostnames
@@ -248,7 +248,7 @@ func UpdateCache(c *tailcfg.DERPMap, logf logger.Logf) {
 	// Don't try writing if we don't have a cache path set; this can happen
 	// when we don't have a state path (e.g. /var/lib/tailscale) configured.
 	if cachePath != "" {
-		err = atomicfile.WriteFile(cachePath, d, 0600)
+		err = atomicfile.WriteFile(cachePath, d, 0o600)
 		if err != nil {
 			logf("[v1] dnsfallback: UpdateCache error writing: %v", err)
 			return

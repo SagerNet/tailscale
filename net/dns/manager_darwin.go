@@ -7,14 +7,14 @@ import (
 	"bytes"
 	"os"
 
+	"github.com/sagernet/tailscale/control/controlknobs"
+	"github.com/sagernet/tailscale/health"
+	"github.com/sagernet/tailscale/net/dns/resolvconffile"
+	"github.com/sagernet/tailscale/net/tsaddr"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/mak"
+	"github.com/sagernet/tailscale/util/syspolicy/policyclient"
 	"go4.org/mem"
-	"tailscale.com/control/controlknobs"
-	"tailscale.com/health"
-	"tailscale.com/net/dns/resolvconffile"
-	"tailscale.com/net/tsaddr"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/mak"
-	"tailscale.com/util/syspolicy/policyclient"
 )
 
 // NewOSConfigurator creates a new OS configurator.
@@ -50,7 +50,7 @@ func (c *darwinConfigurator) SetDNS(cfg OSConfig) error {
 		buf.WriteString("\n")
 	}
 
-	if err := os.MkdirAll("/etc/resolver", 0755); err != nil {
+	if err := os.MkdirAll("/etc/resolver", 0o755); err != nil {
 		return err
 	}
 
@@ -69,7 +69,7 @@ func (c *darwinConfigurator) SetDNS(cfg OSConfig) error {
 			sbuf.WriteString(string(d.WithoutTrailingDot()))
 		}
 		sbuf.WriteString("\n")
-		if err := os.WriteFile("/etc/resolver/"+searchFile, sbuf.Bytes(), 0644); err != nil {
+		if err := os.WriteFile("/etc/resolver/"+searchFile, sbuf.Bytes(), 0o644); err != nil {
 			return err
 		}
 	}
@@ -79,7 +79,7 @@ func (c *darwinConfigurator) SetDNS(cfg OSConfig) error {
 		mak.Set(&keep, fileBase, true)
 		fullPath := "/etc/resolver/" + fileBase
 
-		if err := os.WriteFile(fullPath, buf.Bytes(), 0644); err != nil {
+		if err := os.WriteFile(fullPath, buf.Bytes(), 0o644); err != nil {
 			return err
 		}
 	}

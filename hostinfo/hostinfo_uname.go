@@ -8,8 +8,8 @@ package hostinfo
 import (
 	"runtime"
 
+	"github.com/sagernet/tailscale/types/ptr"
 	"golang.org/x/sys/unix"
-	"tailscale.com/types/ptr"
 )
 
 func init() {

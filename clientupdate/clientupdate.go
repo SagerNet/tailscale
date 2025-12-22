@@ -27,13 +27,13 @@ import (
 	"strconv"
 	"strings"
 
-	"tailscale.com/feature"
-	"tailscale.com/hostinfo"
-	"tailscale.com/types/lazy"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/cmpver"
-	"tailscale.com/version"
-	"tailscale.com/version/distro"
+	"github.com/sagernet/tailscale/feature"
+	"github.com/sagernet/tailscale/hostinfo"
+	"github.com/sagernet/tailscale/types/lazy"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/cmpver"
+	"github.com/sagernet/tailscale/version"
+	"github.com/sagernet/tailscale/version/distro"
 )
 
 const (
@@ -507,7 +507,7 @@ func updateDebianAptSourcesList(dstTrack string) (rewrote bool, err error) {
 	if bytes.Equal(was, newContent) {
 		return false, nil
 	}
-	return true, os.WriteFile(aptSourcesFile, newContent, 0644)
+	return true, os.WriteFile(aptSourcesFile, newContent, 0o644)
 }
 
 func updateDebianAptSourcesListBytes(was []byte, dstTrack string) (newContent []byte, err error) {
@@ -648,7 +648,7 @@ func updateYUMRepoTrack(repoFile, dstTrack string) (rewrote bool, err error) {
 	if bytes.Equal(was, newContent.Bytes()) {
 		return false, nil
 	}
-	return true, os.WriteFile(repoFile, newContent.Bytes(), 0644)
+	return true, os.WriteFile(repoFile, newContent.Bytes(), 0o644)
 }
 
 func (up *Updater) updateAlpineLike() (err error) {
@@ -898,7 +898,7 @@ func (up *Updater) downloadLinuxTarball(ver string) (string, error) {
 		dlDir = os.TempDir()
 	}
 	dlDir = filepath.Join(dlDir, "tailscale-update")
-	if err := os.MkdirAll(dlDir, 0700); err != nil {
+	if err := os.MkdirAll(dlDir, 0o700); err != nil {
 		return "", err
 	}
 	pkgsPath := fmt.Sprintf("%s/tailscale_%s_%s.tgz", up.Track, ver, runtime.GOARCH)
@@ -945,12 +945,12 @@ func (up *Updater) unpackLinuxTarball(path string) error {
 		switch filepath.Base(th.Name) {
 		case "tailscale":
 			files["tailscale"]++
-			if err := writeFile(tr, tailscale+".new", 0755); err != nil {
+			if err := writeFile(tr, tailscale+".new", 0o755); err != nil {
 				return fmt.Errorf("failed extracting the new tailscale binary from %q: %w", path, err)
 			}
 		case "tailscaled":
 			files["tailscaled"]++
-			if err := writeFile(tr, tailscaled+".new", 0755); err != nil {
+			if err := writeFile(tr, tailscaled+".new", 0o755); err != nil {
 				return fmt.Errorf("failed extracting the new tailscaled binary from %q: %w", path, err)
 			}
 		}

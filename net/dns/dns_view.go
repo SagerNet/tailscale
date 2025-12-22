@@ -12,9 +12,9 @@ import (
 
 	jsonv2 "github.com/go-json-experiment/json"
 	"github.com/go-json-experiment/json/jsontext"
-	"tailscale.com/types/dnstype"
-	"tailscale.com/types/views"
-	"tailscale.com/util/dnsname"
+	"github.com/sagernet/tailscale/types/dnstype"
+	"github.com/sagernet/tailscale/types/views"
+	"github.com/sagernet/tailscale/util/dnsname"
 )
 
 //go:generate go run tailscale.com/cmd/cloner  -clonefunc=true -type=Config

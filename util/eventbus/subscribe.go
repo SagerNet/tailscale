@@ -10,9 +10,9 @@ import (
 	"runtime"
 	"time"
 
-	"tailscale.com/syncs"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/cibuild"
+	"github.com/sagernet/tailscale/syncs"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/cibuild"
 )
 
 type DeliveredEvent struct {

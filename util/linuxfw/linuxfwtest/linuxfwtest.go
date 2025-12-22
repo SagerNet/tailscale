@@ -9,15 +9,15 @@
 // in tests intead.
 package linuxfwtest
 
-import (
-	"testing"
-	"unsafe"
-)
-
 /*
 #include <sys/socket.h>  // socket()
 */
 import "C"
+
+import (
+	"testing"
+	"unsafe"
+)
 
 type SizeInfo struct {
 	SizeofSocklen uintptr

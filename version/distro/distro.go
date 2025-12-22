@@ -11,8 +11,8 @@ import (
 	"strconv"
 	"strings"
 
-	"tailscale.com/types/lazy"
-	"tailscale.com/util/lineiter"
+	"github.com/sagernet/tailscale/types/lazy"
+	"github.com/sagernet/tailscale/util/lineiter"
 )
 
 type Distro string
@@ -35,8 +35,10 @@ const (
 	JetKVM    = Distro("jetkvm")
 )
 
-var distro lazy.SyncValue[Distro]
-var isWSL lazy.SyncValue[bool]
+var (
+	distro lazy.SyncValue[Distro]
+	isWSL  lazy.SyncValue[bool]
+)
 
 // Get returns the current distro, or the empty string if unknown.
 func Get() Distro {

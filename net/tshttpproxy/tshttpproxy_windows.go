@@ -19,12 +19,12 @@ import (
 
 	"github.com/alexbrainman/sspi/negotiate"
 	"github.com/dblohm7/wingoes"
+	"github.com/sagernet/tailscale/hostinfo"
+	"github.com/sagernet/tailscale/syncs"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/clientmetric"
+	"github.com/sagernet/tailscale/util/cmpver"
 	"golang.org/x/sys/windows"
-	"tailscale.com/hostinfo"
-	"tailscale.com/syncs"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/clientmetric"
-	"tailscale.com/util/cmpver"
 )
 
 func init() {

@@ -7,8 +7,8 @@ import (
 	"context"
 	"sync"
 
-	"tailscale.com/types/logger"
-	"tailscale.com/util/eventbus"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/eventbus"
 )
 
 // LinkChangeLogLimiter returns a new [logger.Logf] that logs each unique

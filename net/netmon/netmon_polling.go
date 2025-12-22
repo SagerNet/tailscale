@@ -6,8 +6,8 @@
 package netmon
 
 import (
-	"tailscale.com/types/logger"
-	"tailscale.com/util/eventbus"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/eventbus"
 )
 
 func newOSMon(_ *eventbus.Bus, logf logger.Logf, m *Monitor) (osMon, error) {

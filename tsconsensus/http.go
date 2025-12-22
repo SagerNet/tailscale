@@ -14,7 +14,7 @@ import (
 	"net/http"
 	"time"
 
-	"tailscale.com/util/httpm"
+	"github.com/sagernet/tailscale/util/httpm"
 )
 
 type joinRequest struct {

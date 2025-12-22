@@ -5,9 +5,9 @@
 package apitype
 
 import (
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/dnstype"
-	"tailscale.com/util/ctxkey"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/dnstype"
+	"github.com/sagernet/tailscale/util/ctxkey"
 )
 
 // LocalAPIHost is the Host header value used by the LocalAPI.

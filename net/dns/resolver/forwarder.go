@@ -24,27 +24,27 @@ import (
 	"sync/atomic"
 	"time"
 
+	"github.com/sagernet/tailscale/control/controlknobs"
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/feature"
+	"github.com/sagernet/tailscale/feature/buildfeatures"
+	"github.com/sagernet/tailscale/health"
+	"github.com/sagernet/tailscale/net/dns/publicdns"
+	"github.com/sagernet/tailscale/net/dnscache"
+	"github.com/sagernet/tailscale/net/neterror"
+	"github.com/sagernet/tailscale/net/netmon"
+	"github.com/sagernet/tailscale/net/netx"
+	"github.com/sagernet/tailscale/net/sockstats"
+	"github.com/sagernet/tailscale/net/tsdial"
+	"github.com/sagernet/tailscale/syncs"
+	"github.com/sagernet/tailscale/types/dnstype"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/types/nettype"
+	"github.com/sagernet/tailscale/util/cloudenv"
+	"github.com/sagernet/tailscale/util/dnsname"
+	"github.com/sagernet/tailscale/util/race"
+	"github.com/sagernet/tailscale/version"
 	dns "golang.org/x/net/dns/dnsmessage"
-	"tailscale.com/control/controlknobs"
-	"tailscale.com/envknob"
-	"tailscale.com/feature"
-	"tailscale.com/feature/buildfeatures"
-	"tailscale.com/health"
-	"tailscale.com/net/dns/publicdns"
-	"tailscale.com/net/dnscache"
-	"tailscale.com/net/neterror"
-	"tailscale.com/net/netmon"
-	"tailscale.com/net/netx"
-	"tailscale.com/net/sockstats"
-	"tailscale.com/net/tsdial"
-	"tailscale.com/syncs"
-	"tailscale.com/types/dnstype"
-	"tailscale.com/types/logger"
-	"tailscale.com/types/nettype"
-	"tailscale.com/util/cloudenv"
-	"tailscale.com/util/dnsname"
-	"tailscale.com/util/race"
-	"tailscale.com/version"
 )
 
 // headerBytes is the number of bytes in a DNS message header.
@@ -647,8 +647,10 @@ type truncatedResponseError struct {
 
 func (tr truncatedResponseError) Error() string { return "response truncated" }
 
-var errServerFailure = errors.New("response code indicates server issue")
-var errTxIDMismatch = errors.New("txid doesn't match")
+var (
+	errServerFailure = errors.New("response code indicates server issue")
+	errTxIDMismatch  = errors.New("txid doesn't match")
+)
 
 func (f *forwarder) sendUDP(ctx context.Context, fq *forwardQuery, rr resolverAndDelay) (ret []byte, err error) {
 	ipp, ok := rr.name.IPPort()
@@ -863,7 +865,7 @@ func (f *forwarder) sendTCP(ctx context.Context, fq *forwardQuery, rr resolverAn
 	}
 
 	// TODO(andrew): do we need to do this?
-	//clampEDNSSize(out, maxResponseBytes)
+	// clampEDNSSize(out, maxResponseBytes)
 	metricDNSFwdTCPSuccess.Add(1)
 	return out, nil
 }

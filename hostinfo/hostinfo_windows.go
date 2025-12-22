@@ -9,11 +9,11 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/sagernet/tailscale/types/ptr"
+	"github.com/sagernet/tailscale/util/winutil"
+	"github.com/sagernet/tailscale/util/winutil/winenv"
 	"golang.org/x/sys/windows"
 	"golang.org/x/sys/windows/registry"
-	"tailscale.com/types/ptr"
-	"tailscale.com/util/winutil"
-	"tailscale.com/util/winutil/winenv"
 )
 
 func init() {

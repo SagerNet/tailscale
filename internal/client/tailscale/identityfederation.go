@@ -6,7 +6,7 @@ package tailscale
 import (
 	"context"
 
-	"tailscale.com/feature"
+	"github.com/sagernet/tailscale/feature"
 )
 
 // HookResolveAuthKeyViaWIF resolves to [identityfederation.ResolveAuthKey] when the

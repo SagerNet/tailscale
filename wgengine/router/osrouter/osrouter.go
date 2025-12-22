@@ -7,7 +7,7 @@
 // package.
 package osrouter
 
-import "tailscale.com/wgengine/router"
+import "github.com/sagernet/tailscale/wgengine/router"
 
 // shutdownConfig is a routing configuration that removes all router
 // state from the OS. It's the config used when callers pass in a nil

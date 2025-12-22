@@ -13,9 +13,9 @@ import (
 	"reflect"
 	"slices"
 
+	"github.com/sagernet/tailscale/util/set"
+	"github.com/sagernet/tailscale/util/testenv"
 	"go4.org/mem"
-	"tailscale.com/util/set"
-	"tailscale.com/util/testenv"
 )
 
 // rand fills b with cryptographically strong random bytes. Panics if

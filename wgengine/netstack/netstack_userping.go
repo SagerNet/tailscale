@@ -13,8 +13,8 @@ import (
 	"runtime"
 	"time"
 
-	"tailscale.com/feature/buildfeatures"
-	"tailscale.com/version/distro"
+	"github.com/sagernet/tailscale/feature/buildfeatures"
+	"github.com/sagernet/tailscale/version/distro"
 )
 
 // setAmbientCapsRaw is non-nil on Linux for Synology, to run ping with

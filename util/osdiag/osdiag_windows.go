@@ -14,16 +14,14 @@ import (
 
 	"github.com/dblohm7/wingoes/com"
 	"github.com/dblohm7/wingoes/pe"
+	"github.com/sagernet/tailscale/util/osdiag/internal/wsc"
+	"github.com/sagernet/tailscale/util/winutil"
+	"github.com/sagernet/tailscale/util/winutil/authenticode"
 	"golang.org/x/sys/windows"
 	"golang.org/x/sys/windows/registry"
-	"tailscale.com/util/osdiag/internal/wsc"
-	"tailscale.com/util/winutil"
-	"tailscale.com/util/winutil/authenticode"
 )
 
-var (
-	errUnexpectedResult = errors.New("API call returned an unexpected value")
-)
+var errUnexpectedResult = errors.New("API call returned an unexpected value")
 
 const (
 	maxBinaryValueLen  = 128   // we'll truncate any binary values longer than this
@@ -489,15 +487,15 @@ type providerKey struct {
 }
 
 var providerKeys = []providerKey{
-	providerKey{
+	{
 		wsc.WSC_SECURITY_PROVIDER_ANTIVIRUS,
 		"av",
 	},
-	providerKey{
+	{
 		wsc.WSC_SECURITY_PROVIDER_ANTISPYWARE,
 		"antispy",
 	},
-	providerKey{
+	{
 		wsc.WSC_SECURITY_PROVIDER_FIREWALL,
 		"firewall",
 	},

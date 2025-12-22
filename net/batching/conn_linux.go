@@ -17,13 +17,13 @@ import (
 	"time"
 	"unsafe"
 
+	"github.com/sagernet/tailscale/hostinfo"
+	"github.com/sagernet/tailscale/net/neterror"
+	"github.com/sagernet/tailscale/net/packet"
+	"github.com/sagernet/tailscale/types/nettype"
 	"golang.org/x/net/ipv4"
 	"golang.org/x/net/ipv6"
 	"golang.org/x/sys/unix"
-	"tailscale.com/hostinfo"
-	"tailscale.com/net/neterror"
-	"tailscale.com/net/packet"
-	"tailscale.com/types/nettype"
 )
 
 // xnetBatchReaderWriter defines the batching i/o methods of
@@ -43,10 +43,8 @@ type xnetBatchWriter interface {
 	WriteBatch([]ipv6.Message, int) (int, error)
 }
 
-var (
-	// [linuxBatchingConn] implements [Conn].
-	_ Conn = (*linuxBatchingConn)(nil)
-)
+// [linuxBatchingConn] implements [Conn].
+var _ Conn = (*linuxBatchingConn)(nil)
 
 // linuxBatchingConn is a UDP socket that provides batched i/o. It implements
 // [Conn].

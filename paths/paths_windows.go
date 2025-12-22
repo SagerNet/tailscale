@@ -8,8 +8,8 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/sagernet/tailscale/util/winutil"
 	"golang.org/x/sys/windows"
-	"tailscale.com/util/winutil"
 )
 
 func init() {
@@ -56,13 +56,17 @@ func ensureStateDirPermsWindows(dirPath string) error {
 	}
 
 	// Munge the SIDs into the format required by EXPLICIT_ACCESS.
-	userTrustee := windows.TRUSTEE{nil, windows.NO_MULTIPLE_TRUSTEE,
+	userTrustee := windows.TRUSTEE{
+		nil, windows.NO_MULTIPLE_TRUSTEE,
 		windows.TRUSTEE_IS_SID, windows.TRUSTEE_IS_USER,
-		windows.TrusteeValueFromSID(sids.User)}
+		windows.TrusteeValueFromSID(sids.User),
+	}
 
-	adminTrustee := windows.TRUSTEE{nil, windows.NO_MULTIPLE_TRUSTEE,
+	adminTrustee := windows.TRUSTEE{
+		nil, windows.NO_MULTIPLE_TRUSTEE,
 		windows.TRUSTEE_IS_SID, windows.TRUSTEE_IS_WELL_KNOWN_GROUP,
-		windows.TrusteeValueFromSID(adminGroupSid)}
+		windows.TrusteeValueFromSID(adminGroupSid),
+	}
 
 	// We declare our access rights via this array of EXPLICIT_ACCESS structures.
 	// We set full access to our user and to Administrators.

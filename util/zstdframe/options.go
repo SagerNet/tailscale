@@ -9,7 +9,7 @@ import (
 	"sync"
 
 	"github.com/klauspost/compress/zstd"
-	"tailscale.com/util/must"
+	"github.com/sagernet/tailscale/util/must"
 )
 
 // Option is an option that can be passed to [AppendEncode] or [AppendDecode].

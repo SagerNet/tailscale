@@ -20,27 +20,27 @@ import (
 	"sync"
 	"time"
 
+	"github.com/sagernet/tailscale/disco"
+	"github.com/sagernet/tailscale/net/batching"
+	"github.com/sagernet/tailscale/net/netaddr"
+	"github.com/sagernet/tailscale/net/netcheck"
+	"github.com/sagernet/tailscale/net/netmon"
+	"github.com/sagernet/tailscale/net/packet"
+	"github.com/sagernet/tailscale/net/sockopts"
+	"github.com/sagernet/tailscale/net/stun"
+	"github.com/sagernet/tailscale/net/udprelay/endpoint"
+	"github.com/sagernet/tailscale/net/udprelay/status"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/tstime"
+	"github.com/sagernet/tailscale/types/key"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/types/nettype"
+	"github.com/sagernet/tailscale/types/views"
+	"github.com/sagernet/tailscale/util/eventbus"
+	"github.com/sagernet/tailscale/util/set"
 	"go4.org/mem"
 	"golang.org/x/crypto/blake2s"
 	"golang.org/x/net/ipv6"
-	"tailscale.com/disco"
-	"tailscale.com/net/batching"
-	"tailscale.com/net/netaddr"
-	"tailscale.com/net/netcheck"
-	"tailscale.com/net/netmon"
-	"tailscale.com/net/packet"
-	"tailscale.com/net/sockopts"
-	"tailscale.com/net/stun"
-	"tailscale.com/net/udprelay/endpoint"
-	"tailscale.com/net/udprelay/status"
-	"tailscale.com/tailcfg"
-	"tailscale.com/tstime"
-	"tailscale.com/types/key"
-	"tailscale.com/types/logger"
-	"tailscale.com/types/nettype"
-	"tailscale.com/types/views"
-	"tailscale.com/util/eventbus"
-	"tailscale.com/util/set"
 )
 
 const (
@@ -901,7 +901,7 @@ func (s *Server) GetSessions() []status.ServerSession {
 	if s.closed {
 		return nil
 	}
-	var sessions = make([]status.ServerSession, 0, len(s.byDisco))
+	sessions := make([]status.ServerSession, 0, len(s.byDisco))
 	for _, se := range s.byDisco {
 		c1 := extractClientInfo(0, se)
 		c2 := extractClientInfo(1, se)

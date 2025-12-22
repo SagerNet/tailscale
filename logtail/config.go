@@ -8,9 +8,9 @@ import (
 	"net/http"
 	"time"
 
-	"tailscale.com/tstime"
-	"tailscale.com/types/logid"
-	"tailscale.com/util/eventbus"
+	"github.com/sagernet/tailscale/tstime"
+	"github.com/sagernet/tailscale/types/logid"
+	"github.com/sagernet/tailscale/util/eventbus"
 )
 
 // DefaultHost is the default host name to upload logs to when

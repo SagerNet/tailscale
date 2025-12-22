@@ -13,11 +13,11 @@ import (
 	"time"
 
 	"github.com/godbus/dbus/v5"
+	"github.com/sagernet/tailscale/health"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/backoff"
+	"github.com/sagernet/tailscale/util/dnsname"
 	"golang.org/x/sys/unix"
-	"tailscale.com/health"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/backoff"
-	"tailscale.com/util/dnsname"
 )
 
 // DBus entities we talk to.
@@ -263,7 +263,7 @@ func (m *resolvedManager) setConfigOverDBus(ctx context.Context, rManager dbus.B
 	ctx, cancel := context.WithTimeout(ctx, reconfigTimeout)
 	defer cancel()
 
-	var linkNameservers = make([]resolvedLinkNameserver, len(config.Nameservers))
+	linkNameservers := make([]resolvedLinkNameserver, len(config.Nameservers))
 	for i, server := range config.Nameservers {
 		ip := server.As16()
 		if server.Is4() {
