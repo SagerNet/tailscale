@@ -47,10 +47,7 @@ func HardwareAttestationPublicFromPlatformKey(k HardwareAttestationKey) Hardware
 	if !ok {
 		panic("hardware attestation key is not ECDSA")
 	}
-	bytes, err := ecdsaPub.Bytes()
-	if err != nil {
-		panic(err)
-	}
+	bytes := elliptic.Marshal(ecdsaPub.Curve, ecdsaPub.X, ecdsaPub.Y)
 	if len(bytes) != pubkeyLength {
 		panic("hardware attestation key is not uncompressed ECDSA P-256")
 	}
@@ -114,9 +111,9 @@ func (k *HardwareAttestationPublic) UnmarshalText(b []byte) error {
 		return err
 	}
 
-	_, err := ecdsa.ParseUncompressedPublicKey(elliptic.P256(), kb)
-	if err != nil {
-		return err
+	x, _ := elliptic.Unmarshal(elliptic.P256(), kb)
+	if x == nil {
+		return fmt.Errorf("invalid uncompressed P-256 public key")
 	}
 	copy(k.k[:], kb)
 	return nil
@@ -128,11 +125,11 @@ func (k HardwareAttestationPublic) AppendText(dst []byte) ([]byte, error) {
 
 // Verifier returns the ECDSA public key for verifying signatures made by k.
 func (k HardwareAttestationPublic) Verifier() *ecdsa.PublicKey {
-	pk, err := ecdsa.ParseUncompressedPublicKey(elliptic.P256(), k.k[:])
-	if err != nil {
-		panic(err)
+	x, y := elliptic.Unmarshal(elliptic.P256(), k.k[:])
+	if x == nil {
+		panic("invalid uncompressed P-256 public key")
 	}
-	return pk
+	return &ecdsa.PublicKey{Curve: elliptic.P256(), X: x, Y: y}
 }
 
 // emptyHardwareAttestationKey is a function that returns an empty
