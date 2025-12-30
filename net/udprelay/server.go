@@ -328,7 +328,7 @@ func NewServer(logf logger.Logf, port uint16, onlyStaticAddrPorts bool) (s *Serv
 	// in a running client.
 	bus := eventbus.New()
 	s.bus = bus
-	netMon, err := netmon.New(s.bus, logf)
+	netMon, err := netmon.New(s.bus, logf, nil)
 	if err != nil {
 		return nil, err
 	}
