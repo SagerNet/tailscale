@@ -51,20 +51,31 @@ func captivePortalHealthChange(b *LocalBackend, state *health.State) {
 	if isConnectivityImpacted {
 		b.logf("health: connectivity impacted; triggering captive portal detection")
 
-		// Ensure that we select on captiveCtx so that we can time out
-		// triggering captive portal detection if the backend is shutdown.
-		select {
-		case b.needsCaptiveDetection <- true:
-		case <-ctx.Done():
-		}
+		sendNeedsCaptiveDetection(ctx, b.needsCaptiveDetection, true)
 	} else {
 		// If connectivity is not impacted, we know for sure we're not behind a captive portal,
 		// so drop any warning, and signal that we don't need captive portal detection.
 		b.health.SetHealthy(captivePortalWarnable)
-		select {
-		case b.needsCaptiveDetection <- false:
-		case <-ctx.Done():
-		}
+		sendNeedsCaptiveDetection(ctx, b.needsCaptiveDetection, false)
+	}
+}
+
+func sendNeedsCaptiveDetection(ctx context.Context, needsDetection chan bool, needsCaptiveDetection bool) {
+	select {
+	case needsDetection <- needsCaptiveDetection:
+		return
+	case <-ctx.Done():
+		return
+	default:
+	}
+	select {
+	case <-needsDetection:
+	default:
+	}
+	select {
+	case needsDetection <- needsCaptiveDetection:
+	case <-ctx.Done():
+	default:
 	}
 }
 

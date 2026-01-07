@@ -506,6 +506,11 @@ func (o *optionalPolicyLock) Lock() error {
 		o.state = gpLockRestricted
 		return nil
 	default:
+		if errors.Is(err, windows.ERROR_ACCESS_DENIED) {
+			loggerx.Errorf("GP lock not acquired: %v", err)
+			o.state = gpLockRestricted
+			return nil
+		}
 		return err
 	}
 }

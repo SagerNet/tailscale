@@ -517,7 +517,7 @@ func NewLocalBackend(logf logger.Logf, logID logid.PublicID, sys *tsd.System, lo
 		clock:                 clock,
 		captiveCtx:            captiveCtx,
 		captiveCancel:         nil, // so that we start checkCaptivePortalLoop when Running
-		needsCaptiveDetection: make(chan bool),
+		needsCaptiveDetection: make(chan bool, 1),
 		lookupHook:            lookupHook,
 		onlyTCP443:            onlyTCP443,
 	}

@@ -21,7 +21,6 @@ import (
 	"github.com/sagernet/tailscale/net/tstun"
 	"github.com/sagernet/tailscale/wgengine/router"
 	"github.com/sagernet/tailscale/wgengine/winnet"
-	"github.com/sagernet/wireguard-go/tun"
 	"go4.org/netipx"
 	"golang.org/x/sys/windows"
 	"golang.zx2c4.com/wireguard/windows/tunnel/winipcfg"
@@ -41,7 +40,7 @@ import (
 // ICMP fragmentation-needed messages within tailscaled. This code may
 // address a few rare corner cases, but is unlikely to significantly
 // help with MTU issues compared to a static 1280B implementation.
-func monitorDefaultRoutes(tun *tun.NativeTun) (*winipcfg.RouteChangeCallback, error) {
+func monitorDefaultRoutes(tun windowsTunDevice) (*winipcfg.RouteChangeCallback, error) {
 	ourLuid := winipcfg.LUID(tun.LUID())
 	lastMtu := uint32(0)
 	doIt := func() error {
@@ -245,7 +244,7 @@ var networkCategoryWarnable = health.Register(&health.Warnable{
 	MapDebugFlag: "warn-network-category-unhealthy",
 })
 
-func configureInterface(cfg *router.Config, tun *tun.NativeTun, ht *health.Tracker) (retErr error) {
+func configureInterface(cfg *router.Config, tun windowsTunDevice, ht *health.Tracker) (retErr error) {
 	mtu := tstun.DefaultTUNMTU()
 	luid := winipcfg.LUID(tun.LUID())
 	iface, err := interfaceFromLUID(luid,

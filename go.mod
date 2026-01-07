@@ -55,7 +55,6 @@ require (
 	github.com/tailscale/netlink v1.1.1-0.20240822203006-4d49adab4de7
 	github.com/tailscale/peercred v0.0.0-20250107143737-35a0c7bd7edc
 	github.com/tailscale/web-client-prebuilt v0.0.0-20250124233751-d4cd19a26976
-	github.com/tailscale/wireguard-go v0.0.0-20250716170648-1d0488a3d7da
 	github.com/tailscale/xnet v0.0.0-20240729143630-8497ac4dab2e
 	github.com/toqueteos/webbrowser v1.2.0
 	go4.org/mem v0.0.0-20240501181205-ae6ca9944745

@@ -31,6 +31,7 @@ import (
 	"github.com/sagernet/tailscale/control/controlclient"
 	"github.com/sagernet/tailscale/envknob"
 	_ "github.com/sagernet/tailscale/feature/c2n"
+	_ "github.com/sagernet/tailscale/feature/condregister/osrouter"
 	_ "github.com/sagernet/tailscale/feature/condregister/oauthkey"
 	_ "github.com/sagernet/tailscale/feature/condregister/portmapper"
 	_ "github.com/sagernet/tailscale/feature/condregister/useproxy"
@@ -64,6 +65,8 @@ import (
 	"github.com/sagernet/tailscale/util/testenv"
 	"github.com/sagernet/tailscale/wgengine"
 	"github.com/sagernet/tailscale/wgengine/netstack"
+	"github.com/sagernet/tailscale/wgengine/router"
+	wgTun "github.com/sagernet/wireguard-go/tun"
 )
 
 // Server is an embedded Tailscale server.
@@ -141,6 +144,8 @@ type Server struct {
 	OnlyTCP443 bool
 	DNS        dns.OSConfigurator
 	HTTPClient *http.Client
+	TunDevice  wgTun.Device
+	Router     router.Router
 
 	getCertForTesting func(*tls.ClientHelloInfo) (*tls.Certificate, error)
 
@@ -595,7 +600,7 @@ func (s *Server) start() (reterr error) {
 
 	s.dialer = &tsdial.Dialer{Logf: tsLogf, Dialer: s.Dialer} // mutated below (before used)
 	s.dialer.SetBus(sys.Bus.Get())
-	eng, err := wgengine.NewUserspaceEngine(tsLogf, wgengine.Config{
+	engineConfig := wgengine.Config{
 		DNS:           s.DNS,
 		EventBus:      sys.Bus.Get(),
 		ListenPort:    s.Port,
@@ -605,7 +610,20 @@ func (s *Server) start() (reterr error) {
 		ControlKnobs:  sys.ControlKnobs(),
 		HealthTracker: sys.HealthTracker.Get(),
 		Metrics:       sys.UserMetricsRegistry(),
-	})
+	}
+	if s.TunDevice != nil {
+		engineConfig.Tun = s.TunDevice
+		if s.Router != nil {
+			engineConfig.Router = s.Router
+		} else {
+			systemRouter, err := router.New(tsLogf, s.TunDevice, s.netMon, sys.HealthTracker.Get(), sys.Bus.Get())
+			if err != nil {
+				return err
+			}
+			engineConfig.Router = systemRouter
+		}
+	}
+	eng, err := wgengine.NewUserspaceEngine(tsLogf, engineConfig)
 	if err != nil {
 		return err
 	}
