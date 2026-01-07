@@ -197,6 +197,9 @@ type Impl struct {
 	peerapiPort4Atomic atomic.Uint32 // uint16 port number for IPv4 peerapi
 	peerapiPort6Atomic atomic.Uint32 // uint16 port number for IPv6 peerapi
 
+	outboundTCPAccess sync.Mutex
+	outboundTCPFlows  map[tcpFlowKey]time.Time
+
 	// atomicIsLocalIPFunc holds a func that reports whether an IP
 	// is a local (non-subnet) Tailscale IP address of this
 	// machine. It's always a non-nil func. It's changed on netmap
@@ -242,6 +245,11 @@ type Impl struct {
 	// unfortunate that we have to track this all twice, but thankfully the
 	// map only holds pending (in-flight) packets, and it's reasonably cheap.
 	packetsInFlight map[stack.TransportEndpointID]struct{}
+}
+
+type tcpFlowKey struct {
+	src netip.AddrPort
+	dst netip.AddrPort
 }
 
 const nicID = 1
@@ -389,6 +397,7 @@ func Create(logf logger.Logf, tundev *tstun.Wrapper, e wgengine.Engine, mc *magi
 		pm:                    pm,
 		mc:                    mc,
 		dialer:                dialer,
+		outboundTCPFlows:      make(map[tcpFlowKey]time.Time),
 		connsOpenBySubnetIP:   make(map[netip.Addr]int),
 		connsInFlightByClient: make(map[netip.Addr]int),
 		packetsInFlight:       make(map[stack.TransportEndpointID]struct{}),
@@ -834,6 +843,9 @@ func (ns *Impl) handleLocalPackets(p *packet.Parsed, t *tstun.Wrapper, gro *gro.
 	default:
 		// Not traffic to the service IP or a 4via6 IP, so we don't
 		// care about the packet; resume processing.
+		if p.IPProto == ipproto.TCP && p.TCPFlags&packet.TCPSyn != 0 && p.TCPFlags&packet.TCPAck == 0 {
+			ns.recordOutboundTCPFlow(p)
+		}
 		return filter.Accept, gro
 	}
 	if debugPackets {
@@ -1058,10 +1070,56 @@ func (ns *Impl) peerAPIPortAtomic(ip netip.Addr) *atomic.Uint32 {
 }
 
 var viaRange = tsaddr.TailscaleViaRange()
+var outboundTCPFlowTTL = 2 * time.Minute
+
+func (ns *Impl) recordOutboundTCPFlow(p *packet.Parsed) {
+	key := tcpFlowKey{
+		src: p.Dst,
+		dst: p.Src,
+	}
+	now := time.Now()
+	ns.outboundTCPAccess.Lock()
+	ns.outboundTCPFlows[key] = now.Add(outboundTCPFlowTTL)
+	ns.outboundTCPAccess.Unlock()
+}
+
+func (ns *Impl) shouldBypassInbound(p *packet.Parsed) bool {
+	if p.IPProto != ipproto.TCP {
+		return false
+	}
+	key := tcpFlowKey{
+		src: p.Src,
+		dst: p.Dst,
+	}
+	now := time.Now()
+	ns.outboundTCPAccess.Lock()
+	defer ns.outboundTCPAccess.Unlock()
+	expiresAt, ok := ns.outboundTCPFlows[key]
+	if !ok {
+		if debugNetstack() && p.TCPFlags&packet.TCPSynAck == packet.TCPSynAck {
+			ns.logf("netstack: inbound bypass miss for %v -> %v flags=%v", p.Src, p.Dst, p.TCPFlags)
+		}
+		return false
+	}
+	if now.After(expiresAt) {
+		delete(ns.outboundTCPFlows, key)
+		if debugNetstack() && p.TCPFlags&packet.TCPSynAck == packet.TCPSynAck {
+			ns.logf("netstack: inbound bypass expired for %v -> %v flags=%v", p.Src, p.Dst, p.TCPFlags)
+		}
+		return false
+	}
+	if debugNetstack() && (p.TCPFlags&packet.TCPSynAck == packet.TCPSynAck || p.TCPFlags&packet.TCPRst != 0) {
+		ns.logf("netstack: inbound bypass hit for %v -> %v flags=%v", p.Src, p.Dst, p.TCPFlags)
+	}
+	return true
+}
 
 // shouldProcessInbound reports whether an inbound packet (a packet from a
 // WireGuard peer) should be handled by netstack.
 func (ns *Impl) shouldProcessInbound(p *packet.Parsed, t *tstun.Wrapper) bool {
+	if ns.shouldBypassInbound(p) {
+		return false
+	}
 	// Handle incoming peerapi connections in netstack.
 	dstIP := p.Dst.Addr()
 	isLocal := ns.isLocalIP(dstIP)
