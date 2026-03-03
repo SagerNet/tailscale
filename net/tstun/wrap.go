@@ -204,6 +204,12 @@ type Wrapper struct {
 	// disableTSMPRejected disables TSMP rejected responses. For tests.
 	disableTSMPRejected bool
 
+	// netstackOutbound is true when the current outbound packet being
+	// processed in injectedRead originated from netstack
+	// (InjectOutboundPacketBuffer). Only accessed from the single
+	// RoutineReadFromTUN goroutine.
+	netstackOutbound bool
+
 	// connCounter maintains per-connection counters.
 	connCounter syncs.AtomicValue[netlogfunc.ConnectionCounter]
 
@@ -1074,6 +1080,7 @@ func (t *Wrapper) injectedRead(res tunInjectedRead, outBuffs [][]byte, sizes []i
 		if !buildfeatures.HasNetstack {
 			panic("unreachable")
 		}
+		t.netstackOutbound = true
 		bufN := copy(pkt, res.packet.NetworkHeader().Slice())
 		bufN += copy(pkt[bufN:], res.packet.TransportHeader().Slice())
 		bufN += copy(pkt[bufN:], res.packet.Data().AsRange().ToSlice())
@@ -1094,10 +1101,13 @@ func (t *Wrapper) injectedRead(res tunInjectedRead, outBuffs [][]byte, sizes []i
 
 	if !t.disableFilter {
 		response, _ := t.filterPacketOutboundToWireGuard(p, pc, nil)
+		t.netstackOutbound = false
 		if response != filter.Accept {
 			metricPacketOutDrop.Add(1)
 			return 0, nil
 		}
+	} else {
+		t.netstackOutbound = false
 	}
 
 	invertGSOChecksum(pkt, gso)
@@ -1523,6 +1533,13 @@ func (t *Wrapper) BatchSize() int {
 // Unwrap returns the underlying tun.Device.
 func (t *Wrapper) Unwrap() tun.Device {
 	return t.tdev
+}
+
+// IsNetstackOutbound reports whether the current outbound packet being
+// processed originated from netstack (via InjectOutboundPacketBuffer).
+// Only valid to call from filter functions invoked during Read.
+func (t *Wrapper) IsNetstackOutbound() bool {
+	return t.netstackOutbound
 }
 
 // SetConnectionCounter specifies a per-connection statistics aggregator.
