@@ -860,11 +860,7 @@ func (ns *Impl) handleLocalPackets(p *packet.Parsed, t *tstun.Wrapper, gro *gro.
 	default:
 		// Not traffic to the service IP or a 4via6 IP, so we don't
 		// care about the packet; resume processing.
-		// Only record outbound TCP flows for packets from the host OS
-		// (real TUN reads), not for packets injected by netstack.
-		// Netstack-originated connections need their responses delivered
-		// back to netstack, not bypassed to the system TUN.
-		if p.IPProto == ipproto.TCP && p.TCPFlags&packet.TCPSyn != 0 && p.TCPFlags&packet.TCPAck == 0 && !t.IsNetstackOutbound() {
+		if p.IPProto == ipproto.TCP && p.TCPFlags&packet.TCPSyn != 0 && p.TCPFlags&packet.TCPAck == 0 {
 			ns.recordOutboundTCPFlow(p)
 		}
 		return filter.Accept, gro
