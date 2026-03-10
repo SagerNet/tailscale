@@ -904,7 +904,11 @@ func exitNodeIPOfArg(s string, st *ipnstate.Status) (ip netip.Addr, err error) {
 	for _, ps := range st.Peer {
 		baseName := dnsname.TrimSuffix(ps.DNSName, st.MagicDNSSuffix)
 		if !strings.EqualFold(s, baseName) && !strings.EqualFold(s, ps.DNSName) {
-			continue
+			// For shared-in nodes whose tailnet suffix differs from ours,
+			// TrimSuffix returns the full FQDN. Try matching the first label (hostname).
+			if hostname, _, ok := strings.Cut(ps.DNSName, "."); !ok || !strings.EqualFold(s, hostname) {
+				continue
+			}
 		}
 		match++
 		if len(ps.TailscaleIPs) == 0 {
