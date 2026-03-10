@@ -860,7 +860,7 @@ func (ns *Impl) handleLocalPackets(p *packet.Parsed, t *tstun.Wrapper, gro *gro.
 	default:
 		// Not traffic to the service IP or a 4via6 IP, so we don't
 		// care about the packet; resume processing.
-		if p.IPProto == ipproto.TCP && p.TCPFlags&packet.TCPSyn != 0 && p.TCPFlags&packet.TCPAck == 0 {
+		if p.IPProto == ipproto.TCP {
 			ns.recordOutboundTCPFlow(p)
 		}
 		return filter.Accept, gro
@@ -1131,6 +1131,7 @@ func (ns *Impl) shouldBypassInbound(p *packet.Parsed) bool {
 		}
 		return false
 	}
+	ns.outboundTCPFlows[key] = now.Add(outboundTCPFlowTTL)
 	if debugNetstack() && (p.TCPFlags&packet.TCPSynAck == packet.TCPSynAck || p.TCPFlags&packet.TCPRst != 0) {
 		ns.logf("netstack: inbound bypass hit for %v -> %v flags=%v", p.Src, p.Dst, p.TCPFlags)
 	}
