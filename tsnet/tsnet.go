@@ -144,9 +144,8 @@ type Server struct {
 	OnlyTCP443 bool
 	DNS        dns.OSConfigurator
 	HTTPClient *http.Client
-	TunDevice     wgTun.Device
-	Router        router.Router
-	RouterWrapper func(router.Router) router.Router
+	TunDevice  wgTun.Device
+	Router     router.Router
 
 	getCertForTesting func(*tls.ClientHelloInfo) (*tls.Certificate, error)
 
@@ -622,9 +621,6 @@ func (s *Server) start() (reterr error) {
 				return err
 			}
 			engineConfig.Router = systemRouter
-		}
-		if s.RouterWrapper != nil {
-			engineConfig.Router = s.RouterWrapper(engineConfig.Router)
 		}
 	}
 	eng, err := wgengine.NewUserspaceEngine(tsLogf, engineConfig)
