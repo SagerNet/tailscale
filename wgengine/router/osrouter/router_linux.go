@@ -131,41 +131,6 @@ func newUserspaceRouterAdvanced(logf logger.Logf, tunname string, netMon *netmon
 	})
 	r.eventClient = ec
 
-	if r.useIPCommand() {
-		r.ipRuleAvailable = (cmd.run("ip", "rule") == nil)
-	} else {
-		if rules, err := netlink.RuleList(netlink.FAMILY_V4); err != nil {
-			r.logf("error querying IP rules (does kernel have IP_MULTIPLE_TABLES?): %v", err)
-			r.logf("warning: running without policy routing")
-		} else {
-			r.logf("[v1] policy routing available; found %d rules", len(rules))
-			r.ipRuleAvailable = true
-		}
-	}
-
-	// A common installation of OpenWRT involves use of the 'mwan3' package.
-	// This package installs ip-tables rules like:
-	//  -A mwan3_fallback_policy -m mark --mark 0x0/0x3f00 -j MARK --set-xmark 0x100/0x3f00
-	//
-	// which coupled with an ip rule:
-	//  2001: from all fwmark 0x100/0x3f00 lookup 1
-	//
-	// has the effect of gobbling tailscale packets, because tailscale by default installs
-	// its policy routing rules at priority 52xx.
-	//
-	// As such, if we are running on openWRT, detect a mwan3 config, AND detect a rule
-	// with a preference 2001 (corresponding to the first interface wman3 manages), we
-	// shift the priority of our policies to 13xx. This effectively puts us between mwan3's
-	// permit-by-src-ip rules and mwan3 lookup of its own routing table which would drop
-	// the packet.
-	isMWAN3, err := checkOpenWRTUsingMWAN3()
-	if err != nil {
-		r.logf("error checking mwan3 installation: %v", err)
-	} else if isMWAN3 {
-		r.ipPolicyPrefBase = 1300
-		r.logf("mwan3 on openWRT detected, switching policy base priority to 1300")
-	}
-
 	r.v6Available = linuxfw.CheckIPv6(r.logf) == nil
 
 	r.fixupWSLMTU()
@@ -352,9 +317,6 @@ func (r *linuxRouter) Up() error {
 	if err := r.setNetfilterModeLocked(netfilterOff); err != nil {
 		return fmt.Errorf("setting netfilter mode: %w", err)
 	}
-	if err := r.addIPRules(); err != nil {
-		return fmt.Errorf("adding IP rules: %w", err)
-	}
 	if err := r.upInterface(); err != nil {
 		return fmt.Errorf("bringing interface up: %w", err)
 	}
@@ -370,24 +332,22 @@ func (r *linuxRouter) Close() error {
 		r.unregNetMon()
 	}
 	r.eventClient.Close()
+	var errs []error
 	if err := r.downInterface(); err != nil {
-		return err
-	}
-	if err := r.delIPRules(); err != nil {
-		return err
+		errs = append(errs, err)
 	}
 	if err := r.setNetfilterModeLocked(netfilterOff); err != nil {
-		return err
+		errs = append(errs, err)
 	}
 	if err := r.delRoutes(); err != nil {
-		return err
+		errs = append(errs, err)
 	}
 
 	r.addrs = nil
 	r.routes = nil
 	r.localRoutes = nil
 
-	return nil
+	return errors.Join(errs...)
 }
 
 // setupNetfilterLocked initializes the NetfilterRunner in r.nfr. It expects r.nfr
@@ -412,6 +372,10 @@ func (r *linuxRouter) Set(cfg *router.Config) error {
 	var errs []error
 	if cfg == nil {
 		cfg = &shutdownConfig
+	} else {
+		cfg = &router.Config{
+			LocalAddrs: cfg.LocalAddrs,
+		}
 	}
 
 	if cfg.NetfilterKind != r.netfilterKind {
