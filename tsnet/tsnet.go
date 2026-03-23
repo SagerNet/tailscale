@@ -638,8 +638,10 @@ func (s *Server) start() (reterr error) {
 	}
 	sys.Tun.Get().Start()
 	sys.Set(ns)
-	ns.ProcessLocalIPs = true
-	ns.ProcessSubnets = true
+	if s.TunDevice == nil {
+		ns.ProcessLocalIPs = true
+		ns.ProcessSubnets = true
+	}
 	ns.GetTCPHandlerForFlow = s.getTCPHandlerForFlow
 	ns.GetUDPHandlerForFlow = s.getUDPHandlerForFlow
 	s.netstack = ns
