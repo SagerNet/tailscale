@@ -7,7 +7,6 @@ import (
 	"github.com/sagernet/tailscale/net/netmon"
 	"github.com/sagernet/tailscale/types/logger"
 	"github.com/sagernet/tailscale/wgengine/router"
-	"github.com/sagernet/wireguard-go/tun"
 )
 
 func init() {
