@@ -318,10 +318,11 @@ type Server struct {
 
 	Dialer N.Dialer
 
-	LookupHook dnscache.LookupHookFunc
-	OnlyTCP443 bool
-	DNS        dns.OSConfigurator
-	HTTPClient *http.Client
+	LookupHook          dnscache.LookupHookFunc
+	PeerDNSQueryHandler ipnlocal.PeerDNSQueryHandler
+	OnlyTCP443          bool
+	DNS                 dns.OSConfigurator
+	HTTPClient          *http.Client
 
 	initOnce            sync.Once
 	initErr             error
@@ -957,6 +958,9 @@ func (s *Server) start() (reterr error) {
 	lb.SetTCPHandlerForFunnelFlow(s.getTCPHandlerForFunnelFlow)
 	lb.SetVarRoot(s.rootPath)
 	lb.SetHTTPTestClient(s.HTTPClient)
+	if s.PeerDNSQueryHandler != nil {
+		lb.SetPeerDNSQueryHandler(s.PeerDNSQueryHandler)
+	}
 	s.logf("tsnet starting with hostname %q, varRoot %q", s.hostname, s.rootPath)
 	s.lb = lb
 	if err := ns.Start(lb); err != nil {
