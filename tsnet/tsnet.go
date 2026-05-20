@@ -31,8 +31,8 @@ import (
 	"github.com/sagernet/tailscale/control/controlclient"
 	"github.com/sagernet/tailscale/envknob"
 	_ "github.com/sagernet/tailscale/feature/c2n"
-	_ "github.com/sagernet/tailscale/feature/condregister/osrouter"
 	_ "github.com/sagernet/tailscale/feature/condregister/oauthkey"
+	_ "github.com/sagernet/tailscale/feature/condregister/osrouter"
 	_ "github.com/sagernet/tailscale/feature/condregister/portmapper"
 	_ "github.com/sagernet/tailscale/feature/condregister/useproxy"
 	"github.com/sagernet/tailscale/health"
@@ -139,13 +139,14 @@ type Server struct {
 	// that the control server will allow the node to adopt that tag.
 	AdvertiseTags []string
 
-	Dialer     N.Dialer
-	LookupHook dnscache.LookupHookFunc
-	OnlyTCP443 bool
-	DNS        dns.OSConfigurator
-	HTTPClient *http.Client
-	TunDevice  wgTun.Device
-	Router     router.Router
+	Dialer              N.Dialer
+	LookupHook          dnscache.LookupHookFunc
+	PeerDNSQueryHandler ipnlocal.PeerDNSQueryHandler
+	OnlyTCP443          bool
+	DNS                 dns.OSConfigurator
+	HTTPClient          *http.Client
+	TunDevice           wgTun.Device
+	Router              router.Router
 
 	getCertForTesting func(*tls.ClientHelloInfo) (*tls.Certificate, error)
 
@@ -696,6 +697,9 @@ func (s *Server) start() (reterr error) {
 	lb.SetTCPHandlerForFunnelFlow(s.getTCPHandlerForFunnelFlow)
 	lb.SetVarRoot(s.rootPath)
 	lb.SetHTTPTestClient(s.HTTPClient)
+	if s.PeerDNSQueryHandler != nil {
+		lb.SetPeerDNSQueryHandler(s.PeerDNSQueryHandler)
+	}
 	s.logf("tsnet starting with hostname %q, varRoot %q", s.hostname, s.rootPath)
 	s.lb = lb
 	if err := ns.Start(lb); err != nil {

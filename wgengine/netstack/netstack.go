@@ -1088,8 +1088,10 @@ func (ns *Impl) peerAPIPortAtomic(ip netip.Addr) *atomic.Uint32 {
 	}
 }
 
-var viaRange = tsaddr.TailscaleViaRange()
-var outboundTCPFlowTTL = 2 * time.Minute
+var (
+	viaRange           = tsaddr.TailscaleViaRange()
+	outboundTCPFlowTTL = 2 * time.Minute
+)
 
 func (ns *Impl) recordOutboundTCPFlow(p *packet.Parsed) {
 	if !ns.allowInboundBypass {

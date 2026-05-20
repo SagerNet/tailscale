@@ -298,6 +298,7 @@ type LocalBackend struct {
 	prevIfState       *netmon.State
 	peerAPIServer     *peerAPIServer     // or nil
 	peerAPIListeners  []*peerAPIListener // TODO(nickkhyl): move to nodeBackend
+	peerDNSHandler    PeerDNSQueryHandler
 	loginFlags        controlclient.LoginFlags
 	notifyWatchers    map[string]*watchSession // by session ID
 	lastStatusTime    time.Time                // status.AsOf value of the last processed status update
@@ -414,6 +415,10 @@ func (b *LocalBackend) SetHardwareAttested() {
 // used to bind the node's identity to this device.
 func (b *LocalBackend) HardwareAttested() bool {
 	return b.hardwareAttested.Load()
+}
+
+func (b *LocalBackend) SetPeerDNSQueryHandler(handler PeerDNSQueryHandler) {
+	b.peerDNSHandler = handler
 }
 
 // HealthTracker returns the health tracker for the backend.
