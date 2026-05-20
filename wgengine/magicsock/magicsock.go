@@ -33,6 +33,7 @@ import (
 	"github.com/sagernet/tailscale/hostinfo"
 	"github.com/sagernet/tailscale/ipn/ipnstate"
 	"github.com/sagernet/tailscale/net/batching"
+	"github.com/sagernet/tailscale/net/dnscache"
 	"github.com/sagernet/tailscale/net/netcheck"
 	"github.com/sagernet/tailscale/net/neterror"
 	"github.com/sagernet/tailscale/net/netmon"
@@ -199,6 +200,12 @@ type Conn struct {
 	// netChecker is the prober that discovers local network
 	// conditions, including the closest DERP relay and NAT mappings.
 	netChecker *netcheck.Client
+
+	// dnsCache resolves DERP hostnames for both the per-Conn DERP client
+	// and netChecker. It is the dnscache.Get() singleton when no
+	// Options.LookupHook is provided, otherwise a per-Conn Resolver that
+	// honors the hook.
+	dnsCache *dnscache.Resolver
 
 	// portMapper is the NAT-PMP/PCP/UPnP prober/client, for requesting
 	// port mappings from NAT devices.
@@ -492,6 +499,11 @@ type Options struct {
 	// DisablePortMapper, if true, disables the portmapper.
 	// This is primarily useful in tests.
 	DisablePortMapper bool
+
+	// LookupHook, if non-nil, customizes DNS resolution for the per-Conn
+	// DERP client and the embedded netcheck client. When nil, the
+	// process-wide dnscache.Get() singleton is used (historic behavior).
+	LookupHook dnscache.LookupHookFunc
 }
 
 func (o *Options) logf() logger.Logf {
@@ -729,6 +741,17 @@ func NewConn(opts Options) (*Conn, error) {
 	c.health = opts.HealthTracker
 	c.getPeerByKey = opts.PeerByKeyFunc
 
+	if opts.LookupHook != nil {
+		c.dnsCache = &dnscache.Resolver{
+			Forward:     dnscache.Get().Forward,
+			UseLastGood: true,
+			Logf:        c.logf,
+			LookupHook:  opts.LookupHook,
+		}
+	} else {
+		c.dnsCache = dnscache.Get()
+	}
+
 	if err := c.rebind(keepCurrentPort); err != nil {
 		return nil, err
 	}
@@ -740,6 +763,12 @@ func NewConn(opts Options) (*Conn, error) {
 		SkipExternalNetwork: inTest(),
 		PortMapper:          c.portMapper,
 		UseDNSCache:         true,
+	}
+	if opts.LookupHook != nil {
+		// Share the per-Conn resolver so netcheck's DNS lookups also
+		// honor the hook. When unset, netcheck keeps its historic
+		// lazily-constructed resolver (Forward: net.DefaultResolver).
+		c.netChecker.Resolver = c.dnsCache
 	}
 
 	c.metrics = registerMetrics(opts.Metrics)

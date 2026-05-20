@@ -18,7 +18,6 @@ import (
 	"github.com/sagernet/tailscale/derp"
 	"github.com/sagernet/tailscale/derp/derphttp"
 	"github.com/sagernet/tailscale/health"
-	"github.com/sagernet/tailscale/net/dnscache"
 	"github.com/sagernet/tailscale/net/netcheck"
 	"github.com/sagernet/tailscale/net/tsaddr"
 	"github.com/sagernet/tailscale/syncs"
@@ -382,7 +381,7 @@ func (c *Conn) derpWriteChanForRegion(regionID int, peer key.NodePublic) chan de
 	dc.SetCanAckPings(true)
 	dc.NotePreferred(c.myDerp == regionID)
 	dc.SetAddressFamilySelector(derpAddrFamSelector{c})
-	dc.DNSCache = dnscache.Get()
+	dc.DNSCache = c.dnsCache
 
 	ctx, cancel := context.WithCancel(c.connCtx)
 	ch := make(chan derpWriteRequest, derpWriteQueueDepth)

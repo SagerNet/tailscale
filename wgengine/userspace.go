@@ -29,6 +29,7 @@ import (
 	"github.com/sagernet/tailscale/ipn/ipnstate"
 	"github.com/sagernet/tailscale/net/dns"
 	"github.com/sagernet/tailscale/net/dns/resolver"
+	"github.com/sagernet/tailscale/net/dnscache"
 	"github.com/sagernet/tailscale/net/ipset"
 	"github.com/sagernet/tailscale/net/netmon"
 	"github.com/sagernet/tailscale/net/packet"
@@ -253,6 +254,10 @@ type Config struct {
 	// TODO(creachadair): As of 2025-03-19 this is optional, but is intended to
 	// become required non-nil.
 	EventBus *eventbus.Bus
+
+	// LookupHook, if non-nil, overrides DNS resolution for the per-Conn
+	// DERP client and netcheck probes. Mirrors controlclient.Options.LookupHook.
+	LookupHook dnscache.LookupHookFunc
 }
 
 // NewFakeUserspaceEngine returns a new userspace engine for testing.
@@ -422,6 +427,7 @@ func NewUserspaceEngine(logf logger.Logf, conf Config) (_ Engine, reterr error) 
 		Metrics:        conf.Metrics,
 		ControlKnobs:   conf.ControlKnobs,
 		PeerByKeyFunc:  e.PeerByKey,
+		LookupHook:     conf.LookupHook,
 	}
 	if buildfeatures.HasLazyWG {
 		magicsockOpts.NoteRecvActivity = e.noteRecvActivity

@@ -610,6 +610,7 @@ func (s *Server) start() (reterr error) {
 		ControlKnobs:  sys.ControlKnobs(),
 		HealthTracker: sys.HealthTracker.Get(),
 		Metrics:       sys.UserMetricsRegistry(),
+		LookupHook:    s.LookupHook,
 	}
 	if s.TunDevice != nil {
 		engineConfig.Tun = s.TunDevice
