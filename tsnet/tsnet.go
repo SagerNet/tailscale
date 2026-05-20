@@ -867,6 +867,7 @@ func (s *Server) start() (reterr error) {
 		HealthTracker: sys.HealthTracker.Get(),
 		ExtraRootCAs:  sys.ExtraRootCAs,
 		Metrics:       sys.UserMetricsRegistry(),
+		LookupHook:    s.LookupHook,
 	}
 	if s.Tun != nil {
 		if s.Router != nil {

@@ -228,6 +228,13 @@ type Client struct {
 	// If false, the default net.Resolver will be used, with no caching.
 	UseDNSCache bool
 
+	// Resolver, if non-nil, is used as the DNS cache for DERP hostname
+	// resolution (both the probing path and the HTTPS latency derphttp
+	// client) instead of the lazily-constructed internal resolver. It
+	// lets callers share a *dnscache.Resolver (and its LookupHook) with
+	// the rest of the system. Only consulted when UseDNSCache is true.
+	Resolver *dnscache.Resolver
+
 	// if non-zero, force this DERP region to be preferred in all reports where
 	// the DERP is found to be reachable.
 	ForcePreferredDERP int
@@ -1113,6 +1120,9 @@ func (c *Client) measureHTTPSLatency(ctx context.Context, reg *tailcfg.DERPRegio
 	var ip netip.Addr
 
 	dc := derphttp.NewNetcheckClient(c.logf, c.NetMon)
+	if c.Resolver != nil {
+		dc.DNSCache = c.Resolver
+	}
 	defer dc.Close()
 
 	// DialRegionTLS may dial multiple times if a node is not available, as such
@@ -1685,10 +1695,14 @@ func (c *Client) nodeAddrPort(ctx context.Context, n *tailcfg.DERPNode, port int
 	c.mu.Lock()
 	if c.UseDNSCache {
 		if c.resolver == nil {
-			c.resolver = &dnscache.Resolver{
-				Forward:     net.DefaultResolver,
-				UseLastGood: true,
-				Logf:        c.logf,
+			if c.Resolver != nil {
+				c.resolver = c.Resolver
+			} else {
+				c.resolver = &dnscache.Resolver{
+					Forward:     net.DefaultResolver,
+					UseLastGood: true,
+					Logf:        c.logf,
+				}
 			}
 		}
 		resolver := c.resolver

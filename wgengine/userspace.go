@@ -28,6 +28,7 @@ import (
 	"github.com/sagernet/tailscale/ipn/ipnstate"
 	"github.com/sagernet/tailscale/net/dns"
 	"github.com/sagernet/tailscale/net/dns/resolver"
+	"github.com/sagernet/tailscale/net/dnscache"
 	"github.com/sagernet/tailscale/net/ipset"
 	"github.com/sagernet/tailscale/net/netmon"
 	"github.com/sagernet/tailscale/net/packet"
@@ -267,6 +268,10 @@ type Config struct {
 	// WireGuard. The pkt slice is borrowed and must be copied if
 	// the callee needs to retain it.
 	OnDERPRecv func(regionID int, src key.NodePublic, pkt []byte) (handled bool)
+
+	// LookupHook, if non-nil, overrides DNS resolution for the per-Conn
+	// DERP client and netcheck probes. Mirrors controlclient.Options.LookupHook.
+	LookupHook dnscache.LookupHookFunc
 }
 
 // NewFakeUserspaceEngine returns a new userspace engine for testing.
@@ -444,6 +449,7 @@ func NewUserspaceEngine(logf logger.Logf, conf Config) (_ Engine, reterr error) 
 		PeerByKeyFunc:  e.PeerByKey,
 		ForceDiscoKey:  conf.ForceDiscoKey,
 		OnDERPRecv:     conf.OnDERPRecv,
+		LookupHook:     conf.LookupHook,
 	}
 	var err error
 	e.magicConn, err = magicsock.NewConn(magicsockOpts)
