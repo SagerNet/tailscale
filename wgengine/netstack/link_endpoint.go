@@ -4,9 +4,11 @@
 package netstack
 
 import (
+	"bytes"
 	"context"
 	"sync"
 
+	"github.com/sagernet/gvisor/pkg/buffer"
 	"github.com/sagernet/gvisor/pkg/tcpip"
 	"github.com/sagernet/gvisor/pkg/tcpip/header"
 	"github.com/sagernet/gvisor/pkg/tcpip/stack"
@@ -198,6 +200,40 @@ func (ep *linkEndpoint) injectInbound(p *packet.Parsed) {
 	}
 	d.DeliverNetworkPacket(pkt.NetworkProtocolNumber, pkt)
 	pkt.DecRef()
+}
+
+// injectInboundPacketBuffer takes a *stack.PacketBuffer produced for outbound
+// (read from ep.q) and re-delivers it inbound on the same NIC. Used to loop
+// gVisor-originated packets whose destination is one of our own Tailscale IPs
+// back into the stack, replacing gVisor's HandleLocal fast-path without
+// enabling its martian-source check (which is incompatible with our use of
+// promiscuous mode).
+//
+// The caller transfers one ref to this function; we DecRef it on return.
+func (ep *linkEndpoint) injectInboundPacketBuffer(outboundPkt *stack.PacketBuffer) {
+	defer outboundPkt.DecRef()
+
+	ep.mu.RLock()
+	d := ep.dispatcher
+	ep.mu.RUnlock()
+	if d == nil || !buildfeatures.HasNetstack {
+		return
+	}
+
+	payload := stack.PayloadSince(outboundPkt.NetworkHeader())
+	if payload == nil {
+		return
+	}
+	defer payload.Release()
+
+	inboundPkt := stack.NewPacketBuffer(stack.PacketBufferOptions{
+		Payload: buffer.MakeWithData(bytes.Clone(payload.AsSlice())),
+	})
+	inboundPkt.NetworkProtocolNumber = outboundPkt.NetworkProtocolNumber
+	inboundPkt.RXChecksumValidated = true
+	defer inboundPkt.DecRef()
+
+	d.DeliverNetworkPacket(inboundPkt.NetworkProtocolNumber, inboundPkt)
 }
 
 // Attach saves the stack network-layer dispatcher for use later when packets

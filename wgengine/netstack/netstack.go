@@ -338,7 +338,6 @@ func Create(logf logger.Logf, tundev *tstun.Wrapper, e wgengine.Engine, mc *magi
 		NetworkProtocols:   []stack.NetworkProtocolFactory{ipv4.NewProtocol, ipv6.NewProtocol},
 		TransportProtocols: []stack.TransportProtocolFactory{tcp.NewProtocol, udp.NewProtocol, icmp.NewProtocol4, icmp.NewProtocol6},
 		RawFactory:         new(raw.EndpointFactory),
-		HandleLocal:        true,
 	})
 	sackEnabledOpt := tcpip.TCPSACKEnabled(true) // TCP SACK is disabled by default
 	tcpipErr := ipstack.SetTransportProtocolOption(tcp.ProtocolNumber, &sackEnabledOpt)
@@ -1006,11 +1005,23 @@ func (ns *Impl) inject() {
 				ns.logf("netstack inject inbound: %v", err)
 				return
 			}
-		} else {
-			if err := ns.tundev.InjectOutboundPacketBuffer(pkt); err != nil {
-				ns.logf("netstack inject outbound: %v", err)
-				return
-			}
+			continue
+		}
+
+		// If the destination is one of our own Tailscale IPs, loop the packet
+		// back into the stack as inbound. Without this, gVisor would send the
+		// packet out via WireGuard but no peer would claim it. We do this in
+		// Tailscale code rather than via gVisor's HandleLocal option because
+		// HandleLocal also enables a martian-source check that, combined with
+		// our use of promiscuous mode, drops all inbound packets from peers.
+		if dstIP, ok := dstIPFromPacketBuffer(pkt); ok && ns.isLocalIP(dstIP) {
+			ns.linkEP.injectInboundPacketBuffer(pkt)
+			continue
+		}
+
+		if err := ns.tundev.InjectOutboundPacketBuffer(pkt); err != nil {
+			ns.logf("netstack inject outbound: %v", err)
+			return
 		}
 	}
 }
@@ -1064,6 +1075,18 @@ func (ns *Impl) shouldSendToHost(pkt *stack.PacketBuffer) bool {
 	}
 
 	return false
+}
+
+// dstIPFromPacketBuffer extracts the destination IP from pkt for IPv4 or IPv6
+// packets. Returns (zero, false) for unknown network protocols.
+func dstIPFromPacketBuffer(pkt *stack.PacketBuffer) (netip.Addr, bool) {
+	switch v := pkt.Network().(type) {
+	case header.IPv4:
+		return netip.AddrFrom4(v.DestinationAddress().As4()), true
+	case header.IPv6:
+		return netip.AddrFrom16(v.DestinationAddress().As16()), true
+	}
+	return netip.Addr{}, false
 }
 
 // isLocalIP reports whether ip is a Tailscale IP assigned to this
