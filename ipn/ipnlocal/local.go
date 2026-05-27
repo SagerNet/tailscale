@@ -200,6 +200,7 @@ type LocalBackend struct {
 	logFlushFunc             func()         // or nil if SetLogFlusher wasn't called
 	em                       *expiryManager // non-nil; TODO(nickkhyl): move to nodeBackend
 	sshAtomicBool            atomic.Bool    // TODO(nickkhyl): move to nodeBackend
+	externalSSHHostKeys      []string
 	// webClientAtomicBool controls whether the web client is running. This should
 	// be true unless the disable-web-client node attribute has been set.
 	webClientAtomicBool atomic.Bool // TODO(nickkhyl): move to nodeBackend
@@ -2808,7 +2809,7 @@ func (b *LocalBackend) updateFilterLocked(prefs ipn.PrefsView) {
 	localNets, _ := localNetsB.IPSet()
 	logNets, _ := logNetsB.IPSet()
 	var sshPol tailcfg.SSHPolicyView
-	if buildfeatures.HasSSH && haveNetmap && netMap.SSHPolicy != nil {
+	if (buildfeatures.HasSSH || len(b.externalSSHHostKeys) > 0) && haveNetmap && netMap.SSHPolicy != nil {
 		sshPol = netMap.SSHPolicy.View()
 	}
 
@@ -5528,6 +5529,9 @@ func (b *LocalBackend) applyPrefsToHostinfoLocked(hi *tailcfg.Hostinfo, prefs ip
 			b.logf("warning: unable to get SSH host keys, SSH will appear as disabled for this node: %v", err)
 		}
 	}
+	if len(sshHostKeys) == 0 && len(b.externalSSHHostKeys) > 0 {
+		sshHostKeys = b.externalSSHHostKeys
+	}
 	hi.SSH_HostKeys = sshHostKeys
 
 	for _, f := range hookMaybeMutateHostinfoLocked {
@@ -5834,7 +5838,9 @@ func (b *LocalBackend) resetAuthURLLocked() {
 	b.authActor = nil
 }
 
-func (b *LocalBackend) ShouldRunSSH() bool { return b.sshAtomicBool.Load() && envknob.CanSSHD() }
+func (b *LocalBackend) ShouldRunSSH() bool {
+	return b.sshAtomicBool.Load() && envknob.CanSSHD() && len(b.externalSSHHostKeys) == 0
+}
 
 // ShouldRunWebClient reports whether the web client is being run
 // within this tailscaled instance. ShouldRunWebClient is safe to

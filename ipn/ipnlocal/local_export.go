@@ -14,3 +14,13 @@ func (b *LocalBackend) ExportFilter() *atomic.Pointer[filter.Filter] {
 func (b *LocalBackend) ExportEngine() wgengine.Engine {
 	return b.e
 }
+
+func (b *LocalBackend) SetExternalSSHHostKeys(keys []string) {
+	b.mu.Lock()
+	b.externalSSHHostKeys = keys
+	if b.hostinfo != nil {
+		b.hostinfo.SSH_HostKeys = keys
+	}
+	b.mu.Unlock()
+	b.doSetHostinfoFilterServices()
+}
