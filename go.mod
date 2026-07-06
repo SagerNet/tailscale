@@ -48,7 +48,7 @@ require (
 	github.com/safchain/ethtool v0.3.0
 	github.com/sagernet/gvisor v0.0.0-20250811.0-sing-box-mod.1
 	github.com/sagernet/sing v0.7.13
-	github.com/sagernet/wireguard-go v0.0.2-beta.1.0.20250917110311-16510ac47288
+	github.com/sagernet/wireguard-go v0.0.4
 	github.com/tailscale/certstore v0.1.1-0.20231202035212-d3fa0460f47e
 	github.com/tailscale/goupnp v1.0.1-0.20210804011211-c64d0f06ea05
 	github.com/tailscale/hujson v0.0.0-20221223112325-20486734a56a
