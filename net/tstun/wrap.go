@@ -223,6 +223,12 @@ type Wrapper struct {
 
 	captureHook syncs.AtomicValue[packet.CaptureCallback]
 
+	// inputDevice is the wireguard-go device fed by InputPackets.
+	inputDevice atomic.Pointer[device.Device]
+	// returnPath, when set, is offered decrypted packet batches in Write
+	// after dnat and before the inbound filter.
+	returnPath atomic.Pointer[returnPathState]
+
 	metrics *metrics
 
 	eventClient              *eventbus.Client
@@ -1228,6 +1234,14 @@ func (t *Wrapper) filterPacketInboundFromWireGuard(p *packet.Parsed, captHook pa
 // thread-safe.
 func (t *Wrapper) Write(buffs [][]byte, offset int) (int, error) {
 	metricPacketIn.Add(int64(len(buffs)))
+	var consumed int
+	var dnatApplied bool
+	if state := t.returnPath.Load(); state != nil && len(buffs) > 0 && offset >= state.headroom {
+		remaining := t.offerReturnPath(state, buffs, offset)
+		consumed = len(buffs) - len(remaining)
+		buffs = remaining
+		dnatApplied = true
+	}
 	i := 0
 	p := parsedPacketPool.Get().(*packet.Parsed)
 	defer parsedPacketPool.Put(p)
@@ -1236,7 +1250,9 @@ func (t *Wrapper) Write(buffs [][]byte, offset int) (int, error) {
 	var buffsGRO *gro.GRO
 	for _, buff := range buffs {
 		p.Decode(buff[offset:])
-		pc.dnat(p)
+		if !dnatApplied {
+			pc.dnat(p)
+		}
 		if !t.disableFilter {
 			var res filter.Response
 			// TODO(jwhited): name and document this filter code path
@@ -1267,9 +1283,12 @@ func (t *Wrapper) Write(buffs [][]byte, offset int) (int, error) {
 				Reason: usermetric.ReasonError,
 			}, int64(len(buffs)))
 		}
-		return len(buffs), err
+		return consumed + len(buffs), err
 	}
-	return 0, nil
+	if consumed > 0 {
+		t.noteActivity()
+	}
+	return consumed, nil
 }
 
 func (t *Wrapper) tdevWrite(buffs [][]byte, offset int) (int, error) {
