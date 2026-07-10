@@ -375,6 +375,7 @@ func (r *linuxRouter) Set(cfg *router.Config) error {
 	} else {
 		cfg = &router.Config{
 			LocalAddrs: cfg.LocalAddrs,
+			Routes:     cfg.Routes,
 		}
 	}
 
