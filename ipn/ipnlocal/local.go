@@ -6549,51 +6549,12 @@ func (b *LocalBackend) routerConfigLocked(cfg *wgcfg.Config, prefs ipn.PrefsView
 		rs.NetfilterMode = preftype.NetfilterOff
 	}
 
-	// Sanity check: we expect the control server to program both a v4
-	// and a v6 default route, if default routing is on. Fill in
-	// blackhole routes appropriately if we're missing some. This is
-	// likely to break some functionality, but if the user expressed a
-	// preference for routing remotely, we want to avoid leaking
-	// traffic at the expense of functionality.
+	// sing-box manages its own routing: never install exit node default
+	// routes (or LAN-protection routes) into the system routing table.
 	if buildfeatures.HasUseExitNode && (prefs.ExitNodeID() != "" || prefs.ExitNodeIP().IsValid()) {
-		var default4, default6 bool
-		for _, route := range rs.Routes {
-			switch route {
-			case tsaddr.AllIPv4():
-				default4 = true
-			case tsaddr.AllIPv6():
-				default6 = true
-			}
-			if default4 && default6 {
-				break
-			}
-		}
-		if !default4 {
-			rs.Routes = append(rs.Routes, tsaddr.AllIPv4())
-		}
-		if !default6 {
-			rs.Routes = append(rs.Routes, tsaddr.AllIPv6())
-		}
-		internalIPs, externalIPs, err := internalAndExternalInterfaces()
-		if err != nil {
-			b.logf("failed to discover interface ips: %v", err)
-		}
-		switch runtime.GOOS {
-		case "linux", "windows", "darwin", "ios", "android", "openbsd":
-			rs.LocalRoutes = internalIPs // unconditionally allow access to guest VM networks
-			if prefs.ExitNodeAllowLANAccess() {
-				rs.LocalRoutes = append(rs.LocalRoutes, externalIPs...)
-			} else {
-				// Explicitly add routes to the local network so that we do not
-				// leak any traffic.
-				rs.Routes = append(rs.Routes, externalIPs...)
-			}
-			b.logf("allowing exit node access to local IPs: %v", rs.LocalRoutes)
-		default:
-			if prefs.ExitNodeAllowLANAccess() {
-				b.logf("warning: ExitNodeAllowLANAccess has no effect on " + runtime.GOOS)
-			}
-		}
+		rs.Routes = slices.DeleteFunc(rs.Routes, func(route netip.Prefix) bool {
+			return route.Bits() == 0
+		})
 	}
 
 	// Get the VIPs for VIP services this node hosts. We will add all locally served VIPs to routes then
