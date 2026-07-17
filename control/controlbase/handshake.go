@@ -13,6 +13,7 @@ import (
 	"io"
 	"net"
 	"strconv"
+	"sync/atomic"
 	"time"
 
 	"github.com/sagernet/tailscale/types/key"
@@ -125,12 +126,24 @@ func continueClientHandshake(ctx context.Context, conn net.Conn, s *symmetricSta
 	}()
 
 	if deadline, ok := ctx.Deadline(); ok {
-		if err := conn.SetDeadline(deadline); err != nil {
-			return nil, fmt.Errorf("setting conn deadline: %w", err)
+		err := conn.SetDeadline(deadline)
+		if err != nil {
+			var handshakeDone atomic.Bool
+			stopClose := context.AfterFunc(ctx, func() {
+				if handshakeDone.CompareAndSwap(false, true) {
+					conn.Close()
+				}
+			})
+			defer func() {
+				if handshakeDone.CompareAndSwap(false, true) {
+					stopClose()
+				}
+			}()
+		} else {
+			defer func() {
+				conn.SetDeadline(time.Time{})
+			}()
 		}
-		defer func() {
-			conn.SetDeadline(time.Time{})
-		}()
 	}
 
 	// Read in the payload and look for errors/protocol violations from the server.
