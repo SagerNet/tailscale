@@ -3531,6 +3531,10 @@ func (c *Conn) listenPacket(network string, port uint16) (nettype.PacketConn, er
 	if c.testOnlyPacketListener != nil {
 		return nettype.MakePacketListenerWithNetIP(c.testOnlyPacketListener).ListenPacket(ctx, network, addr)
 	}
+	listenPacketFunc := netns.ListenPacketFunc()
+	if listenPacketFunc != nil {
+		return listenPacketFunc(ctx, network, addr)
+	}
 	return nettype.MakePacketListenerWithNetIP(netns.Listener(c.logf, c.netMon)).ListenPacket(ctx, network, addr)
 }
 

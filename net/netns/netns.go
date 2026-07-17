@@ -24,6 +24,7 @@ import (
 	"github.com/sagernet/tailscale/net/netknob"
 	"github.com/sagernet/tailscale/net/netmon"
 	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/types/nettype"
 )
 
 var disabled atomic.Bool
@@ -40,6 +41,24 @@ func SetControlFunc(f func(network, address string, c syscall.RawConn) error) {
 	} else {
 		controlOverride.Store(nil)
 	}
+}
+
+var listenPacketOverride atomic.Pointer[func(ctx context.Context, network, address string) (nettype.PacketConn, error)]
+
+func SetListenPacketFunc(listenPacketFunc func(ctx context.Context, network, address string) (nettype.PacketConn, error)) {
+	if listenPacketFunc != nil {
+		listenPacketOverride.Store(&listenPacketFunc)
+	} else {
+		listenPacketOverride.Store(nil)
+	}
+}
+
+func ListenPacketFunc() func(ctx context.Context, network, address string) (nettype.PacketConn, error) {
+	listenPacketFunc := listenPacketOverride.Load()
+	if listenPacketFunc != nil {
+		return *listenPacketFunc
+	}
+	return nil
 }
 
 // SetEnabled enables or disables netns for the process.
