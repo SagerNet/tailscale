@@ -1174,7 +1174,7 @@ func (e *userspaceEngine) Reconfig(cfg *wgcfg.Config, routerCfg *router.Config, 
 		}
 	}
 
-	if routerChanged && e.onReconfig != nil {
+	if (engineChanged || routerChanged || dnsChanged) && e.onReconfig != nil {
 		e.onReconfig(cfg, routerCfg, dnsCfg)
 	}
 
