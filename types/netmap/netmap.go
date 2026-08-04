@@ -13,13 +13,13 @@ import (
 	"strings"
 	"time"
 
-	"tailscale.com/net/tsaddr"
-	"tailscale.com/tailcfg"
-	"tailscale.com/tka"
-	"tailscale.com/types/key"
-	"tailscale.com/types/views"
-	"tailscale.com/util/set"
-	"tailscale.com/wgengine/filter/filtertype"
+	"github.com/sagernet/tailscale/net/tsaddr"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/tka"
+	"github.com/sagernet/tailscale/types/key"
+	"github.com/sagernet/tailscale/types/views"
+	"github.com/sagernet/tailscale/util/set"
+	"github.com/sagernet/tailscale/wgengine/filter/filtertype"
 )
 
 // NetworkMap is the current state of the world.

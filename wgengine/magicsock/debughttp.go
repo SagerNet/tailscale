@@ -13,11 +13,11 @@ import (
 	"strings"
 	"time"
 
-	"tailscale.com/feature"
-	"tailscale.com/feature/buildfeatures"
-	"tailscale.com/tailcfg"
-	"tailscale.com/tstime/mono"
-	"tailscale.com/types/key"
+	"github.com/sagernet/tailscale/feature"
+	"github.com/sagernet/tailscale/feature/buildfeatures"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/tstime/mono"
+	"github.com/sagernet/tailscale/types/key"
 )
 
 // ServeHTTPDebug serves an HTML representation of the innards of c for debugging.
@@ -189,7 +189,6 @@ func printEndpointHTML(w io.Writer, ep *endpoint) {
 		fmt.Fprintf(w, "</ul></li>\n")
 	}
 	io.WriteString(w, "</ul>")
-
 }
 
 func peerDebugName(p tailcfg.NodeView) string {

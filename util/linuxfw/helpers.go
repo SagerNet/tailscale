@@ -11,7 +11,7 @@ import (
 	"strings"
 	"unicode"
 
-	"tailscale.com/util/slicesx"
+	"github.com/sagernet/tailscale/util/slicesx"
 )
 
 func formatMaybePrintable(b []byte) string {

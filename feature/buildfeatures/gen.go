@@ -13,8 +13,8 @@ import (
 	"os"
 	"strings"
 
-	"tailscale.com/feature/featuretags"
-	"tailscale.com/util/must"
+	"github.com/sagernet/tailscale/feature/featuretags"
+	"github.com/sagernet/tailscale/util/must"
 )
 
 const header = `// Copyright (c) Tailscale Inc & contributors
@@ -42,7 +42,7 @@ func main() {
 					"// Specifically, it's whether the binary was NOT built with the %q build tag.\n"+
 					"// It's a const so it can be used for dead code elimination.\n"+
 					"const %s = %t\n",
-					header, bang, k.OmitTag(), sym, m.Desc, k.OmitTag(), sym, suf == "enabled"), 0644))
+					header, bang, k.OmitTag(), sym, m.Desc, k.OmitTag(), sym, suf == "enabled"), 0o644))
 
 		}
 	}

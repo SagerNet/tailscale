@@ -17,9 +17,7 @@ func init() {
 	packageType = packageTypeDarwin
 }
 
-var (
-	lazyOSVersion = &lazyAtomicValue[string]{f: func() *func() string { godownValue := osVersionDarwin; return &godownValue }()}
-)
+var lazyOSVersion = &lazyAtomicValue[string]{f: func() *func() string { godownValue := osVersionDarwin; return &godownValue }()}
 
 func packageTypeDarwin() string {
 	// Using tailscaled or IPNExtension?

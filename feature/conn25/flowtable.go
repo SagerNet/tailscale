@@ -9,9 +9,9 @@ import (
 	"sync"
 	"time"
 
-	"tailscale.com/net/flowtrack"
-	"tailscale.com/net/packet"
-	"tailscale.com/tstime/mono"
+	"github.com/sagernet/tailscale/net/flowtrack"
+	"github.com/sagernet/tailscale/net/packet"
+	"github.com/sagernet/tailscale/tstime/mono"
 )
 
 // PacketAction may modify the packet.

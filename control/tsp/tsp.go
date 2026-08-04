@@ -18,14 +18,14 @@ import (
 	"strconv"
 	"sync"
 
-	"tailscale.com/control/ts2021"
-	"tailscale.com/health"
-	"tailscale.com/ipn"
-	"tailscale.com/net/tsdial"
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/key"
-	"tailscale.com/types/logger"
-	"tailscale.com/version"
+	"github.com/sagernet/tailscale/control/ts2021"
+	"github.com/sagernet/tailscale/health"
+	"github.com/sagernet/tailscale/ipn"
+	"github.com/sagernet/tailscale/net/tsdial"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/key"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/version"
 )
 
 // DefaultServerURL is the default coordination server base URL,

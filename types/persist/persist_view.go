@@ -9,12 +9,12 @@ import (
 	jsonv1 "encoding/json"
 	"errors"
 
-	jsonv2 "tailscale.com/internal/godown/github.com/go-json-experiment/json"
-	"tailscale.com/internal/godown/github.com/go-json-experiment/json/jsontext"
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/key"
-	"tailscale.com/types/structs"
-	"tailscale.com/types/views"
+	jsonv2 "github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json"
+	"github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json/jsontext"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/key"
+	"github.com/sagernet/tailscale/types/structs"
+	"github.com/sagernet/tailscale/types/views"
 )
 
 //go:generate go run tailscale.com/cmd/cloner  -clonefunc=false -type=Persist

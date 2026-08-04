@@ -9,9 +9,9 @@ package json
 import (
 	"fmt"
 
-	"tailscale.com/internal/godown/github.com/go-json-experiment/json/internal"
-	"tailscale.com/internal/godown/github.com/go-json-experiment/json/internal/jsonflags"
-	"tailscale.com/internal/godown/github.com/go-json-experiment/json/internal/jsonopts"
+	"github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json/internal"
+	"github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json/internal/jsonflags"
+	"github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json/internal/jsonopts"
 )
 
 // Options configure [Marshal], [MarshalWrite], [MarshalEncode],

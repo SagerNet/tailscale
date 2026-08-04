@@ -9,9 +9,9 @@ import (
 	"net/netip"
 	"time"
 
-	"tailscale.com/tstime"
-	"tailscale.com/util/dnsname"
-	"tailscale.com/util/mak"
+	"github.com/sagernet/tailscale/tstime"
+	"github.com/sagernet/tailscale/util/dnsname"
+	"github.com/sagernet/tailscale/util/mak"
 )
 
 // domainDst is a key for looking up an existing address assignment by the
@@ -176,6 +176,7 @@ func (h *addrsHeap) Push(x any) {
 	}
 	*h = append(*h, as)
 }
+
 func (h *addrsHeap) Pop() any {
 	old := *h
 	n := len(old)
@@ -183,6 +184,7 @@ func (h *addrsHeap) Pop() any {
 	*h = old[0 : n-1]
 	return x
 }
+
 func (h addrsHeap) peek() *addrs {
 	return (h)[0]
 }

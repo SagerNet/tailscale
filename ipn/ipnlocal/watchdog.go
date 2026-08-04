@@ -8,7 +8,7 @@ import (
 	"runtime"
 	"time"
 
-	"tailscale.com/tstime"
+	"github.com/sagernet/tailscale/tstime"
 )
 
 // deadlockProbeDelay is how long a watched call must be in flight before we

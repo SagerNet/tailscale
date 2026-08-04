@@ -5,7 +5,7 @@
 
 package tstun
 
-import "tailscale.com/control/controlknobs"
+import "github.com/sagernet/tailscale/control/controlknobs"
 
 func (t *Wrapper) SetLinkFeaturesPostUp(_ *controlknobs.Knobs) {}
 

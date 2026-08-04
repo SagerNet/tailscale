@@ -3,4 +3,4 @@
 
 package condregister
 
-import _ "tailscale.com/feature/condregister/netlog"
+import _ "github.com/sagernet/tailscale/feature/condregister/netlog"

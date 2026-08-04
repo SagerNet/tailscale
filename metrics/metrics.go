@@ -12,7 +12,7 @@ import (
 	"slices"
 	"strings"
 
-	"tailscale.com/syncs"
+	"github.com/sagernet/tailscale/syncs"
 )
 
 // Set is a string-to-Var map variable that satisfies the expvar.Var

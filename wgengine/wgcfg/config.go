@@ -8,7 +8,7 @@ import (
 	"net/netip"
 	"slices"
 
-	"tailscale.com/types/key"
+	"github.com/sagernet/tailscale/types/key"
 )
 
 //go:generate go run tailscale.com/cmd/cloner -type=Config

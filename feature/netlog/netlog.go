@@ -10,12 +10,12 @@ import (
 	"context"
 	"time"
 
-	"tailscale.com/envknob"
-	"tailscale.com/feature"
-	"tailscale.com/types/logid"
-	"tailscale.com/wgengine"
-	"tailscale.com/wgengine/netlog"
-	"tailscale.com/wgengine/router"
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/feature"
+	"github.com/sagernet/tailscale/types/logid"
+	"github.com/sagernet/tailscale/wgengine"
+	"github.com/sagernet/tailscale/wgengine/netlog"
+	"github.com/sagernet/tailscale/wgengine/router"
 )
 
 func init() {

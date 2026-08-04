@@ -8,9 +8,9 @@ import (
 	"fmt"
 	"io/fs"
 
-	"tailscale.com/util/syspolicy/rsop"
-	"tailscale.com/util/syspolicy/setting"
-	"tailscale.com/util/syspolicy/source"
+	"github.com/sagernet/tailscale/util/syspolicy/rsop"
+	"github.com/sagernet/tailscale/util/syspolicy/setting"
+	"github.com/sagernet/tailscale/util/syspolicy/source"
 )
 
 // LoadJSONPolicyFile loads policy settings from the JSON file at path and

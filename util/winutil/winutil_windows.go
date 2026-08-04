@@ -377,7 +377,6 @@ func StartProcessAsChild(parentPID uint32, exePath string, extraEnv []string) er
 	env, err := pt.Environ(false)
 	if err != nil {
 		return err
-
 	}
 	env = append(env, extraEnv...)
 

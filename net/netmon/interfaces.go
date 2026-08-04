@@ -7,7 +7,7 @@ import (
 	"errors"
 	"net"
 
-	"tailscale.com/syncs"
+	"github.com/sagernet/tailscale/syncs"
 )
 
 type ifProps struct {

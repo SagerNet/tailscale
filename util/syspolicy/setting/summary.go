@@ -4,9 +4,9 @@
 package setting
 
 import (
-	jsonv2 "tailscale.com/internal/godown/github.com/go-json-experiment/json"
-	"tailscale.com/internal/godown/github.com/go-json-experiment/json/jsontext"
-	"tailscale.com/types/opt"
+	jsonv2 "github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json"
+	"github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json/jsontext"
+	"github.com/sagernet/tailscale/types/opt"
 )
 
 // Summary is an immutable [PolicyScope] and [Origin].

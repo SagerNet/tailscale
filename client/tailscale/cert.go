@@ -9,7 +9,7 @@ import (
 	"context"
 	"crypto/tls"
 
-	"tailscale.com/client/local"
+	"github.com/sagernet/tailscale/client/local"
 )
 
 // GetCertificate is an alias for [tailscale.com/client/local.GetCertificate].

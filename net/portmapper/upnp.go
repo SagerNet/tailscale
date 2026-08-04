@@ -28,11 +28,11 @@ import (
 	"github.com/huin/goupnp"
 	"github.com/huin/goupnp/dcps/internetgateway2"
 	"github.com/huin/goupnp/soap"
-	"tailscale.com/envknob"
-	"tailscale.com/net/netns"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/ctxkey"
-	"tailscale.com/util/mak"
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/net/netns"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/ctxkey"
+	"github.com/sagernet/tailscale/util/mak"
 )
 
 // upnpHTTPClientKey is a context key for storing an HTTP client to use
@@ -110,6 +110,7 @@ func (u *upnpMapping) MappingDebug() string {
 		u.renewAfter.Unix(), u.goodUntil.Unix(),
 		u.loc)
 }
+
 func (u *upnpMapping) Release(ctx context.Context) {
 	u.client.DeletePortMappingCtx(ctx, "", u.external.Port(), upnpProtocolUDP)
 }
@@ -455,9 +456,7 @@ func (c *Client) upnpHTTPClientLocked() *http.Client {
 	return c.uPnPHTTPClient
 }
 
-var (
-	disableUPnpEnv = envknob.RegisterBool("TS_DISABLE_UPNP")
-)
+var disableUPnpEnv = envknob.RegisterBool("TS_DISABLE_UPNP")
 
 // getUPnPPortMapping attempts to create a port-mapping over the UPnP protocol. On success,
 // it will return the externally exposed IP and port. Otherwise, it will return a zeroed IP and

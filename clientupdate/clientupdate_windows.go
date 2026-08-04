@@ -19,9 +19,9 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/sagernet/tailscale/util/winutil"
+	"github.com/sagernet/tailscale/util/winutil/authenticode"
 	"golang.org/x/sys/windows"
-	"tailscale.com/util/winutil"
-	"tailscale.com/util/winutil/authenticode"
 )
 
 const (
@@ -151,7 +151,7 @@ you can run the command prompt as Administrator one of these ways:
 	} else if !fi.IsDir() {
 		return fmt.Errorf("expected %s to be a directory; got %v", tsDir, fi.Mode())
 	}
-	if err := os.MkdirAll(msiDir, 0700); err != nil {
+	if err := os.MkdirAll(msiDir, 0o700); err != nil {
 		return err
 	}
 	up.cleanupOldDownloads(filepath.Join(msiDir, "*.msi"))
@@ -311,7 +311,7 @@ func (up *Updater) startNewLogFile(baseNamePrefix, baseNameSuffix string) string
 		time.Now().Format("20060102T150405"), baseNameSuffix)
 
 	dir := filepath.Join(os.Getenv("ProgramData"), "Tailscale", "Logs")
-	if err := os.MkdirAll(dir, 0700); err != nil {
+	if err := os.MkdirAll(dir, 0o700); err != nil {
 		up.Logf("failed to create log directory: %v", err)
 		return filepath.Join(os.TempDir(), baseName)
 	}

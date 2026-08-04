@@ -12,14 +12,14 @@ import (
 	"slices"
 	"strings"
 
-	"tailscale.com/envknob"
-	"tailscale.com/ipn/ipnlocal"
-	"tailscale.com/ipn/localapi"
-	"tailscale.com/types/appctype"
-	"tailscale.com/util/dnsname"
-	"tailscale.com/util/httpm"
-	"tailscale.com/util/mak"
-	"tailscale.com/util/testenv"
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/ipn/ipnlocal"
+	"github.com/sagernet/tailscale/ipn/localapi"
+	"github.com/sagernet/tailscale/types/appctype"
+	"github.com/sagernet/tailscale/util/dnsname"
+	"github.com/sagernet/tailscale/util/httpm"
+	"github.com/sagernet/tailscale/util/mak"
+	"github.com/sagernet/tailscale/util/testenv"
 )
 
 // serveLocalAPIStateGet serves the localapi endpoint /conn25/state.

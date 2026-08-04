@@ -11,8 +11,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"tailscale.com/net/routecheck"
-	godownerrors "tailscale.com/internal/godown/std/errors"
+	godownerrors "github.com/sagernet/tailscale/internal/godown/std/errors"
+	"github.com/sagernet/tailscale/net/routecheck"
 )
 
 // ErrReportPending is returned by [Client.RouteCheck] and [Client.RouteCheckProbe]

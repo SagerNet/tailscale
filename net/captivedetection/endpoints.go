@@ -11,10 +11,10 @@ import (
 	"net/url"
 	"slices"
 
+	"github.com/sagernet/tailscale/net/dnsfallback"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/logger"
 	"go4.org/mem"
-	"tailscale.com/net/dnsfallback"
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/logger"
 )
 
 // EndpointProvider is an enum that represents the source of an Endpoint.

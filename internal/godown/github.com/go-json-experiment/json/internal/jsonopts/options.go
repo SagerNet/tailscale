@@ -7,8 +7,8 @@
 package jsonopts
 
 import (
-	"tailscale.com/internal/godown/github.com/go-json-experiment/json/internal"
-	"tailscale.com/internal/godown/github.com/go-json-experiment/json/internal/jsonflags"
+	"github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json/internal"
+	"github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json/internal/jsonflags"
 )
 
 // Options is the common options type shared across json packages.

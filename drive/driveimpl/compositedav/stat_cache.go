@@ -13,13 +13,11 @@ import (
 	"time"
 
 	"github.com/jellydator/ttlcache/v3"
+	"github.com/sagernet/tailscale/drive/driveimpl/shared"
 	"golang.org/x/text/unicode/norm"
-	"tailscale.com/drive/driveimpl/shared"
 )
 
-var (
-	notFound = newCacheEntry(http.StatusNotFound, nil)
-)
+var notFound = newCacheEntry(http.StatusNotFound, nil)
 
 // normalize converts the given path into a canonical form for use as a cache
 // key. In addition to path cleanup, it applies Unicode NFC normalization so

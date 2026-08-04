@@ -10,7 +10,7 @@ import (
 	"sort"
 	"strings"
 
-	"tailscale.com/net/tsaddr"
+	"github.com/sagernet/tailscale/net/tsaddr"
 )
 
 // ValidateViaPrefix checks that the IP prefix is a valid 4via6 route.

@@ -6,9 +6,9 @@ package routecheck
 import (
 	"net/netip"
 
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/views"
-	"tailscale.com/util/mak"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/views"
+	"github.com/sagernet/tailscale/util/mak"
 )
 
 // RoutersByPrefix represents a map of nodes grouped by the subnet that they route.

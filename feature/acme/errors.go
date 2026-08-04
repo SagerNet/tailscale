@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"time"
 
-	"tailscale.com/tsweb"
+	"github.com/sagernet/tailscale/tsweb"
 )
 
 // certRateLimitedError is returned when the upstream ACME CA rate-limited

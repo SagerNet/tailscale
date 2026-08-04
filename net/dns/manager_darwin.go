@@ -12,15 +12,15 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/sagernet/tailscale/control/controlknobs"
+	"github.com/sagernet/tailscale/health"
+	"github.com/sagernet/tailscale/net/dns/resolvconffile"
+	"github.com/sagernet/tailscale/net/tsaddr"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/eventbus"
+	"github.com/sagernet/tailscale/util/mak"
+	"github.com/sagernet/tailscale/util/syspolicy/policyclient"
 	"go4.org/mem"
-	"tailscale.com/control/controlknobs"
-	"tailscale.com/health"
-	"tailscale.com/net/dns/resolvconffile"
-	"tailscale.com/net/tsaddr"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/eventbus"
-	"tailscale.com/util/mak"
-	"tailscale.com/util/syspolicy/policyclient"
 )
 
 // NewOSConfigurator creates a new OS configurator.
@@ -77,7 +77,7 @@ func (c *darwinConfigurator) SetDNS(cfg OSConfig) error {
 		buf.WriteString("\n")
 	}
 
-	if err := os.MkdirAll(c.resolverDir, 0755); err != nil {
+	if err := os.MkdirAll(c.resolverDir, 0o755); err != nil {
 		return err
 	}
 
@@ -102,7 +102,7 @@ func (c *darwinConfigurator) SetDNS(cfg OSConfig) error {
 			sbuf.WriteString(string(d.WithoutTrailingDot()))
 		}
 		sbuf.WriteString("\n")
-		if err := root.WriteFile(searchFile, sbuf.Bytes(), 0644); err != nil {
+		if err := root.WriteFile(searchFile, sbuf.Bytes(), 0o644); err != nil {
 			return err
 		}
 	}
@@ -116,7 +116,7 @@ func (c *darwinConfigurator) SetDNS(cfg OSConfig) error {
 			return fmt.Errorf("invalid resolver domain %q: must not contain slashes or colons", fileBase)
 		}
 
-		if err := root.WriteFile(fileBase, buf.Bytes(), 0644); err != nil {
+		if err := root.WriteFile(fileBase, buf.Bytes(), 0o644); err != nil {
 			return err
 		}
 	}

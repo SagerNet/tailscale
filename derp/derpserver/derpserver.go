@@ -39,27 +39,27 @@ import (
 
 	"github.com/axiomhq/hyperloglog"
 	"github.com/go4org/hashtriemap"
+	"github.com/sagernet/tailscale/client/local"
+	"github.com/sagernet/tailscale/derp"
+	"github.com/sagernet/tailscale/derp/derpconst"
+	"github.com/sagernet/tailscale/disco"
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/metrics"
+	"github.com/sagernet/tailscale/syncs"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/tstime"
+	"github.com/sagernet/tailscale/tstime/rate"
+	"github.com/sagernet/tailscale/types/key"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/bufiox"
+	"github.com/sagernet/tailscale/util/ctxkey"
+	"github.com/sagernet/tailscale/util/mak"
+	"github.com/sagernet/tailscale/util/set"
+	"github.com/sagernet/tailscale/util/slicesx"
+	"github.com/sagernet/tailscale/version"
 	"go4.org/mem"
 	"golang.org/x/sync/errgroup"
 	xrate "golang.org/x/time/rate"
-	"tailscale.com/client/local"
-	"tailscale.com/derp"
-	"tailscale.com/derp/derpconst"
-	"tailscale.com/disco"
-	"tailscale.com/envknob"
-	"tailscale.com/metrics"
-	"tailscale.com/syncs"
-	"tailscale.com/tailcfg"
-	"tailscale.com/tstime"
-	"tailscale.com/tstime/rate"
-	"tailscale.com/types/key"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/bufiox"
-	"tailscale.com/util/ctxkey"
-	"tailscale.com/util/mak"
-	"tailscale.com/util/set"
-	"tailscale.com/util/slicesx"
-	"tailscale.com/version"
 )
 
 // verboseDropKeys is the set of destination public keys that should
@@ -1995,7 +1995,6 @@ func (c *sclient) onSendLoopDone() {
 			return
 		}
 	}
-
 }
 
 func (c *sclient) sendLoop(ctx context.Context) error {

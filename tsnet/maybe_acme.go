@@ -9,4 +9,4 @@ package tsnet
 // [Server.ListenTLS], and related cert-fetch paths work out of the box.
 // Build with the ts_omit_acme tag to omit it.
 
-import _ "tailscale.com/feature/acme"
+import _ "github.com/sagernet/tailscale/feature/acme"

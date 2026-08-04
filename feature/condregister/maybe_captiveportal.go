@@ -5,4 +5,4 @@
 
 package condregister
 
-import _ "tailscale.com/feature/captiveportal"
+import _ "github.com/sagernet/tailscale/feature/captiveportal"

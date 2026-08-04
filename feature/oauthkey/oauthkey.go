@@ -13,9 +13,9 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/sagernet/tailscale/feature"
+	"github.com/sagernet/tailscale/internal/client/tailscale"
 	"golang.org/x/oauth2/clientcredentials"
-	"tailscale.com/feature"
-	"tailscale.com/internal/client/tailscale"
 )
 
 func init() {

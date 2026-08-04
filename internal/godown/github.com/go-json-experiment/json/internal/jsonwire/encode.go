@@ -13,7 +13,7 @@ import (
 	"unicode/utf16"
 	"unicode/utf8"
 
-	"tailscale.com/internal/godown/github.com/go-json-experiment/json/internal/jsonflags"
+	"github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json/internal/jsonflags"
 )
 
 // escapeASCII reports whether the ASCII character needs to be escaped.

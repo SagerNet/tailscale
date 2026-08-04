@@ -9,8 +9,8 @@ import (
 	"context"
 	"net/http"
 
-	"tailscale.com/client/tailscale/apitype"
-	"tailscale.com/feature/serviceclientprefs/serviceclient"
+	"github.com/sagernet/tailscale/client/tailscale/apitype"
+	"github.com/sagernet/tailscale/feature/serviceclientprefs/serviceclient"
 )
 
 // GetServiceClientPrefs returns all of the current profile's [serviceclient.Prefs].

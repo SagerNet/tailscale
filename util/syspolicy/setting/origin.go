@@ -6,8 +6,8 @@ package setting
 import (
 	"fmt"
 
-	jsonv2 "tailscale.com/internal/godown/github.com/go-json-experiment/json"
-	"tailscale.com/internal/godown/github.com/go-json-experiment/json/jsontext"
+	jsonv2 "github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json"
+	"github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json/jsontext"
 )
 
 // Origin describes where a policy or a policy setting is configured.

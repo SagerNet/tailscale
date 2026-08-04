@@ -5,4 +5,4 @@
 
 package condregister
 
-import _ "tailscale.com/feature/acme"
+import _ "github.com/sagernet/tailscale/feature/acme"

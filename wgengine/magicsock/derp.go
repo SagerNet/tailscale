@@ -16,22 +16,22 @@ import (
 	"time"
 	"unsafe"
 
+	"github.com/sagernet/tailscale/derp"
+	"github.com/sagernet/tailscale/derp/derphttp"
+	"github.com/sagernet/tailscale/health"
+	"github.com/sagernet/tailscale/net/dnscache"
+	"github.com/sagernet/tailscale/net/netcheck"
+	"github.com/sagernet/tailscale/net/tsaddr"
+	"github.com/sagernet/tailscale/syncs"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/tstime/mono"
+	"github.com/sagernet/tailscale/types/key"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/backoff"
+	"github.com/sagernet/tailscale/util/mak"
+	"github.com/sagernet/tailscale/util/rands"
+	"github.com/sagernet/tailscale/util/testenv"
 	"github.com/tailscale/wireguard-go/conn"
-	"tailscale.com/derp"
-	"tailscale.com/derp/derphttp"
-	"tailscale.com/health"
-	"tailscale.com/net/dnscache"
-	"tailscale.com/net/netcheck"
-	"tailscale.com/net/tsaddr"
-	"tailscale.com/syncs"
-	"tailscale.com/tailcfg"
-	"tailscale.com/tstime/mono"
-	"tailscale.com/types/key"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/backoff"
-	"tailscale.com/util/mak"
-	"tailscale.com/util/rands"
-	"tailscale.com/util/testenv"
 )
 
 // frameReceiveRecordRate is the minimum time between updates to last frame
@@ -814,7 +814,7 @@ func (c *Conn) setDERPMap(dm *tailcfg.DERPMap, doReStun bool) {
 	c.mu.Lock()
 	defer c.mu.Unlock()
 
-	var derpAddr = debugUseDERPAddr()
+	derpAddr := debugUseDERPAddr()
 	if derpAddr != "" {
 		derpPort := 443
 		if debugUseDERPHTTP() {

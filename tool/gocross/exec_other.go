@@ -6,10 +6,10 @@
 package main
 
 import (
-	
 	"os"
 	"os/exec"
-	godownerrors "tailscale.com/internal/godown/std/errors"
+
+	godownerrors "github.com/sagernet/tailscale/internal/godown/std/errors"
 )
 
 func doExec(cmd string, args []string, env []string) error {

@@ -8,11 +8,11 @@ import (
 	"slices"
 	"time"
 
-	jsonv2 "tailscale.com/internal/godown/github.com/go-json-experiment/json"
-	"tailscale.com/internal/godown/github.com/go-json-experiment/json/jsontext"
+	jsonv2 "github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json"
+	"github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json/jsontext"
+	"github.com/sagernet/tailscale/types/opt"
+	"github.com/sagernet/tailscale/types/views"
 	"golang.org/x/exp/constraints"
-	"tailscale.com/types/opt"
-	"tailscale.com/types/views"
 )
 
 // BasicType is a constraint that allows types whose underlying type is a predeclared

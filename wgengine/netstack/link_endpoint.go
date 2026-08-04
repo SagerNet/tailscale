@@ -7,14 +7,14 @@ import (
 	"context"
 	"sync"
 
+	"github.com/sagernet/tailscale/feature/buildfeatures"
+	"github.com/sagernet/tailscale/net/packet"
+	"github.com/sagernet/tailscale/types/ipproto"
+	"github.com/sagernet/tailscale/wgengine/netstack/gro"
 	"gvisor.dev/gvisor/pkg/buffer"
 	"gvisor.dev/gvisor/pkg/tcpip"
 	"gvisor.dev/gvisor/pkg/tcpip/header"
 	"gvisor.dev/gvisor/pkg/tcpip/stack"
-	"tailscale.com/feature/buildfeatures"
-	"tailscale.com/net/packet"
-	"tailscale.com/types/ipproto"
-	"tailscale.com/wgengine/netstack/gro"
 )
 
 type queue struct {
@@ -88,8 +88,10 @@ func (q *queue) Num() int {
 	return len(q.c)
 }
 
-var _ stack.LinkEndpoint = (*linkEndpoint)(nil)
-var _ stack.GSOEndpoint = (*linkEndpoint)(nil)
+var (
+	_ stack.LinkEndpoint = (*linkEndpoint)(nil)
+	_ stack.GSOEndpoint  = (*linkEndpoint)(nil)
+)
 
 type supportedGRO int
 

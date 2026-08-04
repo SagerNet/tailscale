@@ -52,7 +52,10 @@ func (b *LocalBackend) TCPHandlerForDst(src, dst netip.AddrPort) (handler func(c
 		// tell the difference between a long lived connection that is idle
 		// vs a connection that is dead because the peer has gone away.
 		// We pick 72h as that is typically sufficient for a long weekend.
-		opts = append(opts, func() *tcpip2.KeepaliveIdleOption { godownValue := tcpip.KeepaliveIdleOption(72*time.Hour); return &godownValue }())
+		opts = append(opts, func() *tcpip2.KeepaliveIdleOption {
+			godownValue := tcpip.KeepaliveIdleOption(72 * time.Hour)
+			return &godownValue
+		}())
 		return b.handleSSHConn, opts
 	}
 	// TODO(will,sonia): allow customizing web client port ?

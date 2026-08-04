@@ -11,7 +11,7 @@ import (
 	"syscall"
 	"time"
 
-	"tailscale.com/syncs"
+	"github.com/sagernet/tailscale/syncs"
 )
 
 // blockForeverConn is a net.PacketConn whose reads block until it is closed.

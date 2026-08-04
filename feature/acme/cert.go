@@ -22,17 +22,17 @@ import (
 	"strings"
 	"time"
 
-	"tailscale.com/envknob"
-	"tailscale.com/health"
-	"tailscale.com/ipn"
-	"tailscale.com/ipn/ipnlocal"
-	"tailscale.com/tailcfg"
-	xacme "tailscale.com/tempfork/acme"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/mak"
-	"tailscale.com/util/set"
-	"tailscale.com/util/slicesx"
-	"tailscale.com/util/testenv"
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/health"
+	"github.com/sagernet/tailscale/ipn"
+	"github.com/sagernet/tailscale/ipn/ipnlocal"
+	"github.com/sagernet/tailscale/tailcfg"
+	xacme "github.com/sagernet/tailscale/tempfork/acme"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/mak"
+	"github.com/sagernet/tailscale/util/set"
+	"github.com/sagernet/tailscale/util/slicesx"
+	"github.com/sagernet/tailscale/util/testenv"
 )
 
 type acmeChallengeType string
@@ -429,12 +429,12 @@ func (e *extension) ensureAccount(ctx context.Context, ac *xacme.Client, logf lo
 }
 
 type acmeCertIssueArgs struct {
-	cs            certStore          // certificate and ACME account storage
-	logf          logger.Logf        // logs ACME progress and failures
-	traceACME     func(any)          // optional hook for logging ACME messages
-	domain        string             // certificate domain being issued
+	cs            certStore           // certificate and ACME account storage
+	logf          logger.Logf         // logs ACME progress and failures
+	traceACME     func(any)           // optional hook for logging ACME messages
+	domain        string              // certificate domain being issued
 	opts          []xacme.OrderOption // ACME order options
-	challengeType acmeChallengeType  // challenge type to fulfill
+	challengeType acmeChallengeType   // challenge type to fulfill
 }
 
 func (args acmeCertIssueArgs) baseDomain() string { return strings.TrimPrefix(args.domain, "*.") }

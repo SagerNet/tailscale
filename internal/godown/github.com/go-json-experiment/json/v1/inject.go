@@ -12,9 +12,9 @@ import (
 	"strconv"
 	"strings"
 
-	jsonv2 "tailscale.com/internal/godown/github.com/go-json-experiment/json"
-	"tailscale.com/internal/godown/github.com/go-json-experiment/json/internal"
-	"tailscale.com/internal/godown/github.com/go-json-experiment/json/jsontext"
+	jsonv2 "github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json"
+	"github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json/internal"
+	"github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json/jsontext"
 )
 
 // Inject functionality into v2 to properly handle v1 types.

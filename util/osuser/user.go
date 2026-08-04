@@ -19,7 +19,7 @@ import (
 	"time"
 	"unicode/utf8"
 
-	"tailscale.com/version/distro"
+	"github.com/sagernet/tailscale/version/distro"
 )
 
 // LookupByUIDWithShell is like os/user.LookupId but handles a few edge cases
@@ -221,7 +221,7 @@ func parseGetentUser(out []byte) (*user.User, string, error) {
 	for len(f) < 7 {
 		f = append(f, "")
 	}
-	var mandatoryFields = map[int]string{0: "Username", 2: "Uid", 3: "Gid", 5: "HomeDir"}
+	mandatoryFields := map[int]string{0: "Username", 2: "Uid", 3: "Gid", 5: "HomeDir"}
 	for k, v := range mandatoryFields {
 		if f[k] == "" {
 			return nil, "", fmt.Errorf("missing mandatory field %q", v)

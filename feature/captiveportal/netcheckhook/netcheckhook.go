@@ -11,9 +11,9 @@ import (
 	"log"
 	"time"
 
-	"tailscale.com/net/captivedetection"
-	"tailscale.com/net/netcheck"
-	"tailscale.com/tailcfg"
+	"github.com/sagernet/tailscale/net/captivedetection"
+	"github.com/sagernet/tailscale/net/netcheck"
+	"github.com/sagernet/tailscale/tailcfg"
 )
 
 func init() {

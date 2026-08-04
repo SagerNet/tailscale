@@ -11,12 +11,10 @@ import (
 	"log"
 	"net"
 
-	"tailscale.com/syncs"
+	"github.com/sagernet/tailscale/syncs"
 )
 
-var (
-	lastKnownDefaultRouteIfName syncs.AtomicValue[string]
-)
+var lastKnownDefaultRouteIfName syncs.AtomicValue[string]
 
 // UpdateLastKnownDefaultRouteInterface is called by ipn-go-bridge from apple network extensions when
 // our NWPathMonitor instance detects a network path transition.
@@ -80,7 +78,6 @@ func defaultRoute() (d DefaultRouteDetails, err error) {
 // via UpdateLastKnownDefaultRouteInterface.  If UpdateLastKnownDefaultRouteInterface has not been called,
 // the interface name is not valid, or we cannot find its index, an error is returned.
 func OSDefaultRoute() (d DefaultRouteDetails, err error) {
-
 	// Did Swift set lastKnownDefaultRouteInterface? If so, we should use it and don't bother
 	// with anything else. However, for sanity, do check whether Swift gave us with an interface
 	// that exists, is up, and has an address and is not the tunnel itself.

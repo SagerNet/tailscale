@@ -11,8 +11,8 @@ import (
 	"net/http"
 	"time"
 
-	"tailscale.com/feature"
-	"tailscale.com/ipn"
+	"github.com/sagernet/tailscale/feature"
+	"github.com/sagernet/tailscale/ipn"
 )
 
 // TLSCertKeyPair is a TLS public and private key, and whether they were

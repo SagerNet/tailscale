@@ -19,22 +19,22 @@ import (
 	"strings"
 	"time"
 
-	"tailscale.com/atomicfile"
-	"tailscale.com/drive"
-	"tailscale.com/feature/buildfeatures"
-	"tailscale.com/ipn/ipnstate"
-	"tailscale.com/net/netaddr"
-	"tailscale.com/net/tsaddr"
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/opt"
-	"tailscale.com/types/persist"
-	"tailscale.com/types/preftype"
-	"tailscale.com/types/views"
-	"tailscale.com/util/dnsname"
-	"tailscale.com/util/syspolicy/pkey"
-	"tailscale.com/util/syspolicy/policyclient"
-	"tailscale.com/version"
-	godownreflect "tailscale.com/internal/godown/std/reflect"
+	"github.com/sagernet/tailscale/atomicfile"
+	"github.com/sagernet/tailscale/drive"
+	"github.com/sagernet/tailscale/feature/buildfeatures"
+	godownreflect "github.com/sagernet/tailscale/internal/godown/std/reflect"
+	"github.com/sagernet/tailscale/ipn/ipnstate"
+	"github.com/sagernet/tailscale/net/netaddr"
+	"github.com/sagernet/tailscale/net/tsaddr"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/opt"
+	"github.com/sagernet/tailscale/types/persist"
+	"github.com/sagernet/tailscale/types/preftype"
+	"github.com/sagernet/tailscale/types/views"
+	"github.com/sagernet/tailscale/util/dnsname"
+	"github.com/sagernet/tailscale/util/syspolicy/pkey"
+	"github.com/sagernet/tailscale/util/syspolicy/policyclient"
+	"github.com/sagernet/tailscale/version"
 )
 
 // DefaultControlURL is the URL base of the control plane
@@ -42,11 +42,9 @@ import (
 // The default control plane is the hosted version run by Tailscale.com.
 const DefaultControlURL = "https://controlplane.tailscale.com"
 
-var (
-	// ErrExitNodeIDAlreadySet is returned from (*Prefs).SetExitNodeIP when the
-	// Prefs.ExitNodeID field is already set.
-	ErrExitNodeIDAlreadySet = errors.New("cannot set ExitNodeIP when ExitNodeID is already set")
-)
+// ErrExitNodeIDAlreadySet is returned from (*Prefs).SetExitNodeIP when the
+// Prefs.ExitNodeID field is already set.
+var ErrExitNodeIDAlreadySet = errors.New("cannot set ExitNodeIP when ExitNodeID is already set")
 
 // IsLoginServerSynonym reports whether a URL is a drop-in replacement
 // for the primary Tailscale login server.
@@ -1032,8 +1030,8 @@ func LoadPrefsWindows(filename string) (*Prefs, error) {
 func SavePrefs(filename string, p *Prefs) {
 	log.Printf("Saving prefs %v %v\n", filename, p.Pretty())
 	data := p.ToBytes()
-	os.MkdirAll(filepath.Dir(filename), 0700)
-	if err := atomicfile.WriteFile(filename, data, 0600); err != nil {
+	os.MkdirAll(filepath.Dir(filename), 0o700)
+	if err := atomicfile.WriteFile(filename, data, 0o600); err != nil {
 		log.Printf("SavePrefs: %v\n", err)
 	}
 }

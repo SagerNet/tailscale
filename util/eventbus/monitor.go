@@ -3,7 +3,7 @@
 
 package eventbus
 
-import "tailscale.com/syncs"
+import "github.com/sagernet/tailscale/syncs"
 
 // A Monitor monitors the execution of a goroutine processing events from a
 // [Client], allowing the caller to block until it is complete. The zero value

@@ -15,8 +15,8 @@ import (
 	"strings"
 	"sync"
 
-	"tailscale.com/feature/buildfeatures"
-	"tailscale.com/util/testenv"
+	"github.com/sagernet/tailscale/feature/buildfeatures"
+	"github.com/sagernet/tailscale/util/testenv"
 )
 
 // dohOfIP maps from public DNS IPs to their DoH base URL.
@@ -24,8 +24,10 @@ import (
 // This does not include NextDNS which is handled specially.
 var dohOfIP = map[netip.Addr]string{} // 8.8.8.8 => "https://..."
 
-var dohIPsOfBase = map[string][]netip.Addr{}
-var populateOnce sync.Once
+var (
+	dohIPsOfBase = map[string][]netip.Addr{}
+	populateOnce sync.Once
+)
 
 const (
 	nextDNSBase  = "https://dns.nextdns.io/"

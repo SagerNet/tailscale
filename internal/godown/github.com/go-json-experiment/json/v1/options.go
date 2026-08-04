@@ -177,10 +177,10 @@ package json
 import (
 	"encoding"
 
-	jsonv2 "tailscale.com/internal/godown/github.com/go-json-experiment/json"
-	"tailscale.com/internal/godown/github.com/go-json-experiment/json/internal/jsonflags"
-	"tailscale.com/internal/godown/github.com/go-json-experiment/json/internal/jsonopts"
-	"tailscale.com/internal/godown/github.com/go-json-experiment/json/jsontext"
+	jsonv2 "github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json"
+	"github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json/internal/jsonflags"
+	"github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json/internal/jsonopts"
+	"github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json/jsontext"
 )
 
 // Reference encoding, jsonv2, and jsontext packages to assist pkgsite

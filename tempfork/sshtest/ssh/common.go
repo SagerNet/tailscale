@@ -7,14 +7,13 @@ package ssh
 import (
 	"crypto"
 	"crypto/rand"
+	_ "crypto/sha1"
+	_ "crypto/sha256"
+	_ "crypto/sha512"
 	"fmt"
 	"io"
 	"math"
 	"sync"
-
-	_ "crypto/sha1"
-	_ "crypto/sha256"
-	_ "crypto/sha512"
 )
 
 // These are string constants in the SSH protocol.
@@ -184,7 +183,6 @@ func (a *directionAlgorithms) rekeyBytes() int64 {
 	switch a.Cipher {
 	case "aes128-ctr", "aes192-ctr", "aes256-ctr", gcm128CipherID, gcm256CipherID, aes128cbcID:
 		return 16 * (1 << 32)
-
 	}
 
 	// For others, stick with RFC 4253 recommendation to rekey after 1 Gb of data.

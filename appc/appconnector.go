@@ -18,15 +18,15 @@ import (
 	"strings"
 	"time"
 
-	"tailscale.com/syncs"
-	"tailscale.com/types/appctype"
-	"tailscale.com/types/logger"
-	"tailscale.com/types/views"
-	"tailscale.com/util/clientmetric"
-	"tailscale.com/util/dnsname"
-	"tailscale.com/util/eventbus"
-	"tailscale.com/util/execqueue"
-	"tailscale.com/util/slicesx"
+	"github.com/sagernet/tailscale/syncs"
+	"github.com/sagernet/tailscale/types/appctype"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/types/views"
+	"github.com/sagernet/tailscale/util/clientmetric"
+	"github.com/sagernet/tailscale/util/dnsname"
+	"github.com/sagernet/tailscale/util/eventbus"
+	"github.com/sagernet/tailscale/util/execqueue"
+	"github.com/sagernet/tailscale/util/slicesx"
 )
 
 // rateLogger responds to calls to update by adding a count for the current period and

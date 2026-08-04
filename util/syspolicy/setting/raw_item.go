@@ -7,11 +7,11 @@ import (
 	"fmt"
 	"reflect"
 
-	jsonv2 "tailscale.com/internal/godown/github.com/go-json-experiment/json"
-	"tailscale.com/internal/godown/github.com/go-json-experiment/json/jsontext"
-	"tailscale.com/types/opt"
-	"tailscale.com/types/structs"
-	"tailscale.com/util/syspolicy/pkey"
+	jsonv2 "github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json"
+	"github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json/jsontext"
+	"github.com/sagernet/tailscale/types/opt"
+	"github.com/sagernet/tailscale/types/structs"
+	"github.com/sagernet/tailscale/util/syspolicy/pkey"
 )
 
 // RawItem contains a raw policy setting value as read from a policy store, or an

@@ -11,9 +11,9 @@ import (
 	"errors"
 	"io"
 
-	"tailscale.com/internal/godown/github.com/go-json-experiment/json/internal/jsonflags"
-	"tailscale.com/internal/godown/github.com/go-json-experiment/json/internal/jsonopts"
-	"tailscale.com/internal/godown/github.com/go-json-experiment/json/internal/jsonwire"
+	"github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json/internal/jsonflags"
+	"github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json/internal/jsonopts"
+	"github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json/internal/jsonwire"
 )
 
 // NOTE: The logic for decoding is complicated by the fact that reading from

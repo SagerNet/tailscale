@@ -5,4 +5,4 @@
 
 package oauthkey
 
-import _ "tailscale.com/feature/oauthkey"
+import _ "github.com/sagernet/tailscale/feature/oauthkey"

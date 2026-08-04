@@ -19,13 +19,13 @@ import (
 	"sync/atomic"
 	"time"
 
-	"tailscale.com/envknob"
-	"tailscale.com/net/netx"
-	"tailscale.com/syncs"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/cloudenv"
-	"tailscale.com/util/singleflight"
-	"tailscale.com/util/testenv"
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/net/netx"
+	"github.com/sagernet/tailscale/syncs"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/cloudenv"
+	"github.com/sagernet/tailscale/util/singleflight"
+	"github.com/sagernet/tailscale/util/testenv"
 )
 
 var zaddr netip.Addr

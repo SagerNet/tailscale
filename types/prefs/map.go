@@ -7,11 +7,11 @@ import (
 	"maps"
 	"net/netip"
 
-	jsonv2 "tailscale.com/internal/godown/github.com/go-json-experiment/json"
-	"tailscale.com/internal/godown/github.com/go-json-experiment/json/jsontext"
+	jsonv2 "github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json"
+	"github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json/jsontext"
+	"github.com/sagernet/tailscale/types/opt"
+	"github.com/sagernet/tailscale/types/views"
 	"golang.org/x/exp/constraints"
-	"tailscale.com/types/opt"
-	"tailscale.com/types/views"
 )
 
 // MapKeyType is a constraint allowing types that can be used as [Map] and [StructMap] keys.

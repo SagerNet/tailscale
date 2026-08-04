@@ -23,13 +23,13 @@ import (
 	"sync/atomic"
 
 	"github.com/gaissmai/bart"
-	"tailscale.com/net/tsaddr"
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/key"
-	"tailscale.com/types/logger"
-	"tailscale.com/types/views"
-	"tailscale.com/util/mak"
-	"tailscale.com/util/set"
+	"github.com/sagernet/tailscale/net/tsaddr"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/key"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/types/views"
+	"github.com/sagernet/tailscale/util/mak"
+	"github.com/sagernet/tailscale/util/set"
 )
 
 // peerView is the subset of a peer's netmap state that affects
@@ -1031,7 +1031,8 @@ func (rm *RouteManager) rebuildAll(res *Result) {
 
 // publish stores the changed snapshots and records them in res.
 func (rm *RouteManager) publish(out *bart.Table[*PeerRoute], outChanged bool,
-	osr *bart.Lite, osChanged bool, res *Result) {
+	osr *bart.Lite, osChanged bool, res *Result,
+) {
 	if outChanged {
 		rm.outbound.Store(out)
 		res.OutboundChanged = true

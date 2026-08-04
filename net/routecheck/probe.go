@@ -11,14 +11,14 @@ import (
 	"slices"
 	"time"
 
+	"github.com/sagernet/tailscale/ipn/ipnstate"
+	"github.com/sagernet/tailscale/net/traffic"
+	"github.com/sagernet/tailscale/syncs"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/tsconst"
+	"github.com/sagernet/tailscale/util/clientmetric"
+	"github.com/sagernet/tailscale/util/mak"
 	"golang.org/x/sync/errgroup"
-	"tailscale.com/ipn/ipnstate"
-	"tailscale.com/net/traffic"
-	"tailscale.com/syncs"
-	"tailscale.com/tailcfg"
-	"tailscale.com/tsconst"
-	"tailscale.com/util/clientmetric"
-	"tailscale.com/util/mak"
 )
 
 var (

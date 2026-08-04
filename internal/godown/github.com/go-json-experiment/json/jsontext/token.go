@@ -12,8 +12,8 @@ import (
 	"math"
 	"strconv"
 
-	"tailscale.com/internal/godown/github.com/go-json-experiment/json/internal/jsonflags"
-	"tailscale.com/internal/godown/github.com/go-json-experiment/json/internal/jsonwire"
+	"github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json/internal/jsonflags"
+	"github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json/internal/jsonwire"
 )
 
 // NOTE: Token is analogous to v1 json.Token.

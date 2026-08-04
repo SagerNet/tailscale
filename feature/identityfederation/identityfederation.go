@@ -15,11 +15,11 @@ import (
 	"strings"
 	"time"
 
+	"github.com/sagernet/tailscale/feature"
+	"github.com/sagernet/tailscale/internal/client/tailscale"
+	godownerrors "github.com/sagernet/tailscale/internal/godown/std/errors"
+	"github.com/sagernet/tailscale/ipn"
 	"golang.org/x/oauth2"
-	"tailscale.com/feature"
-	"tailscale.com/internal/client/tailscale"
-	"tailscale.com/ipn"
-	godownerrors "tailscale.com/internal/godown/std/errors"
 )
 
 func init() {

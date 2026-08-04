@@ -6,7 +6,7 @@ package tailscale
 import (
 	"context"
 
-	"tailscale.com/feature"
+	"github.com/sagernet/tailscale/feature"
 )
 
 type ResolveAuthKeyArgs struct {

@@ -23,29 +23,29 @@ import (
 	"syscall"
 	"time"
 
-	"tailscale.com/derp"
-	"tailscale.com/derp/derphttp"
-	"tailscale.com/envknob"
-	"tailscale.com/feature"
-	"tailscale.com/feature/buildfeatures"
-	"tailscale.com/hostinfo"
-	"tailscale.com/net/dnscache"
-	"tailscale.com/net/neterror"
-	"tailscale.com/net/netmon"
-	"tailscale.com/net/netns"
-	"tailscale.com/net/ping"
-	"tailscale.com/net/portmapper/portmappertype"
-	"tailscale.com/net/sockstats"
-	"tailscale.com/net/stun"
-	"tailscale.com/syncs"
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/logger"
-	"tailscale.com/types/nettype"
-	"tailscale.com/types/opt"
-	"tailscale.com/types/views"
-	"tailscale.com/util/clientmetric"
-	"tailscale.com/util/mak"
-	"tailscale.com/util/testenv"
+	"github.com/sagernet/tailscale/derp"
+	"github.com/sagernet/tailscale/derp/derphttp"
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/feature"
+	"github.com/sagernet/tailscale/feature/buildfeatures"
+	"github.com/sagernet/tailscale/hostinfo"
+	"github.com/sagernet/tailscale/net/dnscache"
+	"github.com/sagernet/tailscale/net/neterror"
+	"github.com/sagernet/tailscale/net/netmon"
+	"github.com/sagernet/tailscale/net/netns"
+	"github.com/sagernet/tailscale/net/ping"
+	"github.com/sagernet/tailscale/net/portmapper/portmappertype"
+	"github.com/sagernet/tailscale/net/sockstats"
+	"github.com/sagernet/tailscale/net/stun"
+	"github.com/sagernet/tailscale/syncs"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/types/nettype"
+	"github.com/sagernet/tailscale/types/opt"
+	"github.com/sagernet/tailscale/types/views"
+	"github.com/sagernet/tailscale/util/clientmetric"
+	"github.com/sagernet/tailscale/util/mak"
+	"github.com/sagernet/tailscale/util/testenv"
 )
 
 // Debugging and experimentation tweakables.
@@ -566,7 +566,6 @@ func nodeMight6(n *tailcfg.DERPNode) bool {
 	}
 	ip, _ := netip.ParseAddr(n.IPv6)
 	return ip.Is6()
-
 }
 
 // nodeMight4 reports whether n might reply to STUN over IPv4 based on

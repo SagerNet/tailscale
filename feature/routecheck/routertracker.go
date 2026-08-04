@@ -9,13 +9,13 @@ import (
 	"fmt"
 	"sync"
 
-	"tailscale.com/ipn"
-	"tailscale.com/ipn/ipnext"
-	"tailscale.com/net/routecheck"
-	"tailscale.com/syncs"
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/set"
+	"github.com/sagernet/tailscale/ipn"
+	"github.com/sagernet/tailscale/ipn/ipnext"
+	"github.com/sagernet/tailscale/net/routecheck"
+	"github.com/sagernet/tailscale/syncs"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/set"
 )
 
 var ErrRouteCheckNotEnabled = errors.New("routecheck not enabled")

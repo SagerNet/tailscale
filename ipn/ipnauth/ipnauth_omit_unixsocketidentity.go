@@ -8,7 +8,7 @@ package ipnauth
 import (
 	"net"
 
-	"tailscale.com/types/logger"
+	"github.com/sagernet/tailscale/types/logger"
 )
 
 // GetConnIdentity extracts the identity information from the connection

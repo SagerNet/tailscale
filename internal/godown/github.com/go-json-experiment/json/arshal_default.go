@@ -22,11 +22,11 @@ import (
 	"strings"
 	"sync"
 
-	"tailscale.com/internal/godown/github.com/go-json-experiment/json/internal"
-	"tailscale.com/internal/godown/github.com/go-json-experiment/json/internal/jsonflags"
-	"tailscale.com/internal/godown/github.com/go-json-experiment/json/internal/jsonopts"
-	"tailscale.com/internal/godown/github.com/go-json-experiment/json/internal/jsonwire"
-	"tailscale.com/internal/godown/github.com/go-json-experiment/json/jsontext"
+	"github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json/internal"
+	"github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json/internal/jsonflags"
+	"github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json/internal/jsonopts"
+	"github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json/internal/jsonwire"
+	"github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json/jsontext"
 )
 
 // optimizeCommon specifies whether to use optimizations targeted for certain

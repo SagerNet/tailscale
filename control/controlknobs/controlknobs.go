@@ -10,10 +10,10 @@ import (
 	"reflect"
 	"sync/atomic"
 
-	"tailscale.com/syncs"
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/opt"
-	godownreflect "tailscale.com/internal/godown/std/reflect"
+	godownreflect "github.com/sagernet/tailscale/internal/godown/std/reflect"
+	"github.com/sagernet/tailscale/syncs"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/opt"
 )
 
 // Knobs is the set of knobs that the control plane's coordination server can

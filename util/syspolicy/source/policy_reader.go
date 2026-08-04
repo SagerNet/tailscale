@@ -12,13 +12,13 @@ import (
 	"sync"
 	"time"
 
-	"tailscale.com/util/mak"
-	"tailscale.com/util/set"
-	"tailscale.com/util/syspolicy/internal/loggerx"
-	"tailscale.com/util/syspolicy/internal/metrics"
-	"tailscale.com/util/syspolicy/pkey"
-	"tailscale.com/util/syspolicy/ptype"
-	"tailscale.com/util/syspolicy/setting"
+	"github.com/sagernet/tailscale/util/mak"
+	"github.com/sagernet/tailscale/util/set"
+	"github.com/sagernet/tailscale/util/syspolicy/internal/loggerx"
+	"github.com/sagernet/tailscale/util/syspolicy/internal/metrics"
+	"github.com/sagernet/tailscale/util/syspolicy/pkey"
+	"github.com/sagernet/tailscale/util/syspolicy/ptype"
+	"github.com/sagernet/tailscale/util/syspolicy/setting"
 )
 
 // Reader reads all configured policy settings from a given [Store].

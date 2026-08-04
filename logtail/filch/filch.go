@@ -18,17 +18,21 @@ import (
 	"slices"
 	"sync"
 
-	"tailscale.com/metrics"
-	"tailscale.com/util/must"
+	"github.com/sagernet/tailscale/metrics"
+	"github.com/sagernet/tailscale/util/must"
 )
 
 var stderrFD = 2 // a variable for testing
 
-var errTooLong = errors.New("filch: line too long")
-var errClosed = errors.New("filch: buffer is closed")
+var (
+	errTooLong = errors.New("filch: line too long")
+	errClosed  = errors.New("filch: buffer is closed")
+)
 
-const DefaultMaxLineSize = 64 << 10
-const DefaultMaxFileSize = 50 << 20
+const (
+	DefaultMaxLineSize = 64 << 10
+	DefaultMaxFileSize = 50 << 20
+)
 
 type Options struct {
 	// ReplaceStderr specifies whether to filch [os.Stderr] such that
@@ -131,21 +135,27 @@ func (f *Filch) ExpVar() expvar.Var {
 func (f *Filch) unreadReadBuffer() []byte {
 	return f.rdBuf[f.rdBufIdx:]
 }
+
 func (f *Filch) availReadBuffer() []byte {
 	return f.rdBuf[len(f.rdBuf):cap(f.rdBuf)]
 }
+
 func (f *Filch) resetReadBuffer() {
 	f.rdBufIdx, f.rdBuf = 0, f.rdBuf[:0]
 }
+
 func (f *Filch) moveReadBufferToFront() {
 	f.rdBufIdx, f.rdBuf = 0, f.rdBuf[:copy(f.rdBuf, f.rdBuf[f.rdBufIdx:])]
 }
+
 func (f *Filch) growReadBuffer() {
 	f.rdBuf = slices.Grow(f.rdBuf, cap(f.rdBuf)+1)
 }
+
 func (f *Filch) consumeReadBuffer(n int) {
 	f.rdBufIdx += n
 }
+
 func (f *Filch) appendReadBuffer(n int) {
 	f.rdBuf = f.rdBuf[:len(f.rdBuf)+n]
 	f.rdBufMaxLen = max(f.rdBufMaxLen, len(f.rdBuf))
@@ -437,11 +447,11 @@ func New(filePrefix string, opts Options) (f *Filch, err error) {
 	path1 := filePrefix + ".log1.txt"
 	path2 := filePrefix + ".log2.txt"
 
-	f1, err = os.OpenFile(path1, os.O_CREATE|os.O_RDWR, 0600)
+	f1, err = os.OpenFile(path1, os.O_CREATE|os.O_RDWR, 0o600)
 	if err != nil {
 		return nil, err
 	}
-	f2, err = os.OpenFile(path2, os.O_CREATE|os.O_RDWR, 0600)
+	f2, err = os.OpenFile(path2, os.O_CREATE|os.O_RDWR, 0o600)
 	if err != nil {
 		return nil, err
 	}

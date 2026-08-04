@@ -8,11 +8,11 @@ import (
 	"errors"
 	"net/http"
 
-	"tailscale.com/client/tailscale/apitype"
-	"tailscale.com/feature/serviceclientprefs/serviceclient"
-	"tailscale.com/ipn/ipnlocal"
-	"tailscale.com/ipn/localapi"
-	"tailscale.com/util/httpm"
+	"github.com/sagernet/tailscale/client/tailscale/apitype"
+	"github.com/sagernet/tailscale/feature/serviceclientprefs/serviceclient"
+	"github.com/sagernet/tailscale/ipn/ipnlocal"
+	"github.com/sagernet/tailscale/ipn/localapi"
+	"github.com/sagernet/tailscale/util/httpm"
 )
 
 func init() {

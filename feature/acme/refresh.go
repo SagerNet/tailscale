@@ -8,10 +8,10 @@ import (
 	"net"
 	"time"
 
-	"tailscale.com/envknob"
-	"tailscale.com/ipn"
-	"tailscale.com/ipn/ipnlocal"
-	"tailscale.com/util/set"
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/ipn"
+	"github.com/sagernet/tailscale/ipn/ipnlocal"
+	"github.com/sagernet/tailscale/util/set"
 )
 
 // certRefreshInterval is how often the background loop iterates the set

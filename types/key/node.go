@@ -11,11 +11,11 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/sagernet/tailscale/types/structs"
+	"github.com/sagernet/tailscale/util/bufiox"
 	"go4.org/mem"
 	"golang.org/x/crypto/curve25519"
 	"golang.org/x/crypto/nacl/box"
-	"tailscale.com/types/structs"
-	"tailscale.com/util/bufiox"
 )
 
 const (

@@ -16,10 +16,10 @@ import (
 	"sync"
 	"time"
 
+	"github.com/sagernet/tailscale/syncs"
+	"github.com/sagernet/tailscale/types/key"
 	"golang.org/x/crypto/blake2s"
 	chp "golang.org/x/crypto/chacha20poly1305"
-	"tailscale.com/syncs"
-	"tailscale.com/types/key"
 )
 
 const (
@@ -375,6 +375,7 @@ type errReadTooBig struct {
 func (e errReadTooBig) Error() string {
 	return fmt.Sprintf("requested read of %d bytes exceeds max allowed Noise frame size", e.requested)
 }
+
 func (e errReadTooBig) Temporary() bool {
 	// permanent error because this error only occurs when our peer
 	// sends us a frame so large we're unwilling to ever decode it.

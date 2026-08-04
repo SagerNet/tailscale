@@ -8,7 +8,7 @@ package magicsock
 import (
 	"net/netip"
 
-	"tailscale.com/types/opt"
+	"github.com/sagernet/tailscale/types/opt"
 )
 
 // All knobs are disabled on iOS and Wasm.

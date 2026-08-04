@@ -10,13 +10,13 @@ import (
 	"path/filepath"
 	"sync"
 
-	"tailscale.com/feature"
-	"tailscale.com/ipn"
-	"tailscale.com/ipn/ipnext"
-	"tailscale.com/ipn/ipnlocal"
-	"tailscale.com/ipn/store"
-	"tailscale.com/ipn/store/mem"
-	"tailscale.com/types/logger"
+	"github.com/sagernet/tailscale/feature"
+	"github.com/sagernet/tailscale/ipn"
+	"github.com/sagernet/tailscale/ipn/ipnext"
+	"github.com/sagernet/tailscale/ipn/ipnlocal"
+	"github.com/sagernet/tailscale/ipn/store"
+	"github.com/sagernet/tailscale/ipn/store/mem"
+	"github.com/sagernet/tailscale/types/logger"
 )
 
 const featureName = "serviceclientprefs"

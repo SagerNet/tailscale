@@ -4,7 +4,7 @@
 // The featuretags package is a registry of all the ts_omit-able build tags.
 package featuretags
 
-import "tailscale.com/util/set"
+import "github.com/sagernet/tailscale/util/set"
 
 // CLI is a special feature in the [Features] map that works opposite
 // from the others: it is opt-in, rather than opt-out, having a different

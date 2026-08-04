@@ -16,8 +16,8 @@ import (
 	"strings"
 	"time"
 
+	godownerrors "github.com/sagernet/tailscale/internal/godown/std/errors"
 	"go4.org/mem"
-	godownerrors "tailscale.com/internal/godown/std/errors"
 )
 
 // rateLimitedError is returned from cert-fetching methods when the

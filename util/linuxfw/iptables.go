@@ -15,9 +15,9 @@ import (
 	"unicode"
 
 	"github.com/coreos/go-iptables/iptables"
-	"tailscale.com/types/logger"
-	"tailscale.com/version/distro"
-	godownerrors "tailscale.com/internal/godown/std/errors"
+	godownerrors "github.com/sagernet/tailscale/internal/godown/std/errors"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/version/distro"
 )
 
 func init() {
@@ -117,7 +117,8 @@ func newIPTablesRunner(logf logger.Logf) (*iptablesRunner, error) {
 		ipt6:              ipt6,
 		v6Available:       supportsV6,
 		v6NATAvailable:    supportsV6NAT,
-		v6FilterAvailable: supportsV6Filter}, nil
+		v6FilterAvailable: supportsV6Filter,
+	}, nil
 }
 
 // checkSupportsV6Filter returns whether the system has a "filter" table in the

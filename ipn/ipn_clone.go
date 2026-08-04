@@ -10,11 +10,11 @@ import (
 	"net/netip"
 	"time"
 
-	"tailscale.com/drive"
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/opt"
-	"tailscale.com/types/persist"
-	"tailscale.com/types/preftype"
+	"github.com/sagernet/tailscale/drive"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/opt"
+	"github.com/sagernet/tailscale/types/persist"
+	"github.com/sagernet/tailscale/types/preftype"
 )
 
 // Clone makes a deep copy of LoginProfile.

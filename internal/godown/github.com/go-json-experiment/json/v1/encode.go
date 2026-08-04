@@ -24,7 +24,7 @@ import (
 	"reflect"
 	"strconv"
 
-	jsonv2 "tailscale.com/internal/godown/github.com/go-json-experiment/json"
+	jsonv2 "github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json"
 )
 
 // Marshal returns the JSON encoding of v.

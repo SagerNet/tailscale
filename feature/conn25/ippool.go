@@ -8,8 +8,8 @@ import (
 	"math"
 	"net/netip"
 
+	"github.com/sagernet/tailscale/util/set"
 	"go4.org/netipx"
-	"tailscale.com/util/set"
 )
 
 // errPoolExhausted is returned when there are no more addresses to iterate over.

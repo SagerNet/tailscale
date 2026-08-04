@@ -4,7 +4,7 @@
 // Package ringlog contains a limited-size concurrency-safe generic ring log.
 package ringlog
 
-import "tailscale.com/syncs"
+import "github.com/sagernet/tailscale/syncs"
 
 // New creates a new [RingLog] containing at most max items.
 func New[T any](max int) *RingLog[T] {

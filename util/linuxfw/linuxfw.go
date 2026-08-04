@@ -14,10 +14,10 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/sagernet/tailscale/feature"
+	"github.com/sagernet/tailscale/tsconst"
+	"github.com/sagernet/tailscale/types/logger"
 	"github.com/tailscale/netlink"
-	"tailscale.com/feature"
-	"tailscale.com/tsconst"
-	"tailscale.com/types/logger"
 )
 
 // MatchDecision is the decision made by the firewall for a packet matched by a rule.

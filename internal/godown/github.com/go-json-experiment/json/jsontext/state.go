@@ -14,7 +14,7 @@ import (
 	"strings"
 	"unicode/utf8"
 
-	"tailscale.com/internal/godown/github.com/go-json-experiment/json/internal/jsonwire"
+	"github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json/internal/jsonwire"
 )
 
 // ErrDuplicateName indicates that a JSON token could not be

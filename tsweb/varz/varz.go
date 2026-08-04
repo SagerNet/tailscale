@@ -23,12 +23,12 @@ import (
 	"unicode"
 	"unicode/utf8"
 
+	godownreflect "github.com/sagernet/tailscale/internal/godown/std/reflect"
+	"github.com/sagernet/tailscale/metrics"
+	"github.com/sagernet/tailscale/syncs"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/version"
 	"golang.org/x/exp/constraints"
-	"tailscale.com/metrics"
-	"tailscale.com/syncs"
-	"tailscale.com/types/logger"
-	"tailscale.com/version"
-	godownreflect "tailscale.com/internal/godown/std/reflect"
 )
 
 // StaticStringVar returns a new expvar.Var that always returns s.

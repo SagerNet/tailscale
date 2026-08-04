@@ -27,9 +27,7 @@ const (
 	maxScanIterations = 2000
 )
 
-var (
-	CompactionDefaults = CompactionOptions{
-		MinChain: 24,                  // Keep at minimum 24 AUMs since head.
-		MinAge:   14 * 24 * time.Hour, // Keep 2 weeks of AUMs.
-	}
-)
+var CompactionDefaults = CompactionOptions{
+	MinChain: 24,                  // Keep at minimum 24 AUMs since head.
+	MinAge:   14 * 24 * time.Hour, // Keep 2 weeks of AUMs.
+}

@@ -11,7 +11,7 @@ import (
 	"io/fs"
 	"os"
 
-	"tailscale.com/atomicfile"
+	"github.com/sagernet/tailscale/atomicfile"
 )
 
 // DB is a database backed by a JSON file.
@@ -53,5 +53,5 @@ func (db *DB[T]) Save() error {
 		return err
 	}
 
-	return atomicfile.WriteFile(db.path, bs, 0600)
+	return atomicfile.WriteFile(db.path, bs, 0o600)
 }

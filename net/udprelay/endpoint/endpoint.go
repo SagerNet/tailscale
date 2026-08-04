@@ -9,8 +9,8 @@ import (
 	"net/netip"
 	"time"
 
-	"tailscale.com/tstime"
-	"tailscale.com/types/key"
+	"github.com/sagernet/tailscale/tstime"
+	"github.com/sagernet/tailscale/types/key"
 )
 
 // ServerRetryAfter is the default

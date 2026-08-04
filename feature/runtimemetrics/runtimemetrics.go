@@ -9,9 +9,9 @@ import (
 	"sync"
 	"time"
 
-	"tailscale.com/feature"
-	"tailscale.com/ipn/ipnlocal"
-	"tailscale.com/util/clientmetric"
+	"github.com/sagernet/tailscale/feature"
+	"github.com/sagernet/tailscale/ipn/ipnlocal"
+	"github.com/sagernet/tailscale/util/clientmetric"
 )
 
 func init() {

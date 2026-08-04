@@ -13,8 +13,8 @@ import (
 	"fmt"
 	"reflect"
 
-	"tailscale.com/internal/godown/github.com/go-json-experiment/json"
-	"tailscale.com/internal/godown/github.com/go-json-experiment/json/jsontext"
+	"github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json"
+	"github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json/jsontext"
 )
 
 var (
@@ -81,7 +81,8 @@ var (
 func MakeInterfaceCoders[T any](valuesByName map[string]T) (c struct {
 	Marshal   func(*jsontext.Encoder, *T) error
 	Unmarshal func(*jsontext.Decoder, *T) error
-}) {
+},
+) {
 	// Verify that T is a named interface.
 	switch t := reflect.TypeFor[T](); {
 	case t.Kind() != reflect.Interface:

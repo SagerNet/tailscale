@@ -17,8 +17,8 @@ import (
 	"unsafe"
 
 	"github.com/dblohm7/wingoes"
+	"github.com/sagernet/tailscale/types/logger"
 	"golang.org/x/sys/windows"
-	"tailscale.com/types/logger"
 )
 
 var (

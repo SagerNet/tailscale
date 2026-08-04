@@ -22,12 +22,12 @@ import (
 	"strings"
 	"time"
 
-	"tailscale.com/feature/buildfeatures"
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/netmap"
-	"tailscale.com/util/mak"
-	"tailscale.com/util/set"
-	"tailscale.com/wgengine/filter"
+	"github.com/sagernet/tailscale/feature/buildfeatures"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/netmap"
+	"github.com/sagernet/tailscale/util/mak"
+	"github.com/sagernet/tailscale/util/set"
+	"github.com/sagernet/tailscale/wgengine/filter"
 )
 
 var (
@@ -167,7 +167,7 @@ func (s FileStore) Load(ctx context.Context, key string) ([]byte, error) {
 
 // Store implements part of the [Store] interface.
 func (s FileStore) Store(ctx context.Context, key string, value []byte) error {
-	return os.WriteFile(filepath.Join(string(s), hex.EncodeToString([]byte(key))), value, 0600)
+	return os.WriteFile(filepath.Join(string(s), hex.EncodeToString([]byte(key))), value, 0o600)
 }
 
 // Remove implements part of the [Store] interface.

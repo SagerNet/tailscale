@@ -148,7 +148,7 @@ func ensureToolchain(cacheDir, toolchainDir string) error {
 		}
 	}
 
-	if err := os.WriteFile(stampFile, []byte(wantRev), 0644); err != nil {
+	if err := os.WriteFile(stampFile, []byte(wantRev), 0o644); err != nil {
 		return err
 	}
 
@@ -162,7 +162,6 @@ func ensureGoroot(toolchainDir, gorootDir string) error {
 		return err
 	}
 	return makeGoroot(toolchainDir, gorootDir)
-
 }
 
 func downloadCachedgo(toolchainDir, toolchainRev string) error {
@@ -189,7 +188,7 @@ func downloadCachedgo(toolchainDir, toolchainRev string) error {
 		return err
 	}
 
-	if err := os.MkdirAll(toolchainDir, 0755); err != nil {
+	if err := os.MkdirAll(toolchainDir, 0o755); err != nil {
 		return err
 	}
 	cmd := exec.Command("tar", "--strip-components=1", "-xf", archivePath)

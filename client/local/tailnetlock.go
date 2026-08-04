@@ -12,10 +12,10 @@ import (
 	"fmt"
 	"net/url"
 
-	"tailscale.com/ipn/ipnstate"
-	"tailscale.com/tka"
-	"tailscale.com/types/key"
-	"tailscale.com/types/tkatype"
+	"github.com/sagernet/tailscale/ipn/ipnstate"
+	"github.com/sagernet/tailscale/tka"
+	"github.com/sagernet/tailscale/types/key"
+	"github.com/sagernet/tailscale/types/tkatype"
 )
 
 // TailnetLockStatus fetches information about the tailnet key authority, if one is configured.

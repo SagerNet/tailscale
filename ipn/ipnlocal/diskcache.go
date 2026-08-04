@@ -8,10 +8,10 @@ import (
 	"errors"
 	"fmt"
 
-	"tailscale.com/feature/buildfeatures"
-	"tailscale.com/ipn/ipnlocal/netmapcache"
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/netmap"
+	"github.com/sagernet/tailscale/feature/buildfeatures"
+	"github.com/sagernet/tailscale/ipn/ipnlocal/netmapcache"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/netmap"
 )
 
 // diskCache is the state netmap caching to disk.

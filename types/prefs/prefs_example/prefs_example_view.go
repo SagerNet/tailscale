@@ -10,14 +10,14 @@ import (
 	"errors"
 	"net/netip"
 
-	jsonv2 "tailscale.com/internal/godown/github.com/go-json-experiment/json"
-	"tailscale.com/internal/godown/github.com/go-json-experiment/json/jsontext"
-	"tailscale.com/drive"
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/opt"
-	"tailscale.com/types/persist"
-	"tailscale.com/types/prefs"
-	"tailscale.com/types/preftype"
+	"github.com/sagernet/tailscale/drive"
+	jsonv2 "github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json"
+	"github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json/jsontext"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/opt"
+	"github.com/sagernet/tailscale/types/persist"
+	"github.com/sagernet/tailscale/types/prefs"
+	"github.com/sagernet/tailscale/types/preftype"
 )
 
 //go:generate go run tailscale.com/cmd/cloner  -clonefunc=false -type=Prefs,AutoUpdatePrefs,AppConnectorPrefs

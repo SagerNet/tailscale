@@ -13,9 +13,9 @@ import (
 	"net/http"
 	"strings"
 
-	"tailscale.com/control/ts2021"
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/key"
+	"github.com/sagernet/tailscale/control/ts2021"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/key"
 )
 
 // RegisterOpts contains options for registering a node.

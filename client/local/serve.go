@@ -11,7 +11,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"tailscale.com/ipn"
+	"github.com/sagernet/tailscale/ipn"
 )
 
 // GetServeConfig return the current serve config.

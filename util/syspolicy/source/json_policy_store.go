@@ -13,9 +13,9 @@ import (
 	"sort"
 	"strconv"
 
-	"tailscale.com/feature/buildfeatures"
-	"tailscale.com/util/syspolicy/pkey"
-	"tailscale.com/util/syspolicy/setting"
+	"github.com/sagernet/tailscale/feature/buildfeatures"
+	"github.com/sagernet/tailscale/util/syspolicy/pkey"
+	"github.com/sagernet/tailscale/util/syspolicy/setting"
 )
 
 // hujsonStandardize is set to hujson.Standardize by json_policy_store_hujson.go

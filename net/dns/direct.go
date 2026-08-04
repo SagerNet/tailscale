@@ -24,16 +24,16 @@ import (
 	"sync/atomic"
 	"time"
 
-	"tailscale.com/feature"
-	"tailscale.com/health"
-	"tailscale.com/hostinfo"
-	"tailscale.com/net/dns/resolvconffile"
-	"tailscale.com/net/tsaddr"
-	"tailscale.com/types/lazy"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/dnsname"
-	"tailscale.com/util/eventbus"
-	"tailscale.com/version/distro"
+	"github.com/sagernet/tailscale/feature"
+	"github.com/sagernet/tailscale/health"
+	"github.com/sagernet/tailscale/hostinfo"
+	"github.com/sagernet/tailscale/net/dns/resolvconffile"
+	"github.com/sagernet/tailscale/net/tsaddr"
+	"github.com/sagernet/tailscale/types/lazy"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/dnsname"
+	"github.com/sagernet/tailscale/util/eventbus"
+	"github.com/sagernet/tailscale/version/distro"
 )
 
 // writeResolvConf writes DNS configuration in resolv.conf format to the given writer.
@@ -296,7 +296,7 @@ func (m *directManager) rename(old, new string) error {
 	if err != nil {
 		return fmt.Errorf("reading %q to rename: %w", old, err)
 	}
-	if err := m.fs.WriteFile(new, bs, 0644); err != nil {
+	if err := m.fs.WriteFile(new, bs, 0o644); err != nil {
 		return fmt.Errorf("writing to %q in rename of %q: %w", new, old, err)
 	}
 
@@ -304,7 +304,7 @@ func (m *directManager) rename(old, new string) error {
 	// if we have a umask set which prevents creating world-readable files,
 	// the file will still have the correct permissions once it's renamed
 	// into place. See #12609.
-	if err := m.fs.Chmod(new, 0644); err != nil {
+	if err := m.fs.Chmod(new, 0o644); err != nil {
 		return fmt.Errorf("chmod %q in rename of %q: %w", new, old, err)
 	}
 
@@ -400,7 +400,7 @@ func (m *directManager) SetDNS(config OSConfig) (err error) {
 
 		buf := new(bytes.Buffer)
 		writeResolvConf(buf, config.Nameservers, config.SearchDomains)
-		if err := m.atomicWriteFile(m.fs, resolvConf, buf.Bytes(), 0644); err != nil {
+		if err := m.atomicWriteFile(m.fs, resolvConf, buf.Bytes(), 0o644); err != nil {
 			return err
 		}
 

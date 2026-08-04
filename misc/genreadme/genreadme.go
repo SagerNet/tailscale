@@ -26,7 +26,7 @@ import (
 	"strings"
 
 	"github.com/creachadair/taskgroup"
-	"tailscale.com/tempfork/pkgdoc"
+	"github.com/sagernet/tailscale/tempfork/pkgdoc"
 )
 
 // modulePath is the current module's import path, read from go.mod at startup.
@@ -128,7 +128,7 @@ func update(dir string) error {
 		return nil
 	}
 	log.Printf("Writing %s ...", readmePath)
-	return os.WriteFile(readmePath, newContents, 0644)
+	return os.WriteFile(readmePath, newContents, 0o644)
 }
 
 func getNewContent(dir string) (newContent []byte, err error) {

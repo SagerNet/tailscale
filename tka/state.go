@@ -11,9 +11,9 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/sagernet/tailscale/types/tkatype"
+	"github.com/sagernet/tailscale/util/testenv"
 	"golang.org/x/crypto/argon2"
-	"tailscale.com/types/tkatype"
-	"tailscale.com/util/testenv"
 )
 
 // ErrNoSuchKey is returned if the key referenced by a KeyID does not exist.

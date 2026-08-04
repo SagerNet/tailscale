@@ -9,7 +9,7 @@ import (
 	"net/netip"
 	"time"
 
-	"tailscale.com/util/slicesx"
+	"github.com/sagernet/tailscale/util/slicesx"
 )
 
 // RaceDial races TCP connect attempts across addrs using a

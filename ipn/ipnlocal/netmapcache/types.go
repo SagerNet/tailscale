@@ -4,10 +4,10 @@
 package netmapcache
 
 import (
-	"tailscale.com/tailcfg"
-	"tailscale.com/tka"
-	"tailscale.com/types/key"
-	"tailscale.com/types/views"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/tka"
+	"github.com/sagernet/tailscale/types/key"
+	"github.com/sagernet/tailscale/types/views"
 )
 
 // The fields in the following wrapper types are all pointers, even when their

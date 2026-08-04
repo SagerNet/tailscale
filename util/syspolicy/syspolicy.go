@@ -12,13 +12,13 @@ import (
 	"reflect"
 	"time"
 
-	"tailscale.com/util/syspolicy/internal/loggerx"
-	"tailscale.com/util/syspolicy/pkey"
-	"tailscale.com/util/syspolicy/policyclient"
-	"tailscale.com/util/syspolicy/ptype"
-	"tailscale.com/util/syspolicy/rsop"
-	"tailscale.com/util/syspolicy/setting"
-	"tailscale.com/util/syspolicy/source"
+	"github.com/sagernet/tailscale/util/syspolicy/internal/loggerx"
+	"github.com/sagernet/tailscale/util/syspolicy/pkey"
+	"github.com/sagernet/tailscale/util/syspolicy/policyclient"
+	"github.com/sagernet/tailscale/util/syspolicy/ptype"
+	"github.com/sagernet/tailscale/util/syspolicy/rsop"
+	"github.com/sagernet/tailscale/util/syspolicy/setting"
+	"github.com/sagernet/tailscale/util/syspolicy/source"
 )
 
 var (

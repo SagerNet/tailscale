@@ -9,14 +9,13 @@ import (
 	"net/http"
 	"time"
 
-	jsonv2 "tailscale.com/internal/godown/github.com/go-json-experiment/json"
-	jsonv1 "tailscale.com/internal/godown/github.com/go-json-experiment/json/v1"
-
-	"tailscale.com/ipn/ipnlocal"
-	"tailscale.com/ipn/localapi"
-	"tailscale.com/net/routecheck"
-	"tailscale.com/util/def"
-	"tailscale.com/util/httpm"
+	jsonv2 "github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json"
+	jsonv1 "github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json/v1"
+	"github.com/sagernet/tailscale/ipn/ipnlocal"
+	"github.com/sagernet/tailscale/ipn/localapi"
+	"github.com/sagernet/tailscale/net/routecheck"
+	"github.com/sagernet/tailscale/util/def"
+	"github.com/sagernet/tailscale/util/httpm"
 )
 
 func init() {

@@ -19,16 +19,16 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/sagernet/tailscale/health"
+	"github.com/sagernet/tailscale/net/dns"
+	"github.com/sagernet/tailscale/net/netmon"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/backoff"
+	"github.com/sagernet/tailscale/util/eventbus"
+	"github.com/sagernet/tailscale/wgengine/router"
 	"github.com/tailscale/wireguard-go/tun"
 	"golang.org/x/sys/windows"
 	"golang.zx2c4.com/wireguard/windows/tunnel/winipcfg"
-	"tailscale.com/health"
-	"tailscale.com/net/dns"
-	"tailscale.com/net/netmon"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/backoff"
-	"tailscale.com/util/eventbus"
-	"tailscale.com/wgengine/router"
 )
 
 func init() {

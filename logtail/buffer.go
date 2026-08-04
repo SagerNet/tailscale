@@ -11,8 +11,8 @@ import (
 	"expvar"
 	"fmt"
 
-	"tailscale.com/metrics"
-	"tailscale.com/syncs"
+	"github.com/sagernet/tailscale/metrics"
+	"github.com/sagernet/tailscale/syncs"
 )
 
 type Buffer interface {

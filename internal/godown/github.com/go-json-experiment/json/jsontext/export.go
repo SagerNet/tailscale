@@ -9,7 +9,7 @@ package jsontext
 import (
 	"io"
 
-	"tailscale.com/internal/godown/github.com/go-json-experiment/json/internal"
+	"github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json/internal"
 )
 
 // Internal is for internal use only.

@@ -6,16 +6,16 @@ package wgengine
 import (
 	"net/netip"
 
-	"tailscale.com/feature"
-	"tailscale.com/health"
-	"tailscale.com/net/netmon"
-	"tailscale.com/net/tstun"
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/logger"
-	"tailscale.com/types/logid"
-	"tailscale.com/util/eventbus"
-	"tailscale.com/wgengine/magicsock"
-	"tailscale.com/wgengine/router"
+	"github.com/sagernet/tailscale/feature"
+	"github.com/sagernet/tailscale/health"
+	"github.com/sagernet/tailscale/net/netmon"
+	"github.com/sagernet/tailscale/net/tstun"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/types/logid"
+	"github.com/sagernet/tailscale/util/eventbus"
+	"github.com/sagernet/tailscale/wgengine/magicsock"
+	"github.com/sagernet/tailscale/wgengine/router"
 )
 
 // NetLogSource provides the network flow logging feature what it needs

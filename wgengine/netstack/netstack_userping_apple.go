@@ -11,7 +11,7 @@ import (
 	"net/netip"
 	"time"
 
-	"tailscale.com/net/ping"
+	"github.com/sagernet/tailscale/net/ping"
 )
 
 // sendOutboundUserPing sends a non-privileged ICMP (or ICMPv6) ping to dstIP with the given timeout.

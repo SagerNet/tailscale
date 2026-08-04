@@ -5,8 +5,8 @@
 package useproxy
 
 import (
-	"tailscale.com/feature"
-	"tailscale.com/net/tshttpproxy"
+	"github.com/sagernet/tailscale/feature"
+	"github.com/sagernet/tailscale/net/tshttpproxy"
 )
 
 func init() {

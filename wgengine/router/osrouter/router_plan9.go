@@ -11,11 +11,11 @@ import (
 	"os"
 	"strings"
 
+	"github.com/sagernet/tailscale/health"
+	"github.com/sagernet/tailscale/net/netmon"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/wgengine/router"
 	"github.com/tailscale/wireguard-go/tun"
-	"tailscale.com/health"
-	"tailscale.com/net/netmon"
-	"tailscale.com/types/logger"
-	"tailscale.com/wgengine/router"
 )
 
 func init() {

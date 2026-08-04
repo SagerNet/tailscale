@@ -10,10 +10,10 @@ import (
 	"slices"
 	"sync"
 	"time"
-
-	"tailscale.com/tailcfg"
-	godownreflect "tailscale.com/internal/godown/std/reflect"
 	time2 "time"
+
+	godownreflect "github.com/sagernet/tailscale/internal/godown/std/reflect"
+	"github.com/sagernet/tailscale/tailcfg"
 )
 
 // NodeMutation is the common interface for types that describe

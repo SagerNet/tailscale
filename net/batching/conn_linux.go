@@ -17,16 +17,16 @@ import (
 	"time"
 	"unsafe"
 
+	"github.com/sagernet/tailscale/control/controlknobs"
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/hostinfo"
+	"github.com/sagernet/tailscale/net/neterror"
+	"github.com/sagernet/tailscale/net/packet"
+	"github.com/sagernet/tailscale/types/nettype"
+	"github.com/sagernet/tailscale/util/clientmetric"
 	"golang.org/x/net/ipv4"
 	"golang.org/x/net/ipv6"
 	"golang.org/x/sys/unix"
-	"tailscale.com/control/controlknobs"
-	"tailscale.com/envknob"
-	"tailscale.com/hostinfo"
-	"tailscale.com/net/neterror"
-	"tailscale.com/net/packet"
-	"tailscale.com/types/nettype"
-	"tailscale.com/util/clientmetric"
 )
 
 // xnetBatchReaderWriter defines the batching i/o methods of
@@ -46,10 +46,8 @@ type xnetBatchWriter interface {
 	WriteBatch([]ipv6.Message, int) (int, error)
 }
 
-var (
-	// [linuxBatchingConn] implements [Conn].
-	_ Conn = (*linuxBatchingConn)(nil)
-)
+// [linuxBatchingConn] implements [Conn].
+var _ Conn = (*linuxBatchingConn)(nil)
 
 // linuxBatchingConn is a UDP socket that provides batched i/o. It implements
 // [Conn].
@@ -678,9 +676,8 @@ func TryUpgradeToConn(pconn nettype.PacketConn, network string, batchSize int, r
 var controlMessageSize = -1 // bomb if used for allocation before init
 
 func init() {
-	controlMessageSize =
-		unix.CmsgSpace(2) + // UDP_GRO or UDP_SEGMENT gsoSize (uint16)
-			unix.CmsgSpace(4) // SO_RXQ_OVFL counter (uint32)
+	controlMessageSize = unix.CmsgSpace(2) + // UDP_GRO or UDP_SEGMENT gsoSize (uint16)
+		unix.CmsgSpace(4) // SO_RXQ_OVFL counter (uint32)
 }
 
 // MinControlMessageSize returns the minimum control message size required to

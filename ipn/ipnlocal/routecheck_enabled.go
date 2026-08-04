@@ -6,8 +6,8 @@
 package ipnlocal
 
 import (
-	"tailscale.com/net/routecheck"
-	"tailscale.com/tailcfg"
+	"github.com/sagernet/tailscale/net/routecheck"
+	"github.com/sagernet/tailscale/tailcfg"
 )
 
 func isRouteCheckEnabled(self tailcfg.NodeView) bool {

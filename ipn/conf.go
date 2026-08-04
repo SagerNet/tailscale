@@ -8,10 +8,10 @@ import (
 	"fmt"
 	"net/netip"
 
-	"tailscale.com/net/tsaddr"
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/opt"
-	"tailscale.com/types/preftype"
+	"github.com/sagernet/tailscale/net/tsaddr"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/opt"
+	"github.com/sagernet/tailscale/types/preftype"
 )
 
 // ConfigVAlpha is the config file format for the "alpha0" version.

@@ -13,9 +13,9 @@ import (
 	"sync"
 	"syscall"
 
+	"github.com/sagernet/tailscale/net/netmon"
+	"github.com/sagernet/tailscale/types/logger"
 	"golang.org/x/sys/unix"
-	"tailscale.com/net/netmon"
-	"tailscale.com/types/logger"
 )
 
 var (

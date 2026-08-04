@@ -9,9 +9,9 @@ import (
 	"net/netip"
 	"time"
 
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/util/dnsname"
 	"go4.org/netipx"
-	"tailscale.com/tailcfg"
-	"tailscale.com/util/dnsname"
 )
 
 // ConfigID is an opaque identifier for a configuration.

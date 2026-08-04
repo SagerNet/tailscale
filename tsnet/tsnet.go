@@ -158,46 +158,46 @@ import (
 	"sync"
 	"time"
 
+	"github.com/sagernet/tailscale/client/local"
+	"github.com/sagernet/tailscale/control/controlclient"
+	"github.com/sagernet/tailscale/envknob"
+	_ "github.com/sagernet/tailscale/feature/c2n"
+	_ "github.com/sagernet/tailscale/feature/condregister/netlog"
+	_ "github.com/sagernet/tailscale/feature/condregister/oauthkey"
+	_ "github.com/sagernet/tailscale/feature/condregister/portmapper"
+	_ "github.com/sagernet/tailscale/feature/condregister/useproxy"
+	"github.com/sagernet/tailscale/health"
+	"github.com/sagernet/tailscale/hostinfo"
+	"github.com/sagernet/tailscale/internal/client/tailscale"
+	"github.com/sagernet/tailscale/ipn"
+	"github.com/sagernet/tailscale/ipn/ipnauth"
+	"github.com/sagernet/tailscale/ipn/ipnlocal"
+	"github.com/sagernet/tailscale/ipn/ipnstate"
+	"github.com/sagernet/tailscale/ipn/localapi"
+	"github.com/sagernet/tailscale/ipn/store"
+	"github.com/sagernet/tailscale/ipn/store/mem"
+	"github.com/sagernet/tailscale/logpolicy"
+	"github.com/sagernet/tailscale/logtail"
+	"github.com/sagernet/tailscale/logtail/filch"
+	"github.com/sagernet/tailscale/net/memnet"
+	"github.com/sagernet/tailscale/net/netmon"
+	"github.com/sagernet/tailscale/net/proxymux"
+	"github.com/sagernet/tailscale/net/socks5"
+	"github.com/sagernet/tailscale/net/tsdial"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/tsd"
+	"github.com/sagernet/tailscale/types/bools"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/types/logid"
+	"github.com/sagernet/tailscale/types/nettype"
+	"github.com/sagernet/tailscale/types/views"
+	"github.com/sagernet/tailscale/util/clientmetric"
+	"github.com/sagernet/tailscale/util/mak"
+	"github.com/sagernet/tailscale/util/set"
+	"github.com/sagernet/tailscale/util/testenv"
+	"github.com/sagernet/tailscale/wgengine"
+	"github.com/sagernet/tailscale/wgengine/netstack"
 	"github.com/tailscale/wireguard-go/tun"
-	"tailscale.com/client/local"
-	"tailscale.com/control/controlclient"
-	"tailscale.com/envknob"
-	_ "tailscale.com/feature/c2n"
-	_ "tailscale.com/feature/condregister/netlog"
-	_ "tailscale.com/feature/condregister/oauthkey"
-	_ "tailscale.com/feature/condregister/portmapper"
-	_ "tailscale.com/feature/condregister/useproxy"
-	"tailscale.com/health"
-	"tailscale.com/hostinfo"
-	"tailscale.com/internal/client/tailscale"
-	"tailscale.com/ipn"
-	"tailscale.com/ipn/ipnauth"
-	"tailscale.com/ipn/ipnlocal"
-	"tailscale.com/ipn/ipnstate"
-	"tailscale.com/ipn/localapi"
-	"tailscale.com/ipn/store"
-	"tailscale.com/ipn/store/mem"
-	"tailscale.com/logpolicy"
-	"tailscale.com/logtail"
-	"tailscale.com/logtail/filch"
-	"tailscale.com/net/memnet"
-	"tailscale.com/net/netmon"
-	"tailscale.com/net/proxymux"
-	"tailscale.com/net/socks5"
-	"tailscale.com/net/tsdial"
-	"tailscale.com/tailcfg"
-	"tailscale.com/tsd"
-	"tailscale.com/types/bools"
-	"tailscale.com/types/logger"
-	"tailscale.com/types/logid"
-	"tailscale.com/types/nettype"
-	"tailscale.com/types/views"
-	"tailscale.com/util/clientmetric"
-	"tailscale.com/util/mak"
-	"tailscale.com/util/set"
-	"tailscale.com/util/testenv"
-	"tailscale.com/wgengine"
-	"tailscale.com/wgengine/netstack"
 )
 
 // Server is an embedded Tailscale server.
@@ -813,7 +813,7 @@ func (s *Server) start() (reterr error) {
 		}
 		s.rootPath = filepath.Join(confDir, "tsnet-"+prog)
 	}
-	if err := os.MkdirAll(s.rootPath, 0700); err != nil {
+	if err := os.MkdirAll(s.rootPath, 0o700); err != nil {
 		return err
 	}
 	if fi, err := os.Stat(s.rootPath); err != nil {
@@ -2226,7 +2226,7 @@ func (s *Server) CapturePcap(ctx context.Context, pcapFile string) error {
 		return err
 	}
 
-	f, err := os.OpenFile(pcapFile, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
+	f, err := os.OpenFile(pcapFile, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0o644)
 	if err != nil {
 		stream.Close()
 		return err

@@ -14,16 +14,16 @@ import (
 	"strings"
 	"time"
 
-	"tailscale.com/envknob"
-	"tailscale.com/ipn"
-	"tailscale.com/ipn/store"
-	"tailscale.com/ipn/store/mem"
-	"tailscale.com/kube/kubeapi"
-	"tailscale.com/kube/kubeclient"
-	"tailscale.com/kube/kubetypes"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/dnsname"
-	"tailscale.com/util/mak"
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/ipn"
+	"github.com/sagernet/tailscale/ipn/store"
+	"github.com/sagernet/tailscale/ipn/store/mem"
+	"github.com/sagernet/tailscale/kube/kubeapi"
+	"github.com/sagernet/tailscale/kube/kubeclient"
+	"github.com/sagernet/tailscale/kube/kubetypes"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/dnsname"
+	"github.com/sagernet/tailscale/util/mak"
 )
 
 func init() {

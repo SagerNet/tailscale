@@ -9,9 +9,9 @@ import (
 	"sync/atomic"
 	"time"
 
-	"tailscale.com/util/syspolicy/setting"
-	"tailscale.com/util/syspolicy/source"
-	"tailscale.com/util/testenv"
+	"github.com/sagernet/tailscale/util/syspolicy/setting"
+	"github.com/sagernet/tailscale/util/syspolicy/source"
+	"github.com/sagernet/tailscale/util/testenv"
 )
 
 // ErrAlreadyConsumed is the error returned when [StoreRegistration.ReplaceStore]

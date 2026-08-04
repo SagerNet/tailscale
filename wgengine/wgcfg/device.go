@@ -7,10 +7,10 @@ import (
 	"fmt"
 	"net/netip"
 
+	"github.com/sagernet/tailscale/types/logger"
 	"github.com/tailscale/wireguard-go/conn"
 	"github.com/tailscale/wireguard-go/device"
 	"github.com/tailscale/wireguard-go/tun"
-	"tailscale.com/types/logger"
 )
 
 // NewDevice returns a wireguard-go Device configured for Tailscale use.

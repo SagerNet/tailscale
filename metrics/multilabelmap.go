@@ -11,7 +11,8 @@ import (
 	"sort"
 	"strings"
 	"sync"
-	godownreflect "tailscale.com/internal/godown/std/reflect"
+
+	godownreflect "github.com/sagernet/tailscale/internal/godown/std/reflect"
 )
 
 // MultiLabelMap is a struct-value-to-Var map variable that satisfies the

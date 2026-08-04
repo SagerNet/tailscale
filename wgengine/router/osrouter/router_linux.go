@@ -24,24 +24,24 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/sagernet/tailscale/envknob"
+	"github.com/sagernet/tailscale/health"
+	"github.com/sagernet/tailscale/net/netmon"
+	"github.com/sagernet/tailscale/net/tsaddr"
+	"github.com/sagernet/tailscale/tsconst"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/types/opt"
+	"github.com/sagernet/tailscale/types/preftype"
+	"github.com/sagernet/tailscale/util/eventbus"
+	"github.com/sagernet/tailscale/util/linuxfw"
+	"github.com/sagernet/tailscale/util/set"
+	"github.com/sagernet/tailscale/version/distro"
+	"github.com/sagernet/tailscale/wgengine/router"
 	"github.com/tailscale/netlink"
 	"github.com/tailscale/wireguard-go/tun"
 	"go4.org/netipx"
 	"golang.org/x/sys/unix"
 	"golang.org/x/time/rate"
-	"tailscale.com/envknob"
-	"tailscale.com/health"
-	"tailscale.com/net/netmon"
-	"tailscale.com/net/tsaddr"
-	"tailscale.com/tsconst"
-	"tailscale.com/types/logger"
-	"tailscale.com/types/opt"
-	"tailscale.com/types/preftype"
-	"tailscale.com/util/eventbus"
-	"tailscale.com/util/linuxfw"
-	"tailscale.com/util/set"
-	"tailscale.com/version/distro"
-	"tailscale.com/wgengine/router"
 )
 
 func init() {
@@ -1407,7 +1407,7 @@ func (r *linuxRouter) enableIPForwarding() {
 
 func writeSysctl(key, val string) error {
 	fn := "/proc/sys/" + strings.Replace(key, ".", "/", -1)
-	if err := os.WriteFile(fn, []byte(val), 0644); err != nil {
+	if err := os.WriteFile(fn, []byte(val), 0o644); err != nil {
 		return fmt.Errorf("sysctl(%v=%v): %v", key, val, err)
 	}
 	return nil

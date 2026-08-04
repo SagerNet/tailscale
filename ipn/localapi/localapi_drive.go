@@ -13,8 +13,8 @@ import (
 	"os"
 	"path"
 
-	"tailscale.com/drive"
-	"tailscale.com/util/httpm"
+	"github.com/sagernet/tailscale/drive"
+	"github.com/sagernet/tailscale/util/httpm"
 )
 
 func init() {

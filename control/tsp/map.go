@@ -18,9 +18,9 @@ import (
 	"sync/atomic"
 
 	"github.com/klauspost/compress/zstd"
-	"tailscale.com/control/ts2021"
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/key"
+	"github.com/sagernet/tailscale/control/ts2021"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/key"
 )
 
 // errSessionClosed is returned by [MapSession.Next] and

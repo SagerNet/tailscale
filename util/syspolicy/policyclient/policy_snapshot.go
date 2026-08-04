@@ -5,7 +5,7 @@
 
 package policyclient
 
-import "tailscale.com/util/syspolicy/setting"
+import "github.com/sagernet/tailscale/util/syspolicy/setting"
 
 // PolicySnapshot is an alias for [settings.Snapshot] unless syspolicy is omitted
 // from the build.

@@ -11,10 +11,10 @@ import (
 	"sync"
 	"time"
 
-	"tailscale.com/util/set"
-	"tailscale.com/util/syspolicy/pkey"
-	"tailscale.com/util/syspolicy/policyclient"
-	"tailscale.com/util/syspolicy/ptype"
+	"github.com/sagernet/tailscale/util/set"
+	"github.com/sagernet/tailscale/util/syspolicy/pkey"
+	"github.com/sagernet/tailscale/util/syspolicy/policyclient"
+	"github.com/sagernet/tailscale/util/syspolicy/ptype"
 )
 
 // Config is a [policyclient.Client] implementation with a static mapping of
@@ -88,6 +88,7 @@ func (pc policyChanges) HasChanged(v pkey.Key) bool {
 	_, ok := pc[v]
 	return ok
 }
+
 func (pc policyChanges) HasChangedAnyOf(keys ...pkey.Key) bool {
 	return slices.ContainsFunc(keys, pc.HasChanged)
 }

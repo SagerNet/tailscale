@@ -12,8 +12,8 @@
 package ipnlocal
 
 import (
-	"tailscale.com/ipn"
-	"tailscale.com/tailcfg"
+	"github.com/sagernet/tailscale/ipn"
+	"github.com/sagernet/tailscale/tailcfg"
 )
 
 const serveEnabled = false

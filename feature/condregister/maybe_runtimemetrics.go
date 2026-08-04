@@ -5,4 +5,4 @@
 
 package condregister
 
-import _ "tailscale.com/feature/runtimemetrics"
+import _ "github.com/sagernet/tailscale/feature/runtimemetrics"

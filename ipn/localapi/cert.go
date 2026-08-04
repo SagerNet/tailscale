@@ -6,16 +6,15 @@
 package localapi
 
 import (
-	
 	"fmt"
 	"maps"
 	"net/http"
 	"strings"
 	"time"
 
-	"tailscale.com/ipn/ipnlocal"
-	"tailscale.com/tsweb"
-	godownerrors "tailscale.com/internal/godown/std/errors"
+	godownerrors "github.com/sagernet/tailscale/internal/godown/std/errors"
+	"github.com/sagernet/tailscale/ipn/ipnlocal"
+	"github.com/sagernet/tailscale/tsweb"
 )
 
 func init() {

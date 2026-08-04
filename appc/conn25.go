@@ -9,11 +9,11 @@ import (
 	"slices"
 	"strings"
 
-	"tailscale.com/ipn/ipnext"
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/appctype"
-	"tailscale.com/types/dnstype"
-	"tailscale.com/util/set"
+	"github.com/sagernet/tailscale/ipn/ipnext"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/appctype"
+	"github.com/sagernet/tailscale/types/dnstype"
+	"github.com/sagernet/tailscale/util/set"
 )
 
 const AppConnectorsExperimentalAttrName = "tailscale.com/app-connectors-experimental"

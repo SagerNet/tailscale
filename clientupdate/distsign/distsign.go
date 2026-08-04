@@ -54,13 +54,13 @@ import (
 	"time"
 
 	"github.com/hdevalence/ed25519consensus"
+	"github.com/sagernet/tailscale/feature"
+	"github.com/sagernet/tailscale/net/netutil"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/httpm"
+	"github.com/sagernet/tailscale/util/must"
+	"github.com/sagernet/tailscale/util/progresstracking"
 	"golang.org/x/crypto/blake2s"
-	"tailscale.com/feature"
-	"tailscale.com/net/netutil"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/httpm"
-	"tailscale.com/util/must"
-	"tailscale.com/util/progresstracking"
 )
 
 const (

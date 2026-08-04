@@ -15,8 +15,8 @@ import (
 	"strings"
 	"syscall"
 
+	godownerrors "github.com/sagernet/tailscale/internal/godown/std/errors"
 	"golang.org/x/sys/unix"
-	godownerrors "tailscale.com/internal/godown/std/errors"
 )
 
 // commandRunner abstracts helpers to run OS commands. It exists

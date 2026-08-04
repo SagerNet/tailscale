@@ -8,7 +8,7 @@ package gro
 import (
 	"runtime"
 
-	"tailscale.com/net/packet"
+	"github.com/sagernet/tailscale/net/packet"
 )
 
 type GRO struct{}
@@ -18,7 +18,6 @@ func NewGRO() *GRO {
 		panic("unsupported on iOS")
 	}
 	panic("GRO disabled in build")
-
 }
 
 func (g *GRO) SetDispatcher(any) {}

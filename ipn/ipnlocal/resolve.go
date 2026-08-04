@@ -7,13 +7,13 @@ import (
 	"net/netip"
 	"strings"
 
-	"tailscale.com/feature/buildfeatures"
-	"tailscale.com/net/dns/resolver"
-	"tailscale.com/net/tsaddr"
-	"tailscale.com/tailcfg"
-	"tailscale.com/types/key"
-	"tailscale.com/util/dnsname"
-	"tailscale.com/wgengine"
+	"github.com/sagernet/tailscale/feature/buildfeatures"
+	"github.com/sagernet/tailscale/net/dns/resolver"
+	"github.com/sagernet/tailscale/net/tsaddr"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/types/key"
+	"github.com/sagernet/tailscale/util/dnsname"
+	"github.com/sagernet/tailscale/wgengine"
 )
 
 // lookupPeerByIP returns the node public key for the peer that should

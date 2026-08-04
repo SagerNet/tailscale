@@ -10,7 +10,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"tailscale.com/util/httpm"
+	"github.com/sagernet/tailscale/util/httpm"
 )
 
 // TailnetDeleteRequest handles sending a DELETE request for a tailnet to control.

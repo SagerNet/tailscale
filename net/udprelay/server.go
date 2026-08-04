@@ -22,32 +22,32 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/sagernet/tailscale/control/controlknobs"
+	"github.com/sagernet/tailscale/disco"
+	"github.com/sagernet/tailscale/net/batching"
+	"github.com/sagernet/tailscale/net/netaddr"
+	"github.com/sagernet/tailscale/net/netcheck"
+	"github.com/sagernet/tailscale/net/netmon"
+	"github.com/sagernet/tailscale/net/netns"
+	"github.com/sagernet/tailscale/net/packet"
+	"github.com/sagernet/tailscale/net/sockopts"
+	"github.com/sagernet/tailscale/net/stun"
+	"github.com/sagernet/tailscale/net/udprelay/endpoint"
+	"github.com/sagernet/tailscale/net/udprelay/status"
+	"github.com/sagernet/tailscale/tailcfg"
+	"github.com/sagernet/tailscale/tstime"
+	"github.com/sagernet/tailscale/tstime/mono"
+	"github.com/sagernet/tailscale/types/key"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/types/nettype"
+	"github.com/sagernet/tailscale/types/views"
+	"github.com/sagernet/tailscale/util/cloudinfo"
+	"github.com/sagernet/tailscale/util/eventbus"
+	"github.com/sagernet/tailscale/util/set"
+	"github.com/sagernet/tailscale/util/usermetric"
 	"go4.org/mem"
 	"golang.org/x/crypto/blake2s"
 	"golang.org/x/net/ipv6"
-	"tailscale.com/control/controlknobs"
-	"tailscale.com/disco"
-	"tailscale.com/net/batching"
-	"tailscale.com/net/netaddr"
-	"tailscale.com/net/netcheck"
-	"tailscale.com/net/netmon"
-	"tailscale.com/net/netns"
-	"tailscale.com/net/packet"
-	"tailscale.com/net/sockopts"
-	"tailscale.com/net/stun"
-	"tailscale.com/net/udprelay/endpoint"
-	"tailscale.com/net/udprelay/status"
-	"tailscale.com/tailcfg"
-	"tailscale.com/tstime"
-	"tailscale.com/tstime/mono"
-	"tailscale.com/types/key"
-	"tailscale.com/types/logger"
-	"tailscale.com/types/nettype"
-	"tailscale.com/types/views"
-	"tailscale.com/util/cloudinfo"
-	"tailscale.com/util/eventbus"
-	"tailscale.com/util/set"
-	"tailscale.com/util/usermetric"
 )
 
 const (
@@ -1105,7 +1105,7 @@ func (s *Server) GetSessions() []status.ServerSession {
 	if s.closed {
 		return nil
 	}
-	var sessions = make([]status.ServerSession, 0, len(s.serverEndpointByDisco))
+	sessions := make([]status.ServerSession, 0, len(s.serverEndpointByDisco))
 	for _, se := range s.serverEndpointByDisco {
 		clientInfos := se.extractClientInfo()
 		sessions = append(sessions, status.ServerSession{

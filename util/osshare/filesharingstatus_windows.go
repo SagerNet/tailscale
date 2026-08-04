@@ -11,10 +11,10 @@ import (
 	"path/filepath"
 	"runtime"
 
+	"github.com/sagernet/tailscale/types/lazy"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/winutil"
 	"golang.org/x/sys/windows/registry"
-	"tailscale.com/types/lazy"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/winutil"
 )
 
 const (

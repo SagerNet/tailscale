@@ -7,7 +7,7 @@
 
 package ipnlocal
 
-import "tailscale.com/tailcfg"
+import "github.com/sagernet/tailscale/tailcfg"
 
 const (
 	// DriveLocalPort is the port on which the Taildrive listens for location

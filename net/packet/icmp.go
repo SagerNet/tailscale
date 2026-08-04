@@ -5,7 +5,6 @@ package packet
 
 import (
 	crand "crypto/rand"
-
 	"encoding/binary"
 	"net/netip"
 )
@@ -31,8 +30,10 @@ func ICMPEchoPayload(payload []byte) (idSeq uint32, buf []byte) {
 // icmpDestUnreachableUnusedLen is the number of unused bytes that both ICMPv4
 // and ICMPv6 "Destination Unreachable" messages have between header and bits
 // from the invoking packet.
-const icmpDestUnreachableUnusedLen = 4
-const minIPv6MTU = 1280 // RFC 2460, section 5
+const (
+	icmpDestUnreachableUnusedLen = 4
+	minIPv6MTU                   = 1280 // RFC 2460, section 5
+)
 
 // GenerateICMPHostUnreachable builds an ICMPv4 or ICMPv6 "Destination
 // Unreachable" message according to RFC 792 and RFC 4443, section 3.1.

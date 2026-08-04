@@ -15,12 +15,12 @@ import (
 	"syscall"
 	"time"
 
-	"tailscale.com/client/local"
-	"tailscale.com/ipn"
-	"tailscale.com/kube/localclient"
-	"tailscale.com/types/logger"
-	"tailscale.com/util/goroutines"
-	"tailscale.com/util/mak"
+	"github.com/sagernet/tailscale/client/local"
+	"github.com/sagernet/tailscale/ipn"
+	"github.com/sagernet/tailscale/kube/localclient"
+	"github.com/sagernet/tailscale/types/logger"
+	"github.com/sagernet/tailscale/util/goroutines"
+	"github.com/sagernet/tailscale/util/mak"
 )
 
 // CertManager is responsible for issuing certificates for known domains and for

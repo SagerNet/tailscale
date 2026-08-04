@@ -12,8 +12,10 @@ import (
 	"runtime"
 )
 
-const regBase = ``
-const regPolicyBase = ``
+const (
+	regBase       = ``
+	regPolicyBase = ``
+)
 
 var ErrNoValue = errors.New("no value because registry is unavailable on this OS")
 

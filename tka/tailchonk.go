@@ -18,9 +18,9 @@ import (
 	"time"
 
 	"github.com/fxamacker/cbor/v2"
-	"tailscale.com/atomicfile"
-	"tailscale.com/tstime"
-	"tailscale.com/util/testenv"
+	"github.com/sagernet/tailscale/atomicfile"
+	"github.com/sagernet/tailscale/tstime"
+	"github.com/sagernet/tailscale/util/testenv"
 )
 
 // Chonk implementations provide durable storage for AUMs and other
@@ -295,7 +295,7 @@ type FS struct {
 // ChonkDir returns an implementation of Chonk which uses the
 // given directory to store TKA state.
 func ChonkDir(dir string) (*FS, error) {
-	if err := os.MkdirAll(dir, 0755); err != nil && !os.IsExist(err) {
+	if err := os.MkdirAll(dir, 0o755); err != nil && !os.IsExist(err) {
 		return nil, fmt.Errorf("creating chonk root dir: %v", err)
 	}
 
@@ -557,7 +557,7 @@ func (c *FS) scanHashes(eachHashInfo func(*fsHashInfo)) error {
 func (c *FS) SetLastActiveAncestor(hash AUMHash) error {
 	c.mu.Lock()
 	defer c.mu.Unlock()
-	return atomicfile.WriteFile(filepath.Join(c.base, "last_active_ancestor"), hash[:], 0644)
+	return atomicfile.WriteFile(filepath.Join(c.base, "last_active_ancestor"), hash[:], 0o644)
 }
 
 // LastActiveAncestor returns the oldest-known AUM that was (in a
@@ -655,7 +655,7 @@ func (c *FS) commit(h AUMHash, updater func(*fsHashInfo)) error {
 	}
 
 	dir, base := c.aumDir(h)
-	if err := os.MkdirAll(dir, 0755); err != nil && !os.IsExist(err) {
+	if err := os.MkdirAll(dir, 0o755); err != nil && !os.IsExist(err) {
 		return fmt.Errorf("creating directory: %v", err)
 	}
 
@@ -668,7 +668,7 @@ func (c *FS) commit(h AUMHash, updater func(*fsHashInfo)) error {
 	if err := m.NewEncoder(&buff).Encode(toCommit); err != nil {
 		return fmt.Errorf("encoding: %v", err)
 	}
-	return atomicfile.WriteFile(filepath.Join(dir, base), buff.Bytes(), 0644)
+	return atomicfile.WriteFile(filepath.Join(dir, base), buff.Bytes(), 0o644)
 }
 
 // CompactionOptions describes tuneables to use when compacting a Chonk.

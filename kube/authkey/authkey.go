@@ -19,11 +19,11 @@ import (
 	"log"
 	"time"
 
-	"tailscale.com/ipn"
-	"tailscale.com/ipn/conffile"
-	"tailscale.com/kube/kubeapi"
-	"tailscale.com/kube/kubeclient"
-	"tailscale.com/kube/kubetypes"
+	"github.com/sagernet/tailscale/ipn"
+	"github.com/sagernet/tailscale/ipn/conffile"
+	"github.com/sagernet/tailscale/kube/kubeapi"
+	"github.com/sagernet/tailscale/kube/kubeclient"
+	"github.com/sagernet/tailscale/kube/kubetypes"
 )
 
 const (

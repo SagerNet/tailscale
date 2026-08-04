@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"os"
 
-	"tailscale.com/types/key"
+	"github.com/sagernet/tailscale/types/key"
 )
 
 // ServerInfo identifies a coordination server by its URL and Noise public key.
@@ -69,7 +69,7 @@ func WriteNodeFile(path string, nf NodeFile) error {
 	if err := nf.Check(); err != nil {
 		return fmt.Errorf("invalid NodeFile: %w", err)
 	}
-	return os.WriteFile(path, nf.AsJSON(), 0600)
+	return os.WriteFile(path, nf.AsJSON(), 0o600)
 }
 
 // AsJSON returns nf as a pretty-printed JSON object, terminated by a newline.

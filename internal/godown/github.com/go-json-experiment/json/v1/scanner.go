@@ -11,9 +11,9 @@ import (
 	"io"
 	"strings"
 
-	"tailscale.com/internal/godown/github.com/go-json-experiment/json/internal"
-	"tailscale.com/internal/godown/github.com/go-json-experiment/json/internal/jsonflags"
-	"tailscale.com/internal/godown/github.com/go-json-experiment/json/jsontext"
+	"github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json/internal"
+	"github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json/internal/jsonflags"
+	"github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json/jsontext"
 )
 
 // export exposes internal functionality of the "jsontext" package.

@@ -9,7 +9,7 @@ import (
 	"net/url"
 	"strings"
 
-	"tailscale.com/types/logger"
+	"github.com/sagernet/tailscale/types/logger"
 )
 
 // DownloadVerified is a convenience wrapper around [Client.Download]

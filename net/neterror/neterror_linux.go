@@ -4,11 +4,10 @@
 package neterror
 
 import (
-	
 	"os"
 
+	godownerrors "github.com/sagernet/tailscale/internal/godown/std/errors"
 	"golang.org/x/sys/unix"
-	godownerrors "tailscale.com/internal/godown/std/errors"
 )
 
 func init() {

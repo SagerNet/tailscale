@@ -7,7 +7,7 @@ import (
 	"encoding/binary"
 	"net/netip"
 
-	"tailscale.com/types/ipproto"
+	"github.com/sagernet/tailscale/types/ipproto"
 )
 
 // ip6HeaderLength is the length of an IPv6 header with no IP options.

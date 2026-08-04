@@ -10,7 +10,7 @@ package main
 import (
 	"log"
 
-	"tailscale.com/misc/git_hook/githook"
+	"github.com/sagernet/tailscale/misc/git_hook/githook"
 )
 
 func main() {
