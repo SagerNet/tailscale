@@ -36,6 +36,7 @@ import (
 	"tailscale.com/types/logger"
 	"tailscale.com/util/ctxkey"
 	"tailscale.com/util/vizerror"
+	godownerrors "tailscale.com/internal/godown/std/errors"
 )
 
 // DevMode controls whether extra output in shown, for when the binary is being run in dev mode.
@@ -783,9 +784,9 @@ func (h errorHandler) handleError(w http.ResponseWriter, r *http.Request, lw *lo
 
 	// Extract a presentable, loggable error.
 	var hOK bool
-	hErr, hAsOK := errors.AsType[HTTPError](err)
+	hErr, hAsOK := godownerrors.AsType[HTTPError](err)
 	if !hAsOK {
-		if hs, ok := errors.AsType[HTTPStatuser](err); ok {
+		if hs, ok := godownerrors.AsType[HTTPStatuser](err); ok {
 			hErr = hs.HTTPStatus()
 			hAsOK = true
 		}

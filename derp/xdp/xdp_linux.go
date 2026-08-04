@@ -14,6 +14,7 @@ import (
 	"github.com/cilium/ebpf"
 	"github.com/cilium/ebpf/link"
 	"github.com/prometheus/client_golang/prometheus"
+	godownerrors "tailscale.com/internal/godown/std/errors"
 )
 
 //go:generate go run github.com/cilium/ebpf/cmd/bpf2go -type config -type counters_key -type counter_key_af -type counter_key_packets_bytes_action -type counter_key_prog_end bpf xdp.c -- -I headers
@@ -62,7 +63,7 @@ func NewSTUNServer(config *STUNServerConfig, opts ...STUNServerOption) (*STUNSer
 	objs := new(bpfObjects)
 	err = loadBpfObjects(objs, nil)
 	if err != nil {
-		if ve, ok := errors.AsType[*ebpf.VerifierError](err); config.FullVerifierErr && ok {
+		if ve, ok := godownerrors.AsType[*ebpf.VerifierError](err); config.FullVerifierErr && ok {
 			err = fmt.Errorf("verifier error: %+v", ve)
 		}
 		return nil, fmt.Errorf("error loading XDP program: %w", err)

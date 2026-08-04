@@ -48,6 +48,7 @@ import (
 	"tailscale.com/util/mak"
 	"tailscale.com/util/race"
 	"tailscale.com/version"
+	godownerrors "tailscale.com/internal/godown/std/errors"
 )
 
 // headerBytes is the number of bytes in a DNS message header.
@@ -748,7 +749,7 @@ func (f *forwarder) send(ctx context.Context, fq *forwardQuery, rr resolverAndDe
 	}
 
 	// If we got a truncated UDP response, return that instead of an error.
-	if trErr, ok := errors.AsType[truncatedResponseError](err); ok {
+	if trErr, ok := godownerrors.AsType[truncatedResponseError](err); ok {
 		return trErr.res, nil
 	}
 	return nil, err
@@ -1301,7 +1302,7 @@ func (f *forwarder) forwardWithDestChan(ctx context.Context, query packet, respo
 					// available; otherwise synthesize a SERVFAIL response. Note the
 					// rcode guard: firstErr may be a REFUSED rcodeResponseError if it
 					// arrived before the SERVFAIL that set sawNonRefused.
-					if rcodeErr, ok := errors.AsType[rcodeResponseError](firstErr); ok && rcodeErr.rcode == dns.RCodeServerFailure {
+					if rcodeErr, ok := godownerrors.AsType[rcodeResponseError](firstErr); ok && rcodeErr.rcode == dns.RCodeServerFailure {
 						res = packet{rcodeErr.res, query.family, query.addr}
 					} else {
 						r, err := servfailResponse(query)
@@ -1314,7 +1315,7 @@ func (f *forwarder) forwardWithDestChan(ctx context.Context, query packet, respo
 				} else {
 					// !sawNonRefused means every error was an rcodeResponseError with rcode REFUSED,
 					// so firstErr is guaranteed to wrap one.
-					rcodeErr, ok := errors.AsType[rcodeResponseError](firstErr)
+					rcodeErr, ok := godownerrors.AsType[rcodeResponseError](firstErr)
 					if !ok {
 						f.logf("unexpected: all errors were REFUSED but firstErr is not rcodeResponseError: %v", firstErr)
 						return firstErr

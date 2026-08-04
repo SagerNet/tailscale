@@ -43,6 +43,7 @@ import (
 	"tailscale.com/util/syspolicy/policyclient"
 	"tailscale.com/version"
 	"tailscale.com/version/distro"
+	godownerrors "tailscale.com/internal/godown/std/errors"
 )
 
 // ListenPort is the static port used for the web client when run inside tailscaled.
@@ -540,7 +541,7 @@ func handleJSON[data any](h func(ctx context.Context, data data) error) http.Han
 			return
 		}
 		if err := h(r.Context(), body); err != nil {
-			if httpErr, ok := errors.AsType[tsweb.HTTPError](err); ok {
+			if httpErr, ok := godownerrors.AsType[tsweb.HTTPError](err); ok {
 				tsweb.WriteHTTPError(w, r, httpErr)
 			} else {
 				http.Error(w, err.Error(), http.StatusInternalServerError)

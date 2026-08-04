@@ -16,9 +16,10 @@ import (
 	"reflect"
 	"slices"
 
-	jsonv2 "github.com/go-json-experiment/json"
-	"github.com/go-json-experiment/json/jsontext"
+	jsonv2 "tailscale.com/internal/godown/github.com/go-json-experiment/json"
+	"tailscale.com/internal/godown/github.com/go-json-experiment/json/jsontext"
 	"go4.org/mem"
+	godownreflect "tailscale.com/internal/godown/std/reflect"
 )
 
 // ByteSlice is a read-only accessor for types that are backed by a []byte.
@@ -900,7 +901,7 @@ func (p ValuePointer[T]) Clone() *T {
 	if p.ж == nil {
 		return nil
 	}
-	return new(*p.ж)
+	return func() *T { godownValue := *p.ж; return &godownValue }()
 }
 
 // String implements [fmt.Stringer].
@@ -968,7 +969,7 @@ func containsPointers(typ reflect.Type) bool {
 		if isWellKnownImmutableStruct(typ) {
 			return false
 		}
-		for field := range typ.Fields() {
+		for field := range godownreflect.TypeFields(typ) {
 			if containsPointers(field.Type) {
 				return true
 			}

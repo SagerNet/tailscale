@@ -34,6 +34,7 @@ import (
 	"tailscale.com/util/clientmetric"
 	"tailscale.com/util/mak"
 	"tailscale.com/util/set"
+	godownerrors "tailscale.com/internal/godown/std/errors"
 )
 
 // featureName is the name of the feature implemented by this package.
@@ -196,7 +197,7 @@ func getCertPEMHook(ctx context.Context, b *ipnlocal.LocalBackend, domain string
 	}
 	pair, err := e.getCertPEMWithValidity(ctx, b, domain, minValidity)
 	if err != nil {
-		if ae, ok := errors.AsType[*xacme.Error](err); ok {
+		if ae, ok := godownerrors.AsType[*xacme.Error](err); ok {
 			if d, ok := xacme.RateLimit(ae); ok {
 				return nil, certRateLimitedError{retryAfter: d, underlying: err}
 			}

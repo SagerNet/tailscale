@@ -67,6 +67,7 @@ import (
 	"tailscale.com/util/vizerror"
 	"tailscale.com/util/zstdframe"
 	"tailscale.com/wgengine/filter"
+	tailcfg2 "tailscale.com/tailcfg"
 )
 
 // Direct is the client that connects to a tailcontrol server for a node.
@@ -483,7 +484,7 @@ func (c *Direct) SetHostinfo(hi *tailcfg.Hostinfo) bool {
 	if hi == nil {
 		panic("nil Hostinfo")
 	}
-	hi = new(*hi)
+	hi = func() *tailcfg2.Hostinfo { godownValue := *hi; return &godownValue }()
 	hi.NetInfo = nil
 	c.mu.Lock()
 	defer c.mu.Unlock()

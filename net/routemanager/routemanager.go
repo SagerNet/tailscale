@@ -745,7 +745,7 @@ func (rm *RouteManager) applyUpsert(p peerView, dirty set.Set[netip.Prefix]) {
 	if !had || attrsChanged {
 		// Intern a fresh PeerRoute rather than mutating the old
 		// one, which published snapshots may still reference.
-		rm.routes[p.ID] = new(p.routeAttrs())
+		rm.routes[p.ID] = func() *PeerRoute { godownValue := p.routeAttrs(); return &godownValue }()
 	}
 	if had && old.hasDataPlaneAttrs() {
 		rm.attrPeers.Add(-1)

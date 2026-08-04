@@ -224,7 +224,7 @@ func (e *extension) profileStateChanged(_ ipn.LoginProfileView, prefs ipn.PrefsV
 		e.stopRelayServerLocked()
 		e.port = nil
 		if ok {
-			e.port = new(newPort)
+			e.port = func() *uint16 { godownValue := newPort; return &godownValue }()
 		}
 	}
 	e.handleRelayServerLifetimeLocked()
@@ -263,7 +263,7 @@ func (e *extension) serverStatus() status.ServerStatus {
 	if e.rs == nil {
 		return st
 	}
-	st.UDPPort = new(*e.port)
+	st.UDPPort = func() *uint16 { godownValue := *e.port; return &godownValue }()
 	st.Sessions = e.rs.GetSessions()
 	return st
 }

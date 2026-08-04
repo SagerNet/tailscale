@@ -51,6 +51,7 @@ import (
 	"tailscale.com/types/key"
 	"tailscale.com/util/clientmetric"
 	"tailscale.com/util/eventbus"
+	godownerrors "tailscale.com/internal/godown/std/errors"
 )
 
 // defaultClient is the default Client when using the legacy
@@ -201,7 +202,7 @@ func (e *AccessDeniedError) Unwrap() error { return e.err }
 
 // IsAccessDeniedError reports whether err is or wraps an AccessDeniedError.
 func IsAccessDeniedError(err error) bool {
-	_, ok := errors.AsType[*AccessDeniedError](err)
+	_, ok := godownerrors.AsType[*AccessDeniedError](err)
 	return ok
 }
 
@@ -219,7 +220,7 @@ func (e *PreconditionsFailedError) Unwrap() error { return e.err }
 
 // IsPreconditionsFailedError reports whether err is or wraps an PreconditionsFailedError.
 func IsPreconditionsFailedError(err error) bool {
-	_, ok := errors.AsType[*PreconditionsFailedError](err)
+	_, ok := godownerrors.AsType[*PreconditionsFailedError](err)
 	return ok
 }
 

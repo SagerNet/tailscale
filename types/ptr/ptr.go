@@ -15,5 +15,5 @@ package ptr
 //
 //go:fix inline
 func To[T any](v T) *T {
-	return new(v)
+	return func() *T { godownValue := v; return &godownValue }()
 }

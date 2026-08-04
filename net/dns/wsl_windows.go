@@ -6,7 +6,7 @@ package dns
 import (
 	"bytes"
 	"context"
-	"errors"
+	
 	"fmt"
 	"os"
 	"os/exec"
@@ -19,6 +19,7 @@ import (
 	"tailscale.com/health"
 	"tailscale.com/types/logger"
 	"tailscale.com/util/winutil"
+	godownerrors "tailscale.com/internal/godown/std/errors"
 )
 
 // wslDistros reports the names of the installed WSL2 linux distributions.
@@ -174,7 +175,7 @@ func (fs wslFS) Truncate(name string) error { return fs.WriteFile(name, nil, 064
 
 func (fs wslFS) ReadFile(name string) ([]byte, error) {
 	b, err := wslCombinedOutput(fs.cmd("cat", "--", name))
-	if ee, ok := errors.AsType[*exec.ExitError](err); ok && ee.ExitCode() == 1 {
+	if ee, ok := godownerrors.AsType[*exec.ExitError](err); ok && ee.ExitCode() == 1 {
 		return nil, os.ErrNotExist
 	}
 	return b, err

@@ -22,9 +22,9 @@ func init() {
 }
 
 var (
-	lazyDistroName  = &lazyAtomicValue[string]{f: new(distroNameWindows)}
-	lazyOSVersion   = &lazyAtomicValue[string]{f: new(osVersionWindows)}
-	lazyPackageType = &lazyAtomicValue[string]{f: new(packageTypeWindows)}
+	lazyDistroName  = &lazyAtomicValue[string]{f: func() *func() string { godownValue := distroNameWindows; return &godownValue }()}
+	lazyOSVersion   = &lazyAtomicValue[string]{f: func() *func() string { godownValue := osVersionWindows; return &godownValue }()}
+	lazyPackageType = &lazyAtomicValue[string]{f: func() *func() string { godownValue := packageTypeWindows; return &godownValue }()}
 )
 
 func distroNameWindows() string {

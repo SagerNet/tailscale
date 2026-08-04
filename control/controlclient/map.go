@@ -36,6 +36,9 @@ import (
 	"tailscale.com/util/set"
 	"tailscale.com/util/slicesx"
 	"tailscale.com/wgengine/filter"
+	godownreflect "tailscale.com/internal/godown/std/reflect"
+	key2 "tailscale.com/types/key"
+	time2 "time"
 )
 
 type responseWithSource struct {
@@ -589,7 +592,7 @@ func (ms *mapSession) removeUnwantedDiscoUpdatesFromFullNetmapUpdate(resp *tailc
 		// Overwrite the key and last seen in the full netmap update.
 		peer.DiscoKey = existingNode.DiscoKey()
 		if t, ok := existingNode.LastSeen().GetOk(); ok {
-			peer.LastSeen = new(t)
+			peer.LastSeen = func() *time2.Time { godownValue := t; return &godownValue }()
 		} else {
 			peer.LastSeen = nil
 		}
@@ -832,7 +835,7 @@ func (ms *mapSession) updatePeersStateFromResponse(resp *tailcfg.MapResponse) (s
 		if vp, ok := ms.peers[nodeID]; ok {
 			mut := vp.AsStruct()
 			if seen {
-				mut.LastSeen = new(clock.Now())
+				mut.LastSeen = func() *time2.Time { godownValue := clock.Now(); return &godownValue }()
 			} else {
 				mut.LastSeen = nil
 			}
@@ -844,7 +847,7 @@ func (ms *mapSession) updatePeersStateFromResponse(resp *tailcfg.MapResponse) (s
 	for nodeID, online := range resp.OnlineChange {
 		if vp, ok := ms.peers[nodeID]; ok {
 			mut := vp.AsStruct()
-			mut.Online = new(online)
+			mut.Online = func() *bool { godownValue := online; return &godownValue }()
 			ms.peers[nodeID] = mut.View()
 			stats.changed++
 		}
@@ -878,11 +881,11 @@ func (ms *mapSession) updatePeersStateFromResponse(resp *tailcfg.MapResponse) (s
 			patchDiscoKey.Add(1)
 		}
 		if v := pc.Online; v != nil {
-			mut.Online = new(*v)
+			mut.Online = func() *bool { godownValue := *v; return &godownValue }()
 			patchOnline.Add(1)
 		}
 		if v := pc.LastSeen; v != nil {
-			mut.LastSeen = new(*v)
+			mut.LastSeen = func() *time2.Time { godownValue := *v; return &godownValue }()
 			patchLastSeen.Add(1)
 		}
 		if v := pc.KeyExpiry; v != nil {
@@ -959,7 +962,7 @@ var nodeFields = sync.OnceValue(getNodeFields)
 func getNodeFields() []string {
 	rt := reflect.TypeFor[tailcfg.Node]()
 	ret := make([]string, 0, rt.NumField())
-	for f := range rt.Fields() {
+	for f := range godownreflect.TypeFields(rt) {
 		ret = append(ret, f.Name)
 	}
 	return ret
@@ -1039,11 +1042,11 @@ func peerChangeDiff(was tailcfg.NodeView, n *tailcfg.Node, onFalse func(string))
 			}
 		case "Key":
 			if was.Key() != n.Key {
-				pc().Key = new(n.Key)
+				pc().Key = func() *key2.NodePublic { godownValue := n.Key; return &godownValue }()
 			}
 		case "KeyExpiry":
 			if !was.KeyExpiry().Equal(n.KeyExpiry) {
-				pc().KeyExpiry = new(n.KeyExpiry)
+				pc().KeyExpiry = func() *time2.Time { godownValue := n.KeyExpiry; return &godownValue }()
 			}
 		case "KeySignature":
 			if !was.KeySignature().Equal(n.KeySignature) {
@@ -1056,7 +1059,7 @@ func peerChangeDiff(was tailcfg.NodeView, n *tailcfg.Node, onFalse func(string))
 			}
 		case "DiscoKey":
 			if was.DiscoKey() != n.DiscoKey {
-				pc().DiscoKey = new(n.DiscoKey)
+				pc().DiscoKey = func() *key2.DiscoPublic { godownValue := n.DiscoKey; return &godownValue }()
 			}
 		case "Addresses":
 			if !views.SliceEqual(was.Addresses(), views.SliceOf(n.Addresses)) {
@@ -1132,11 +1135,11 @@ func peerChangeDiff(was tailcfg.NodeView, n *tailcfg.Node, onFalse func(string))
 			}
 		case "Online":
 			if wasOnline, ok := was.Online().GetOk(); ok && n.Online != nil && *n.Online != wasOnline {
-				pc().Online = new(*n.Online)
+				pc().Online = func() *bool { godownValue := *n.Online; return &godownValue }()
 			}
 		case "LastSeen":
 			if wasSeen, ok := was.LastSeen().GetOk(); ok && n.LastSeen != nil && !wasSeen.Equal(*n.LastSeen) {
-				pc().LastSeen = new(*n.LastSeen)
+				pc().LastSeen = func() *time2.Time { godownValue := *n.LastSeen; return &godownValue }()
 			}
 		case "MachineAuthorized":
 			if was.MachineAuthorized() != n.MachineAuthorized {

@@ -28,6 +28,7 @@ import (
 	"tailscale.com/util/lineiter"
 	"tailscale.com/version"
 	"tailscale.com/version/distro"
+	opt2 "tailscale.com/types/opt"
 )
 
 var started = time.Now()
@@ -92,8 +93,8 @@ func condCall[T any](fn func() T) T {
 }
 
 var (
-	lazyInContainer = &lazyAtomicValue[opt.Bool]{f: new(inContainer)}
-	lazyGoArchVar   = &lazyAtomicValue[string]{f: new(goArchVar)}
+	lazyInContainer = &lazyAtomicValue[opt.Bool]{f: func() *func() opt2.Bool { godownValue := inContainer; return &godownValue }()}
+	lazyGoArchVar   = &lazyAtomicValue[string]{f: func() *func() string { godownValue := goArchVar; return &godownValue }()}
 )
 
 type lazyAtomicValue[T any] struct {

@@ -15,7 +15,7 @@ func init() {
 	unameMachine = lazyUnameMachine.Get
 }
 
-var lazyUnameMachine = &lazyAtomicValue[string]{f: new(unameMachineUnix)}
+var lazyUnameMachine = &lazyAtomicValue[string]{f: func() *func() string { godownValue := unameMachineUnix; return &godownValue }()}
 
 func unameMachineUnix() string {
 	switch runtime.GOOS {

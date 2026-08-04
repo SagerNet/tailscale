@@ -25,8 +25,8 @@ func init() {
 }
 
 var (
-	lazyVersionMeta = &lazyAtomicValue[versionMeta]{f: new(linuxVersionMeta)}
-	lazyOSVersion   = &lazyAtomicValue[string]{f: new(osVersionLinux)}
+	lazyVersionMeta = &lazyAtomicValue[versionMeta]{f: func() *func() (meta versionMeta) { godownValue := linuxVersionMeta; return &godownValue }()}
+	lazyOSVersion   = &lazyAtomicValue[string]{f: func() *func() string { godownValue := osVersionLinux; return &godownValue }()}
 )
 
 type versionMeta struct {

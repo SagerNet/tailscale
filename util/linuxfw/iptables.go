@@ -17,11 +17,12 @@ import (
 	"github.com/coreos/go-iptables/iptables"
 	"tailscale.com/types/logger"
 	"tailscale.com/version/distro"
+	godownerrors "tailscale.com/internal/godown/std/errors"
 )
 
 func init() {
 	isNotExistError = func(err error) bool {
-		e, ok := errors.AsType[*iptables.Error](err)
+		e, ok := godownerrors.AsType[*iptables.Error](err)
 		return ok && e.IsNotExist()
 	}
 }

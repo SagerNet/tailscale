@@ -41,6 +41,7 @@ import (
 	"tailscale.com/util/mak"
 	"tailscale.com/util/set"
 	"tailscale.com/util/testenv"
+	ipnstate2 "tailscale.com/ipn/ipnstate"
 )
 
 // TODO(tom): RPC retry/backoff was broken and has been removed. Fix?
@@ -632,7 +633,7 @@ func (b *LocalBackend) TailnetLockStatus() *ipnstate.TailnetLockStatus {
 
 	var filtered []*ipnstate.TKAPeer
 	for _, fp := range b.tka.filtered {
-		filtered = append(filtered, new(fp))
+		filtered = append(filtered, func() *ipnstate2.TKAPeer { godownValue := fp; return &godownValue }())
 	}
 
 	var visible []*ipnstate.TKAPeer

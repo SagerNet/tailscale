@@ -34,8 +34,8 @@ import (
 	"tailscale.com/util/set"
 	"tailscale.com/wgengine/router"
 
-	jsonv2 "github.com/go-json-experiment/json"
-	"github.com/go-json-experiment/json/jsontext"
+	jsonv2 "tailscale.com/internal/godown/github.com/go-json-experiment/json"
+	"tailscale.com/internal/godown/github.com/go-json-experiment/json/jsontext"
 )
 
 // pollPeriod specifies how often to poll for network traffic.

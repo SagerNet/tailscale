@@ -23,6 +23,7 @@ import (
 	"tailscale.com/types/views"
 	"tailscale.com/util/dnsname"
 	"tailscale.com/version"
+	time2 "time"
 )
 
 //go:generate go run tailscale.com/cmd/cloner  -clonefunc=false -type=TKAPeer
@@ -565,7 +566,7 @@ func (sb *StatusBuilder) AddPeer(peer key.NodePublic, st *PeerStatus) {
 		e.Expired = true
 	}
 	if t := st.KeyExpiry; t != nil {
-		e.KeyExpiry = new(*t)
+		e.KeyExpiry = func() *time2.Time { godownValue := *t; return &godownValue }()
 	}
 	if v := st.CapMap; v != nil {
 		e.CapMap = v

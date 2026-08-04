@@ -11,6 +11,7 @@ import (
 	"sort"
 	"strings"
 	"sync"
+	godownreflect "tailscale.com/internal/godown/std/reflect"
 )
 
 // MultiLabelMap is a struct-value-to-Var map variable that satisfies the
@@ -64,7 +65,7 @@ func LabelString(k any) string {
 	sb.WriteString("{")
 
 	first := true
-	for ft, fv := range rv.Fields() {
+	for ft, fv := range godownreflect.ValueFields(rv) {
 		if !first {
 			sb.WriteString(",")
 		}

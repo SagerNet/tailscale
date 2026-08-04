@@ -26,6 +26,7 @@ import (
 	"tailscale.com/util/execqueue"
 	"tailscale.com/util/testenv"
 	"tailscale.com/wgengine/filter"
+	godownerrors "tailscale.com/internal/godown/std/errors"
 )
 
 type LoginGoal struct {
@@ -358,7 +359,7 @@ func (c *Auto) authRoutine() {
 		if err != nil {
 			c.direct.health.SetAuthRoutineInError(err)
 			report(err, f)
-			if rle, ok := errors.AsType[*rateLimitError](err); ok {
+			if rle, ok := godownerrors.AsType[*rateLimitError](err); ok {
 				c.logf("authRoutine: %s", rle)
 				select {
 				case <-ctx.Done():

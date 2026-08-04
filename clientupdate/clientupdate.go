@@ -36,6 +36,7 @@ import (
 	"tailscale.com/util/cmpver"
 	"tailscale.com/version"
 	"tailscale.com/version/distro"
+	godownerrors "tailscale.com/internal/godown/std/errors"
 )
 
 // GokrazyUpdateArgs contains arguments for updating a Gokrazy appliance from a
@@ -1381,6 +1382,6 @@ func requireRoot() error {
 }
 
 func isExitError(err error) bool {
-	_, ok := errors.AsType[*exec.ExitError](err)
+	_, ok := godownerrors.AsType[*exec.ExitError](err)
 	return ok
 }

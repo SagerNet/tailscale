@@ -12,6 +12,7 @@ import (
 	"net/http"
 
 	"tailscale.com/net/routecheck"
+	godownerrors "tailscale.com/internal/godown/std/errors"
 )
 
 // ErrReportPending is returned by [Client.RouteCheck] and [Client.RouteCheckProbe]
@@ -22,7 +23,7 @@ var ErrRouteCheckReportUnavailable = errors.New("report pending")
 func (lc *Client) RouteCheckProbe(ctx context.Context) (*routecheck.Report, error) {
 	body, err := lc.send(ctx, "POST", "/localapi/v0/routecheck?probe=true", http.StatusOK, nil)
 	if err != nil {
-		if hs, ok := errors.AsType[httpStatusError](err); ok && hs.HTTPStatus == http.StatusNoContent {
+		if hs, ok := godownerrors.AsType[httpStatusError](err); ok && hs.HTTPStatus == http.StatusNoContent {
 			return nil, ErrRouteCheckReportUnavailable
 		}
 		return nil, fmt.Errorf("error %w: %s", err, body)
@@ -34,7 +35,7 @@ func (lc *Client) RouteCheckProbe(ctx context.Context) (*routecheck.Report, erro
 func (lc *Client) RouteCheck(ctx context.Context) (*routecheck.Report, error) {
 	body, err := lc.send(ctx, "POST", "/localapi/v0/routecheck", http.StatusOK, nil)
 	if err != nil {
-		if hs, ok := errors.AsType[httpStatusError](err); ok && hs.HTTPStatus == http.StatusNoContent {
+		if hs, ok := godownerrors.AsType[httpStatusError](err); ok && hs.HTTPStatus == http.StatusNoContent {
 			return nil, ErrRouteCheckReportUnavailable
 		}
 		return nil, fmt.Errorf("error %w: %s", err, body)

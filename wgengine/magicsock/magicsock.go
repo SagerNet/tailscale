@@ -72,6 +72,7 @@ import (
 	"tailscale.com/wgengine/filter"
 	"tailscale.com/wgengine/router"
 	"tailscale.com/wgengine/wgint"
+	godownerrors "tailscale.com/internal/godown/std/errors"
 )
 
 const (
@@ -1551,7 +1552,7 @@ func (c *Conn) sendUDPBatch(addr epAddr, buffs [][]byte, offset int) (sent bool,
 		err = c.pconn4.WriteWireGuardBatchTo(buffs, addr, offset)
 	}
 	if err != nil {
-		if errGSO, ok := errors.AsType[neterror.ErrUDPGSODisabled](err); ok {
+		if errGSO, ok := godownerrors.AsType[neterror.ErrUDPGSODisabled](err); ok {
 			c.logf("magicsock: %s", errGSO.Error())
 			err = errGSO.RetryErr
 		} else {

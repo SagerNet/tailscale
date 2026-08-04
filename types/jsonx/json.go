@@ -13,8 +13,8 @@ import (
 	"fmt"
 	"reflect"
 
-	"github.com/go-json-experiment/json"
-	"github.com/go-json-experiment/json/jsontext"
+	"tailscale.com/internal/godown/github.com/go-json-experiment/json"
+	"tailscale.com/internal/godown/github.com/go-json-experiment/json/jsontext"
 )
 
 var (

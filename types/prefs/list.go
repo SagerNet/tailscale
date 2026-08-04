@@ -8,8 +8,8 @@ import (
 	"slices"
 	"time"
 
-	jsonv2 "github.com/go-json-experiment/json"
-	"github.com/go-json-experiment/json/jsontext"
+	jsonv2 "tailscale.com/internal/godown/github.com/go-json-experiment/json"
+	"tailscale.com/internal/godown/github.com/go-json-experiment/json/jsontext"
 	"golang.org/x/exp/constraints"
 	"tailscale.com/types/opt"
 	"tailscale.com/types/views"
@@ -61,7 +61,7 @@ func (ls *List[T]) View() ListView[T] {
 
 // Clone returns a copy of l that aliases no memory with l.
 func (ls List[T]) Clone() *List[T] {
-	res := new(ls)
+	res := func() *List[T] { godownValue := ls; return &godownValue }()
 	if v, ok := ls.s.Value.GetOk(); ok {
 		res.s.Value.Set(append(v[:0:0], v...))
 	}

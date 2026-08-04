@@ -11,14 +11,15 @@ import (
 	"slices"
 	"time"
 
-	jsonv2 "github.com/go-json-experiment/json"
-	"github.com/go-json-experiment/json/jsontext"
-	jsonv1 "github.com/go-json-experiment/json/v1"
+	jsonv2 "tailscale.com/internal/godown/github.com/go-json-experiment/json"
+	"tailscale.com/internal/godown/github.com/go-json-experiment/json/jsontext"
+	jsonv1 "tailscale.com/internal/godown/github.com/go-json-experiment/json/v1"
 
 	"tailscale.com/net/routecheck/peernode"
 	"tailscale.com/tailcfg"
 	"tailscale.com/util/clientmetric"
 	"tailscale.com/util/mak"
+	godownnetip "tailscale.com/internal/godown/std/net/netip"
 )
 
 var (
@@ -156,7 +157,7 @@ type RoutablePrefixes map[netip.Prefix][]Node
 // ordered by the network prefix as described in [netip.Prefix.Compare].
 func (rt RoutablePrefixes) Sorted() iter.Seq2[netip.Prefix, []Node] {
 	return func(yield func(netip.Prefix, []Node) bool) {
-		prefixes := slices.SortedFunc(maps.Keys(rt), netip.Prefix.Compare)
+		prefixes := slices.SortedFunc(maps.Keys(rt), godownnetip.PrefixCompare)
 		for _, p := range prefixes {
 			if !yield(p, rt[p]) {
 				return

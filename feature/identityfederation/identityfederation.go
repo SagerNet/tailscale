@@ -19,6 +19,7 @@ import (
 	"tailscale.com/feature"
 	"tailscale.com/internal/client/tailscale"
 	"tailscale.com/ipn"
+	godownerrors "tailscale.com/internal/godown/std/errors"
 )
 
 func init() {
@@ -124,7 +125,7 @@ func exchangeJWTForToken(ctx context.Context, args tailscale.ExchangeJWTForToken
 	}).Exchange(ctx, "", oauth2.SetAuthURLParam("client_id", args.ClientID), oauth2.SetAuthURLParam("jwt", args.IDToken))
 	if err != nil {
 		// Try to extract more detailed error message
-		if retrieveErr, ok := errors.AsType[*oauth2.RetrieveError](err); ok {
+		if retrieveErr, ok := godownerrors.AsType[*oauth2.RetrieveError](err); ok {
 			return "", fmt.Errorf("token exchange failed with status %d: %s", retrieveErr.Response.StatusCode, string(retrieveErr.Body))
 		}
 		return "", fmt.Errorf("unexpected token exchange request error: %w", err)

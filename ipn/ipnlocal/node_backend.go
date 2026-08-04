@@ -38,6 +38,7 @@ import (
 	"tailscale.com/util/slicesx"
 	"tailscale.com/util/testenv"
 	"tailscale.com/wgengine/filter"
+	netmap2 "tailscale.com/types/netmap"
 )
 
 // nodeBackend is node-specific [LocalBackend] state. It is usually the current node.
@@ -626,7 +627,7 @@ func (nb *nodeBackend) netMapWithPeers() *netmap.NetworkMap {
 	if nb.netMap == nil {
 		return nil
 	}
-	nm := new(*nb.netMap) // shallow clone
+	nm := func() *netmap2.NetworkMap { godownValue := *nb.netMap; return &godownValue }() // shallow clone
 	nm.Peers = slicesx.MapValues(nb.peers)
 	slices.SortFunc(nm.Peers, func(a, b tailcfg.NodeView) int {
 		return cmp.Compare(a.ID(), b.ID())

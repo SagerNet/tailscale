@@ -8,8 +8,8 @@ import (
 	"reflect"
 	"slices"
 
-	jsonv2 "github.com/go-json-experiment/json"
-	"github.com/go-json-experiment/json/jsontext"
+	jsonv2 "tailscale.com/internal/godown/github.com/go-json-experiment/json"
+	"tailscale.com/internal/godown/github.com/go-json-experiment/json/jsontext"
 	"tailscale.com/types/opt"
 	"tailscale.com/types/views"
 )
@@ -44,7 +44,7 @@ func (ls *StructList[T]) SetManagedValue(val []T) {
 
 // Clone returns a copy of l that aliases no memory with l.
 func (ls StructList[T]) Clone() *StructList[T] {
-	res := new(ls)
+	res := func() *StructList[T] { godownValue := ls; return &godownValue }()
 	if v, ok := ls.s.Value.GetOk(); ok {
 		res.s.Value.Set(deepCloneSlice(v))
 	}

@@ -13,8 +13,8 @@ package prefs_example
 import (
 	"net/netip"
 
-	jsonv2 "github.com/go-json-experiment/json"
-	"github.com/go-json-experiment/json/jsontext"
+	jsonv2 "tailscale.com/internal/godown/github.com/go-json-experiment/json"
+	"tailscale.com/internal/godown/github.com/go-json-experiment/json/jsontext"
 	"tailscale.com/drive"
 	"tailscale.com/tailcfg"
 	"tailscale.com/types/opt"

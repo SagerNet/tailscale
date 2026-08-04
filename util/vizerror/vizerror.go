@@ -8,6 +8,7 @@ package vizerror
 import (
 	"errors"
 	"fmt"
+	godownerrors "tailscale.com/internal/godown/std/errors"
 )
 
 // Error is an error that is safe to display to end users.
@@ -77,5 +78,5 @@ func WrapWithMessage(wrapped error, publicMsg string) error {
 
 // As returns the first vizerror.Error in err's chain.
 func As(err error) (e Error, ok bool) {
-	return errors.AsType[Error](err)
+	return godownerrors.AsType[Error](err)
 }

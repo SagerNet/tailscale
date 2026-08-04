@@ -28,6 +28,7 @@ import (
 	"tailscale.com/syncs"
 	"tailscale.com/types/logger"
 	"tailscale.com/version"
+	godownreflect "tailscale.com/internal/godown/std/reflect"
 )
 
 // StaticStringVar returns a new expvar.Var that always returns s.
@@ -445,7 +446,7 @@ func structTypeSortedFields(t reflect.Type) []sortedStructField {
 		return v.([]sortedStructField)
 	}
 	fields := make([]sortedStructField, 0, t.NumField())
-	for sf := range t.Fields() {
+	for sf := range godownreflect.TypeFields(t) {
 		name := sf.Name
 		if v := sf.Tag.Get("json"); v != "" {
 			v, _, _ = strings.Cut(v, ",")

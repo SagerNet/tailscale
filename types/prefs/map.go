@@ -7,8 +7,8 @@ import (
 	"maps"
 	"net/netip"
 
-	jsonv2 "github.com/go-json-experiment/json"
-	"github.com/go-json-experiment/json/jsontext"
+	jsonv2 "tailscale.com/internal/godown/github.com/go-json-experiment/json"
+	"tailscale.com/internal/godown/github.com/go-json-experiment/json/jsontext"
 	"golang.org/x/exp/constraints"
 	"tailscale.com/types/opt"
 	"tailscale.com/types/views"
@@ -43,7 +43,7 @@ func (m *Map[K, V]) View() MapView[K, V] {
 
 // Clone returns a copy of m that aliases no memory with m.
 func (m Map[K, V]) Clone() *Map[K, V] {
-	res := new(m)
+	res := func() *Map[K, V] { godownValue := m; return &godownValue }()
 	if v, ok := m.s.Value.GetOk(); ok {
 		res.s.Value.Set(maps.Clone(v))
 	}

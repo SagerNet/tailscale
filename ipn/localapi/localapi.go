@@ -54,6 +54,7 @@ import (
 	"tailscale.com/util/syspolicy/pkey"
 	"tailscale.com/version"
 	"tailscale.com/wgengine/magicsock"
+	ipn2 "tailscale.com/ipn"
 )
 
 var (
@@ -872,8 +873,8 @@ func InUseOtherUserIPNStream(w http.ResponseWriter, r *http.Request, err error) 
 	}
 	js, err := json.Marshal(&ipn.Notify{
 		Version:    version.Long(),
-		State:      new(ipn.InUseOtherUser),
-		ErrMessage: new(err.Error()),
+		State:      func() *ipn2.State { godownValue := ipn.InUseOtherUser; return &godownValue }(),
+		ErrMessage: func() *string { godownValue := err.Error(); return &godownValue }(),
 	})
 	if err != nil {
 		return false

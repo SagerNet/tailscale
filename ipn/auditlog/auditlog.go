@@ -18,6 +18,7 @@ import (
 	"tailscale.com/types/logger"
 	"tailscale.com/util/rands"
 	"tailscale.com/util/set"
+	godownerrors "tailscale.com/internal/godown/std/errors"
 )
 
 // transaction represents an audit log that has not yet been sent to the control plane.
@@ -69,7 +70,7 @@ type Opts struct {
 // IsRetryableError returns true if the given error is retryable
 // See [controlclient.apiResponseError].  Potentially retryable errors implement the Retryable() method.
 func IsRetryableError(err error) bool {
-	retryable, ok := errors.AsType[interface {
+	retryable, ok := godownerrors.AsType[interface {
 		error
 		Retryable() bool
 	}](err)

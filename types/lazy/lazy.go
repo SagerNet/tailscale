@@ -11,7 +11,7 @@ import (
 
 // nilErrPtr is a sentinel *error value for SyncValue.err to signal
 // that SyncValue.v is valid.
-var nilErrPtr = new(error(nil))
+var nilErrPtr = func() *error { godownValue := error(nil); return &godownValue }()
 
 // SyncValue is a lazily computed value.
 //
@@ -78,7 +78,7 @@ func (z *SyncValue[T]) GetErr(fill func() (T, error)) (T, error) {
 
 		// Update z.err after z.v; see field docs.
 		if err != nil {
-			z.err.Store(new(err))
+			z.err.Store(func() *error { godownValue := err; return &godownValue }())
 		} else {
 			z.err.Store(nilErrPtr)
 		}
@@ -143,7 +143,7 @@ func (z *SyncValue[T]) SetForTest(tb testing_TB, val T, err error) {
 
 	z.v = val
 	if err != nil {
-		z.err.Store(new(err))
+		z.err.Store(func() *error { godownValue := err; return &godownValue }())
 	} else {
 		z.err.Store(nilErrPtr)
 	}

@@ -21,8 +21,8 @@ func init() {
 }
 
 var (
-	lazyVersionMeta = &lazyAtomicValue[versionMeta]{f: new(freebsdVersionMeta)}
-	lazyOSVersion   = &lazyAtomicValue[string]{f: new(osVersionFreeBSD)}
+	lazyVersionMeta = &lazyAtomicValue[versionMeta]{f: func() *func() (meta versionMeta) { godownValue := freebsdVersionMeta; return &godownValue }()}
+	lazyOSVersion   = &lazyAtomicValue[string]{f: func() *func() string { godownValue := osVersionFreeBSD; return &godownValue }()}
 )
 
 func distroNameFreeBSD() string {

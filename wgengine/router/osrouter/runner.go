@@ -16,6 +16,7 @@ import (
 	"syscall"
 
 	"golang.org/x/sys/unix"
+	godownerrors "tailscale.com/internal/godown/std/errors"
 )
 
 // commandRunner abstracts helpers to run OS commands. It exists
@@ -43,7 +44,7 @@ func errCode(err error) int {
 	if err == nil {
 		return 0
 	}
-	if e, ok := errors.AsType[*exec.ExitError](err); ok {
+	if e, ok := godownerrors.AsType[*exec.ExitError](err); ok {
 		return e.ExitCode()
 	}
 	s := err.Error()

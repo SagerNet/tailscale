@@ -34,6 +34,7 @@ import (
 	"tailscale.com/util/syspolicy/pkey"
 	"tailscale.com/util/syspolicy/policyclient"
 	"tailscale.com/version"
+	godownreflect "tailscale.com/internal/godown/std/reflect"
 )
 
 // DefaultControlURL is the URL base of the control plane
@@ -443,7 +444,7 @@ func applyPrefsEdits(src, dst reflect.Value, mask map[string]reflect.Value) {
 
 func maskFields(v reflect.Value) map[string]reflect.Value {
 	mask := make(map[string]reflect.Value)
-	for sf, fv := range v.Fields() {
+	for sf, fv := range godownreflect.ValueFields(v) {
 		if !strings.HasSuffix(sf.Name, "Set") {
 			continue
 		}

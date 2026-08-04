@@ -13,6 +13,7 @@ import (
 	"tailscale.com/syncs"
 	"tailscale.com/tailcfg"
 	"tailscale.com/types/opt"
+	godownreflect "tailscale.com/internal/godown/std/reflect"
 )
 
 // Knobs is the set of knobs that the control plane's coordination server can
@@ -220,7 +221,7 @@ func (k *Knobs) AsDebugJSON() map[string]any {
 	}
 	ret := map[string]any{}
 	rv := reflect.ValueOf(k).Elem() // of *k
-	for sf, fv := range rv.Fields() {
+	for sf, fv := range godownreflect.ValueFields(rv) {
 		switch v := fv.Addr().Interface().(type) {
 		case *atomic.Bool:
 			ret[sf.Name] = v.Load()

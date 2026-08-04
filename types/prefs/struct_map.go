@@ -6,8 +6,8 @@ package prefs
 import (
 	"maps"
 
-	jsonv2 "github.com/go-json-experiment/json"
-	"github.com/go-json-experiment/json/jsontext"
+	jsonv2 "tailscale.com/internal/godown/github.com/go-json-experiment/json"
+	"tailscale.com/internal/godown/github.com/go-json-experiment/json/jsontext"
 	"tailscale.com/types/opt"
 	"tailscale.com/types/views"
 )
@@ -42,7 +42,7 @@ func (m *StructMap[K, V]) SetManagedValue(val map[K]V) {
 
 // Clone returns a copy of m that aliases no memory with m.
 func (m StructMap[K, V]) Clone() *StructMap[K, V] {
-	res := new(m)
+	res := func() *StructMap[K, V] { godownValue := m; return &godownValue }()
 	if v, ok := m.s.Value.GetOk(); ok {
 		res.s.Value.Set(deepCloneMap(v))
 	}

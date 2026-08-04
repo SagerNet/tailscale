@@ -6,7 +6,7 @@
 package localapi
 
 import (
-	"errors"
+	
 	"fmt"
 	"maps"
 	"net/http"
@@ -15,6 +15,7 @@ import (
 
 	"tailscale.com/ipn/ipnlocal"
 	"tailscale.com/tsweb"
+	godownerrors "tailscale.com/internal/godown/std/errors"
 )
 
 func init() {
@@ -42,7 +43,7 @@ func (h *Handler) serveCert(w http.ResponseWriter, r *http.Request) {
 	}
 	pair, err := h.b.GetCertPEMWithValidity(r.Context(), domain, minValidity)
 	if err != nil {
-		if hs, ok := errors.AsType[tsweb.HTTPStatuser](err); ok {
+		if hs, ok := godownerrors.AsType[tsweb.HTTPStatuser](err); ok {
 			resp := hs.HTTPStatus()
 			maps.Copy(w.Header(), resp.Header)
 			http.Error(w, resp.Msg, resp.Code)

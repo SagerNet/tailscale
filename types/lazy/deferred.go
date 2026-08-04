@@ -89,7 +89,7 @@ func (d *DeferredInit) doSlow() (err *error) {
 	}()
 	for _, f := range d.funcs {
 		if err := f(); err != nil {
-			return new(err)
+			return func() *error { godownValue := err; return &godownValue }()
 		}
 	}
 	return nilErrPtr
