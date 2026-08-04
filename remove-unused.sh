@@ -14,7 +14,16 @@ function remove_unused() {
     ssh/ \
     wf/ \
     internal/tooldeps \
-    gokrazy/
+    gokrazy/ \
+    ipn/lapitest \
+    ipn/ipnlocal/ipnlocaltest \
+    feature/taildrop \
+    feature/condregister/maybe_taildrop.go \
+    feature/ssh \
+    feature/tailnetlock \
+    feature/condregister/maybe_tailnetlock.go \
+    tool/updateflakes \
+    tsnet/example
 }
 
 remove_unused
