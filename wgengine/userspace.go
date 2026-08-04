@@ -60,8 +60,8 @@ import (
 	"github.com/sagernet/tailscale/wgengine/wgcfg"
 	"github.com/sagernet/tailscale/wgengine/wgint"
 	"github.com/sagernet/tailscale/wgengine/wglog"
-	"github.com/tailscale/wireguard-go/device"
-	"github.com/tailscale/wireguard-go/tun"
+	"github.com/sagernet/wireguard-go/device"
+	"github.com/sagernet/wireguard-go/tun"
 	"go4.org/mem"
 )
 
@@ -74,6 +74,8 @@ type userspaceEngine struct {
 
 	logf           logger.Logf
 	wgLogger       *wglog.Logger // a wireguard-go logging wrapper
+	ctx            context.Context
+	workers        int
 	reqCh          chan struct{}
 	waitCh         chan struct{} // chan is closed when first Close call completes; contrast with closing bool
 	timeNow        func() mono.Time
@@ -171,6 +173,9 @@ type Config struct {
 	// the OS.
 	// If nil, a fake Device that does nothing is used.
 	Tun tun.Device
+
+	Context context.Context
+	Workers int
 
 	// IsTAP is whether Tun is actually a TAP (Layer 2) device that'll
 	// require ethernet headers.
@@ -363,6 +368,8 @@ func NewUserspaceEngine(logf logger.Logf, conf Config) (_ Engine, reterr error) 
 
 	e := &userspaceEngine{
 		eventBus:       conf.EventBus,
+		ctx:            conf.Context,
+		workers:        conf.Workers,
 		timeNow:        mono.Now,
 		logf:           logf,
 		reqCh:          make(chan struct{}, 1),
@@ -510,7 +517,7 @@ func NewUserspaceEngine(logf logger.Logf, conf Config) (_ Engine, reterr error) 
 
 	// wgdev takes ownership of tundev, will close it when closed.
 	e.logf("Creating WireGuard device...")
-	e.wgdev = wgcfg.NewDevice(e.tundev, e.magicConn.Bind(), e.wgLogger.DeviceLogger)
+	e.wgdev = wgcfg.NewDevice(e.ctx, e.tundev, e.magicConn.Bind(), e.wgLogger.DeviceLogger, e.workers)
 	closePool.addFunc(e.wgdev.Close)
 	closePool.addFunc(func() {
 		if err := e.magicConn.Close(); err != nil {

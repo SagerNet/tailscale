@@ -26,7 +26,7 @@ import (
 	"github.com/sagernet/tailscale/util/backoff"
 	"github.com/sagernet/tailscale/util/eventbus"
 	"github.com/sagernet/tailscale/wgengine/router"
-	"github.com/tailscale/wireguard-go/tun"
+	"github.com/sagernet/wireguard-go/tun"
 	"golang.org/x/sys/windows"
 	"golang.zx2c4.com/wireguard/windows/tunnel/winipcfg"
 )

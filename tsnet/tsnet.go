@@ -197,7 +197,7 @@ import (
 	"github.com/sagernet/tailscale/util/testenv"
 	"github.com/sagernet/tailscale/wgengine"
 	"github.com/sagernet/tailscale/wgengine/netstack"
-	"github.com/tailscale/wireguard-go/tun"
+	"github.com/sagernet/wireguard-go/tun"
 )
 
 // Server is an embedded Tailscale server.

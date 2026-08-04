@@ -47,7 +47,7 @@ import (
 	"github.com/sagernet/tailscale/wgengine/filter"
 	"github.com/sagernet/tailscale/wgengine/magicsock"
 	"github.com/sagernet/tailscale/wgengine/netstack/gro"
-	"github.com/tailscale/wireguard-go/conn"
+	"github.com/sagernet/wireguard-go/conn"
 	"github.com/sagernet/gvisor/pkg/refs"
 	"github.com/sagernet/gvisor/pkg/tcpip"
 	"github.com/sagernet/gvisor/pkg/tcpip/adapters/gonet"

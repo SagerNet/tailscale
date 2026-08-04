@@ -18,7 +18,7 @@ import (
 	"github.com/sagernet/tailscale/types/logger"
 	"github.com/sagernet/tailscale/version"
 	"github.com/sagernet/tailscale/wgengine/router"
-	"github.com/tailscale/wireguard-go/tun"
+	"github.com/sagernet/wireguard-go/tun"
 	"go4.org/netipx"
 )
 

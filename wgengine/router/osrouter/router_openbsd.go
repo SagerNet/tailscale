@@ -17,7 +17,7 @@ import (
 	"github.com/sagernet/tailscale/util/eventbus"
 	"github.com/sagernet/tailscale/util/set"
 	"github.com/sagernet/tailscale/wgengine/router"
-	"github.com/tailscale/wireguard-go/tun"
+	"github.com/sagernet/wireguard-go/tun"
 	"go4.org/netipx"
 )
 

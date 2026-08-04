@@ -54,7 +54,6 @@ require (
 	github.com/tailscale/netlink v1.1.1-0.20240822203006-4d49adab4de7
 	github.com/tailscale/peercred v0.0.0-20250107143737-35a0c7bd7edc
 	github.com/tailscale/web-client-prebuilt v0.0.0-20250124233751-d4cd19a26976
-	github.com/tailscale/wireguard-go v0.0.0-20260715223240-2e01ba5b00f0
 	github.com/tailscale/xnet v0.0.0-20240729143630-8497ac4dab2e
 	github.com/toqueteos/webbrowser v1.2.0
 	go4.org/mem v0.0.0-20240501181205-ae6ca9944745
@@ -89,6 +88,7 @@ require (
 	github.com/hashicorp/go-metrics v0.5.4 // indirect
 	github.com/hashicorp/go-msgpack/v2 v2.1.2 // indirect
 	github.com/hashicorp/golang-lru v1.0.2 // indirect
+	github.com/sagernet/sing v0.7.10 // indirect
 	go.etcd.io/bbolt v1.4.2 // indirect
 )
 
@@ -108,6 +108,7 @@ require (
 	github.com/prometheus/procfs v0.20.1 // indirect
 	github.com/rogpeppe/go-internal v1.14.1 // indirect
 	github.com/sagernet/gvisor v0.0.0-20250811.0-sing-box-mod.1
+	github.com/sagernet/wireguard-go v0.0.5-0.20260804111801-7a66fbee4ae1
 	github.com/sourcegraph/go-diff v0.7.0
 	github.com/tailscale/go-winio v0.0.0-20231025203758-c4f33415bf55
 	github.com/u-root/uio v0.0.0-20240224005618-d2acac8f3701 // indirect

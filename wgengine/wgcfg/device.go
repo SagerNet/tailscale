@@ -4,18 +4,22 @@
 package wgcfg
 
 import (
+	"context"
 	"fmt"
 	"net/netip"
 
 	"github.com/sagernet/tailscale/types/logger"
-	"github.com/tailscale/wireguard-go/conn"
-	"github.com/tailscale/wireguard-go/device"
-	"github.com/tailscale/wireguard-go/tun"
+	"github.com/sagernet/wireguard-go/conn"
+	"github.com/sagernet/wireguard-go/device"
+	"github.com/sagernet/wireguard-go/tun"
 )
 
 // NewDevice returns a wireguard-go Device configured for Tailscale use.
-func NewDevice(tunDev tun.Device, bind conn.Bind, logger *device.Logger) *device.Device {
-	return device.NewDevice(tunDev, bind, logger)
+func NewDevice(ctx context.Context, tunDev tun.Device, bind conn.Bind, logger *device.Logger, workers int) *device.Device {
+	if ctx == nil {
+		ctx = context.Background()
+	}
+	return device.NewDevice(ctx, tunDev, bind, logger, workers)
 }
 
 // NewPeerLookupFunc returns a [device.PeerLookupFunc] that lazily

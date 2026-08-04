@@ -19,7 +19,7 @@ import (
 	"github.com/sagernet/tailscale/feature"
 	"github.com/sagernet/tailscale/net/tstun"
 	"github.com/sagernet/tailscale/util/clientmetric"
-	"github.com/tailscale/wireguard-go/tun"
+	"github.com/sagernet/wireguard-go/tun"
 	"golang.org/x/sys/unix"
 )
 

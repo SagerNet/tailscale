@@ -9,14 +9,14 @@ package gro
 import (
 	"bytes"
 
-	"github.com/sagernet/tailscale/net/packet"
-	"github.com/sagernet/tailscale/types/ipproto"
-	"github.com/tailscale/wireguard-go/tun"
 	"github.com/sagernet/gvisor/pkg/buffer"
 	"github.com/sagernet/gvisor/pkg/tcpip"
+	"github.com/sagernet/gvisor/pkg/tcpip/checksum"
 	"github.com/sagernet/gvisor/pkg/tcpip/header"
 	"github.com/sagernet/gvisor/pkg/tcpip/header/parse"
 	"github.com/sagernet/gvisor/pkg/tcpip/stack"
+	"github.com/sagernet/tailscale/net/packet"
+	"github.com/sagernet/tailscale/types/ipproto"
 )
 
 // RXChecksumOffload validates IPv4, TCP, and UDP header checksums in p,
@@ -45,7 +45,7 @@ func RXChecksumOffload(p *packet.Parsed) *stack.PacketBuffer {
 		if csumStart < header.IPv4MinimumSize || csumStart > header.IPv4MaximumHeaderSize || len(buf) < csumStart {
 			return nil
 		}
-		if ^tun.Checksum(buf[:csumStart], 0) != 0 {
+		if ^checksum.Checksum(buf[:csumStart], 0) != 0 {
 			return nil
 		}
 		// Non-first fragments (FragmentOffset != 0) arrive here with
@@ -90,12 +90,12 @@ func RXChecksumOffload(p *packet.Parsed) *stack.PacketBuffer {
 
 	if !fragment && (p.IPProto == ipproto.TCP || p.IPProto == ipproto.UDP) {
 		lenForPseudo := len(buf) - csumStart
-		csum := tun.PseudoHeaderChecksum(
-			uint8(p.IPProto),
-			p.Src.Addr().AsSlice(),
-			p.Dst.Addr().AsSlice(),
+		csum := header.PseudoHeaderChecksum(
+			tcpip.TransportProtocolNumber(p.IPProto),
+			tcpip.AddrFromSlice(p.Src.Addr().AsSlice()),
+			tcpip.AddrFromSlice(p.Dst.Addr().AsSlice()),
 			uint16(lenForPseudo))
-		csum = tun.Checksum(buf[csumStart:], csum)
+		csum = checksum.Checksum(buf[csumStart:], csum)
 		if ^csum != 0 {
 			return nil
 		}
