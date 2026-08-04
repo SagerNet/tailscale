@@ -27,7 +27,6 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/creachadair/msync/trigger"
 	jsonv2 "github.com/go-json-experiment/json"
 	"github.com/go-json-experiment/json/jsontext"
 	"tailscale.com/envknob"
@@ -323,7 +322,7 @@ type Logger struct {
 	httpDoCalls    atomic.Int32
 	sockstatsLabel atomicSocktatsLabel
 	eventClient    *eventbus.Client
-	networkIsUp    trigger.Cond // set/reset by netmon.ChangeDelta events
+	networkIsUp    triggerCond // set/reset by netmon.ChangeDelta events
 
 	procID              uint32
 	includeProcSequence bool
