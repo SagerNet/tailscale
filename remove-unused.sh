@@ -23,6 +23,7 @@ function remove_unused() {
     feature/tailnetlock \
     feature/condregister/maybe_tailnetlock.go \
     tool/updateflakes \
+    tsconsensus/ \
     tsnet/example
 }
 

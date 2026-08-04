@@ -7,14 +7,14 @@ import (
 	"context"
 	"sync"
 
-	"github.com/sagernet/tailscale/feature/buildfeatures"
-	"github.com/sagernet/tailscale/net/packet"
-	"github.com/sagernet/tailscale/types/ipproto"
-	"github.com/sagernet/tailscale/wgengine/netstack/gro"
 	"github.com/sagernet/gvisor/pkg/buffer"
 	"github.com/sagernet/gvisor/pkg/tcpip"
 	"github.com/sagernet/gvisor/pkg/tcpip/header"
 	"github.com/sagernet/gvisor/pkg/tcpip/stack"
+	"github.com/sagernet/tailscale/feature/buildfeatures"
+	"github.com/sagernet/tailscale/net/packet"
+	"github.com/sagernet/tailscale/types/ipproto"
+	"github.com/sagernet/tailscale/wgengine/netstack/gro"
 )
 
 type queue struct {

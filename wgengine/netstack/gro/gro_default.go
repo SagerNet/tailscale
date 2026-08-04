@@ -8,9 +8,9 @@ package gro
 import (
 	"sync"
 
-	"github.com/sagernet/tailscale/net/packet"
 	"github.com/sagernet/gvisor/pkg/tcpip/stack"
 	nsgro "github.com/sagernet/gvisor/pkg/tcpip/stack/gro"
+	"github.com/sagernet/tailscale/net/packet"
 )
 
 var groPool sync.Pool
