@@ -164,6 +164,7 @@ import (
 	"github.com/sagernet/tailscale/envknob"
 	_ "github.com/sagernet/tailscale/feature/c2n"
 	_ "github.com/sagernet/tailscale/feature/condregister/netlog"
+	_ "github.com/sagernet/tailscale/feature/condregister/osrouter"
 	_ "github.com/sagernet/tailscale/feature/condregister/oauthkey"
 	_ "github.com/sagernet/tailscale/feature/condregister/portmapper"
 	_ "github.com/sagernet/tailscale/feature/condregister/useproxy"
@@ -199,6 +200,7 @@ import (
 	"github.com/sagernet/tailscale/util/testenv"
 	"github.com/sagernet/tailscale/wgengine"
 	"github.com/sagernet/tailscale/wgengine/netstack"
+	"github.com/sagernet/tailscale/wgengine/router"
 	"github.com/sagernet/wireguard-go/tun"
 )
 
@@ -309,6 +311,10 @@ type Server struct {
 	//
 	// This field must be set before calling Start.
 	Tun tun.Device
+
+	// Router, if non-nil, is used to configure the OS network stack for the
+	// custom Tun device. If nil while Tun is set, a system router is created.
+	Router router.Router
 
 	Dialer N.Dialer
 
@@ -848,7 +854,7 @@ func (s *Server) start() (reterr error) {
 
 	s.dialer = &tsdial.Dialer{Logf: tsLogf, Dialer: s.Dialer} // mutated below (before used)
 	s.dialer.SetBus(sys.Bus.Get())
-	eng, err := wgengine.NewUserspaceEngine(tsLogf, wgengine.Config{
+	engineConfig := wgengine.Config{
 		Tun:           s.Tun,
 		DNS:           s.DNS,
 		EventBus:      sys.Bus.Get(),
@@ -860,7 +866,19 @@ func (s *Server) start() (reterr error) {
 		HealthTracker: sys.HealthTracker.Get(),
 		ExtraRootCAs:  sys.ExtraRootCAs,
 		Metrics:       sys.UserMetricsRegistry(),
-	})
+	}
+	if s.Tun != nil {
+		if s.Router != nil {
+			engineConfig.Router = s.Router
+		} else {
+			systemRouter, err := router.New(tsLogf, s.Tun, s.netMon, sys.HealthTracker.Get(), sys.Bus.Get())
+			if err != nil {
+				return err
+			}
+			engineConfig.Router = systemRouter
+		}
+	}
+	eng, err := wgengine.NewUserspaceEngine(tsLogf, engineConfig)
 	if err != nil {
 		return err
 	}

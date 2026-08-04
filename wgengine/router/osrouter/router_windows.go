@@ -41,13 +41,23 @@ type winRouter struct {
 	logf                func(fmt string, args ...any)
 	netMon              *netmon.Monitor // may be nil
 	health              *health.Tracker
-	nativeTun           *tun.NativeTun
+	nativeTun           windowsTunDevice
 	routeChangeCallback *winipcfg.RouteChangeCallback
 	firewall            *firewallTweaker
 }
 
+type windowsTunDevice interface {
+	tun.Device
+	LUID() uint64
+	MTU() (int, error)
+	ForceMTU(int)
+}
+
 func newUserspaceRouter(logf logger.Logf, tundev tun.Device, netMon *netmon.Monitor, health *health.Tracker, bus *eventbus.Bus) (router.Router, error) {
-	nativeTun := tundev.(*tun.NativeTun)
+	nativeTun, ok := tundev.(windowsTunDevice)
+	if !ok {
+		return nil, fmt.Errorf("unsupported tun device type %T", tundev)
+	}
 	luid := winipcfg.LUID(nativeTun.LUID())
 	guid, err := luid.GUID()
 	if err != nil {
