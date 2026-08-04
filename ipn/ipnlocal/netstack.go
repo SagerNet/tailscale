@@ -10,8 +10,8 @@ import (
 	"net/netip"
 	"time"
 
-	"gvisor.dev/gvisor/pkg/tcpip"
-	tcpip2 "gvisor.dev/gvisor/pkg/tcpip"
+	"github.com/sagernet/gvisor/pkg/tcpip"
+	tcpip2 "github.com/sagernet/gvisor/pkg/tcpip"
 )
 
 // TCPHandlerForDst returns a TCP handler for connections to dst, or nil if

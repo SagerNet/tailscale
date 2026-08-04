@@ -70,7 +70,6 @@ require (
 	golang.org/x/time v0.15.0
 	golang.org/x/tools v0.47.0
 	golang.zx2c4.com/wireguard/windows v0.5.3
-	gvisor.dev/gvisor v0.0.0-20260224225140-573d5e7127a8
 )
 
 require (
@@ -108,6 +107,7 @@ require (
 	github.com/prometheus/client_model v0.6.2 // indirect
 	github.com/prometheus/procfs v0.20.1 // indirect
 	github.com/rogpeppe/go-internal v1.14.1 // indirect
+	github.com/sagernet/gvisor v0.0.0-20250811.0-sing-box-mod.1
 	github.com/sourcegraph/go-diff v0.7.0
 	github.com/tailscale/go-winio v0.0.0-20231025203758-c4f33415bf55
 	github.com/u-root/uio v0.0.0-20240224005618-d2acac8f3701 // indirect
