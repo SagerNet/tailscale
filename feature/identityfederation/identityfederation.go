@@ -19,7 +19,6 @@ import (
 	"tailscale.com/feature"
 	"tailscale.com/internal/client/tailscale"
 	"tailscale.com/ipn"
-	"tailscale.com/wif"
 )
 
 func init() {
@@ -35,14 +34,7 @@ func resolveAuthKey(ctx context.Context, args tailscale.ResolveAuthKeyWIFArgs) (
 	}
 
 	if args.IDToken == "" {
-		if args.Audience == "" {
-			return "", errors.New("federated identity requires either an ID token or an audience")
-		}
-		providerIdToken, err := wif.ObtainProviderToken(ctx, args.Audience)
-		if err != nil {
-			return "", errors.New("federated identity authkeys require --id-token")
-		}
-		args.IDToken = providerIdToken
+		return "", errors.New("federated identity authkeys require --id-token")
 	}
 	if len(args.Tags) == 0 {
 		return "", errors.New("federated identity authkeys require --advertise-tags")

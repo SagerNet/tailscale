@@ -9,9 +9,6 @@ require (
 	github.com/alexbrainman/sspi v0.0.0-20231016080023-1a75b4708caa
 	github.com/andybalholm/brotli v1.1.0
 	github.com/atotto/clipboard v0.1.4
-	github.com/aws/aws-sdk-go-v2 v1.42.1
-	github.com/aws/aws-sdk-go-v2/config v1.32.17
-	github.com/aws/aws-sdk-go-v2/service/ssm v1.45.0
 	github.com/axiomhq/hyperloglog v0.0.0-20240319100328-84253e514e02
 	github.com/cilium/ebpf v0.16.0
 	github.com/coder/websocket v1.8.14
@@ -79,7 +76,6 @@ require (
 )
 
 require (
-	github.com/aws/aws-sdk-go-v2/service/signin v1.0.11 // indirect
 	github.com/google/go-containerregistry v0.21.5 // indirect
 	github.com/mattn/go-colorable v0.1.15 // indirect
 	github.com/onsi/gomega v1.36.2 // indirect
@@ -114,17 +110,6 @@ require (
 
 require (
 	filippo.io/edwards25519 v1.2.0 // indirect
-	github.com/aws/aws-sdk-go-v2/credentials v1.19.16 // indirect
-	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.18.23
-	github.com/aws/aws-sdk-go-v2/internal/configsources v1.4.30 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.7.30 // indirect
-	github.com/aws/aws-sdk-go-v2/internal/v4a v1.4.24 // indirect
-	github.com/aws/aws-sdk-go-v2/service/internal/accept-encoding v1.13.13 // indirect
-	github.com/aws/aws-sdk-go-v2/service/internal/presigned-url v1.13.30 // indirect
-	github.com/aws/aws-sdk-go-v2/service/sso v1.30.17 // indirect
-	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.35.21 // indirect
-	github.com/aws/aws-sdk-go-v2/service/sts v1.42.1
-	github.com/aws/smithy-go v1.27.3
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/containerd/stargz-snapshotter/estargz v0.18.2 // indirect
@@ -137,7 +122,6 @@ require (
 	github.com/google/btree v1.1.3 // indirect
 	github.com/gorilla/csrf v1.7.3
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
-	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/mattn/go-runewidth v0.0.14 // indirect
 	github.com/mdlayher/socket v0.5.0
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
