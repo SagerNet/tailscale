@@ -78,6 +78,7 @@ type userspaceEngine struct {
 	ctx            context.Context
 	workers        int
 	onReconfig     ReconfigListener
+	onReconfigArgs *reconfigArgs
 	reqCh          chan struct{}
 	waitCh         chan struct{} // chan is closed when first Close call completes; contrast with closing bool
 	timeNow        func() mono.Time
@@ -868,6 +869,7 @@ func (e *userspaceEngine) Reconfig(cfg *wgcfg.Config, routerCfg *router.Config, 
 	}
 
 	if !engineChanged && !routerChanged && !dnsChanged && !listenPortChanged && !birdChanged && !peerMTUChanged && !netlogChanged {
+		e.notifyOnReconfigLocked(cfg, routerCfg, dnsCfg)
 		return ErrNoChanges
 	}
 
@@ -963,9 +965,7 @@ func (e *userspaceEngine) Reconfig(cfg *wgcfg.Config, routerCfg *router.Config, 
 		e.bird.ReconfigDone()
 	}
 
-	if (engineChanged || routerChanged || dnsChanged) && e.onReconfig != nil {
-		e.onReconfig(cfg, routerCfg, dnsCfg)
-	}
+	e.notifyOnReconfigLocked(cfg, routerCfg, dnsCfg)
 
 	e.logf("[v1] wgengine: Reconfig done")
 	return errors.Join(routerErr, dnsErr, vpnErr)
