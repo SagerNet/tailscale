@@ -8,3 +8,8 @@ func SetVersion(version string) {
 	long = lazy.SyncValue[string]{}
 	long.MustSet(version)
 }
+
+func SetAppleTV() {
+	isAppleTV = lazy.SyncValue[bool]{}
+	isAppleTV.MustSet(true)
+}
