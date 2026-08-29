@@ -8,7 +8,7 @@ package internal
 import (
 	"bytes"
 
-	"github.com/go-json-experiment/json/jsontext"
+	"github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json/jsontext"
 	"github.com/sagernet/tailscale/types/lazy"
 	"github.com/sagernet/tailscale/util/testenv"
 	"github.com/sagernet/tailscale/version"

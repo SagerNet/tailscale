@@ -11,8 +11,8 @@ import (
 	"net/netip"
 	"time"
 
-	jsonv2 "github.com/go-json-experiment/json"
-	"github.com/go-json-experiment/json/jsontext"
+	jsonv2 "github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json"
+	"github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json/jsontext"
 	"github.com/sagernet/tailscale/types/dnstype"
 	"github.com/sagernet/tailscale/types/key"
 	"github.com/sagernet/tailscale/types/opt"

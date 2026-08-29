@@ -17,9 +17,9 @@ import (
 	"net/netip"
 	"time"
 
-	jsonv2 "github.com/go-json-experiment/json"
-	"github.com/go-json-experiment/json/jsontext"
 	"github.com/sagernet/tailscale/health"
+	jsonv2 "github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json"
+	"github.com/sagernet/tailscale/internal/godown/github.com/go-json-experiment/json/jsontext"
 	"github.com/sagernet/tailscale/logpolicy"
 	"github.com/sagernet/tailscale/logtail"
 	"github.com/sagernet/tailscale/net/netmon"
