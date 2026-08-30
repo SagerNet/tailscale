@@ -738,7 +738,7 @@ func NewConn(opts Options) (*Conn, error) {
 	}
 
 	if err := c.rebind(keepCurrentPort); err != nil {
-		return nil, err
+		c.logf("%v", err)
 	}
 
 	c.netChecker = &netcheck.Client{
