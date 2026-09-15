@@ -91,6 +91,7 @@ type Monitor struct {
 	lastWall     time.Time
 	jumpDuration time.Duration // wall-clock time elapsed during detected time jump; 0 if no time jump observed since reset
 	dialer       N.Dialer
+	underlay     Underlay
 }
 
 // ChangeFunc is a callback function registered with Monitor that's called when the
@@ -372,7 +373,7 @@ func filterRoutableIPs(addrs []netip.Prefix) []netip.Prefix {
 // New instantiates and starts a monitoring instance.
 // The returned monitor is inactive until it's started by the Start method.
 // Use RegisterChangeCallback to get notified of network changes.
-func New(bus *eventbus.Bus, logf logger.Logf, dialer N.Dialer) (*Monitor, error) {
+func New(bus *eventbus.Bus, logf logger.Logf, dialer N.Dialer, underlay Underlay) (*Monitor, error) {
 	logf = logger.WithPrefix(logf, "monitor: ")
 	m := &Monitor{
 		logf:     logf,
@@ -381,6 +382,7 @@ func New(bus *eventbus.Bus, logf logger.Logf, dialer N.Dialer) (*Monitor, error)
 		stop:     make(chan struct{}),
 		lastWall: wallTime(),
 		dialer:   dialer,
+		underlay: underlay,
 	}
 	m.changed = eventbus.Publish[ChangeDelta](m.b)
 	st, err := m.interfaceStateUncached()

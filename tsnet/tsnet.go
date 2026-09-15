@@ -318,6 +318,12 @@ type Server struct {
 
 	Dialer N.Dialer
 
+	// Underlay, if non-nil, opens the sockets that carry Tailscale's own
+	// traffic to the network: DERP connections and the magicsock UDP sockets
+	// used for peer, disco and STUN traffic. Control plane connections keep
+	// using Dialer. If nil, direct sockets are used as before.
+	Underlay netmon.Underlay
+
 	LookupHook          dnscache.LookupHookFunc
 	PeerDNSQueryHandler ipnlocal.PeerDNSQueryHandler
 	OnlyTCP443          bool
@@ -847,7 +853,7 @@ func (s *Server) start() (reterr error) {
 		return err
 	}
 
-	s.netMon, err = netmon.New(sys.Bus.Get(), tsLogf, s.Dialer)
+	s.netMon, err = netmon.New(sys.Bus.Get(), tsLogf, s.Dialer, s.Underlay)
 	if err != nil {
 		return err
 	}
