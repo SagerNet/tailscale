@@ -978,7 +978,9 @@ func (c *Client) GetReport(ctx context.Context, dm *tailcfg.DERPMap, opts *GetRe
 			}
 		}
 		if len(need) > 0 {
-			if opts == nil || !opts.OnlyTCP443 {
+			// ICMP cannot go through an Underlay, so skip the probes
+			// rather than open direct sockets.
+			if (opts == nil || !opts.OnlyTCP443) && c.NetMon.Underlay() == nil {
 				// Kick off ICMP in parallel to HTTPS checks; we don't
 				// reuse the same WaitGroup for those probes because we
 				// need to close the underlying Pinger after a timeout
