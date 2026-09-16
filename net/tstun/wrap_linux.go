@@ -10,9 +10,8 @@ import (
 	"net/netip"
 	"runtime"
 
-	"github.com/sagernet/gvisor/pkg/tcpip"
-	"github.com/sagernet/gvisor/pkg/tcpip/checksum"
-	"github.com/sagernet/gvisor/pkg/tcpip/header"
+	"github.com/sagernet/sing-tun/gtcpip/checksum"
+	"github.com/sagernet/sing-tun/gtcpip/header"
 	"github.com/sagernet/tailscale/control/controlknobs"
 	"github.com/sagernet/tailscale/envknob"
 	"github.com/sagernet/tailscale/net/tsaddr"
@@ -78,14 +77,13 @@ func probeTCPGRO(dev tun.GRODevice) error {
 	iphLen := 20
 	tcphLen := 20
 	totalLen := iphLen + tcphLen + segmentSize
-	ipAs4 := ipPort.Addr().As4()
 	bufs := make([][]byte, 2)
 	for i := range bufs {
 		bufs[i] = make([]byte, PacketStartOffset+totalLen, PacketStartOffset+(totalLen*2))
 		ipv4H := header.IPv4(bufs[i][PacketStartOffset:])
 		ipv4H.Encode(&header.IPv4Fields{
-			SrcAddr:  tcpip.AddrFromSlice(ipAs4[:]),
-			DstAddr:  tcpip.AddrFromSlice(ipAs4[:]),
+			SrcAddr:  ipPort.Addr(),
+			DstAddr:  ipPort.Addr(),
 			Protocol: unix.IPPROTO_TCP,
 			// Use a zero value TTL as best effort means to reduce chance of
 			// probe packet leaking further than it needs to.
@@ -104,7 +102,7 @@ func probeTCPGRO(dev tun.GRODevice) error {
 		})
 		copy(bufs[i][PacketStartOffset+iphLen+tcphLen:], fingerprint)
 		ipv4H.SetChecksum(^ipv4H.CalculateChecksum())
-		pseudoCsum := header.PseudoHeaderChecksum(unix.IPPROTO_TCP, ipv4H.SourceAddress(), ipv4H.DestinationAddress(), uint16(tcphLen+segmentSize))
+		pseudoCsum := header.PseudoHeaderChecksum(unix.IPPROTO_TCP, ipv4H.SourceAddressSlice(), ipv4H.DestinationAddressSlice(), uint16(tcphLen+segmentSize))
 		pseudoCsum = checksum.Checksum(bufs[i][PacketStartOffset+iphLen+tcphLen:], pseudoCsum)
 		tcpH.SetChecksum(^tcpH.CalculateChecksum(pseudoCsum))
 	}

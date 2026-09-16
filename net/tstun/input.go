@@ -81,7 +81,7 @@ func (t *Wrapper) InputPackets(packets [][]byte) ([][]byte, error) {
 		}
 		p.Decode(pkt)
 		if !t.disableFilter {
-			response, _ := t.filterPacketOutboundToWireGuard(p, pc, nil)
+			response := t.filterPacketOutboundToWireGuard(p, pc)
 			if response != filter.Accept {
 				metricPacketOutDrop.Add(1)
 				continue
