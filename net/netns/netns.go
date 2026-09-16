@@ -19,47 +19,13 @@ import (
 	"net/netip"
 	"runtime"
 	"sync/atomic"
-	"syscall"
 
 	"github.com/sagernet/tailscale/net/netknob"
 	"github.com/sagernet/tailscale/net/netmon"
 	"github.com/sagernet/tailscale/types/logger"
-	"github.com/sagernet/tailscale/types/nettype"
 )
 
 var disabled atomic.Bool
-
-var controlOverride atomic.Pointer[func(network, address string, c syscall.RawConn) error]
-
-// SetControlFunc sets a custom control function that overrides the
-// platform-specific socket control (SO_MARK, SO_BINDTODEVICE, etc.)
-// for both Listener and FromDialer paths.
-// Pass nil to restore the default platform behavior.
-func SetControlFunc(f func(network, address string, c syscall.RawConn) error) {
-	if f != nil {
-		controlOverride.Store(&f)
-	} else {
-		controlOverride.Store(nil)
-	}
-}
-
-var listenPacketOverride atomic.Pointer[func(ctx context.Context, network, address string) (nettype.PacketConn, error)]
-
-func SetListenPacketFunc(listenPacketFunc func(ctx context.Context, network, address string) (nettype.PacketConn, error)) {
-	if listenPacketFunc != nil {
-		listenPacketOverride.Store(&listenPacketFunc)
-	} else {
-		listenPacketOverride.Store(nil)
-	}
-}
-
-func ListenPacketFunc() func(ctx context.Context, network, address string) (nettype.PacketConn, error) {
-	listenPacketFunc := listenPacketOverride.Load()
-	if listenPacketFunc != nil {
-		return *listenPacketFunc
-	}
-	return nil
-}
 
 // SetEnabled enables or disables netns for the process.
 // It defaults to being enabled.
@@ -128,8 +94,8 @@ func Listener(logf logger.Logf, netMon *netmon.Monitor) *net.ListenConfig {
 	if disabled.Load() {
 		return new(net.ListenConfig)
 	}
-	if f := controlOverride.Load(); f != nil {
-		return &net.ListenConfig{Control: *f}
+	if f := netMon.ControlFunc(); f != nil {
+		return &net.ListenConfig{Control: f}
 	}
 	return &net.ListenConfig{Control: control(logf, netMon)}
 }
@@ -170,8 +136,8 @@ func FromDialer(logf logger.Logf, netMon *netmon.Monitor, d *net.Dialer, ad bool
 	if disabled.Load() {
 		return d
 	}
-	if f := controlOverride.Load(); f != nil {
-		d.Control = *f
+	if f := netMon.ControlFunc(); f != nil {
+		d.Control = f
 	} else {
 		d.Control = control(logf, netMon)
 	}
