@@ -197,13 +197,13 @@ type Engine interface {
 	// before the first [Engine.Reconfig]. fn is called rarely (when
 	// wireguard-go first hears from a peer it doesn't have) and may
 	// acquire locks.
-	SetPeerConfigFunc(fn func(key.NodePublic) (allowedIPs []netip.Prefix, ok bool))
+	SetPeerConfigFunc(fn func(key.NodePublic) (config wgcfg.PeerConfig, ok bool))
 
 	// SyncDevicePeer synchronizes the WireGuard device's state for a
 	// single peer with the config source installed via
 	// [Engine.SetPeerConfigFunc]: if the source no longer knows the
 	// peer, it is removed from the device; if the peer is active in the
-	// device, its allowed IPs are updated. It does O(1) work (plus the
+	// device, its allowed IPs and pre-shared key are updated. It does O(1) work (plus the
 	// config source lookup) and is intended to be called for each peer
 	// added, updated, or removed by an incremental netmap delta,
 	// avoiding a full [Engine.Reconfig].

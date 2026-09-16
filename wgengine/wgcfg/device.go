@@ -6,7 +6,6 @@ package wgcfg
 import (
 	"context"
 	"fmt"
-	"net/netip"
 
 	"github.com/sagernet/tailscale/types/logger"
 	"github.com/sagernet/wireguard-go/conn"
@@ -23,11 +22,12 @@ func NewDevice(ctx context.Context, tunDev tun.Device, bind conn.Bind, logger *d
 }
 
 // NewPeerLookupFunc returns a [device.PeerLookupFunc] that lazily
-// creates peers using allowedIPs as the source of each peer's allowed
-// IPs. The peer's endpoint is derived from its public key via bind.
-func NewPeerLookupFunc(bind conn.Bind, logf logger.Logf, allowedIPs func(device.NoisePublicKey) ([]netip.Prefix, bool)) device.PeerLookupFunc {
+// creates peers using peerConfig as the source of each peer's allowed
+// IPs and optional pre-shared key. The peer's endpoint is derived from
+// its public key via bind.
+func NewPeerLookupFunc(bind conn.Bind, logf logger.Logf, peerConfig func(device.NoisePublicKey) (PeerConfig, bool)) device.PeerLookupFunc {
 	return func(pubk device.NoisePublicKey) (_ *device.NewPeerConfig, ok bool) {
-		ips, ok := allowedIPs(pubk)
+		conf, ok := peerConfig(pubk)
 		if !ok {
 			return nil, false
 		}
@@ -37,8 +37,9 @@ func NewPeerLookupFunc(bind conn.Bind, logf logger.Logf, allowedIPs func(device.
 			return nil, false
 		}
 		return &device.NewPeerConfig{
-			AllowedIPs: ips,
-			Endpoint:   ep,
+			AllowedIPs:   conf.AllowedIPs,
+			PresharedKey: conf.PresharedKey,
+			Endpoint:     ep,
 		}, true
 	}
 }
