@@ -11,7 +11,7 @@
 // Normally, Tailscale runs as a background system service (tailscaled)
 // that manages a virtual network interface for the whole machine. tsnet
 // takes a different approach: it runs a fully self-contained Tailscale
-// node inside your process using a userspace TCP/IP stack (gVisor).
+// node inside your process using a userspace TCP/IP stack (netstack).
 // This means:
 //
 //   - No root privileges required.
@@ -158,6 +158,7 @@ import (
 	"sync"
 	"time"
 
+	singtun "github.com/sagernet/sing-tun"
 	N "github.com/sagernet/sing/common/network"
 	"github.com/sagernet/tailscale/client/local"
 	"github.com/sagernet/tailscale/control/controlclient"
@@ -190,6 +191,7 @@ import (
 	"github.com/sagernet/tailscale/tailcfg"
 	"github.com/sagernet/tailscale/tsd"
 	"github.com/sagernet/tailscale/types/bools"
+	"github.com/sagernet/tailscale/types/ipproto"
 	"github.com/sagernet/tailscale/types/logger"
 	"github.com/sagernet/tailscale/types/logid"
 	"github.com/sagernet/tailscale/types/nettype"
@@ -310,7 +312,9 @@ type Server struct {
 	// Tun, if non-nil, specifies a custom tun.Device to use for packet I/O.
 	//
 	// This field must be set before calling Start.
-	Tun tun.Device
+	Tun                    tun.Device
+	NetstackHandler        singtun.Handler
+	NetstackMemoryPressure func() singtun.MemoryPressure
 
 	// Router, if non-nil, is used to configure the OS network stack for the
 	// custom Tun device. If nil while Tun is set, a system router is created.
@@ -619,7 +623,7 @@ func (s *Server) Close() error {
 func (s *Server) close() {
 	// Close listeners under s.mu, then release before the heavy shutdown
 	// operations. We must not hold s.mu during netstack.Close, lb.Shutdown,
-	// etc. because callbacks from gVisor (e.g. getTCPHandlerForFlow)
+	// etc. because callbacks from netstack (e.g. getTCPHandlerForFlow)
 	// acquire s.mu, and waiting for those goroutines while holding the lock
 	// would deadlock.
 	s.mu.Lock()
@@ -889,7 +893,7 @@ func (s *Server) start() (reterr error) {
 	sys.HealthTracker.Get().SetMetricsRegistry(sys.UserMetricsRegistry())
 
 	// TODO(oxtoacart): do we need to support Taildrive on tsnet, and if so, how?
-	ns, err := netstack.Create(tsLogf, sys.Tun.Get(), eng, sys.MagicSock.Get(), s.dialer, sys.DNSManager.Get(), sys.ProxyMapper())
+	ns, err := netstack.Create(tsLogf, sys.Tun.Get(), sys.DNSManager.Get(), sys.ProxyMapper(), s.NetstackMemoryPressure)
 	if err != nil {
 		return fmt.Errorf("netstack.Create: %w", err)
 	}
@@ -901,9 +905,23 @@ func (s *Server) start() (reterr error) {
 		ns.ProcessLocalIPs = true
 		ns.ProcessSubnets = true
 	} else {
-		// When using a TUN, check gVisor for registered endpoints to handle
+		// When using a TUN, check netstack for registered endpoints to handle
 		// packets for tsnet listeners and outbound connection replies.
 		ns.CheckLocalTransportEndpoints = true
+	}
+	ns.Handler = s.NetstackHandler
+	ns.HasListenerForDestination = func(protocol uint8, destination netip.AddrPort) bool {
+		var network string
+		switch ipproto.Proto(protocol) {
+		case ipproto.TCP:
+			network = "tcp"
+		case ipproto.UDP:
+			network = "udp"
+		default:
+			return false
+		}
+		_, found := s.listenerForDstAddr(network, destination, false)
+		return found
 	}
 	ns.GetTCPHandlerForFlow = s.getTCPHandlerForFlow
 	ns.GetUDPHandlerForFlow = s.getUDPHandlerForFlow
@@ -915,7 +933,7 @@ func (s *Server) start() (reterr error) {
 	}
 	s.dialer.NetstackDialTCP = func(ctx context.Context, dst netip.AddrPort) (net.Conn, error) {
 		// Note: don't just return ns.DialContextTCP or we'll return
-		// *gonet.TCPConn(nil) instead of a nil interface which trips up
+		// *tun.GoConn(nil) instead of a nil interface which trips up
 		// callers.
 		v4, v6 := s.TailscaleIPs()
 		src := bools.IfElse(dst.Addr().Is6(), v6, v4)
@@ -1360,13 +1378,13 @@ func (s *Server) ListenPacket(network, addr string) (net.PacketConn, error) {
 		return nil, err
 	}
 
-	// Create the gVisor PacketConn first so it can handle port 0 allocation.
+	// Create the netstack PacketConn first so it can handle port 0 allocation.
 	pc, err := s.netstack.ListenPacket(network, ap.String())
 	if err != nil {
 		return nil, err
 	}
 
-	// If port 0 was requested, use the port gVisor assigned.
+	// If port 0 was requested, use the port netstack assigned.
 	if ap.Port() == 0 {
 		if p := portFromAddr(pc.LocalAddr()); p != 0 {
 			ap = netip.AddrPortFrom(ap.Addr(), p)
@@ -1374,7 +1392,7 @@ func (s *Server) ListenPacket(network, addr string) (net.PacketConn, error) {
 		}
 	}
 
-	ln, err := s.registerListener(network, addr, ap, listenOnTailnet, nil)
+	ln, err := s.registerListener(network, addr, ap, listenOnTailnet)
 	if err != nil {
 		pc.Close()
 		return nil, err
@@ -2058,6 +2076,9 @@ const (
 )
 
 func (s *Server) listen(network, addr string, lnOn listenOn) (net.Listener, error) {
+	if network == "" {
+		network = "tcp"
+	}
 	switch network {
 	case "", "tcp", "tcp4", "tcp6", "udp", "udp4", "udp6":
 	default:
@@ -2071,67 +2092,17 @@ func (s *Server) listen(network, addr string, lnOn listenOn) (net.Listener, erro
 		return nil, err
 	}
 
-	isTCP := network == "" || network == "tcp" || network == "tcp4" || network == "tcp6"
-
-	// When using a TUN with TCP, create a gVisor TCP listener.
-	// gVisor handles port 0 allocation natively.
-	var gonetLn net.Listener
-	if s.Tun != nil && isTCP {
-		gonetLn, err = s.listenTCP(network, host)
-		if err != nil {
-			return nil, err
-		}
-		// If port 0 was requested, update host to the port gVisor assigned
-		// so that the listenKey uses the real port.
-		if host.Port() == 0 {
-			if p := portFromAddr(gonetLn.Addr()); p != 0 {
-				host = netip.AddrPortFrom(host.Addr(), p)
-				addr = listenAddr(host)
-			}
-		}
-	}
-
-	ln, err := s.registerListener(network, addr, host, lnOn, gonetLn)
-	if err != nil {
-		if gonetLn != nil {
-			gonetLn.Close()
-		}
-		return nil, err
-	}
-	return ln, nil
-}
-
-// listenTCP creates a gVisor TCP listener for TUN mode.
-func (s *Server) listenTCP(network string, host netip.AddrPort) (net.Listener, error) {
-	var nsNetwork string
-	nsAddr := host
-	switch {
-	case network == "tcp4" || network == "tcp6":
-		nsNetwork = network
-	case host.Addr().Is4():
-		nsNetwork = "tcp4"
-	case host.Addr().Is6():
-		nsNetwork = "tcp6"
-	default:
-		// Wildcard address: use tcp6 for dual-stack (accepts both v4 and v6).
-		nsNetwork = "tcp6"
-		nsAddr = netip.AddrPortFrom(netip.IPv6Unspecified(), host.Port())
-	}
-	ln, err := s.netstack.ListenTCP(nsNetwork, nsAddr.String())
-	if err != nil {
-		return nil, fmt.Errorf("tsnet: %w", err)
-	}
-	return ln, nil
+	return s.registerListener(network, addr, host, lnOn)
 }
 
 // registerListener allocates a port (if 0) and registers the listener in
 // s.listeners under s.mu.
-func (s *Server) registerListener(network, addr string, host netip.AddrPort, lnOn listenOn, gonetLn net.Listener) (*listener, error) {
+func (s *Server) registerListener(network, addr string, host netip.AddrPort, lnOn listenOn) (*listener, error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
 	// Allocate an ephemeral port for non-TUN listeners requesting port 0.
-	if host.Port() == 0 && gonetLn == nil {
+	if host.Port() == 0 {
 		p, ok := s.allocEphemeralLocked(network, host.Addr(), lnOn)
 		if !ok {
 			return nil, errors.New("tsnet: no available port in ephemeral range")
@@ -2163,7 +2134,6 @@ func (s *Server) registerListener(network, addr string, host netip.AddrPort, lnO
 		addr:    addr,
 		closedc: make(chan struct{}),
 		conn:    make(chan net.Conn),
-		gonetLn: gonetLn,
 	}
 	if s.listeners == nil {
 		s.listeners = make(map[listenKey]*listener)
@@ -2294,17 +2264,9 @@ type listener struct {
 	conn    chan net.Conn // unbuffered, never closed
 	closedc chan struct{} // closed on [listener.Close]
 	closed  bool          // guarded by s.mu
-
-	// gonetLn, if set, is the gonet.Listener that handles new connections.
-	// gonetLn is set by [listen] when a TUN is in use and terminates the listener.
-	// gonetLn is nil when TUN is nil.
-	gonetLn net.Listener
 }
 
 func (ln *listener) Accept() (net.Conn, error) {
-	if ln.gonetLn != nil {
-		return ln.gonetLn.Accept()
-	}
 	select {
 	case c := <-ln.conn:
 		return c, nil
@@ -2314,9 +2276,6 @@ func (ln *listener) Accept() (net.Conn, error) {
 }
 
 func (ln *listener) Addr() net.Addr {
-	if ln.gonetLn != nil {
-		return ln.gonetLn.Addr()
-	}
 	return addr{
 		network: ln.keys[0].network,
 		addr:    ln.addr,
@@ -2342,9 +2301,6 @@ func (ln *listener) closeLocked() error {
 	}
 	close(ln.closedc)
 	ln.closed = true
-	if ln.gonetLn != nil {
-		ln.gonetLn.Close()
-	}
 	return nil
 }
 

@@ -6,6 +6,7 @@ package tap
 
 import (
 	"bytes"
+	"encoding/binary"
 	"errors"
 	"fmt"
 	"net"
@@ -15,12 +16,9 @@ import (
 	"sync"
 
 	"github.com/insomniacslk/dhcp/dhcpv4"
-	"github.com/sagernet/gvisor/pkg/tcpip"
-	"github.com/sagernet/gvisor/pkg/tcpip/checksum"
-	"github.com/sagernet/gvisor/pkg/tcpip/header"
-	"github.com/sagernet/gvisor/pkg/tcpip/network/ipv4"
-	"github.com/sagernet/gvisor/pkg/tcpip/network/ipv6"
-	"github.com/sagernet/gvisor/pkg/tcpip/transport/udp"
+	tcpip "github.com/sagernet/sing-tun/gtcpip"
+	"github.com/sagernet/sing-tun/gtcpip/checksum"
+	"github.com/sagernet/sing-tun/gtcpip/header"
 	"github.com/sagernet/tailscale/net/netaddr"
 	"github.com/sagernet/tailscale/net/packet"
 	"github.com/sagernet/tailscale/net/tsaddr"
@@ -94,6 +92,7 @@ var (
 const (
 	ipv4HeaderLen     = 20
 	ethernetFrameSize = 14 // 2 six byte MACs, 2 bytes ethertype
+	arpPacketSize     = 28
 )
 
 const (
@@ -136,15 +135,16 @@ func (t *tapDevice) handleTAPFrame(ethBuf []byte) bool {
 		}
 		return t.handleDHCPRequest(ethBuf)
 	case etherTypeARP:
-		arpPacket := header.ARP(ethBuf[ethernetFrameSize:])
-		if !arpPacket.IsValid() {
+		arpPacket := ethBuf[ethernetFrameSize:]
+		if len(arpPacket) < arpPacketSize || binary.BigEndian.Uint16(arpPacket) != 1 ||
+			binary.BigEndian.Uint16(arpPacket[2:]) != uint16(header.IPv4ProtocolNumber) || arpPacket[4] != 6 || arpPacket[5] != 4 {
 			// Bogus ARP. Eat.
 			return consumePacket
 		}
-		switch arpPacket.Op() {
-		case header.ARPRequest:
+		switch binary.BigEndian.Uint16(arpPacket[6:]) {
+		case 1:
 			req := arpPacket // better name at this point
-			buf := make([]byte, header.EthernetMinimumSize+header.ARPSize)
+			buf := make([]byte, ethernetFrameSize+arpPacketSize)
 
 			// Our ARP "Table" of one:
 			var srcMAC [6]byte
@@ -153,27 +153,22 @@ func (t *tapDevice) handleTAPFrame(ethBuf []byte) bool {
 				t.destMACAtomic.Store(srcMAC)
 			}
 
-			eth := header.Ethernet(buf)
-			eth.Encode(&header.EthernetFields{
-				SrcAddr: tcpip.LinkAddress(ourMAC[:]),
-				DstAddr: tcpip.LinkAddress(ethSrcMAC),
-				Type:    0x0806, // arp
-			})
-			res := header.ARP(buf[header.EthernetMinimumSize:])
-			res.SetIPv4OverEthernet()
-			res.SetOp(header.ARPReply)
+			writeEthernetFrame(buf, ourMAC, ethSrcMAC, 0x0806)
+			res := buf[ethernetFrameSize:]
+			copy(res[:6], req[:6])
+			binary.BigEndian.PutUint16(res[6:], 2)
 
 			// If the client's asking about their own IP, tell them it's
 			// their own MAC. TODO(bradfitz): remove String allocs.
-			if net.IP(req.ProtocolAddressTarget()).String() == t.clientIPv4.Load() {
-				copy(res.HardwareAddressSender(), ethSrcMAC)
+			if net.IP(req[24:28]).String() == t.clientIPv4.Load() {
+				copy(res[8:14], ethSrcMAC)
 			} else {
-				copy(res.HardwareAddressSender(), ourMAC[:])
+				copy(res[8:14], ourMAC)
 			}
 
-			copy(res.ProtocolAddressSender(), req.ProtocolAddressTarget())
-			copy(res.HardwareAddressTarget(), req.HardwareAddressSender())
-			copy(res.ProtocolAddressTarget(), req.ProtocolAddressSender())
+			copy(res[14:18], req[24:28])
+			copy(res[18:24], req[8:14])
+			copy(res[24:28], req[14:18])
 
 			n, err := t.WriteEthernet(buf)
 			if tapDebug {
@@ -318,45 +313,37 @@ func (t *tapDevice) handleDHCPRequest(ethBuf []byte) bool {
 }
 
 func writeEthernetFrame(buf []byte, srcMAC, dstMAC net.HardwareAddr, proto tcpip.NetworkProtocolNumber) {
-	// Ethernet header
-	eth := header.Ethernet(buf)
-	eth.Encode(&header.EthernetFields{
-		SrcAddr: tcpip.LinkAddress(srcMAC),
-		DstAddr: tcpip.LinkAddress(dstMAC),
-		Type:    proto,
-	})
+	copy(buf[:6], dstMAC)
+	copy(buf[6:12], srcMAC)
+	binary.BigEndian.PutUint16(buf[12:], uint16(proto))
 }
 
 func packLayer2UDP(payload []byte, srcMAC, dstMAC net.HardwareAddr, src, dst netip.AddrPort) []byte {
-	buf := make([]byte, header.EthernetMinimumSize+header.UDPMinimumSize+header.IPv4MinimumSize+len(payload))
+	buf := make([]byte, ethernetFrameSize+header.UDPMinimumSize+header.IPv4MinimumSize+len(payload))
 	payloadStart := len(buf) - len(payload)
 	copy(buf[payloadStart:], payload)
-	srcB := src.Addr().As4()
-	srcIP := tcpip.AddrFromSlice(srcB[:])
-	dstB := dst.Addr().As4()
-	dstIP := tcpip.AddrFromSlice(dstB[:])
 	// Ethernet header
-	writeEthernetFrame(buf, srcMAC, dstMAC, ipv4.ProtocolNumber)
+	writeEthernetFrame(buf, srcMAC, dstMAC, header.IPv4ProtocolNumber)
 	// IP header
-	ipbuf := buf[header.EthernetMinimumSize:]
+	ipbuf := buf[ethernetFrameSize:]
 	ip := header.IPv4(ipbuf)
 	ip.Encode(&header.IPv4Fields{
 		TotalLength: uint16(len(ipbuf)),
 		TTL:         65,
-		Protocol:    uint8(udp.ProtocolNumber),
-		SrcAddr:     srcIP,
-		DstAddr:     dstIP,
+		Protocol:    uint8(header.UDPProtocolNumber),
+		SrcAddr:     src.Addr(),
+		DstAddr:     dst.Addr(),
 	})
 	ip.SetChecksum(^ip.CalculateChecksum())
 	// UDP header
-	u := header.UDP(buf[header.EthernetMinimumSize+header.IPv4MinimumSize:])
+	u := header.UDP(buf[ethernetFrameSize+header.IPv4MinimumSize:])
 	u.Encode(&header.UDPFields{
 		SrcPort: src.Port(),
 		DstPort: dst.Port(),
 		Length:  uint16(header.UDPMinimumSize + len(payload)),
 	})
 	// Calculate the UDP pseudo-header checksum.
-	xsum := header.PseudoHeaderChecksum(udp.ProtocolNumber, srcIP, dstIP, uint16(len(u)))
+	xsum := header.PseudoHeaderChecksum(header.UDPProtocolNumber, src.Addr().AsSlice(), dst.Addr().AsSlice(), uint16(len(u)))
 	// Calculate the UDP checksum and set it.
 	xsum = checksum.Checksum(payload, xsum)
 	u.SetChecksum(^u.CalculateChecksum(xsum))
@@ -461,14 +448,14 @@ func (t *tapDevice) Write(buffs [][]byte, offset int) (int, error) {
 	defer ethBufPool.Put(buf)
 	for _, buff := range buffs {
 		buf.Reset()
-		buf.Grow(header.EthernetMinimumSize + len(buff) - offset)
+		buf.Grow(ethernetFrameSize + len(buff) - offset)
 
 		var ebuf [14]byte
 		switch buff[offset] >> 4 {
 		case 4:
-			writeEthernetFrame(ebuf[:], ourMAC, dstMac, ipv4.ProtocolNumber)
+			writeEthernetFrame(ebuf[:], ourMAC, dstMac, header.IPv4ProtocolNumber)
 		case 6:
-			writeEthernetFrame(ebuf[:], ourMAC, dstMac, ipv6.ProtocolNumber)
+			writeEthernetFrame(ebuf[:], ourMAC, dstMac, header.IPv6ProtocolNumber)
 		default:
 			continue
 		}

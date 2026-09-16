@@ -1,7 +1,7 @@
 package netstack
 
-import "github.com/sagernet/gvisor/pkg/tcpip/stack"
+import tun "github.com/sagernet/sing-tun"
 
-func (ns *Impl) ExportIPStack() *stack.Stack {
+func (ns *Impl) ExportIPStack() *tun.Go {
 	return ns.ipstack
 }

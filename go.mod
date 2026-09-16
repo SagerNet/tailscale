@@ -38,13 +38,13 @@ require (
 	github.com/kortschak/wol v0.0.0-20200729010619-da482cc4850a
 	github.com/mattn/go-isatty v0.0.23
 	github.com/mdlayher/genetlink v1.3.2
-	github.com/mdlayher/netlink v1.7.3-0.20250113171957-fbb4dce95f42
+	github.com/mdlayher/netlink v1.11.2
 	github.com/mdlayher/sdnotify v1.0.0
 	github.com/mitchellh/go-ps v1.0.0
 	github.com/pires/go-proxyproto v0.8.1
 	github.com/prometheus/client_golang v1.23.2
 	github.com/safchain/ethtool v0.3.0
-	github.com/sagernet/sing v0.8.12-0.20260731081310-cb3e09a281aa
+	github.com/sagernet/sing v0.9.4-0.20260912053229-7776850263cd
 	github.com/skip2/go-qrcode v0.0.0-20200617195104-da1b6568686e
 	github.com/tailscale/certstore v0.1.1-0.20260409135935-3638fb84b77d
 	github.com/tailscale/hujson v0.0.0-20260302212456-ecc657c15afd
@@ -58,7 +58,7 @@ require (
 	golang.org/x/crypto v0.54.0
 	golang.org/x/exp v0.0.0-20260410095643-746e56fc9e2f
 	golang.org/x/mod v0.37.0
-	golang.org/x/net v0.56.0
+	golang.org/x/net v0.57.0
 	golang.org/x/oauth2 v0.36.0
 	golang.org/x/sync v0.22.0
 	golang.org/x/sys v0.47.0
@@ -77,9 +77,14 @@ require (
 
 require (
 	github.com/dgryski/go-metro v0.0.0-20180109044635-280f6062b5bc // indirect
+	github.com/florianl/go-nfqueue/v2 v2.1.0 // indirect
+	github.com/fsnotify/fsnotify v1.9.0 // indirect
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
 	github.com/gorilla/securecookie v1.1.2 // indirect
 	github.com/prometheus/common v0.69.0 // indirect
+	github.com/sagernet/fswatch v0.1.2 // indirect
+	github.com/sagernet/netlink v0.0.0-20260814022025-64455d367bbf // indirect
+	github.com/sagernet/nftables v0.3.0-mod.4 // indirect
 )
 
 require (
@@ -90,14 +95,15 @@ require (
 	github.com/fatih/color v1.18.0
 	github.com/google/btree v1.1.3 // indirect
 	github.com/gorilla/csrf v1.7.3
-	github.com/mdlayher/socket v0.5.0
+	github.com/mdlayher/socket v0.6.0
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
 	github.com/pierrec/lz4/v4 v4.1.26 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/prometheus/client_model v0.6.2 // indirect
 	github.com/prometheus/procfs v0.20.1 // indirect
 	github.com/rogpeppe/go-internal v1.14.1 // indirect
-	github.com/sagernet/gvisor v0.0.0-20250811.0-sing-box-mod.1
+	github.com/sagernet/gvisor v0.0.0-20260727.0-sing-box-mod.1 // indirect
+	github.com/sagernet/sing-tun v0.9.4-0.20260916041232-89d2e01a748a
 	github.com/sagernet/wireguard-go v0.0.5-0.20260804111801-7a66fbee4ae1
 	github.com/sourcegraph/go-diff v0.7.0
 	github.com/tailscale/go-winio v0.0.0-20231025203758-c4f33415bf55
