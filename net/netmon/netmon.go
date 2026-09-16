@@ -17,7 +17,6 @@ import (
 	"sync"
 	"time"
 
-	N "github.com/sagernet/sing/common/network"
 	"github.com/sagernet/tailscale/feature/buildfeatures"
 	"github.com/sagernet/tailscale/syncs"
 	"github.com/sagernet/tailscale/types/logger"
@@ -90,7 +89,7 @@ type Monitor struct {
 	wallTimer    *time.Timer // nil until Started; re-armed AfterFunc per tick
 	lastWall     time.Time
 	jumpDuration time.Duration // wall-clock time elapsed during detected time jump; 0 if no time jump observed since reset
-	dialer       N.Dialer
+	hooks        Hooks
 }
 
 // ChangeFunc is a callback function registered with Monitor that's called when the
@@ -372,7 +371,7 @@ func filterRoutableIPs(addrs []netip.Prefix) []netip.Prefix {
 // New instantiates and starts a monitoring instance.
 // The returned monitor is inactive until it's started by the Start method.
 // Use RegisterChangeCallback to get notified of network changes.
-func New(bus *eventbus.Bus, logf logger.Logf, dialer N.Dialer) (*Monitor, error) {
+func New(bus *eventbus.Bus, logf logger.Logf, hooks Hooks) (*Monitor, error) {
 	logf = logger.WithPrefix(logf, "monitor: ")
 	m := &Monitor{
 		logf:     logf,
@@ -380,7 +379,7 @@ func New(bus *eventbus.Bus, logf logger.Logf, dialer N.Dialer) (*Monitor, error)
 		change:   make(chan bool, 1),
 		stop:     make(chan struct{}),
 		lastWall: wallTime(),
-		dialer:   dialer,
+		hooks:    hooks,
 	}
 	m.changed = eventbus.Publish[ChangeDelta](m.b)
 	st, err := m.interfaceStateUncached()
