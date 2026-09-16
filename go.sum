@@ -154,8 +154,8 @@ github.com/sagernet/sing v0.9.4-0.20260912053229-7776850263cd h1:awZQVpsmNdo/EZg
 github.com/sagernet/sing v0.9.4-0.20260912053229-7776850263cd/go.mod h1:K3Owt3xPhHugvlnlPPxZJ/exXdaJfEPOTNorGk4AXjo=
 github.com/sagernet/sing-tun v0.9.4-0.20260916041232-89d2e01a748a h1:gtmASuYUvtc3v/gzCRXIyKQl3wL5/lHZdOv/cLWImDE=
 github.com/sagernet/sing-tun v0.9.4-0.20260916041232-89d2e01a748a/go.mod h1:BvT1uA71a1pi+TIhIiHSL8/y3BIbAcJ2331mGkU+/bo=
-github.com/sagernet/wireguard-go v0.0.5-0.20260804111801-7a66fbee4ae1 h1:KThk4C4x5HEnjXcGqxxFj5giHeT3487pBquRqewqFdY=
-github.com/sagernet/wireguard-go v0.0.5-0.20260804111801-7a66fbee4ae1/go.mod h1:er10sELpmzLXq7S7Pbc1Zsbyapcr+/gxNAHKTo6fzVA=
+github.com/sagernet/wireguard-go v0.0.7-0.20260916054909-2da8d81dcd5e h1:/PjWOCp01EG9cIdU18tn1nDT7+y/5KiIdIBcIfBThl8=
+github.com/sagernet/wireguard-go v0.0.7-0.20260916054909-2da8d81dcd5e/go.mod h1:er10sELpmzLXq7S7Pbc1Zsbyapcr+/gxNAHKTo6fzVA=
 github.com/shurcooL/go v0.0.0-20180423040247-9e1955d9fb6e/go.mod h1:TDJrrUr11Vxrven61rcy3hJMUqaf/CLWYhHNPmT14Lk=
 github.com/shurcooL/go-goon v0.0.0-20170922171312-37c2f522c041/go.mod h1:N5mDOmsrJOB+vfqUK+7DmDyjhSLIIBnXo9lvZJj3MWQ=
 github.com/skip2/go-qrcode v0.0.0-20200617195104-da1b6568686e h1:MRM5ITcdelLK2j1vwZ3Je0FKVCfqOLp5zO6trqMLYs0=

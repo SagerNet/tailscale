@@ -9,6 +9,7 @@ import (
 	"slices"
 
 	"github.com/sagernet/tailscale/types/key"
+	"github.com/sagernet/wireguard-go/device"
 )
 
 //go:generate go run tailscale.com/cmd/cloner -type=Config
@@ -22,6 +23,17 @@ import (
 type Config struct {
 	PrivateKey key.NodePrivate
 	Addresses  []netip.Prefix
+}
+
+// PeerConfig is the live per-peer WireGuard configuration returned by
+// the source installed via [tailscale.com/wgengine.Engine.SetPeerConfigFunc].
+type PeerConfig struct {
+	// AllowedIPs is the set of prefixes the peer may originate traffic from.
+	AllowedIPs []netip.Prefix
+
+	// PresharedKey is the optional WireGuard pre-shared key. The zero value
+	// disables the pre-shared-key layer.
+	PresharedKey device.NoisePresharedKey
 }
 
 func (c *Config) Equal(o *Config) bool {

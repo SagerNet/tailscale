@@ -104,7 +104,7 @@ require (
 	github.com/rogpeppe/go-internal v1.14.1 // indirect
 	github.com/sagernet/gvisor v0.0.0-20260727.0-sing-box-mod.1 // indirect
 	github.com/sagernet/sing-tun v0.9.4-0.20260916041232-89d2e01a748a
-	github.com/sagernet/wireguard-go v0.0.5-0.20260804111801-7a66fbee4ae1
+	github.com/sagernet/wireguard-go v0.0.7-0.20260916054909-2da8d81dcd5e
 	github.com/sourcegraph/go-diff v0.7.0
 	github.com/tailscale/go-winio v0.0.0-20231025203758-c4f33415bf55
 	github.com/u-root/uio v0.0.0-20240224005618-d2acac8f3701 // indirect
