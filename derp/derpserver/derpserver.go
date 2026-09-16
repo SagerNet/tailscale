@@ -189,6 +189,7 @@ type Server struct {
 	// running tailscaled's client's LocalAPI.
 	verifyClientsLocalTailscaled bool
 	verifyClientLocalClient      []*tailscale.LocalClient
+	verifyClientKeys             set.Set[key.NodePublic]
 	verifyClientHTTPClient       []*http.Client
 	verifyClientsURL             []string
 	verifyClientsURLFailOpen     bool
@@ -493,6 +494,10 @@ func (s *Server) SetVerifyClient(v bool) {
 
 func (s *Server) SetVerifyClientLocalClient(localClient []*tailscale.LocalClient) {
 	s.verifyClientLocalClient = localClient
+}
+
+func (s *Server) SetVerifyClientKeys(keys []key.NodePublic) {
+	s.verifyClientKeys = set.Of(keys...)
 }
 
 func (s *Server) SetVerifyClientHTTPClient(httpClient []*http.Client) {
@@ -1613,6 +1618,12 @@ func (s *Server) verifyClient(ctx context.Context, clientKey key.NodePublic, inf
 	}
 
 	var errors []error
+	if len(s.verifyClientKeys) > 0 {
+		if s.verifyClientKeys.Contains(clientKey) {
+			return nil
+		}
+		errors = append(errors, fmt.Errorf("peer %v not authorized (not in verify client keys)", clientKey))
+	}
 	if len(s.verifyClientLocalClient) > 0 {
 		for _, verifyClient := range s.verifyClientLocalClient {
 			_, err := verifyClient.WhoIsNodeKey(ctx, clientKey)
