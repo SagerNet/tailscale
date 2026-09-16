@@ -1521,6 +1521,11 @@ func (de *endpoint) updateFromNode(n tailcfg.NodeView, heartbeatDisabled bool, p
 		de.c.logf("[v1] magicsock: disco: node %s changed from %s to %s", de.publicKey.ShortString(), discoKey, n.DiscoKey())
 		key := n.DiscoKey()
 		de.updateDiscoKey(key)
+		// A new disco key means the peer restarted, so any direct path
+		// discovered for its previous session is dead. Without clearing
+		// it, sends keep going to that address alone (a trusted best
+		// address suppresses the DERP copy) until the trust expires.
+		de.resetLocked()
 		de.debugUpdates.Add(EndpointChange{
 			When: time.Now(),
 			What: "updateFromNode-resetLocked",
