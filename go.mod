@@ -44,7 +44,7 @@ require (
 	github.com/pires/go-proxyproto v0.8.1
 	github.com/prometheus/client_golang v1.23.2
 	github.com/safchain/ethtool v0.3.0
-	github.com/sagernet/sing v0.9.4-0.20260912053229-7776850263cd
+	github.com/sagernet/sing v0.9.5-0.20260917142815-f37989cadbf0
 	github.com/skip2/go-qrcode v0.0.0-20200617195104-da1b6568686e
 	github.com/tailscale/certstore v0.1.1-0.20260409135935-3638fb84b77d
 	github.com/tailscale/hujson v0.0.0-20260302212456-ecc657c15afd
@@ -103,7 +103,7 @@ require (
 	github.com/prometheus/procfs v0.20.1 // indirect
 	github.com/rogpeppe/go-internal v1.14.1 // indirect
 	github.com/sagernet/gvisor v0.0.0-20260727.0-sing-box-mod.1 // indirect
-	github.com/sagernet/sing-tun v0.9.4-0.20260916041232-89d2e01a748a
+	github.com/sagernet/sing-tun v0.9.6-0.20260925112405-97d11460f2ea
 	github.com/sagernet/wireguard-go v0.0.7-0.20260916054909-2da8d81dcd5e
 	github.com/sourcegraph/go-diff v0.7.0
 	github.com/tailscale/go-winio v0.0.0-20231025203758-c4f33415bf55

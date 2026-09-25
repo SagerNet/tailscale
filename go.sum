@@ -150,10 +150,10 @@ github.com/sagernet/netlink v0.0.0-20260814022025-64455d367bbf h1:b/3rm+KvxzuYRc
 github.com/sagernet/netlink v0.0.0-20260814022025-64455d367bbf/go.mod h1:xLnfdiJbSp8rNqYEdIW/6eDO4mVoogml14Bh2hSiFpM=
 github.com/sagernet/nftables v0.3.0-mod.4 h1:vnOtcDYeSXv2e5RoRuGH0lrpttQFJ8iC4ICS2nhlDSo=
 github.com/sagernet/nftables v0.3.0-mod.4/go.mod h1:8kslHG4VvYNihcco+i6uxIX7qbT8A56T0y5q7U44ZaQ=
-github.com/sagernet/sing v0.9.4-0.20260912053229-7776850263cd h1:awZQVpsmNdo/EZgEW1nwj9sMQbtgfD130oFIH/7fIDM=
-github.com/sagernet/sing v0.9.4-0.20260912053229-7776850263cd/go.mod h1:K3Owt3xPhHugvlnlPPxZJ/exXdaJfEPOTNorGk4AXjo=
-github.com/sagernet/sing-tun v0.9.4-0.20260916041232-89d2e01a748a h1:gtmASuYUvtc3v/gzCRXIyKQl3wL5/lHZdOv/cLWImDE=
-github.com/sagernet/sing-tun v0.9.4-0.20260916041232-89d2e01a748a/go.mod h1:BvT1uA71a1pi+TIhIiHSL8/y3BIbAcJ2331mGkU+/bo=
+github.com/sagernet/sing v0.9.5-0.20260917142815-f37989cadbf0 h1:rn2MLe/qiqCxvRIHfT9WRc22eNLBTRCKlY39pZTWRdg=
+github.com/sagernet/sing v0.9.5-0.20260917142815-f37989cadbf0/go.mod h1:K3Owt3xPhHugvlnlPPxZJ/exXdaJfEPOTNorGk4AXjo=
+github.com/sagernet/sing-tun v0.9.6-0.20260925112405-97d11460f2ea h1:q7XaAcZqX9kZissKAPpi3gDYYdpAuO9D9wqQH/KgN6E=
+github.com/sagernet/sing-tun v0.9.6-0.20260925112405-97d11460f2ea/go.mod h1:liMb9HPIWcFWqF6VJ/ttIY8fTSRPdRltBeSeEcXt1Dk=
 github.com/sagernet/wireguard-go v0.0.7-0.20260916054909-2da8d81dcd5e h1:/PjWOCp01EG9cIdU18tn1nDT7+y/5KiIdIBcIfBThl8=
 github.com/sagernet/wireguard-go v0.0.7-0.20260916054909-2da8d81dcd5e/go.mod h1:er10sELpmzLXq7S7Pbc1Zsbyapcr+/gxNAHKTo6fzVA=
 github.com/shurcooL/go v0.0.0-20180423040247-9e1955d9fb6e/go.mod h1:TDJrrUr11Vxrven61rcy3hJMUqaf/CLWYhHNPmT14Lk=
