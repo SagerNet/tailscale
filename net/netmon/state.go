@@ -882,6 +882,9 @@ func DefaultRouteInterface() (string, error) {
 // DefaultRoute returns details of the network interface that owns
 // the default route, not including any tailscale interfaces.
 func DefaultRoute() (DefaultRouteDetails, error) {
+	if f := defaultRouteOverride.Load(); f != nil {
+		return (*f)()
+	}
 	return defaultRoute()
 }
 
