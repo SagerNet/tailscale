@@ -20,8 +20,15 @@ func (c *Conn) retryFailedBind() {
 	delay := bindRetryInitialDelay
 	for {
 		c.rebindMu.Lock()
-		needed := c.bindRetryNeeded
+		needed := c.bindRetryNeeded && !c.bindRetryPaused
+		postBind := c.bindRetryPostBind && !c.bindRetryPaused
+		c.bindRetryPostBind = false
 		c.rebindMu.Unlock()
+		if postBind && !c.closing.Load() {
+			c.updateAfterBind()
+			c.afterRebind()
+			c.ReSTUN("bind-updated")
+		}
 		if !needed {
 			delay = bindRetryInitialDelay
 			select {
@@ -39,6 +46,9 @@ func (c *Conn) retryFailedBind() {
 			return
 		case <-c.bindRetryWake:
 			timer.Stop()
+			// A completed bind, a fresh failure, or a Close/Open transition
+			// starts a new recovery episode, even if wakeups were coalesced.
+			delay = bindRetryInitialDelay
 			continue
 		case <-timer.C:
 		}
