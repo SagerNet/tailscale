@@ -379,7 +379,7 @@ const (
 // onlyStaticAddrPorts is true, then dynamic addr:port discovery will be
 // disabled, and only addr:port's set via [Server.SetStaticAddrPorts] will be
 // used. Metrics must be non-nil. knobs may be nil.
-func NewServer(logf logger.Logf, port uint16, onlyStaticAddrPorts bool, metrics *usermetric.Registry, knobs *controlknobs.Knobs) (s *Server, err error) {
+func NewServer(logf logger.Logf, port uint16, onlyStaticAddrPorts bool, hooks netmon.Hooks, metrics *usermetric.Registry, knobs *controlknobs.Knobs) (s *Server, err error) {
 	s = &Server{
 		logf:                  logf,
 		disco:                 key.NewDisco(),
@@ -400,7 +400,7 @@ func NewServer(logf logger.Logf, port uint16, onlyStaticAddrPorts bool, metrics 
 	// in a running client.
 	bus := eventbus.New()
 	s.bus = bus
-	netMon, err := netmon.New(s.bus, logf, netmon.Hooks{})
+	netMon, err := netmon.New(s.bus, logf, hooks)
 	if err != nil {
 		return nil, err
 	}
@@ -566,11 +566,11 @@ var _ batching.Conn = (*singlePacketConn)(nil)
 // singlePacketConn implements [batching.Conn] with single packet syscall
 // operations.
 type singlePacketConn struct {
-	*net.UDPConn
+	nettype.PacketConn
 }
 
 func (c *singlePacketConn) ReadBatch(msgs []ipv6.Message, _ int) (int, error) {
-	n, ap, err := c.UDPConn.ReadFromUDPAddrPort(msgs[0].Buffers[0])
+	n, ap, err := c.PacketConn.ReadFromUDPAddrPort(msgs[0].Buffers[0])
 	if err != nil {
 		return 0, err
 	}
@@ -586,7 +586,7 @@ func (c *singlePacketConn) WriteBatchTo(buffs [][]byte, addr netip.AddrPort, gen
 		} else {
 			buff = buff[offset:]
 		}
-		_, err := c.UDPConn.WriteToUDPAddrPort(buff, addr)
+		_, err := c.PacketConn.WriteToUDPAddrPort(buff, addr)
 		if err != nil {
 			return err
 		}
@@ -660,6 +660,9 @@ func (s *Server) bindSockets(desiredPort uint16) error {
 	listenConfig := &net.ListenConfig{
 		Control: func(network, address string, c syscall.RawConn) error {
 			trySetReusePort(network, address, c)
+			if control := s.netMon.ControlFunc(); control != nil {
+				return control(network, address, c)
+			}
 			trySetSOMark(s.logf, s.netMon, network, address, c)
 			return nil
 		},
@@ -704,7 +707,8 @@ func (s *Server) bindSockets(desiredPort uint16) error {
 				s.uc6 = append(s.uc6, bc)
 				s.uc6Port = boundPort
 			}
-			if !isReusableSocket(uc) {
+			udpConn, isUDPConn := uc.(*net.UDPConn)
+			if !isUDPConn || !isReusableSocket(udpConn) {
 				break
 			}
 		}
@@ -716,12 +720,15 @@ func (s *Server) bindSockets(desiredPort uint16) error {
 	return nil
 }
 
-func (s *Server) bindSocketTo(listenConfig *net.ListenConfig, network string, port uint16) (*net.UDPConn, uint16, error) {
-	lis, err := listenConfig.ListenPacket(context.Background(), network, fmt.Sprintf(":%d", port))
+func (s *Server) bindSocketTo(listenConfig *net.ListenConfig, network string, port uint16) (nettype.PacketConn, uint16, error) {
+	listenPacket := s.netMon.ListenPacketFunc()
+	if listenPacket == nil {
+		listenPacket = nettype.MakePacketListenerWithNetIP(listenConfig).ListenPacket
+	}
+	uc, err := listenPacket(context.Background(), network, fmt.Sprintf(":%d", port))
 	if err != nil {
 		return nil, 0, err
 	}
-	uc := lis.(*net.UDPConn)
 	trySetUDPSocketOptions(uc, s.logf)
 	_, boundPortStr, err := net.SplitHostPort(uc.LocalAddr().String())
 	if err != nil {
