@@ -194,6 +194,21 @@ type Conn struct {
 	pconn4 RebindingUDPConn
 	pconn6 RebindingUDPConn
 
+	// rebindMu serializes socket replacement with socket shutdown. Never
+	// acquire mu while holding it (Close takes mu before rebindMu).
+	rebindMu syncs.Mutex
+	// These fields are guarded by rebindMu. IPv4 failure starts recovery;
+	// IPv6 is retried only if it also failed, preserving a healthy socket.
+	bindRetryNeeded     bool
+	bindRetryIPv6Failed bool
+	// Paused only after an opened Bind is closed, not before its first Open.
+	bindRetryPaused bool
+	// Open cannot acquire Conn.mu while wireguard-go holds its own locks.
+	// Leave post-bind processing to the existing recovery worker instead.
+	bindRetryPostBind bool
+	bindRetryWake     chan struct{}
+	bindRetryDone     chan struct{}
+
 	receiveBatchPool sync.Pool
 
 	// closeDisco4 and closeDisco6 are io.Closers to shut down the raw
@@ -698,6 +713,8 @@ func NewConn(opts Options) (*Conn, error) {
 
 	c.connCtx, c.connCtxCancel = context.WithCancel(context.Background())
 	c.donec = c.connCtx.Done()
+	c.bindRetryWake = make(chan struct{}, 1)
+	c.bindRetryDone = make(chan struct{})
 
 	// Don't log the same log messages possibly every few seconds in our
 	// portmapper.
@@ -775,6 +792,9 @@ func NewConn(opts Options) (*Conn, error) {
 	}
 
 	c.logf("magicsock: disco key = %v", c.discoAtomic.Short())
+	// Start only after construction is complete: the initial bind can fail,
+	// but recovery must not access a partially initialized Conn.
+	go c.retryFailedBind()
 	return c, nil
 }
 
@@ -3528,6 +3548,23 @@ func (c *connBind) Open(ignoredPort uint16) ([]conn.ReceiveFunc, uint16, error) 
 	if !c.closed {
 		return nil, 0, errors.New("magicsock: connBind already open")
 	}
+	c.rebindMu.Lock()
+	if c.closing.Load() {
+		c.rebindMu.Unlock()
+		return nil, 0, net.ErrClosed
+	}
+	if c.bindRetryPaused {
+		// WireGuard has waited for the old receive funcs before reopening.
+		// Restore sockets (or blocking placeholders) before returning new
+		// receive funcs, so they cannot exit on the old sockets' close errors.
+		c.bindRetryPaused = false
+		if err := c.rebindSocketsLocked(keepCurrentPort, false); err != nil {
+			c.logf("%v", err)
+		}
+		c.bindRetryPostBind = !c.bindRetryNeeded || !c.bindRetryIPv6Failed
+		c.wakeBindRetryLocked()
+	}
+	c.rebindMu.Unlock()
 	c.closed = false
 	fns := []conn.ReceiveFunc{c.receiveIPv4(), c.receiveIPv6(), c.receiveDERP}
 	if runtime.GOOS == "js" {
@@ -3557,8 +3594,15 @@ func (c *connBind) Close() error {
 	}
 	c.closed = true
 	// Unblock all outstanding receives.
+	c.rebindMu.Lock()
+	// Serialize the state change with recovery as well as socket closure:
+	// otherwise a queued retry could reopen sockets after Close returns.
+	c.bindRetryPaused = true
+	c.bindRetryPostBind = false
+	c.wakeBindRetryLocked()
 	c.pconn4.Close()
 	c.pconn6.Close()
+	c.rebindMu.Unlock()
 	if c.closeDisco4 != nil {
 		c.closeDisco4.Close()
 	}
@@ -3594,7 +3638,14 @@ func (c *Conn) Close() error {
 	c.eventClient.Close()
 
 	c.mu.Lock()
-	defer c.mu.Unlock()
+	defer func() {
+		c.mu.Unlock()
+		// Recovery's post-bind processing may need mu. Wait only after
+		// releasing it, so Close cannot deadlock with the recovery worker.
+		if c.bindRetryDone != nil {
+			<-c.bindRetryDone
+		}
+	}()
 	if c.closed {
 		return nil
 	}
@@ -3616,8 +3667,10 @@ func (c *Conn) Close() error {
 	c.closeAllDerpLocked("conn-close")
 	// Ignore errors from c.pconnN.Close.
 	// They will frequently have been closed already by a call to connBind.Close.
+	c.rebindMu.Lock()
 	c.pconn6.Close()
 	c.pconn4.Close()
+	c.rebindMu.Unlock()
 	if c.closeDisco4 != nil {
 		c.closeDisco4.Close()
 	}
@@ -3858,17 +3911,78 @@ const (
 // rebind closes and re-binds the UDP sockets.
 // We consider it successful if we manage to bind the IPv4 socket.
 func (c *Conn) rebind(curPortFate currentPortFate) error {
-	if err := c.bindSocket(&c.pconn6, "udp6", curPortFate); err != nil {
-		c.logf("magicsock: Rebind ignoring IPv6 bind failure: %v", err)
+	_, err := c.rebindIfNeeded(curPortFate, false)
+	return err
+}
+
+// rebindIfNeeded also serves the recovery worker. Checking bindRetryNeeded
+// and replacing the sockets under the same lock prevents a stale retry from
+// closing sockets already repaired by an ordinary network-change rebind.
+func (c *Conn) rebindIfNeeded(curPortFate currentPortFate, failedOnly bool) (bool, error) {
+	c.rebindMu.Lock()
+	if c.closing.Load() || c.bindRetryPaused {
+		c.rebindMu.Unlock()
+		return false, net.ErrClosed
 	}
-	if err := c.bindSocket(&c.pconn4, "udp4", curPortFate); err != nil {
+	if failedOnly && (!c.bindRetryNeeded || c.onlyTCP443.Load()) {
+		c.rebindMu.Unlock()
+		return false, nil
+	}
+	ipv6Failed := c.bindRetryIPv6Failed
+	err := c.rebindSocketsLocked(curPortFate, failedOnly)
+	if err != nil && failedOnly && ipv6Failed && !c.bindRetryIPv6Failed {
+		// IPv6 became usable while IPv4 is still unavailable. Advertise that
+		// progress without disturbing it on subsequent IPv4 retry attempts.
+		c.bindRetryPostBind = true
+		c.wakeBindRetryLocked()
+	}
+	c.rebindMu.Unlock()
+	if err != nil {
+		return true, err
+	}
+	if c.closing.Load() {
+		return true, net.ErrClosed
+	}
+	c.updateAfterBind()
+	return true, nil
+}
+
+// rebindSocketsLocked replaces sockets and records failures. Unlike the full
+// rebind follow-up it does not acquire Conn.mu, so connBind.Open may call it.
+// c.rebindMu must be held.
+func (c *Conn) rebindSocketsLocked(curPortFate currentPortFate, failedOnly bool) error {
+	if !failedOnly || c.bindRetryIPv6Failed {
+		err := c.bindSocket(&c.pconn6, "udp6", curPortFate)
+		c.bindRetryIPv6Failed = err != nil
+		if err != nil {
+			c.logf("magicsock: Rebind ignoring IPv6 bind failure: %v", err)
+		}
+	}
+	err := c.bindSocket(&c.pconn4, "udp4", curPortFate)
+	needed := err != nil
+	if c.bindRetryNeeded != needed {
+		c.bindRetryNeeded = needed
+		c.wakeBindRetryLocked()
+	}
+	if err != nil {
 		return fmt.Errorf("magicsock: Rebind IPv4 failed: %w", err)
 	}
+	return nil
+}
+
+// c.rebindMu must be held.
+func (c *Conn) wakeBindRetryLocked() {
+	select {
+	case c.bindRetryWake <- struct{}{}:
+	default:
+	}
+}
+
+func (c *Conn) updateAfterBind() {
 	if c.portMapper != nil {
 		c.portMapper.SetLocalPort(c.LocalPort())
 	}
 	c.UpdatePMTUD()
-	return nil
 }
 
 // Rebind closes and re-binds the UDP sockets and resets the DERP connection.
@@ -3879,13 +3993,18 @@ func (c *Conn) Rebind() {
 		c.logf("%v", err)
 		return
 	}
+	c.afterRebind()
+}
 
+// afterRebind preserves the ordinary successful-rebind path for recovery.
+func (c *Conn) afterRebind() {
 	var ifIPs []netip.Prefix
 	if c.netMon != nil {
-		st := c.netMon.InterfaceState()
-		defIf := st.DefaultRouteInterface
-		ifIPs = st.InterfaceIPs[defIf]
-		c.logf("Rebind; defIf=%q, ips=%v", defIf, ifIPs)
+		if st := c.netMon.InterfaceState(); st != nil {
+			defIf := st.DefaultRouteInterface
+			ifIPs = st.InterfaceIPs[defIf]
+			c.logf("Rebind; defIf=%q, ips=%v", defIf, ifIPs)
+		}
 	}
 
 	if len(ifIPs) > 0 {
